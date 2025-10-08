@@ -1,7 +1,5 @@
 {
-  "framework": "other",
-  "outputDirectory": ".",
-  "buildCommand": "echo 'Build completed'"
+
 }
 
 
