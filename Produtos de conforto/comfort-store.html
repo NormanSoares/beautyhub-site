@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seção Conforto - 67 Beauty Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+        
+        /* User Authentication Styles */
+        .user-auth {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: #d4af37;
+            border: 2px solid #d4af37;
+        }
+
+        .login-btn:hover {
+            background: #d4af37;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .register-btn {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid #d4af37;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #d4af37;
+            font-weight: 500;
+        }
+
+        .user-avatar:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        .user-avatar i.fa-user-circle {
+            font-size: 1.2rem;
+        }
+
+        .user-avatar i.fa-chevron-down {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .user-avatar.active i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 5px;
+        }
+
+        .user-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .user-dropdown a:hover {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+        }
+
+        .user-dropdown a i {
+            font-size: 1.1rem;
+        }
+        
+        .comfort-background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f0e6d2, #e6d7c3);
+        }
+        
+        .comfort-background-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(5px);
+            transform: scale(1.1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+        
+        .comfort-header {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+        }
+        
+        .comfort-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .comfort-header p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .comfort-nav {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .comfort-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            gap: 20px;
+        }
+        
+        .comfort-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00b894;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+        
+        .comfort-nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .comfort-nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        
+        .comfort-nav-links a:hover {
+            background: #00b894;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        
+        .products-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(15px);
+            border: 3px solid rgba(212, 175, 55, 0.6);
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border: 3px solid rgba(212, 175, 55, 0.8);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.02);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .product-content {
+            padding: 25px;
+        }
+        
+        .product-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .price-current {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00b894;
+        }
+        
+        .price-original {
+            font-size: 1.2rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+        
+        .price-discount {
+            background: #e17055;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #00b894;
+            border: 2px solid #00b894;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-secondary:hover {
+            background: #00b894;
+            color: white;
+        }
+        
+        .features-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 20px;
+            margin: 60px 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 50px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: #00b894;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .testimonials-section {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .testimonials-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .testimonial-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .newsletter-section {
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .newsletter-description {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            background: #00b894;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background: #00a085;
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .comfort-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .comfort-nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .comfort-nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <div class="comfort-background-video">
+        <video autoplay muted loop playsinline preload="auto">
+            <source src="Background.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos.
+        </video>
+    </div>
+    
+    <!-- Comfort Header -->
+    <div class="comfort-header">
+        <h1><i class="fas fa-home"></i> Seção Conforto</h1>
+        <p>Transforme seu lar em um oásis de conforto e bem-estar com nossos produtos exclusivos</p>
+    </div>
+
+    <!-- Comfort Navigation -->
+    <nav class="comfort-nav">
+        <div class="comfort-nav-container">
+            <div class="comfort-logo">
+                <img src="C:\Users\DEADMAN\Desktop\Site Editável para 67 Beauty Hub com Beleza e Conforto\Logo.png" alt="67 Beauty Hub" style="height: 40px; margin-right: 10px;">
+                <span style="font-weight: 700; color: #d4af37;">67 BEAUTY HUB</span>
+            </div>
+            <div class="comfort-nav-links">
+                <a href="../index.html"><i class="fas fa-home"></i> Início</a>
+                <a href="../Produtos de beleza/beauty-store.html"><i class="fas fa-palette"></i> Seção Beleza</a>
+                <a href="#features"><i class="fas fa-star"></i> Benefícios</a>
+            </div>
+            
+            
+            <!-- User Authentication Section -->
+            <div class="user-auth" id="userAuthSection">
+                <!-- Login/Register buttons (shown when not logged in) -->
+                <div class="auth-buttons" id="authButtons">
+                    <button class="auth-btn login-btn" onclick="openLoginModal()">
+                        <i class="fas fa-sign-in-alt"></i> Entrar
+                    </button>
+                    <button class="auth-btn register-btn" onclick="openRegisterModal()">
+                        <i class="fas fa-user-plus"></i> Cadastrar
+                    </button>
+                </div>
+                
+                <!-- User menu (shown when logged in) -->
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <div class="user-avatar" onclick="toggleUserDropdown()">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userName">Usuário</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#" onclick="viewProfile()">
+                            <i class="fas fa-user"></i> Meu Perfil
+                        </a>
+                        <a href="#" onclick="viewMyReviews()">
+                            <i class="fas fa-star"></i> Minhas Avaliações
+                        </a>
+                        <a href="#" onclick="logoutUser()">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Products Section -->
+    <div class="products-container">
+        <div class="products-grid" id="products">
+            <!-- Detachable Sofa Cover -->
+            <div class="product-card">
+                <div class="product-badge">Mais Popular</div>
+                <img src="Detachable Sofa Cover Bean Bag Cover Lazy Person's Couch/Apresentação.jpg" alt="Detachable Sofa Cover" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">Detachable Sofa Cover Bean Bag Cover</h3>
+                    <p class="product-description">Acabe com sofás desgastados e manchados. Transforme qualquer móvel em um lounge confortável. Remove e lava em segundos.</p>
+                    <div class="product-price">
+                        <span class="price-current">R$ 34,99</span>
+                        <span class="price-original">R$ 59,99</span>
+                        <span class="price-discount">42% OFF</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="Detachable Sofa Cover Bean Bag Cover Lazy Person's Couch/checkout-sofa-cover.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Comprar Agora
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Human Dog Bed -->
+            <div class="product-card">
+                <div class="product-badge">Conforto Máximo</div>
+                <img src="Human Dog bad/Apresentação.png" alt="Human Dog Bed" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">Human Dog Bed</h3>
+                    <p class="product-description">Acabe com dores nas costas e no pescoço. Cama gigante que suporta até 150kg. Conforto total para relaxar.</p>
+                    <div class="product-price">
+                        <span class="price-current">R$ 79,99</span>
+                        <span class="price-original">R$ 129,99</span>
+                        <span class="price-discount">38% OFF</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="Human Dog bad/checkout-human-dog-bed.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Comprar Agora
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- SNOOZE BUNDLE -->
+            <div class="product-card">
+                <div class="product-badge">Kit Completo</div>
+                <img src="SNOOZE BUNDLE/apresentação.png" alt="SNOOZE BUNDLE" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">SNOOZE BUNDLE</h3>
+                    <p class="product-description">Acabe com noites mal dormidas em viagens. Conforto total para dormir em qualquer lugar. Compacto e prático.</p>
+                    <div class="product-price">
+                        <span class="price-current">R$ 149,99</span>
+                        <span class="price-original">R$ 249,99</span>
+                        <span class="price-discount">40% OFF</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="SNOOZE BUNDLE/checkout-snooze-bundle.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Comprar Agora
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section" id="features">
+        <div class="features-container">
+            <h2 class="features-title">Por que escolher nossa Seção Conforto?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="feature-title">Conforto Garantido</h3>
+                    <p class="feature-description">Produtos selecionados para proporcionar o máximo de conforto e bem-estar em seu lar.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3 class="feature-title">Entrega Gratuita</h3>
+                    <p class="feature-description">Frete grátis para todo o Brasil. Receba seus produtos de conforto no conforto da sua casa.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="feature-title">Transforme Seu Lar</h3>
+                    <p class="feature-description">Produtos que transformam qualquer ambiente em um espaço acolhedor e confortável.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <h3 class="feature-title">Pet-Friendly</h3>
+                    <p class="feature-description">Muitos de nossos produtos são perfeitos para você e seus pets desfrutarem juntos.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="testimonials-section">
+        <div class="testimonials-container">
+            <h2 class="testimonials-title">O que nossos clientes dizem</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"A capa do sofá mudou completamente o visual da minha sala! Super fácil de colocar e lavar."</p>
+                    <p class="testimonial-author">- Maria Silva, São Paulo</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"O secador portátil é perfeito para minhas viagens. Leve e eficiente!"</p>
+                    <p class="testimonial-author">- João Santos, Rio de Janeiro</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"A caixa de areia inteligente é um sonho! Meu gato adora e eu também."</p>
+                    <p class="testimonial-author">- Ana Costa, Belo Horizonte</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Section -->
+    <div class="newsletter-section">
+        <div class="newsletter-container">
+            <h2 class="newsletter-title">Transforme seu lar hoje!</h2>
+            <p class="newsletter-description">Receba dicas de decoração e ofertas especiais para tornar sua casa ainda mais confortável</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Seu melhor e-mail">
+                <button type="submit" class="newsletter-btn">Inscrever-se</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 67 Beauty Hub - Seção Conforto. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Newsletter form submission
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('.newsletter-input').value;
+            if (email) {
+                alert('Obrigado por se inscrever! Você receberá nossas dicas de conforto em breve.');
+                this.querySelector('.newsletter-input').value = '';
+            }
+        });
+
+        // Add to cart functionality
+        function setupButtonListeners() {
+        document.querySelectorAll('.btn-primary').forEach(button => {
+            button.addEventListener('click', function(e) {
+                    console.log('Comfort button clicked!', e.target);
+                    
+                    // Prevent event from bubbling up to the card
+                    e.stopPropagation();
+                    
+                // Add visual feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+        }
+
+        // Forçar o vídeo de background a tocar
+        const backgroundVideo = document.querySelector('.comfort-background-video video');
+        if (backgroundVideo) {
+            console.log('Vídeo de background da seção conforto encontrado');
+            
+            // Garantir que o vídeo seja reproduzido
+            backgroundVideo.muted = true;
+            backgroundVideo.loop = true;
+            backgroundVideo.playsInline = true;
+            
+            const playVideo = () => {
+                backgroundVideo.play().catch(e => {
+                    console.log('Erro ao tocar vídeo da seção conforto:', e);
+                    // Tentar novamente após um pequeno delay
+                    setTimeout(playVideo, 1000);
+                });
+            };
+            
+            playVideo();
+            
+            // Tentar reproduzir quando o usuário interagir com a página
+            document.addEventListener('click', playVideo, { once: true });
+            document.addEventListener('touchstart', playVideo, { once: true });
+        } else {
+            console.log('Vídeo de background da seção conforto não encontrado');
+        }
+
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // User Authentication System
+        let currentUser = null;
+
+        // Check if user is logged in on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showUserMenu();
+            }
+            
+            // Make product cards clickable with beautiful effects
+            setTimeout(() => {
+                makeProductCardsClickable();
+                setupButtonListeners();
+            }, 100);
+        });
+
+        function openLoginModal() {
+            const email = prompt('Digite seu e-mail:');
+            const password = prompt('Digite sua senha:');
+            
+            if (email && password) {
+                // Simulate login (in real app, this would be an API call)
+                currentUser = {
+                    name: email.split('@')[0],
+                    email: email
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showUserMenu();
+                alert('Login realizado com sucesso!');
+            }
+        }
+
+        function openRegisterModal() {
+            const name = prompt('Digite seu nome:');
+            const email = prompt('Digite seu e-mail:');
+            const password = prompt('Digite sua senha:');
+            
+            if (name && email && password) {
+                // Simulate registration (in real app, this would be an API call)
+                currentUser = {
+                    name: name,
+                    email: email
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showUserMenu();
+                alert('Cadastro realizado com sucesso!');
+            }
+        }
+
+        function showUserMenu() {
+            document.getElementById('authButtons').style.display = 'none';
+            document.getElementById('userMenu').style.display = 'block';
+            document.getElementById('userName').textContent = currentUser.name;
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            const avatar = document.querySelector('.user-avatar');
+            
+            dropdown.classList.toggle('show');
+            avatar.classList.toggle('active');
+        }
+
+        function viewProfile() {
+            alert('Perfil do usuário: ' + currentUser.name + ' (' + currentUser.email + ')');
+            document.getElementById('userDropdown').classList.remove('show');
+        }
+
+        function viewMyReviews() {
+            alert('Suas avaliações serão exibidas aqui em breve!');
+            document.getElementById('userDropdown').classList.remove('show');
+        }
+
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            document.getElementById('authButtons').style.display = 'flex';
+            document.getElementById('userMenu').style.display = 'none';
+            document.getElementById('userDropdown').classList.remove('show');
+            alert('Logout realizado com sucesso!');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.user-menu')) {
+                document.getElementById('userDropdown').classList.remove('show');
+                document.querySelector('.user-avatar').classList.remove('active');
+            }
+        });
+
+        // Make product cards clickable with beautiful effects
+        function makeProductCardsClickable() {
+            const cards = document.querySelectorAll('.product-card');
+            console.log('Found', cards.length, 'product cards to make clickable in Comfort Store');
+            
+            cards.forEach((card, index) => {
+                console.log(`Setting up click listener for comfort card ${index + 1}`);
+            card.addEventListener('click', function(e) {
+                    console.log('Comfort card clicked!', e.target);
+                    
+                    // Add beautiful visual feedback
+                    this.style.transform = 'scale(0.98)';
+                    this.style.boxShadow = '0 10px 25px rgba(212, 175, 55, 0.5)';
+                    
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                        this.style.boxShadow = '0 15px 40px rgba(0,0,0,0.3)';
+                    }, 150);
+                
+                // Get the product title to determine the checkout page
+                const title = this.querySelector('.product-title').textContent.trim();
+                    console.log('Comfort product title:', title);
+                    
+                let checkoutUrl = '';
+                
+                    if (title.includes('Detachable Sofa Cover') || title.includes('Capa de Sofá') || title.includes('Sofa Cover')) {
+                    checkoutUrl = 'Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/checkout-sofa-cover.html';
+                    } else if (title.includes('Human Dog Bed') || title.includes('Cama Humana') || title.includes('Dog Bed')) {
+                    checkoutUrl = 'Human Dog bad/checkout-human-dog-bed.html';
+                    } else if (title.includes('SNOOZE BUNDLE') || title.includes('Kit Snooze') || title.includes('Snooze')) {
+                    checkoutUrl = 'SNOOZE BUNDLE/checkout-snooze-bundle.html';
+                }
+                    
+                    console.log('Comfort checkout URL:', checkoutUrl);
+                
+                if (checkoutUrl) {
+                        console.log('Redirecting to comfort product:', checkoutUrl);
+                        // Add a small delay to show the visual feedback
+                        setTimeout(() => {
+                            console.log('Executing comfort redirect...');
+                    window.location.href = checkoutUrl;
+                        }, 200);
+                    } else {
+                        console.log('No checkout URL found for comfort product:', title);
+                }
+            });
+        });
+        }
+
+        // Global Translation System for Comfort Page
+        class ComfortTranslator {
+            constructor() {
+                this.baseCurrency = 'USD';
+                this.exchangeRates = {
+                    'USD': 1.00,
+                    'BRL': 5.20,
+                    'EUR': 0.85
+                };
+                
+                this.currencySymbols = {
+                    'USD': '$',
+                    'BRL': 'R$',
+                    'EUR': '€'
+                };
+                
+                this.userCountry = null;
+                this.userCurrency = 'USD';
+                this.isInitialized = false;
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    await this.detectUserLocation();
+                    this.updatePageContent();
+                    this.isInitialized = true;
+                    console.log(`Comfort translator initialized. Currency: ${this.userCurrency}`);
+                } catch (error) {
+                    console.error('Error initializing comfort translator:', error);
+                    this.userCurrency = 'USD';
+                    this.updatePageContent();
+                }
+            }
+            
+            async detectUserLocation() {
+                try {
+                    let countryCode = null;
+                    
+                    // Check if running from file:// protocol
+                    if (window.location.protocol === 'file:') {
+                        console.log('Running from file:// protocol, using fallback detection');
+                        // Try to detect from browser language
+                        const browserLang = navigator.language || navigator.userLanguage;
+                        if (browserLang.startsWith('pt')) {
+                            countryCode = 'BR';
+                            console.log('Detected Portuguese language, assuming Brazil');
+                        } else if (browserLang.startsWith('es')) {
+                            countryCode = 'ES';
+                            console.log('Detected Spanish language, assuming Spain');
+                        } else {
+                            countryCode = 'US';
+                            console.log('Using default US location');
+                        }
+                    } else {
+                        try {
+                            const response = await fetch('https://ipapi.co/json/', { 
+                                timeout: 5000,
+                                mode: 'cors'
+                            });
+                            if (response.ok) {
+                                const data = await response.json();
+                                countryCode = data.country_code;
+                                console.log('Location detected via ipapi.co:', countryCode);
+                            }
+                        } catch (e) {
+                            console.log('ipapi.co failed, trying alternative...');
+                        }
+                        
+                        if (!countryCode) {
+                            try {
+                                const response = await fetch('https://ipinfo.io/json', { 
+                                    timeout: 5000,
+                                    mode: 'cors'
+                                });
+                                if (response.ok) {
+                                    const data = await response.json();
+                                    countryCode = data.country;
+                                    console.log('Location detected via ipinfo.io:', countryCode);
+                                }
+                            } catch (e) {
+                                console.log('ipinfo.io also failed');
+                            }
+                        }
+                    }
+                    
+                    this.userCountry = countryCode;
+                    
+                    const countryToCurrency = {
+                        'BR': 'BRL',
+                        'US': 'USD', 'CA': 'USD', 'MX': 'USD', 'AR': 'USD', 'CL': 'USD', 'CO': 'USD', 'PE': 'USD', 'UY': 'USD', 'BO': 'USD', 'PY': 'USD', 'VE': 'USD', 'EC': 'USD', 'GY': 'USD', 'SR': 'USD', 'GF': 'USD', 'FK': 'USD', 'BZ': 'USD', 'GT': 'USD', 'HN': 'USD', 'SV': 'USD', 'NI': 'USD', 'CR': 'USD', 'PA': 'USD', 'CU': 'USD', 'JM': 'USD', 'HT': 'USD', 'DO': 'USD', 'PR': 'USD', 'VI': 'USD', 'AG': 'USD', 'BB': 'USD', 'DM': 'USD', 'GD': 'USD', 'KN': 'USD', 'LC': 'USD', 'VC': 'USD', 'TT': 'USD', 'BS': 'USD', 'AU': 'USD', 'NZ': 'USD', 'JP': 'USD', 'KR': 'USD', 'SG': 'USD', 'HK': 'USD', 'TW': 'USD', 'TH': 'USD', 'MY': 'USD', 'ID': 'USD', 'PH': 'USD', 'VN': 'USD', 'IN': 'USD', 'PK': 'USD', 'BD': 'USD', 'LK': 'USD', 'MM': 'USD', 'KH': 'USD', 'LA': 'USD', 'BN': 'USD', 'FJ': 'USD', 'PG': 'USD', 'SB': 'USD', 'VU': 'USD', 'NC': 'USD', 'PF': 'USD', 'WS': 'USD', 'TO': 'USD', 'KI': 'USD', 'TV': 'USD', 'NR': 'USD', 'MH': 'USD', 'FM': 'USD', 'PW': 'USD', 'AS': 'USD', 'GU': 'USD', 'MP': 'USD', 'CK': 'USD', 'NU': 'USD', 'TK': 'USD', 'WF': 'USD', 'NF': 'USD', 'PN': 'USD', 'GS': 'USD', 'SH': 'USD', 'AC': 'USD', 'TA': 'USD', 'IO': 'USD', 'CX': 'USD', 'CC': 'USD', 'HM': 'USD', 'AQ': 'USD', 'BV': 'USD', 'TF': 'USD', 'UM': 'USD',
+                        'DE': 'EUR', 'FR': 'EUR', 'IT': 'EUR', 'ES': 'EUR', 'NL': 'EUR', 'BE': 'EUR', 'AT': 'EUR', 'PT': 'EUR', 'IE': 'EUR', 'FI': 'EUR', 'GR': 'EUR', 'LU': 'EUR', 'MT': 'EUR', 'CY': 'EUR', 'SK': 'EUR', 'SI': 'EUR', 'EE': 'EUR', 'LV': 'EUR', 'LT': 'EUR', 'AD': 'EUR', 'MC': 'EUR', 'SM': 'EUR', 'VA': 'EUR', 'ME': 'EUR', 'XK': 'EUR'
+                    };
+                    
+                    this.userCurrency = countryToCurrency[this.userCountry] || 'USD';
+                    console.log(`Final detection - Country: ${this.userCountry}, Currency: ${this.userCurrency}`);
+                    
+                } catch (error) {
+                    console.error('Error in location detection:', error);
+                    this.userCurrency = 'USD';
+                    this.userCountry = 'Unknown';
+                }
+            }
+            
+            translateProductDescription(productKey) {
+                return this.productDescriptions[productKey] ? 
+                    this.productDescriptions[productKey][this.userCurrency] || 
+                    this.productDescriptions[productKey]['USD'] : 
+                    '';
+            }
+            
+            translateContent(contentKey) {
+                const translations = {
+                    'header': {
+                        'USD': 'Comfort Section',
+                        'BRL': 'Seção Conforto',
+                        'EUR': 'Comfort Section'
+                    },
+                    'subtitle': {
+                        'USD': 'Discover the best comfort and well-being products for your home',
+                        'BRL': 'Descubra os melhores produtos de conforto e bem-estar para sua casa',
+                        'EUR': 'Discover the best comfort and well-being products for your home'
+                    },
+                    'features_title': {
+                        'USD': 'Why choose our Comfort Section?',
+                        'BRL': 'Por que escolher nossa Seção Conforto?',
+                        'EUR': 'Why choose our Comfort Section?'
+                    },
+                    'premium_products': {
+                        'USD': 'Premium Products',
+                        'BRL': 'Produtos Premium',
+                        'EUR': 'Premium Products'
+                    },
+                    'premium_description': {
+                        'USD': 'We select only the best comfort products on the market to ensure exceptional quality.',
+                        'BRL': 'Selecionamos apenas os melhores produtos de conforto do mercado para garantir qualidade excepcional.',
+                        'EUR': 'We select only the best comfort products on the market to ensure exceptional quality.'
+                    },
+                    'fast_delivery': {
+                        'USD': 'Fast Delivery',
+                        'BRL': 'Entrega Rápida',
+                        'EUR': 'Fast Delivery'
+                    },
+                    'fast_delivery_description': {
+                        'USD': 'Free shipping throughout Brazil with delivery in 15-25 business days. Complete tracking.',
+                        'BRL': 'Frete grátis para todo o Brasil com entrega em 15-25 dias úteis. Rastreamento completo.',
+                        'EUR': 'Free shipping throughout Europe with delivery in 15-25 business days. Complete tracking.'
+                    },
+                    'total_guarantee': {
+                        'USD': 'Total Guarantee',
+                        'BRL': 'Garantia Total',
+                        'EUR': 'Total Guarantee'
+                    },
+                    'guarantee_description': {
+                        'USD': '30 days guarantee on all products. Satisfaction guaranteed or your money back.',
+                        'BRL': '30 dias de garantia em todos os produtos. Satisfação garantida ou seu dinheiro de volta.',
+                        'EUR': '30 days guarantee on all products. Satisfaction guaranteed or your money back.'
+                    },
+                    'expert_approved': {
+                        'USD': 'Expert Approved',
+                        'BRL': 'Aprovado por Especialistas',
+                        'EUR': 'Expert Approved'
+                    },
+                    'expert_description': {
+                        'USD': 'Products tested and approved by comfort and well-being professionals.',
+                        'BRL': 'Produtos testados e aprovados por profissionais de conforto e bem-estar.',
+                        'EUR': 'Products tested and approved by comfort and well-being professionals.'
+                    },
+                    'testimonials_title': {
+                        'USD': 'What our customers say',
+                        'BRL': 'O que nossos clientes dizem',
+                        'EUR': 'What our customers say'
+                    },
+                    'newsletter_title': {
+                        'USD': 'Stay updated with the latest news!',
+                        'BRL': 'Fique por dentro das novidades!',
+                        'EUR': 'Stay updated with the latest news!'
+                    },
+                    'newsletter_description': {
+                        'USD': 'Receive exclusive offers and comfort tips directly to your email',
+                        'BRL': 'Receba ofertas exclusivas e dicas de conforto direto no seu e-mail',
+                        'EUR': 'Receive exclusive offers and comfort tips directly to your email'
+                    },
+                    'newsletter_placeholder': {
+                        'USD': 'Your best email',
+                        'BRL': 'Seu melhor e-mail',
+                        'EUR': 'Your best email'
+                    },
+                    'newsletter_button': {
+                        'USD': 'Subscribe',
+                        'BRL': 'Inscrever-se',
+                        'EUR': 'Subscribe'
+                    },
+                    'footer_text': {
+                        'USD': '© 2024 67 Beauty Hub - Comfort Section. All rights reserved.',
+                        'BRL': '© 2024 67 Beauty Hub - Seção Conforto. Todos os direitos reservados.',
+                        'EUR': '© 2024 67 Beauty Hub - Comfort Section. All rights reserved.'
+                    }
+                };
+                
+                // Product descriptions translations
+                this.productDescriptions = {
+                    'sofa-cover': {
+                        'USD': 'Versatile and comfortable design, perfect as sofa, puff or lounge. Easy to remove and clean.',
+                        'BRL': 'Design versátil e confortável, ideal como sofá, puff ou lounge. Fácil de remover e limpar.',
+                        'EUR': 'Versatile and comfortable design, perfect as sofa, puff or lounge. Easy to remove and clean.'
+                    },
+                    'steam-dryer': {
+                        'USD': 'Compact steam dryer for quick clothes drying. Portable and efficient for home use.',
+                        'BRL': 'Secador a vapor compacto para secagem rápida de roupas. Portátil e eficiente para uso doméstico.',
+                        'EUR': 'Compact steam dryer for quick clothes drying. Portable and efficient for home use.'
+                    },
+                    'human-dog-bed': {
+                        'USD': 'Comfortable bed for pets with soft material and ergonomic design for better rest.',
+                        'BRL': 'Cama confortável para pets com material macio e design ergonômico para melhor descanso.',
+                        'EUR': 'Comfortable bed for pets with soft material and ergonomic design for better rest.'
+                    },
+                    'cat-litter-box': {
+                        'USD': 'Automatic cat litter box with cleaning and deodorization system. Smart monitoring via app.',
+                        'BRL': 'Caixa de areia automática com sistema de limpeza e desodorização. Monitoramento inteligente via app.',
+                        'EUR': 'Automatic cat litter box with cleaning and deodorization system. Smart monitoring via app.'
+                    },
+                    'snooze-bundle': {
+                        'USD': 'Complete sleep bundle with comfortable items for better rest and relaxation.',
+                        'BRL': 'Kit completo de sono com itens confortáveis para melhor descanso e relaxamento.',
+                        'EUR': 'Complete sleep bundle with comfortable items for better rest and relaxation.'
+                    },
+                    'testimonial_1': {
+                        'USD': 'The sofa cover is amazing! It completely transformed my living room. Easy to install and very comfortable.',
+                        'BRL': 'A capa do sofá é incrível! Transformou completamente minha sala de estar. Fácil de instalar e muito confortável.',
+                        'EUR': 'The sofa cover is amazing! It completely transformed my living room. Easy to install and very comfortable.'
+                    },
+                    'testimonial_1_author': {
+                        'USD': '- Ana Silva, São Paulo',
+                        'BRL': '- Ana Silva, São Paulo',
+                        'EUR': '- Ana Silva, São Paulo'
+                    },
+                    'testimonial_2': {
+                        'USD': 'The steam dryer is a game changer! My clothes are ready in minutes. Highly recommend!',
+                        'BRL': 'O secador a vapor é revolucionário! Minhas roupas ficam prontas em minutos. Super recomendo!',
+                        'EUR': 'The steam dryer is a game changer! My clothes are ready in minutes. Highly recommend!'
+                    },
+                    'testimonial_2_author': {
+                        'USD': '- Carlos Mendes, Brasília',
+                        'BRL': '- Carlos Mendes, Brasília',
+                        'EUR': '- Carlos Mendes, Brasília'
+                    },
+                    'testimonial_3': {
+                        'USD': 'The cat litter box is perfect for my pets. Automatic cleaning and no odors. My cats love it!',
+                        'BRL': 'A caixa de areia é perfeita para meus pets. Limpeza automática e sem odores. Meus gatos adoram!',
+                        'EUR': 'The cat litter box is perfect for my pets. Automatic cleaning and no odors. My cats love it!'
+                    },
+                    'testimonial_3_author': {
+                        'USD': '- Maria Oliveira, Belo Horizonte',
+                        'BRL': '- Maria Oliveira, Belo Horizonte',
+                        'EUR': '- Maria Oliveira, Belo Horizonte'
+                    }
+                };
+                
+                return translations[contentKey] ? 
+                    translations[contentKey][this.userCurrency] || 
+                    translations[contentKey]['USD'] : 
+                    contentKey;
+            }
+            
+            updatePageContent() {
+                try {
+                    // Update header
+                    const header = document.querySelector('.beauty-header h1');
+                    if (header) {
+                        header.innerHTML = `<i class="fas fa-couch"></i> ${this.translateContent('header')}`;
+                    }
+                    
+                    // Update subtitle
+                    const subtitle = document.querySelector('.beauty-header p');
+                    if (subtitle) {
+                        subtitle.textContent = this.translateContent('subtitle');
+                    }
+                    
+                    // Update features section
+                    const featuresTitle = document.querySelector('.features-title');
+                    if (featuresTitle) {
+                        featuresTitle.textContent = this.translateContent('features_title');
+                    }
+                    
+                    // Update feature cards
+                    const featureCards = document.querySelectorAll('.feature-card');
+                    if (featureCards.length >= 4) {
+                        // Premium Products
+                        const premiumTitle = featureCards[0].querySelector('.feature-title');
+                        const premiumDesc = featureCards[0].querySelector('.feature-description');
+                        if (premiumTitle) premiumTitle.textContent = this.translateContent('premium_products');
+                        if (premiumDesc) premiumDesc.textContent = this.translateContent('premium_description');
+                        
+                        // Fast Delivery
+                        const deliveryTitle = featureCards[1].querySelector('.feature-title');
+                        const deliveryDesc = featureCards[1].querySelector('.feature-description');
+                        if (deliveryTitle) deliveryTitle.textContent = this.translateContent('fast_delivery');
+                        if (deliveryDesc) deliveryDesc.textContent = this.translateContent('fast_delivery_description');
+                        
+                        // Total Guarantee
+                        const guaranteeTitle = featureCards[2].querySelector('.feature-title');
+                        const guaranteeDesc = featureCards[2].querySelector('.feature-description');
+                        if (guaranteeTitle) guaranteeTitle.textContent = this.translateContent('total_guarantee');
+                        if (guaranteeDesc) guaranteeDesc.textContent = this.translateContent('guarantee_description');
+                        
+                        // Expert Approved
+                        const expertTitle = featureCards[3].querySelector('.feature-title');
+                        const expertDesc = featureCards[3].querySelector('.feature-description');
+                        if (expertTitle) expertTitle.textContent = this.translateContent('expert_approved');
+                        if (expertDesc) expertDesc.textContent = this.translateContent('expert_description');
+                    }
+                    
+                    // Update testimonials
+                    const testimonialsTitle = document.querySelector('.testimonials-title');
+                    if (testimonialsTitle) {
+                        testimonialsTitle.textContent = this.translateContent('testimonials_title');
+                    }
+                    
+                    // Update testimonial cards
+                    const testimonialCards = document.querySelectorAll('.testimonial-card');
+                    if (testimonialCards.length >= 3) {
+                        // First testimonial
+                        const testimonial1Text = testimonialCards[0].querySelector('.testimonial-text');
+                        const testimonial1Author = testimonialCards[0].querySelector('.testimonial-author');
+                        if (testimonial1Text) testimonial1Text.textContent = this.translateContent('testimonial_1');
+                        if (testimonial1Author) testimonial1Author.textContent = this.translateContent('testimonial_1_author');
+                        
+                        // Second testimonial
+                        const testimonial2Text = testimonialCards[1].querySelector('.testimonial-text');
+                        const testimonial2Author = testimonialCards[1].querySelector('.testimonial-author');
+                        if (testimonial2Text) testimonial2Text.textContent = this.translateContent('testimonial_2');
+                        if (testimonial2Author) testimonial2Author.textContent = this.translateContent('testimonial_2_author');
+                        
+                        // Third testimonial
+                        const testimonial3Text = testimonialCards[2].querySelector('.testimonial-text');
+                        const testimonial3Author = testimonialCards[2].querySelector('.testimonial-author');
+                        if (testimonial3Text) testimonial3Text.textContent = this.translateContent('testimonial_3');
+                        if (testimonial3Author) testimonial3Author.textContent = this.translateContent('testimonial_3_author');
+                    }
+                    
+                    // Update newsletter
+                    const newsletterTitle = document.querySelector('.newsletter-title');
+                    const newsletterDesc = document.querySelector('.newsletter-description');
+                    const newsletterInput = document.querySelector('.newsletter-input');
+                    const newsletterBtn = document.querySelector('.newsletter-btn');
+                    
+                    if (newsletterTitle) newsletterTitle.textContent = this.translateContent('newsletter_title');
+                    if (newsletterDesc) newsletterDesc.textContent = this.translateContent('newsletter_description');
+                    if (newsletterInput) newsletterInput.placeholder = this.translateContent('newsletter_placeholder');
+                    if (newsletterBtn) newsletterBtn.textContent = this.translateContent('newsletter_button');
+                    
+                    // Update footer
+                    const footerText = document.querySelector('.footer p');
+                    if (footerText) {
+                        footerText.textContent = this.translateContent('footer_text');
+                    }
+                    
+                    console.log('Comfort page content updated successfully');
+                    
+                } catch (error) {
+                    console.error('Error updating comfort page content:', error);
+                }
+            }
+        }
+        
+        // Initialize comfort translator when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            new ComfortTranslator();
+        });
+    </script>
+</body>
+</html>

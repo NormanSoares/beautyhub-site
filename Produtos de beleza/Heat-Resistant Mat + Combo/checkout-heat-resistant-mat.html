@@ -1,0 +1,2816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Heat-Resistant Mat | 67 Beauty Hub</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="../../js/aliexpress-integration.js"></script>
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=Ab2ftZVJCplquKwOY1cWgvWMivADwMhbUs-OhehwO4hVh_VW9lS87qLkRUVD39yEeoh7YGXzBeuq1Dlh&currency=USD&intent=capture"></script>
+    <style>
+        body { background: #f0e6d2; }
+        .checkout-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; margin-top: 50px; }
+        .checkout-layout { display: flex; flex-direction: column; gap: 40px; }
+        .unified-section { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+        .checkout-bottom { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start; }
+        .form-section { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 30px; }
+        .checkout-header { text-align: center; margin-bottom: 40px; grid-column: 1 / -1; }
+        .checkout-header h1 { color: #d4af37; font-size: 2.5rem; margin-bottom: 10px; }
+        .product-summary { background: #f8f9fa; padding: 30px; border-radius: 10px; margin-bottom: 30px; text-align: center; }
+        .product-image { max-width: 100%; height: 400px; object-fit: cover; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); margin: 0 auto 20px; display: block; }
+        .product-details h3 { color: #333; font-size: 1.8rem; margin-bottom: 15px; }
+        .product-details p { color: #666; margin-bottom: 20px; font-size: 1.1rem; line-height: 1.6; }
+        .offer-options { display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px; }
+        .offer-option { border: 2px solid #e0e0e0; border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.3s ease; position: relative; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .offer-option:hover { border-color: #d4af37; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15); }
+        .offer-option.selected { border-color: #d4af37; background: linear-gradient(135deg, #fff9e6, #fff); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2); transform: translateY(-2px); }
+        .offer-checkbox { position: absolute; top: 15px; left: 15px; width: 20px; height: 20px; accent-color: #d4af37; cursor: pointer; }
+        .offer-option.has-checkbox { padding-left: 50px; }
+        .offer-option.has-checkbox .option-header { margin-left: 10px; }
+        .option-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .offer-option h4 { color: #333; font-size: 1.3rem; margin: 0; }
+        .offer-option .price { font-size: 1.5rem; font-weight: 700; color: #d4af37; }
+        .offer-option .description { color: #666; font-size: 0.95rem; margin-bottom: 10px; }
+        .offer-option .discount {
+            background: #d4af37;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+        }
+        .summary-section { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 30px; position: sticky; top: 20px; }
+        .summary-section h3 { color: #333; margin-bottom: 20px; font-size: 1.4rem; text-align: center; border-bottom: 2px solid #d4af37; padding-bottom: 10px; }
+        .form-section .form-section { margin-bottom: 30px; }
+        .form-section h3 { color: #333; margin-bottom: 20px; font-size: 1.3rem; border-bottom: 2px solid #d4af37; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .form-section h3 i { color: #d4af37; font-size: 1.2rem; }
+        .form-row { display: flex; gap: 20px; margin-bottom: 20px; }
+        .form-group { flex: 1; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #333; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: all 0.3s ease; background: white; color: #333; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #d4af37; box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1); transform: translateY(-1px); }
+        .checkout-summary { background: #f8f9fa; padding: 25px; border-radius: 10px; margin-bottom: 30px; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .summary-row.total { border-top: 2px solid #d4af37; padding-top: 15px; margin-top: 15px; font-size: 1.2rem; font-weight: 700; color: #d4af37; }
+        .checkout-btn { width: 100%; background: linear-gradient(135deg, #d4af37, #b8941f); color: white; border: none; padding: 15px; font-size: 1.2rem; font-weight: 600; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4); }
+        .back-link { text-align: center; margin-top: 20px; }
+        .back-link a { color: #d4af37; text-decoration: none; font-weight: 500; }
+        @media (max-width: 768px) { 
+            .checkout-layout { grid-template-columns: 1fr; gap: 20px; } 
+            .form-row { flex-direction: column; } 
+            .unified-section { grid-template-columns: 1fr; gap: 20px; } 
+            .checkout-bottom { grid-template-columns: 1fr; gap: 20px; } 
+            .summary-section { position: static; order: -1; } 
+            .product-image { height: 300px; }
+        }
+        
+        @media (max-width: 480px) {
+            .product-image { height: 250px; }
+        }
+        
+        /* Quantity Button Hover Effects */
+        .quantity-btn:hover {
+            background: #d4af37 !important;
+            color: white !important;
+            transform: scale(1.1);
+        }
+        
+        .quantity-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Reviews Section Styles */
+        .reviews-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .reviews-header h3 {
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .reviews-header h3 i {
+            color: #d4af37;
+            font-size: 1.8rem;
+        }
+
+        .reviews-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .review-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .review-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.15);
+            border-color: #d4af37;
+        }
+
+        .clickable-review {
+            cursor: pointer;
+        }
+
+        .clickable-review:hover {
+            background: #f0f0f0;
+        }
+
+        .review-image {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .review-video {
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-position: center;
+            cursor: pointer;
+        }
+
+        /* Remove border-radius when video is in fullscreen */
+        video:fullscreen,
+        video:-webkit-full-screen,
+        video:-moz-full-screen,
+        video:-ms-fullscreen {
+            border-radius: 0 !important;
+        }
+
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-modal-content {
+            position: relative;
+            max-width: 800px;
+            max-height: 600px;
+            width: 80%;
+            height: auto;
+            background: black;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-modal video {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            display: block;
+        }
+
+        .video-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 2001;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-modal-close:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Responsive adjustments for video modal */
+        @media (max-width: 768px) {
+            .video-modal-content {
+                max-width: 95%;
+                width: 95%;
+                max-height: 400px;
+            }
+            
+            .video-modal video {
+                max-height: 350px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-modal-content {
+                max-width: 98%;
+                width: 98%;
+                max-height: 300px;
+            }
+            
+            .video-modal video {
+                max-height: 250px;
+            }
+            
+            .video-modal-close {
+                top: 5px;
+                right: 10px;
+                width: 35px;
+                height: 35px;
+                font-size: 25px;
+            }
+        }
+
+        .review-video:hover {
+            transform: scale(1.05);
+        }
+
+        /* Background overlay for reviews section */
+        .reviews-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            z-index: 1;
+        }
+
+        .reviews-section > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .review-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            margin: 0 auto;
+        }
+
+        .review-avatar i {
+            font-size: 2.2rem;
+            color: white;
+        }
+
+        .review-stars {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-bottom: 15px;
+        }
+
+        .review-stars i {
+            color: #ffd700;
+            font-size: 1.1rem;
+        }
+
+        .review-stars i.far {
+            color: #ddd;
+        }
+
+        .review-text {
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .review-text::before {
+            content: '"';
+            font-size: 2rem;
+            color: #d4af37;
+            opacity: 0.5;
+        }
+
+        .review-text::after {
+            content: '"';
+            font-size: 2rem;
+            color: #d4af37;
+            opacity: 0.5;
+        }
+
+        .review-author {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .review-author strong {
+            color: #333;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .review-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+
+
+
+        .reviews-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 5px;
+        }
+
+        .stat-stars {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-bottom: 10px;
+        }
+
+        .stat-stars i {
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Review Form Styles */
+        .user-review-form {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .review-form-container h4 {
+            color: #d4af37;
+            margin-bottom: 25px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .review-form-group {
+            margin-bottom: 20px;
+        }
+
+        .review-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .star-rating i {
+            font-size: 24px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .star-rating i.active {
+            color: #ffd700;
+        }
+
+        .review-form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .review-form-group textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .char-count {
+            color: #666;
+            font-size: 0.9rem;
+            text-align: right;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .submit-review-btn {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        .submit-review-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Reviews Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .reviews-section {
+                padding: 25px 20px;
+                margin-bottom: 20px;
+            }
+
+            .reviews-header h3 {
+                font-size: 1.5rem;
+            }
+
+            .reviews-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .reviews-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Flag Dropdown Styles */
+        .flag-dropdown-container {
+            position: relative;
+            display: inline-block;
+            margin-left: 20px;
+        }
+        
+        .flag-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: white;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1);
+        }
+        
+        .flag-dropdown:hover {
+            border-color: #b8941f;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
+        }
+        
+        .selected-flag {
+            font-size: 1.5rem;
+            user-select: none;
+        }
+        
+        .dropdown-arrow {
+            color: #d4af37;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .flag-dropdown.open .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .flag-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #d4af37;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
+            z-index: 1000;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .flag-dropdown-menu.open {
+            max-height: 400px;
+            overflow-y: auto;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+        
+        .flag-dropdown-menu.open::-webkit-scrollbar {
+            display: none; /* WebKit browsers (Chrome, Safari, Edge) */
+        }
+        
+        .flag-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .flag-option:hover {
+            background-color: #fff9e6;
+        }
+        
+        .flag-option:last-child {
+            border-radius: 0 0 6px 6px;
+        }
+        
+        @media (max-width: 768px) {
+            .flag-dropdown-container {
+                margin-top: 20px;
+                margin-left: 0;
+            }
+            
+            .flag-dropdown {
+                padding: 10px 15px;
+            }
+            
+            .selected-flag {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Galeria Styles */
+        .product-gallery-section {
+            margin-top: 30px;
+        }
+        
+        .gallery-main {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .gallery-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(212, 175, 55, 0.9);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .gallery-nav-btn.prev-btn {
+            left: 15px;
+        }
+        
+        .gallery-nav-btn.next-btn {
+            right: 15px;
+        }
+        
+        .gallery-nav-btn:hover {
+            background: rgba(184, 148, 31, 0.95);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+        
+        .gallery-nav-btn:disabled {
+            background: rgba(204, 204, 204, 0.7);
+            cursor: not-allowed;
+            transform: translateY(-50%);
+            box-shadow: none;
+        }
+        
+        .gallery-main-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease-in-out, opacity 0.3s ease;
+        }
+        
+        .gallery-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .gallery-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-indicator.active {
+            background: #d4af37;
+            transform: scale(1.2);
+        }
+        
+        .gallery-indicator:hover {
+            background: #d4af37;
+            transform: scale(1.1);
+        }
+        
+        /* Responsivo para galeria */
+        @media (max-width: 768px) {
+            .gallery-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .gallery-nav-btn.prev-btn {
+                left: 10px;
+            }
+            
+            .gallery-nav-btn.next-btn {
+                right: 10px;
+            }
+            
+            .gallery-main {
+                max-width: 100%;
+            }
+            
+            .gallery-main-image {
+                height: 350px;
+            }
+        }
+        
+        /* Animações da galeria */
+        .gallery-main-image.slide-left {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        
+        .gallery-main-image.slide-right {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        
+        .gallery-main-image.slide-in-left {
+            animation: slideInFromRight 0.5s ease-in-out forwards;
+        }
+        
+        .gallery-main-image.slide-in-right {
+            animation: slideInFromLeft 0.5s ease-in-out forwards;
+        }
+        
+        @keyframes slideInFromRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideInFromLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-container">
+                    <img src="../../Logo.png" alt="67 Beauty Hub" class="logo-image">
+                    <div class="logo-text"><span class="logo-brand">67 BEAUTY HUB</span></div>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Início</a></li>
+                <li class="nav-item"><a href="index.html#products" class="nav-link">Produtos</a></li>
+                <li class="nav-item"><a href="index.html#about" class="nav-link">Sobre</a></li>
+                <li class="nav-item"><a href="index.html#contact" class="nav-link">Contato</a></li>
+            </ul>
+            
+            <!-- Flag Dropdown Selector -->
+            <div class="flag-dropdown-container">
+                <div class="flag-dropdown" onclick="toggleFlagDropdown()">
+                    <div class="selected-flag" id="selectedFlag">🇺🇸</div>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </div>
+                <div class="flag-dropdown-menu" id="flagDropdownMenu">
+                    <!-- Países selecionados -->
+                    <div class="flag-option" data-currency="USD" data-flag="🇺🇸" data-country="Estados Unidos">🇺🇸 Estados Unidos</div>
+                    <div class="flag-option" data-currency="BRL" data-flag="🇧🇷" data-country="Brasil">🇧🇷 Brasil</div>
+                    <div class="flag-option" data-currency="EUR" data-flag="🇵🇹" data-country="Portugal">🇵🇹 Portugal</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="checkout-container">
+        <div class="checkout-header">
+            <h1><i class="fas fa-shopping-cart"></i> Finalizar Compra</h1>
+            <p>Escolha sua oferta e complete seu pedido com segurança</p>
+        </div>
+
+        <div class="checkout-layout">
+            <div class="unified-section">
+                <div class="product-info">
+                    <div class="product-summary">
+                        <img src="Apresentação.jpeg" alt="Heat-Resistant Mat" class="product-image" id="mainProductImage">
+                        <div class="product-details">
+                            <h3>Heat-Resistant Mat</h3>
+                            <p>Tapete resistente ao calor, ideal para proteger superfícies de danos causados por ferramentas de styling, panelas ou utensílios quentes.</p>
+                        </div>
+                        
+                        <!-- Galeria de Imagens -->
+                        <div class="product-gallery-section">
+                            <div class="simple-gallery">
+                                <div class="gallery-main">
+                                    <button class="gallery-nav-btn prev-btn" id="prevBtn">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <img src="Galeria/Combo 1.png" alt="Heat-Resistant Mat" class="gallery-main-image" id="galleryMainImage">
+                                    <button class="gallery-nav-btn next-btn" id="nextBtn">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="gallery-indicators" id="galleryIndicators">
+                                <!-- Indicadores serão gerados pelo JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="offers-info">
+                    <h3 style="color: #333; margin-bottom: 20px; text-align: center;"><i class="fas fa-gift"></i> Oferta Básica</h3>
+                    
+                    <div class="offer-options">
+                        <div class="offer-option selected" data-option="basic" style="padding-left: 20px;">
+                            <div class="option-header">
+                                <h4>Heat-Resistant Mat</h4>
+                                <div class="price" id="offerPrice">$2.29</div>
+                            </div>
+                            <div class="discount">94% OFF</div>
+                            <div class="description">Chega de queimar móveis ou estragar superfícies ao usar a chapinha. Com o Heat-Resistant Mat, você apoia sua prancha quente com segurança e mantém tudo protegido.</div>
+                            
+                            <!-- Seleção de tamanho e cor com imagens -->
+                            <div class="color-selection" style="margin: 15px 0;">
+                                <h5 style="color: #333; margin-bottom: 10px; font-size: 1rem;">Escolha o tamanho e cor:</h5>
+                                <div class="color-options" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                                    <!-- 13.5x28.5cm -->
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="small-green">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/13.5X28.5CM Green.png" alt="Small Green" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                                        <span>13.5x28.5cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Verde</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="small-blue">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/13.5X28.5CMBlue.png" alt="Small Blue" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>13.5x28.5cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Azul</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="small-gray">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/13.5X28.5CMGray.png" alt="Small Gray" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>13.5x28.5cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Cinza</span>
+                                    </div>
+                                    <div class="color-option selected" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #d4af37; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="small-pink">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/13.5X28.5CMPink.png" alt="Small Pink" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>13.5x28.5cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Rosa</span>
+                                    </div>
+                                    <!-- 21.8x16cm -->
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="medium-blue">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/21.8X16CM Blue.png" alt="Medium Blue" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>21.8x16cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Azul</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="medium-gray">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/21.8X16CM Gray.png" alt="Medium Gray" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>21.8x16cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Cinza</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="medium-green">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/21.8X16CM Green.png" alt="Medium Green" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>21.8x16cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Verde</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="medium-pink">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/21.8X16CM Pink.png" alt="Medium Pink" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>21.8x16cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Rosa</span>
+                                    </div>
+                                    <!-- 28.5x13.5cm -->
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="large-blue">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/28.5X13.5CM Blue.png" alt="Large Blue" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>28.5x13.5cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Azul</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="large-gray">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/28.5X13.5CM Gray.png" alt="Large Gray" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>28.5x13.5cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Cinza</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="large-green">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/28.5X13.5CM Green.png" alt="Large Green" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>28.5x13.5cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Verde</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="large-pink">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/28.5X13.5CM Pink.png" alt="Large Pink" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>28.5x13.5cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Rosa</span>
+                                    </div>
+                                    <!-- 30x39.5cm -->
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="extra-large">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolha/30X39.5CM.png" alt="Extra Large" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>30x39.5cm</span>
+                                        <span style="color: #666; font-size: 0.7rem;">Extra Grande</span>
+                                    </div>
+                                </div>
+                        </div>
+
+                            <!-- Sistema de Quantidade -->
+                            <div class="quantity-section" style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e0e0e0;">
+                                <h5 style="color: #333; margin-bottom: 10px; font-size: 1rem;">Quantidade:</h5>
+                                <div class="quantity-controls" style="display: flex; align-items: center; gap: 15px; justify-content: center;">
+                                    <button type="button" class="quantity-btn" id="decreaseQty" style="width: 40px; height: 40px; border: 2px solid #d4af37; background: white; color: #d4af37; border-radius: 50%; cursor: pointer; font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">-</button>
+                                    <input type="number" id="productQuantity" value="1" min="1" max="10" style="width: 60px; height: 40px; text-align: center; border: 2px solid #d4af37; border-radius: 8px; font-size: 1.1rem; font-weight: 600; color: #333;">
+                                    <button type="button" class="quantity-btn" id="increaseQty" style="width: 40px; height: 40px; border: 2px solid #d4af37; background: white; color: #d4af37; border-radius: 50%; cursor: pointer; font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">+</button>
+                            </div>
+                                <p style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9rem;">Máximo 10 unidades</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkout-bottom">
+                <div class="form-section">
+                    <form class="checkout-form" id="checkoutForm">
+                        <div class="form-section">
+                            <h3><i class="fas fa-envelope"></i> Informações de Contato</h3>
+                                <div class="form-group">
+                                    <label for="email">E-mail *</label>
+                                <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                            </div>
+                        </div>
+
+                    <h3><i class="fas fa-credit-card"></i> Método de Pagamento</h3>
+                    <!-- Updated structure -->
+                    
+                    <div class="form-group">
+                        <label for="paymentMethod">Forma de Pagamento *</label>
+                        <select id="paymentMethod" name="paymentMethod" required>
+                            <option value="">Selecione</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="pix">PIX</option>
+                        </select>
+                    </div>
+
+                    <div id="paypal-payment-button" style="display: none;"></div>
+                    <div id="pix-payment-info" style="display: none;">
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border: 2px solid #d4af37; text-align: center;">
+                            <h4 style="color: #d4af37; margin-bottom: 15px;"><i class="fas fa-qrcode"></i> Pagamento via PIX</h4>
+                            <p style="color: #666; margin-bottom: 15px;">Após confirmar o pedido, você receberá as instruções de pagamento PIX por email.</p>
+                            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                                <strong>Chave PIX:</strong> contato@67beautyhub.com
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="observations">Observações (opcional)</label>
+                        <textarea id="observations" name="observations" rows="3" placeholder="Alguma observação especial sobre seu pedido?"></textarea>
+                    </div>
+
+                        <button type="submit" class="checkout-btn">
+                            <i class="fas fa-check"></i> Confirmar Pedido
+                        </button>
+                    </form>
+
+                </div>
+
+                <div class="summary-section">
+                    <h3><i class="fas fa-receipt"></i> Resumo do Pedido</h3>
+                    <div class="checkout-summary">
+                        <div id="selectedOffers"></div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="totalAmount">R$ 35,90</span>
+                        </div>
+                        
+                        <!-- Currency Selector for Summary -->
+                        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; text-align: center;">
+                            <div>
+                                <label style="display: block; color: #555; font-size: 14px; margin-bottom: 5px;">
+                                    <i class="fas fa-exchange-alt"></i> Moeda do Resumo
+                                </label>
+                                <select id="summaryCurrencySelector" style="padding: 8px 12px; border: 2px solid #d4af37; border-radius: 6px; background: white; color: #333; font-size: 14px; width: 100%; max-width: 250px;">
+                                    <option value="USD">🇺🇸 Dólar Americano (USD)</option>
+                                    <option value="BRL">🇧🇷 Real Brasileiro (BRL)</option>
+                                    <option value="EUR">🇪🇺 Euro (EUR)</option>
+                                    <option value="AOA">🇦🇴 Kwanza Angolano (AOA)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Preços por tamanho/cor em USD (preços base)
+        const sizePricesUSD = {
+            'small-pink': 2.29,    // 13.5x28.5cm Pink
+            'small-green': 2.29,   // 13.5x28.5cm Green
+            'small-gray': 2.29,    // 13.5x28.5cm Gray
+            'small-blue': 2.29,    // 13.5x28.5cm Blue
+            'medium-blue': 1.78,   // 21.8x16cm Blue
+            'medium-gray': 1.78,   // 21.8x16cm Gray
+            'medium-green': 1.78,  // 21.8x16cm Green
+            'medium-pink': 1.78,   // 21.8x16cm Pink
+            'large-blue': 2.50,    // 28.5x13.5cm Blue
+            'large-gray': 2.50,    // 28.5x13.5cm Gray
+            'large-green': 2.50,   // 28.5x13.5cm Green
+            'large-pink': 2.50,    // 28.5x13.5cm Pink
+            'extra-large': 4.99    // 30x39.5cm
+        };
+
+        // Sistema de moedas
+        let currentCurrency = 'USD';
+        let summaryCurrency = 'USD'; // Moeda específica para o resumo do pedido
+        let exchangeRates = {
+            'USD': { symbol: '$', rate: 1, locale: 'en-US', currency: 'USD' },
+            'BRL': { symbol: 'R$', rate: 5.27, locale: 'pt-BR', currency: 'BRL' },
+            'EUR': { symbol: '€', rate: 0.92, locale: 'de-DE', currency: 'EUR' },
+            'AOA': { symbol: 'Kz', rate: 920, locale: 'pt-AO', currency: 'AOA' }
+        };
+
+        const offers = {
+            basic: { 
+                name: 'Oferta Básica', 
+                prices: {
+                    USD: 2.29,
+                    BRL: 12.07,
+                    EUR: 2.11,
+                    AOA: 2107
+                },
+                discount: 0, 
+                shipping: {
+                    USD: 8.90,
+                    BRL: 46.90,
+                    EUR: 8.18,
+                    AOA: 8180
+                }
+            }
+        };
+
+        let selectedOffers = ['basic'];
+        let selectedColor = null; // Cor/tamanho selecionado para a oferta básica
+
+        // Função para converter preço USD para moeda atual
+        function convertPrice(priceUSD) {
+            const exchangeRate = exchangeRates[currentCurrency];
+            return priceUSD * exchangeRate.rate;
+        }
+
+        // Função para formatar preço (preço já está convertido)
+        function formatPrice(price) {
+            if (currentCurrency === 'BRL') {
+                return `R$ ${price.toFixed(2).replace('.', ',')}`;
+            } else if (currentCurrency === 'USD') {
+                return `$${price.toFixed(2)}`;
+            } else if (currentCurrency === 'EUR') {
+                return `€${price.toFixed(2)}`;
+            } else if (currentCurrency === 'AOA') {
+                return `Kz ${price.toLocaleString()}`;
+            }
+            return price.toString();
+        }
+
+        // Função para obter preço do tamanho selecionado na moeda atual
+        function getCurrentSizePrice(selectedSize) {
+            const priceUSD = sizePricesUSD[selectedSize] || 2.29;
+            return convertPrice(priceUSD);
+        }
+
+        // Função para converter preço para a moeda do resumo
+        function convertPriceForSummary(priceUSD) {
+            const exchangeRate = exchangeRates[summaryCurrency];
+            return priceUSD * exchangeRate.rate;
+        }
+
+        // Função para formatar preço do resumo
+        function formatPriceForSummary(price) {
+            if (summaryCurrency === 'BRL') {
+                return `R$ ${price.toFixed(2).replace('.', ',')}`;
+            } else if (summaryCurrency === 'USD') {
+                return `$${price.toFixed(2)}`;
+            } else if (summaryCurrency === 'EUR') {
+                return `€${price.toFixed(2)}`;
+            } else if (summaryCurrency === 'AOA') {
+                return `Kz ${price.toLocaleString()}`;
+            }
+            return price.toString();
+        }
+
+        document.querySelectorAll('.offer-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const option = this.dataset.option;
+                const offerElement = this.closest('.offer-option');
+                
+                if (this.checked) {
+                    if (!selectedOffers.includes(option)) {
+                        selectedOffers.push(option);
+                    }
+                    offerElement.classList.add('selected');
+                } else {
+                    selectedOffers = selectedOffers.filter(offer => offer !== option);
+                    offerElement.classList.remove('selected');
+                }
+                
+                if (selectedOffers.length === 0) {
+                    this.checked = true;
+                    selectedOffers.push(option);
+                    offerElement.classList.add('selected');
+                }
+                
+                updateOrderSummary();
+            });
+        });
+
+        document.querySelectorAll('.offer-option').forEach(option => {
+            option.addEventListener('click', function(e) {
+                if (e.target.type === 'checkbox') return;
+                const checkbox = this.querySelector('.offer-checkbox');
+                if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+                checkbox.dispatchEvent(new Event('change'));
+                }
+            });
+        });
+
+        function updateOrderSummary() {
+            const selectedOffersContainer = document.getElementById('selectedOffers');
+            let total = 0;
+            const quantity = parseInt(document.getElementById('productQuantity')?.value || 1);
+            
+            // Obter o tamanho selecionado
+            const selectedOption = document.querySelector('.color-option.selected');
+            const selectedSize = selectedOption ? selectedOption.dataset.color : 'small-pink';
+            const currentPrice = getCurrentSizePrice(selectedSize);
+
+            // Atualizar o preço exibido no topo da caixa de seleção
+            const offerPriceElement = document.getElementById('offerPrice');
+            if (offerPriceElement) {
+                offerPriceElement.textContent = formatPrice(currentPrice);
+            }
+
+            selectedOffersContainer.innerHTML = '';
+
+            selectedOffers.forEach(offerKey => {
+                const offer = offers[offerKey];
+                // Obter o preço USD do tamanho selecionado
+                const selectedOption = document.querySelector('.color-option.selected');
+                const selectedSize = selectedOption ? selectedOption.dataset.color : 'small-pink';
+                const priceUSD = sizePricesUSD[selectedSize] || 2.29;
+                
+                // Converter para a moeda do resumo
+                const offerPriceSummary = convertPriceForSummary(priceUSD);
+                const discountAmount = (offerPriceSummary * offer.discount / 100);
+                const offerTotal = (offerPriceSummary - discountAmount) * quantity;
+                
+                total += offerTotal;
+
+                const offerRow = document.createElement('div');
+                offerRow.className = 'summary-row';
+                offerRow.innerHTML = `
+                    <span>${offer.name} ${quantity > 1 ? `(x${quantity})` : ''}</span>
+                    <span>${formatPriceForSummary(offerTotal)}</span>
+                `;
+                selectedOffersContainer.appendChild(offerRow);
+            });
+
+            const totalElement = document.getElementById('totalAmount');
+            if (totalElement) {
+                totalElement.textContent = formatPriceForSummary(total);
+            }
+        }
+
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const orderData = {};
+            formData.forEach((value, key) => {
+                orderData[key] = value;
+            });
+            
+            orderData.selectedOffers = selectedOffers;
+            orderData.offerNames = selectedOffers.map(key => {
+                if (key === 'basic' && selectedColor) {
+                    return selectedColor.name;
+                }
+                return offers[key].name;
+            });
+            orderData.quantity = parseInt(document.getElementById('productQuantity')?.value || 1);
+            
+            // Obter o tamanho selecionado para calcular o preço correto
+            const selectedOption = document.querySelector('.color-option.selected');
+            const selectedSize = selectedOption ? selectedOption.dataset.color : 'small-pink';
+            const currentPrice = getCurrentSizePrice(selectedSize);
+            
+            let total = 0;
+            const quantity = orderData.quantity;
+            selectedOffers.forEach(offerKey => {
+                const offer = offers[offerKey];
+                const offerPrice = currentPrice; // Use price based on selected size
+                const discountAmount = (offerPrice * offer.discount / 100);
+                const offerTotal = (offerPrice - discountAmount) * quantity;
+                total += offerTotal;
+            });
+            
+            orderData.total = total;
+            
+            const offerNames = selectedOffers.map(key => offers[key].name).join(', ');
+            alert(`Pedido realizado com sucesso!\n\nProduto: Heat-Resistant Mat\nOfertas: ${offerNames}\nTotal: ${formatPrice(orderData.total)}\n\nVocê receberá um e-mail de confirmação em breve.`);
+            
+            window.location.href = 'index.html';
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Definir cor padrão selecionada
+            const defaultColorOption = document.querySelector('.color-option.selected');
+            if (defaultColorOption) {
+                const colorValue = defaultColorOption.getAttribute('data-color');
+                const colorName = defaultColorOption.querySelector('span')?.textContent || colorValue;
+                
+                selectedColor = {
+                    name: colorName,
+                    image: defaultColorOption.querySelector('img')?.src || '',
+                    size: colorValue
+                };
+                
+                console.log('Cor padrão selecionada:', selectedColor);
+            }
+            
+            updateOrderSummary();
+            
+            // Sistema de galeria de produtos
+            function initializeProductGallery() {
+                const galleryImages = [
+                    { src: 'Galeria/Combo 1.png' },
+                    { src: 'Galeria/Screenshot 2025-09-20 021826.png' },
+                    { src: 'Galeria/Screenshot 2025-09-20 021856.png' },
+                    { src: 'Galeria/Screenshot 2025-09-20 021919.png' },
+                    { src: 'Galeria/unnamed.png' }
+                ];
+                
+                let currentImageIndex = 0;
+                const mainImage = document.getElementById('galleryMainImage');
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const indicatorsContainer = document.getElementById('galleryIndicators');
+                
+                // Criar indicadores
+                galleryImages.forEach((_, index) => {
+                    const indicator = document.createElement('div');
+                    indicator.className = 'gallery-indicator';
+                    if (index === 0) indicator.classList.add('active');
+                    indicator.addEventListener('click', () => goToImage(index));
+                    indicatorsContainer.appendChild(indicator);
+                });
+                
+                function updateImage(direction = null) {
+                    const currentImage = galleryImages[currentImageIndex];
+                    
+                    // Aplicar transição de saída
+                    if (direction === 'next') {
+                        mainImage.classList.add('slide-right');
+                    } else if (direction === 'prev') {
+                        mainImage.classList.add('slide-left');
+                    }
+                    
+                    setTimeout(() => {
+                        mainImage.src = currentImage.src;
+                        mainImage.alt = `Heat-Resistant Mat - Imagem ${currentImageIndex + 1}`;
+                        
+                        // Remover classes de saída e aplicar entrada
+                        mainImage.classList.remove('slide-left', 'slide-right');
+                        
+                        if (direction === 'next') {
+                            mainImage.classList.add('slide-in-left');
+                        } else if (direction === 'prev') {
+                            mainImage.classList.add('slide-in-right');
+                        }
+                        
+                        // Remover classes de entrada após animação
+                        setTimeout(() => {
+                            mainImage.classList.remove('slide-in-left', 'slide-in-right');
+                        }, 500);
+                    }, 250);
+                    
+                    // Atualizar indicadores
+                    const indicators = document.querySelectorAll('.gallery-indicator');
+                    indicators.forEach((indicator, index) => {
+                        indicator.classList.toggle('active', index === currentImageIndex);
+                    });
+                    
+                    // Atualizar botões
+                    prevBtn.disabled = currentImageIndex === 0;
+                    nextBtn.disabled = currentImageIndex === galleryImages.length - 1;
+                }
+                
+                function goToImage(index) {
+                    currentImageIndex = index;
+                    updateImage();
+                }
+                
+                function nextImage() {
+                    if (currentImageIndex < galleryImages.length - 1) {
+                        currentImageIndex++;
+                        updateImage('next');
+                    }
+                }
+                
+                function prevImage() {
+                    if (currentImageIndex > 0) {
+                        currentImageIndex--;
+                        updateImage('prev');
+                    }
+                }
+                
+                // Event listeners
+                prevBtn.addEventListener('click', prevImage);
+                nextBtn.addEventListener('click', nextImage);
+                
+                // Slideshow automático
+                let slideshowInterval;
+                const slideshowDelay = 4000; // 4 segundos
+                
+                function startSlideshow() {
+                    slideshowInterval = setInterval(() => {
+                        if (currentImageIndex < galleryImages.length - 1) {
+                            nextImage();
+                        } else {
+                            currentImageIndex = 0;
+                            updateImage('next');
+                        }
+                    }, slideshowDelay);
+                }
+                
+                function stopSlideshow() {
+                    clearInterval(slideshowInterval);
+                }
+                
+                // Pausar slideshow quando hover
+                const galleryMain = document.querySelector('.gallery-main');
+                galleryMain.addEventListener('mouseenter', stopSlideshow);
+                galleryMain.addEventListener('mouseleave', startSlideshow);
+                
+                // Iniciar slideshow
+                startSlideshow();
+                
+                // Inicializar estado dos botões
+                updateImage();
+            }
+            
+            // Inicializar galeria
+            initializeProductGallery();
+            
+            // Event listeners para seleção de tamanho e cor
+            const colorOptions = document.querySelectorAll('.color-option');
+            const mainProductImage = document.getElementById('mainProductImage');
+            
+            // Set default image (pink 13.5x28.5cm) as main product image on page load
+            const defaultImageOption = document.querySelector('.color-option.selected');
+            if (defaultImageOption && mainProductImage) {
+                const defaultImage = defaultImageOption.querySelector('img');
+                if (defaultImage) {
+                    mainProductImage.src = defaultImage.src;
+                    mainProductImage.alt = defaultImage.alt;
+                }
+            }
+            
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    colorOptions.forEach(opt => {
+                        opt.classList.remove('selected');
+                        opt.style.border = '2px solid #e0e0e0';
+                    });
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    this.style.border = '2px solid #d4af37';
+                    
+                    // Capturar a cor/tamanho selecionado
+                    const colorValue = this.getAttribute('data-color');
+                    const colorName = this.querySelector('span')?.textContent || colorValue;
+                    
+                    selectedColor = {
+                        name: colorName,
+                        image: this.querySelector('img')?.src || '',
+                        size: colorValue
+                    };
+                    
+                    console.log('Cor/Tamanho selecionado:', selectedColor);
+                    
+                    // Update main product image
+                    const selectedImage = this.querySelector('img');
+                    if (selectedImage && mainProductImage) {
+                        const newImageSrc = selectedImage.src;
+                        mainProductImage.src = newImageSrc;
+                        mainProductImage.alt = selectedImage.alt;
+                        
+                        // Add smooth transition effect
+                        mainProductImage.style.transition = 'opacity 0.3s ease';
+                        mainProductImage.style.opacity = '0.7';
+                        setTimeout(() => {
+                            mainProductImage.style.opacity = '1';
+                        }, 150);
+                    }
+                    
+                    // Update order summary with new price
+                    updateOrderSummary();
+                });
+            });
+            
+            // Sistema de quantidade
+            const decreaseBtn = document.getElementById('decreaseQty');
+            const increaseBtn = document.getElementById('increaseQty');
+            const quantityInput = document.getElementById('productQuantity');
+            
+            if (decreaseBtn && increaseBtn && quantityInput) {
+                decreaseBtn.addEventListener('click', function() {
+                    let currentValue = parseInt(quantityInput.value);
+                    if (currentValue > 1) {
+                        quantityInput.value = currentValue - 1;
+                        updateOrderSummary();
+                    }
+                });
+                
+                increaseBtn.addEventListener('click', function() {
+                    let currentValue = parseInt(quantityInput.value);
+                    if (currentValue < 10) {
+                        quantityInput.value = currentValue + 1;
+                        updateOrderSummary();
+                    }
+                });
+                
+                quantityInput.addEventListener('change', function() {
+                    let value = parseInt(this.value);
+                    if (value < 1) this.value = 1;
+                    if (value > 10) this.value = 10;
+                    updateOrderSummary();
+                });
+            }
+            
+            
+            // Event listener para o seletor de moeda do resumo
+            const summaryCurrencySelector = document.getElementById('summaryCurrencySelector');
+            if (summaryCurrencySelector) {
+                summaryCurrencySelector.addEventListener('change', function() {
+                    summaryCurrency = this.value;
+                    console.log('Summary currency changed to:', summaryCurrency);
+                    // Atualizar o resumo com a nova moeda
+                    updateOrderSummary();
+                });
+            }
+        });
+
+
+        // Toggle flag dropdown
+        function toggleFlagDropdown() {
+            const dropdown = document.querySelector('.flag-dropdown');
+            const menu = document.getElementById('flagDropdownMenu');
+            
+            dropdown.classList.toggle('open');
+            menu.classList.toggle('open');
+        }
+        
+        // Select flag option
+        function selectFlagOption(currency, flag) {
+            const selectedFlag = document.getElementById('selectedFlag');
+            selectedFlag.textContent = flag;
+            
+            // Close dropdown
+            const dropdown = document.querySelector('.flag-dropdown');
+            const menu = document.getElementById('flagDropdownMenu');
+            dropdown.classList.remove('open');
+            menu.classList.remove('open');
+            
+            // Change currency
+            changeMainCurrency(currency);
+        }
+        
+        // Change main currency (affects everything including summary)
+        function changeMainCurrency(currencyCode) {
+            currentCurrency = currencyCode;
+            
+            // Update all prices
+            updateCurrencyDisplay();
+            
+            // Update order summary with new currency
+            updateOrderSummary();
+            
+            // Save selection to localStorage
+            localStorage.setItem('selectedCurrency', currencyCode);
+            
+            console.log(`Main currency changed to: ${currencyCode}`);
+        }
+
+        // Initialize currency system
+        function initializeCurrency() {
+            // Check if user has a saved currency preference
+            const savedCurrency = localStorage.getItem('selectedCurrency');
+            let detectedCurrency;
+            
+            if (savedCurrency && exchangeRates[savedCurrency]) {
+                detectedCurrency = savedCurrency;
+                console.log('Using saved currency preference:', savedCurrency);
+            } else {
+                detectedCurrency = 'USD';
+                console.log('Auto-detected currency: USD');
+            }
+            
+            currentCurrency = detectedCurrency;
+            
+            // Update selected flag
+            const selectedFlag = document.getElementById('selectedFlag');
+            const flagOption = document.querySelector(`[data-currency="${detectedCurrency}"]`);
+            if (flagOption && selectedFlag) {
+                selectedFlag.textContent = flagOption.dataset.flag;
+            }
+            
+            console.log('🌍 Auto-set currency:', currentCurrency);
+            
+            updateCurrencyDisplay();
+            updateOrderSummary();
+        }
+
+        // Update currency display
+        function updateCurrencyDisplay() {
+            // Update offer prices - our system uses dynamic pricing based on size selection
+            // The updateOrderSummary function will handle price updates
+            console.log('Currency display updated for:', currentCurrency);
+        }
+
+
+        // Initialize currency when page loads
+        initializeCurrency();
+        
+        // Add event listeners for flag selection
+        document.querySelectorAll('.flag-option').forEach(flag => {
+            flag.addEventListener('click', function() {
+                const currency = this.dataset.currency;
+                const flagEmoji = this.dataset.flag;
+                selectFlagOption(currency, flagEmoji);
+            });
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const container = document.querySelector('.flag-dropdown-container');
+            if (container && !container.contains(event.target)) {
+                const dropdown = document.querySelector('.flag-dropdown');
+                const menu = document.getElementById('flagDropdownMenu');
+                dropdown.classList.remove('open');
+                menu.classList.remove('open');
+            }
+        });
+        
+        // Video Modal Functions
+        function openVideoModal(videoSrc) {
+            const modal = document.createElement('div');
+            modal.className = 'video-modal';
+            modal.innerHTML = `
+                <div class="video-modal-content">
+                    <span class="video-modal-close">&times;</span>
+                    <video controls autoplay>
+                        <source src="${videoSrc}" type="video/mp4">
+                        Seu navegador não suporta vídeos HTML5.
+                    </video>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Close modal functions
+            const closeBtn = modal.querySelector('.video-modal-close');
+            const closeModal = () => {
+                document.body.removeChild(modal);
+            };
+            
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+            
+            // Close with Escape key
+            const handleEscape = (e) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    document.removeEventListener('keydown', handleEscape);
+                }
+            };
+            document.addEventListener('keydown', handleEscape);
+        }
+
+        // Review Modal Functions
+        function openReviewModal(author, date, stars, fullText) {
+            // Criar modal dinâmico para mostrar review completa
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); z-index: 1000; 
+                display: flex; justify-content: center; align-items: center;
+            `;
+            
+            const starCount = parseFloat(stars);
+            let starsHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= starCount) {
+                    starsHTML += '<i class="fas fa-star" style="color: #d4af37;"></i>';
+                } else {
+                    starsHTML += '<i class="far fa-star" style="color: #ddd;"></i>';
+                }
+            }
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; text-align: center;">
+                    <h3 style="color: #d4af37; margin-bottom: 20px;">Review Completa</h3>
+                    <div style="margin-bottom: 15px;">
+                        <strong>${author}</strong>
+                        <div style="margin: 10px 0;">${starsHTML}</div>
+                        <span style="color: #666; font-size: 14px;">Compra verificada - ${date}</span>
+                    </div>
+                    <p style="text-align: left; line-height: 1.6; margin-bottom: 20px;">"${fullText}"</p>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: #d4af37; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Fechar</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function closeReviewModal() {
+            const modal = document.getElementById('reviewModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+
+
+        // Add click listeners to reviews
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const clickableReviews = document.querySelectorAll('.clickable-review');
+            clickableReviews.forEach(review => {
+                review.addEventListener('click', function() {
+                    const author = this.dataset.author;
+                    const date = this.dataset.date;
+                    const stars = this.dataset.stars;
+                    
+                    // Get review text based on ID
+                    const reviewTexts = {
+                        'maria': "Excelente produto! Protege perfeitamente minha bancada quando uso a chapinha. Não queima mais nada! O material é de alta qualidade e resistente ao calor. Recomendo para quem usa ferramentas quentes regularmente. Fácil de limpar e muito prático. Gravei um vídeo mostrando como funciona na prática - vejam acima!",
+                        'ana': "Perfeito para minha rotina de styling! Resistente ao calor e fácil de limpar. Recomendo! Uso todos os dias e nunca mais tive problemas com queimaduras na bancada. O tamanho é ideal e o material é muito durável. Vale cada centavo investido!",
+                        'carla': "Muito bom! Protege bem as superfícies. Único ponto é que poderia ser um pouco maior, mas mesmo assim atende bem às minhas necessidades. A qualidade é excelente e o preço justo. Já estou pensando em comprar outro para ter de reserva.",
+                        'fernanda': "Salvou minha bancada! Agora posso usar a chapinha sem medo de queimar o móvel. Qualidade excelente! O produto é exatamente como descrito, resistente e funcional. Entrega rápida e embalagem perfeita. Com certeza comprarei novamente!",
+                        'jeeper': "I keep these to use for hot hair products to prevent damage to counters. I burned a counter once with a flat iron and wanted to remove this worry with my new remodel. The are nice sized, convenient to store away, and seem like they will be easy to clean if needed. So far the counters stay nice and cool underneath. I also bought one to use under my home wax machine to prevent sticky counter messes.",
+                        'vanessa': "I set my hot tools high and it's protected my surface well. Love the pink is perfect and it's not too small not too big. The quality is excellent and it fits perfectly in my bathroom. Easy to clean and store when not in use. Highly recommend for anyone who uses hot styling tools regularly!",
+                        'michele': "I got this because I always do my hair last with a straightener and then my family needs to check out of hotels immediately after during travel. Id often carry the straightener separately until it cooled enough to store in my suitcase. But with this, I can wrap it up and store immediately while it's still hot. No part of the heated plate is exposed to anything that could burn. It made me a little nervous the first time I used it as it doesn't roll up the tightest and the little securing loop doesnt loop over super tight either. But once you tuck it into your bag, it's fine and holds up well. I also use it on my bathroom counter now just for some added heat protection."
+                    };
+                    
+                    const reviewId = this.dataset.reviewId;
+                    const fullText = reviewTexts[reviewId] || "Review completo não disponível.";
+                    
+                    openReviewModal(author, date, stars, fullText);
+                });
+            });
+
+            // Add click listener to video review
+            const reviewVideo = document.querySelector('.review-video');
+            if (reviewVideo) {
+                reviewVideo.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent opening review modal
+                    openVideoModal('REviews/Reviews 1.mp4');
+                });
+            }
+        });
+    </script>
+
+    <!-- Seção de Reviews -->
+    <div class="reviews-section" style="margin: 40px auto; max-width: 1200px; padding: 40px 20px; background-image: url('Background.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 15px; position: relative;">
+        <div class="reviews-header">
+            <h3><i class="fas fa-star"></i> O que nossos clientes estão dizendo</h3>
+            <p>Mais de 1.400 clientes satisfeitas com nossos produtos</p>
+            
+            <!-- Botão para adicionar review -->
+            <div style="margin-top: 20px;">
+                <button id="addReviewBtn" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 25px; font-size: 16px; cursor: pointer; transition: all 0.3s ease;">
+                    <i class="fas fa-plus"></i> Adicionar sua Review
+                </button>
+            </div>
+        </div>
+        
+        <div class="reviews-container">
+            <div class="review-item clickable-review" 
+                 data-review-id="maria"
+                 data-author="Maria S."
+                 data-date="2 dias atrás"
+                 data-stars="5">
+                <div class="review-image">
+                    <video class="review-video" controls style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" preload="metadata">
+                        <source src="REviews/Reviews 1.mp4" type="video/mp4">
+                        <div class="video-fallback">
+                            <i class="fas fa-video"></i>
+                            <p>Video Review Available</p>
+                            <p>Click to play</p>
+                        </div>
+                    </video>
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Excelente produto! Protege perfeitamente minha bancada quando uso a chapinha. Não queima mais nada! Vejam como funciona no vídeo acima!"</p>
+                    <div class="review-author">
+                        <strong>Maria S.</strong>
+                        <span class="review-date">Compra verificada - 2 dias atrás</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item clickable-review" 
+                 data-review-id="ana"
+                 data-author="Sidney"
+                 data-date="1 semana atrás"
+                 data-stars="5">
+                <div class="review-image">
+                    <div class="review-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Perfeito para minha rotina de styling! Resistente ao calor e fácil de limpar. Recomendo!"</p>
+                    <div class="review-author">
+                        <strong>Sidney</strong>
+                        <span class="review-date">Compra verificada - 1 semana atrás</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item clickable-review" 
+                 data-review-id="carla"
+                 data-author="Brittaney Finny"
+                 data-date="3 dias atrás"
+                 data-stars="4">
+                <div class="review-image">
+                    <div class="review-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="review-text">"Muito bom! Protege bem as superfícies. Único ponto é que poderia ser um pouco maior."</p>
+                    <div class="review-author">
+                        <strong>Brittaney Finny</strong>
+                        <span class="review-date">Compra verificada - 3 dias atrás</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item clickable-review" 
+                 data-review-id="fernanda"
+                 data-author="Fernanda R."
+                 data-date="5 dias atrás"
+                 data-stars="5">
+                <div class="review-image">
+                    <div class="review-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Salvou minha bancada! Agora posso usar a chapinha sem medo de queimar o móvel. Qualidade excelente!"</p>
+                    <div class="review-author">
+                        <strong>Fernanda R.</strong>
+                        <span class="review-date">Compra verificada - 5 dias atrás</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item clickable-review" 
+                 data-review-id="jeeper"
+                 data-author="Jeeper For Life"
+                 data-date="1 semana atrás"
+                 data-stars="4">
+                <div class="review-image">
+                    <div class="review-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="review-text">"I keep these to use for hot hair products to prevent damage to counters. I burned a counter once with a flat iron and wanted to remove this worry with my new remodel."</p>
+                    <div class="review-author">
+                        <strong>Jeeper For Life</strong>
+                        <span class="review-date">Compra verificada - 1 semana atrás</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item clickable-review" 
+                 data-review-id="vanessa"
+                 data-author="Vanessa Medina"
+                 data-date="4 dias atrás"
+                 data-stars="5">
+                <div class="review-image">
+                    <img src="REviews/Upload de Vanessa Medina.jpg" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"I set my hot tools high and it's protected my surface well. Love the pink is perfect and it's not too small not too big."</p>
+                    <div class="review-author">
+                        <strong>Vanessa Medina</strong>
+                        <span class="review-date">Compra verificada - 4 dias atrás</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item clickable-review" 
+                 data-review-id="michele"
+                 data-author="Michele"
+                 data-date="2 semanas atrás"
+                 data-stars="5">
+                <div class="review-image">
+                    <div class="review-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"I got this because I always do my hair last with a straightener and then my family needs to check out of hotels immediately after during travel."</p>
+                    <div class="review-author">
+                        <strong>Michele</strong>
+                        <span class="review-date">Compra verificada - 2 semanas atrás</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulário de Review para Usuários Logados -->
+        <div id="userReviewForm" class="user-review-form" style="display: none;">
+            <div class="review-form-container">
+                <h4><i class="fas fa-edit"></i> Deixe sua avaliação</h4>
+                <form id="submitReviewForm">
+                    <div class="review-form-group">
+                        <label>Avaliação:</label>
+                        <div class="star-rating" id="starRating">
+                            <i class="far fa-star" data-rating="1"></i>
+                            <i class="far fa-star" data-rating="2"></i>
+                            <i class="far fa-star" data-rating="3"></i>
+                            <i class="far fa-star" data-rating="4"></i>
+                            <i class="far fa-star" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" id="selectedRating" value="0">
+                    </div>
+                    <div class="review-form-group">
+                        <label for="reviewText">Sua avaliação:</label>
+                        <textarea id="reviewText" rows="4" placeholder="Conte-nos sobre sua experiência com o produto..." maxlength="500"></textarea>
+                        <small class="char-count">0/500 caracteres</small>
+                    </div>
+                    <button type="submit" class="submit-review-btn">
+                        <i class="fas fa-paper-plane"></i> Enviar Avaliação
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="reviews-stats">
+            <div class="stat-item">
+                <div class="stat-number" id="averageRating">4.7</div>
+                <div class="stat-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <div class="stat-label">Avaliação média</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="totalReviews">1,427</div>
+                <div class="stat-label">Clientes satisfeitas</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Recomendariam</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review System Section -->
+    <div id="reviewSection">
+        <script>
+            // Adicionar seção de reviews ao DOM
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof reviewSystem !== 'undefined') {
+                    const reviewSection = reviewSystem.createReviewSection('heat-resistant-mat', 'Heat-Resistant Mat + Combo');
+                    document.body.insertAdjacentHTML('beforeend', reviewSection);
+                    reviewSystem.loadExistingReviews();
+                }
+            });
+        </script>
+    </div>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%; text-align: center;">
+            <h3 style="color: #d4af37; margin-bottom: 20px;"><i class="fas fa-user"></i> Faça Login</h3>
+            <form id="loginForm">
+                <div style="margin-bottom: 15px;">
+                    <input type="email" id="loginEmail" placeholder="Seu email" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <input type="password" id="loginPassword" placeholder="Sua senha" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button type="submit" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Login</button>
+                    <button type="button" id="closeLoginModal" style="background: #666; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Review -->
+    <div id="reviewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;">
+            <h3 style="color: #d4af37; margin-bottom: 20px;"><i class="fas fa-star"></i> Adicionar Review</h3>
+            <form id="reviewForm">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Seu Nome:</label>
+                    <input type="text" id="reviewerName" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Avaliação:</label>
+                    <div id="starRating" style="display: flex; gap: 5px; justify-content: center; margin: 10px 0;">
+                        <i class="fas fa-star" data-rating="1" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
+                        <i class="fas fa-star" data-rating="2" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
+                        <i class="fas fa-star" data-rating="3" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
+                        <i class="fas fa-star" data-rating="4" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
+                        <i class="fas fa-star" data-rating="5" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Sua Review:</label>
+                    <textarea id="reviewText" required placeholder="Conte-nos sua experiência com o produto..." style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; min-height: 100px; resize: vertical;"></textarea>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Foto (opcional):</label>
+                    <input type="file" id="reviewImage" accept="image/*" style="width: 100%; padding: 8px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                    <div id="imagePreview" style="margin-top: 10px; text-align: center;"></div>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button type="submit" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Enviar Review</button>
+                    <button type="button" id="closeReviewModal" style="background: #666; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sistema de Reviews JavaScript -->
+    <script>
+        // Sistema de Reviews
+        let currentUser = null;
+        let userReviews = JSON.parse(localStorage.getItem('userReviews')) || [];
+        let selectedRating = 0;
+
+        // Verificar se usuário está logado
+        function checkLogin() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                return true;
+            }
+            return false;
+        }
+
+        // Mostrar modal de login
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        // Fechar modal de login
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        // Mostrar modal de review
+        function showReviewModal() {
+            if (!checkLogin()) {
+                showLoginModal();
+                return;
+            }
+            document.getElementById('reviewModal').style.display = 'flex';
+        }
+
+        // Fechar modal de review
+        function closeReviewModal() {
+            document.getElementById('reviewModal').style.display = 'none';
+            document.getElementById('reviewForm').reset();
+            selectedRating = 0;
+            updateStarDisplay();
+            document.getElementById('imagePreview').innerHTML = '';
+        }
+
+        // Atualizar display das estrelas
+        function updateStarDisplay() {
+            const stars = document.querySelectorAll('#starRating i');
+            stars.forEach((star, index) => {
+                if (index < selectedRating) {
+                    star.style.color = '#d4af37';
+                } else {
+                    star.style.color = '#ddd';
+                }
+            });
+        }
+
+        // Event listeners para sistema de reviews
+        document.addEventListener('DOMContentLoaded', function() {
+            // Botão adicionar review
+            const addReviewBtn = document.getElementById('addReviewBtn');
+            if (addReviewBtn) {
+                addReviewBtn.addEventListener('click', showReviewModal);
+            }
+
+            // Fechar modais
+            document.getElementById('closeLoginModal').addEventListener('click', closeLoginModal);
+            document.getElementById('closeReviewModal').addEventListener('click', closeReviewModal);
+
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                // Simular login (em produção, validar com backend)
+                if (email && password) {
+                    currentUser = { email: email, name: email.split('@')[0] };
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    closeLoginModal();
+                    showReviewModal();
+                } else {
+                    alert('Por favor, preencha todos os campos');
+                }
+            });
+
+            // Sistema de estrelas
+            const stars = document.querySelectorAll('#starRating i');
+            stars.forEach((star, index) => {
+                star.addEventListener('click', function() {
+                    selectedRating = index + 1;
+                    updateStarDisplay();
+                });
+                star.addEventListener('mouseenter', function() {
+                    for (let i = 0; i <= index; i++) {
+                        stars[i].style.color = '#d4af37';
+                    }
+                });
+                star.addEventListener('mouseleave', function() {
+                    updateStarDisplay();
+                });
+            });
+
+            // Preview de imagem
+            document.getElementById('reviewImage').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                const preview = document.getElementById('imagePreview');
+                
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.innerHTML = `
+                            <img src="${e.target.result}" style="max-width: 200px; max-height: 200px; border-radius: 8px; border: 2px solid #ddd;">
+                        `;
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.innerHTML = '';
+                }
+            });
+
+            // Formulário de review
+            document.getElementById('reviewForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (selectedRating === 0) {
+                    alert('Por favor, selecione uma avaliação');
+                    return;
+                }
+
+                const reviewData = {
+                    id: Date.now().toString(),
+                    name: document.getElementById('reviewerName').value,
+                    rating: selectedRating,
+                    text: document.getElementById('reviewText').value,
+                    image: null,
+                    date: new Date().toLocaleDateString('pt-BR'),
+                    verified: true
+                };
+
+                // Processar imagem se houver
+                const imageFile = document.getElementById('reviewImage').files[0];
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        reviewData.image = e.target.result;
+                        saveReview(reviewData);
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    saveReview(reviewData);
+                }
+            });
+
+            // Carregar reviews existentes
+            loadUserReviews();
+        });
+
+        // Salvar review
+        function saveReview(reviewData) {
+            userReviews.push(reviewData);
+            localStorage.setItem('userReviews', JSON.stringify(userReviews));
+            
+            // Adicionar review ao DOM
+            addReviewToDOM(reviewData);
+            
+            closeReviewModal();
+            alert('Review adicionada com sucesso!');
+        }
+
+        // Adicionar review ao DOM
+        function addReviewToDOM(reviewData) {
+            const reviewsContainer = document.querySelector('.reviews-container');
+            const reviewElement = document.createElement('div');
+            reviewElement.className = 'review-item clickable-review';
+            reviewElement.setAttribute('data-review-id', reviewData.id);
+            reviewElement.setAttribute('data-author', reviewData.name);
+            reviewElement.setAttribute('data-date', reviewData.date);
+            reviewElement.setAttribute('data-stars', reviewData.rating);
+            
+            let imageHtml = '';
+            if (reviewData.image) {
+                imageHtml = `<img src="${reviewData.image}" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            } else {
+                imageHtml = `<div class="review-avatar"><i class="fas fa-user"></i></div>`;
+            }
+
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= reviewData.rating) {
+                    starsHtml += '<i class="fas fa-star"></i>';
+                } else {
+                    starsHtml += '<i class="far fa-star"></i>';
+                }
+            }
+
+            reviewElement.innerHTML = `
+                <div class="review-image">
+                    ${imageHtml}
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        ${starsHtml}
+                    </div>
+                    <p class="review-text">"${reviewData.text}"</p>
+                    <div class="review-author">
+                        <strong>${reviewData.name}</strong>
+                        <span class="review-date">Compra verificada - ${reviewData.date}</span>
+                    </div>
+                </div>
+            `;
+
+            // Adicionar event listener para o modal
+            reviewElement.addEventListener('click', function() {
+                openReviewModal(reviewData.name, reviewData.date, reviewData.rating, reviewData.text);
+            });
+
+            reviewsContainer.insertBefore(reviewElement, reviewsContainer.firstChild);
+        }
+
+        // Carregar reviews do usuário
+        function loadUserReviews() {
+            userReviews.forEach(review => {
+                addReviewToDOM(review);
+            });
+        }
+
+        // Função para mostrar modal de review completa
+        function openReviewModal(author, date, stars, fullText) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); z-index: 1000; 
+                display: flex; justify-content: center; align-items: center;
+            `;
+            
+            const starCount = parseFloat(stars);
+            let starsHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= starCount) {
+                    starsHTML += '<i class="fas fa-star" style="color: #d4af37;"></i>';
+                } else {
+                    starsHTML += '<i class="far fa-star" style="color: #ddd;"></i>';
+                }
+            }
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; text-align: center;">
+                    <h3 style="color: #d4af37; margin-bottom: 20px;">Review Completa</h3>
+                    <div style="margin-bottom: 15px;">
+                        <strong>${author}</strong>
+                        <div style="margin: 10px 0;">${starsHTML}</div>
+                        <span style="color: #666; font-size: 14px;">Compra verificada - ${date}</span>
+                    </div>
+                    <p style="text-align: left; line-height: 1.6; margin-bottom: 20px;">"${fullText}"</p>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: #d4af37; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Fechar</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+    </script>
+
+    <script>
+        // Payment method control
+        function setupPaymentMethodControl() {
+            const paymentMethodSelect = document.getElementById('paymentMethod');
+            const paypalButton = document.getElementById('paypal-payment-button');
+            const pixInfo = document.getElementById('pix-payment-info');
+            
+            if (paymentMethodSelect) {
+                paymentMethodSelect.addEventListener('change', function() {
+                    const selectedMethod = this.value;
+                    
+                    // Hide all payment options first
+                    if (paypalButton) paypalButton.style.display = 'none';
+                    if (pixInfo) pixInfo.style.display = 'none';
+                    
+                    // Show selected payment method
+                    switch(selectedMethod) {
+                        case 'paypal':
+                            if (paypalButton) paypalButton.style.display = 'block';
+                            break;
+                        case 'pix':
+                            if (pixInfo) pixInfo.style.display = 'block';
+                            break;
+                    }
+                });
+            }
+        }
+        
+        // Initialize payment method control and PayPal
+        document.addEventListener('DOMContentLoaded', function() {
+            setupPaymentMethodControl();
+            initializePayPal();
+        });
+
+        // PayPal integration
+        function initializePayPal() {
+            // Wait for PayPal SDK to be loaded
+            if (typeof paypal === 'undefined') {
+                console.log('PayPal SDK not loaded yet, retrying...');
+                setTimeout(initializePayPal, 100);
+                return;
+            }
+
+            console.log('PayPal SDK loaded, initializing buttons...');
+
+            // Clear any existing buttons
+            const paypalContainer = document.getElementById('paypal-payment-button');
+            if (paypalContainer) {
+                paypalContainer.innerHTML = '';
+            }
+
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                    return new Promise((resolve, reject) => {
+                        try {
+                            // Validate required variables
+                            if (!selectedOffers || !Array.isArray(selectedOffers) || selectedOffers.length === 0) {
+                                throw new Error('No offers selected');
+                            }
+                            
+                            if (!currentCurrency) {
+                                currentCurrency = 'USD'; // Fallback
+                            }
+                            
+                            // Get total from order summary (converted to USD for PayPal)
+                            const totalElement = document.getElementById('totalAmount');
+                            let totalAmount = 0;
+                            
+                            if (totalElement) {
+                                const totalText = totalElement.textContent;
+                                const totalValue = parseFloat(totalText.replace(/[^\d.,]/g, '').replace(',', '.'));
+                                
+                                // Convert to USD if needed
+                                if (summaryCurrency === 'BRL') {
+                                    totalAmount = totalValue / 5.2; // Convert BRL to USD
+                                } else if (summaryCurrency === 'EUR') {
+                                    totalAmount = totalValue / 0.92; // Convert EUR to USD
+                                } else {
+                                    totalAmount = totalValue; // Already USD
+                                }
+                            } else {
+                                // Fallback to calculation
+                                totalAmount = selectedOffers.reduce((total, offerType) => {
+                                    if (!offers[offerType]) {
+                                        console.warn('Offer not found:', offerType);
+                                        return total;
+                                    }
+                                    
+                                    const price = offers[offerType].prices && offers[offerType].prices[currentCurrency] 
+                                        ? offers[offerType].prices[currentCurrency] 
+                                        : offers[offerType].price || 0;
+                                    
+                                    return total + price;
+                                }, 0);
+                            }
+                            
+                            const productNames = selectedOffers.map(offerType => 
+                                offers[offerType] ? offers[offerType].name : 'Produto'
+                            ).join(' + ');
+                            
+                            console.log('PayPal order creation:', {
+                                selectedOffers: selectedOffers,
+                                totalAmount: totalAmount,
+                                currency: currentCurrency,
+                                productNames: productNames
+                            });
+                            
+                            if (totalAmount <= 0) {
+                                throw new Error('Invalid total amount: ' + totalAmount);
+                            }
+                            
+                            // Create order with timeout - PayPal only supports USD
+                            const orderPromise = actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: totalAmount.toFixed(2),
+                                        currency_code: 'USD'
+                                    },
+                                    description: productNames || 'Heat-Resistant Mat Products'
+                                }]
+                            });
+                            
+                            // Add timeout to prevent hanging
+                            const timeoutPromise = new Promise((_, timeoutReject) => {
+                                setTimeout(() => {
+                                    timeoutReject(new Error('PayPal order creation timeout'));
+                                }, 8000);
+                            });
+                            
+                            Promise.race([orderPromise, timeoutPromise])
+                                .then(resolve)
+                                .catch(reject);
+                                
+                        } catch (error) {
+                            console.error('Error creating PayPal order:', error);
+                            reject(error);
+                        }
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                        console.log('PayPal payment approved:', details);
+                    alert('Pagamento aprovado! ID da transação: ' + details.id);
+                    processCheckout();
+                    }).catch(function(error) {
+                        console.error('PayPal payment error:', error);
+                        alert('Erro no processamento do pagamento. Tente novamente.');
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal error:', err);
+                    alert('Erro no PayPal. Tente novamente ou escolha outra forma de pagamento.');
+                },
+                onCancel: function(data) {
+                    console.log('PayPal payment cancelled:', data);
+                }
+            }).render('#paypal-payment-button').then(function() {
+                console.log('PayPal buttons rendered successfully');
+            }).catch(function(error) {
+                console.error('Error rendering PayPal buttons:', error);
+                // Retry after a delay
+                setTimeout(() => {
+                    console.log('Retrying PayPal button initialization...');
+                    initializePayPal();
+                }, 2000);
+            });
+        }
+    </script>
+
+    <script>
+        // Função de processamento de checkout
+        function processCheckout() {
+            const email = document.getElementById('email').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const observations = document.getElementById('observations').value;
+
+            if (!email || !paymentMethod) {
+                alert('Por favor, preencha o email e selecione uma forma de pagamento.');
+                return;
+            }
+            
+            const orderData = {
+                id: 'ORDER_' + Date.now(),
+                products: selectedOffers.map(offerType => ({
+                    ...offers[offerType],
+                    totalPrice: offers[offerType].prices[currentCurrency]
+                })),
+                customer: {
+                    email
+                },
+                paymentMethod,
+                observations,
+                total: selectedOffers.reduce((total, offerType) => total + offers[offerType].prices[currentCurrency], 0),
+                date: new Date().toISOString()
+            };
+            
+            // Save order
+            let orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            orders.push(orderData);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            // Show specific message based on payment method
+            let successMessage = `Pedido realizado com sucesso!\n\nProdutos: ${orderData.products.map(p => p.name).join(' + ')}\nTotal: ${formatPrice(orderData.total)}\n\n`;
+            
+            switch(paymentMethod) {
+                case 'paypal':
+                    successMessage += 'O pagamento via PayPal foi processado. Você receberá um email de confirmação em breve.';
+                    break;
+                case 'pix':
+                    successMessage += 'Você receberá as instruções de pagamento PIX por email. Após o pagamento, seu pedido será processado.';
+                    break;
+                default:
+                    successMessage += 'Você receberá um email de confirmação em breve.';
+            }
+            
+            alert(successMessage);
+            
+            // Redirect to home page
+            window.location.href = '../../index.html';
+        }
+
+        // Checkout Translation System (without currency converter)
+        class CheckoutTranslator {
+            constructor() {
+                this.userCountry = null;
+                this.userCurrency = 'USD';
+                this.isInitialized = false;
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    await this.detectUserLocation();
+                    this.updatePageContent();
+                    this.isInitialized = true;
+                    console.log(`Checkout translator initialized. Currency: ${this.userCurrency}`);
+                } catch (error) {
+                    console.error('Error initializing checkout translator:', error);
+                    this.userCurrency = 'USD';
+                    this.updatePageContent();
+                }
+            }
+            
+            async detectUserLocation() {
+                try {
+                    let countryCode = null;
+                    
+                    // Check if running from file:// protocol
+                    if (window.location.protocol === 'file:') {
+                        console.log('Running from file:// protocol, using fallback detection');
+                        // Try to detect from browser language
+                        const browserLang = navigator.language || navigator.userLanguage;
+                        if (browserLang.startsWith('pt')) {
+                            countryCode = 'BR';
+                            console.log('Detected Portuguese language, assuming Brazil');
+                        } else if (browserLang.startsWith('es')) {
+                            countryCode = 'ES';
+                            console.log('Detected Spanish language, assuming Spain');
+                        } else {
+                            countryCode = 'US';
+                            console.log('Using default US location');
+                        }
+                    } else {
+                        try {
+                            const response = await fetch('https://ipapi.co/json/', { 
+                                timeout: 5000,
+                                mode: 'cors'
+                            });
+                            if (response.ok) {
+                                const data = await response.json();
+                                countryCode = data.country_code;
+                                console.log('Location detected via ipapi.co:', countryCode);
+                            }
+                        } catch (e) {
+                            console.log('ipapi.co failed, trying alternative...');
+                        }
+                        
+                        if (!countryCode) {
+                            try {
+                                const response = await fetch('https://ipinfo.io/json', { 
+                                    timeout: 5000,
+                                    mode: 'cors'
+                                });
+                                if (response.ok) {
+                                    const data = await response.json();
+                                    countryCode = data.country;
+                                    console.log('Location detected via ipinfo.io:', countryCode);
+                                }
+                            } catch (e) {
+                                console.log('ipinfo.io also failed');
+                            }
+                        }
+                    }
+                    
+                    this.userCountry = countryCode;
+                    
+                    const countryToCurrency = {
+                        'BR': 'BRL',
+                        'US': 'USD', 'CA': 'USD', 'MX': 'USD', 'AR': 'USD', 'CL': 'USD', 'CO': 'USD', 'PE': 'USD', 'UY': 'USD', 'BO': 'USD', 'PY': 'USD', 'VE': 'USD', 'EC': 'USD', 'GY': 'USD', 'SR': 'USD', 'GF': 'USD', 'FK': 'USD', 'BZ': 'USD', 'GT': 'USD', 'HN': 'USD', 'SV': 'USD', 'NI': 'USD', 'CR': 'USD', 'PA': 'USD', 'CU': 'USD', 'JM': 'USD', 'HT': 'USD', 'DO': 'USD', 'PR': 'USD', 'VI': 'USD', 'AG': 'USD', 'BB': 'USD', 'DM': 'USD', 'GD': 'USD', 'KN': 'USD', 'LC': 'USD', 'VC': 'USD', 'TT': 'USD', 'BS': 'USD', 'AU': 'USD', 'NZ': 'USD', 'JP': 'USD', 'KR': 'USD', 'SG': 'USD', 'HK': 'USD', 'TW': 'USD', 'TH': 'USD', 'MY': 'USD', 'ID': 'USD', 'PH': 'USD', 'VN': 'USD', 'IN': 'USD', 'PK': 'USD', 'BD': 'USD', 'LK': 'USD', 'MM': 'USD', 'KH': 'USD', 'LA': 'USD', 'BN': 'USD', 'FJ': 'USD', 'PG': 'USD', 'SB': 'USD', 'VU': 'USD', 'NC': 'USD', 'PF': 'USD', 'WS': 'USD', 'TO': 'USD', 'KI': 'USD', 'TV': 'USD', 'NR': 'USD', 'MH': 'USD', 'FM': 'USD', 'PW': 'USD', 'AS': 'USD', 'GU': 'USD', 'MP': 'USD', 'CK': 'USD', 'NU': 'USD', 'TK': 'USD', 'WF': 'USD', 'NF': 'USD', 'PN': 'USD', 'GS': 'USD', 'SH': 'USD', 'AC': 'USD', 'TA': 'USD', 'IO': 'USD', 'CX': 'USD', 'CC': 'USD', 'HM': 'USD', 'AQ': 'USD', 'BV': 'USD', 'TF': 'USD', 'UM': 'USD',
+                        'DE': 'EUR', 'FR': 'EUR', 'IT': 'EUR', 'ES': 'EUR', 'NL': 'EUR', 'BE': 'EUR', 'AT': 'EUR', 'PT': 'EUR', 'IE': 'EUR', 'FI': 'EUR', 'GR': 'EUR', 'LU': 'EUR', 'MT': 'EUR', 'CY': 'EUR', 'SK': 'EUR', 'SI': 'EUR', 'EE': 'EUR', 'LV': 'EUR', 'LT': 'EUR', 'AD': 'EUR', 'MC': 'EUR', 'SM': 'EUR', 'VA': 'EUR', 'ME': 'EUR', 'XK': 'EUR'
+                    };
+                    
+                    this.userCurrency = countryToCurrency[this.userCountry] || 'USD';
+                    console.log(`Final detection - Country: ${this.userCountry}, Currency: ${this.userCurrency}`);
+                    
+                } catch (error) {
+                    console.error('Error in location detection:', error);
+                    this.userCurrency = 'USD';
+                    this.userCountry = 'Unknown';
+                }
+            }
+            
+            translateContent(contentKey) {
+                const translations = {
+                    'checkout_title': {
+                        'USD': 'Checkout',
+                        'BRL': 'Finalizar Compra',
+                        'EUR': 'Checkout'
+                    },
+                    'product_info': {
+                        'USD': 'Product Information',
+                        'BRL': 'Informações do Produto',
+                        'EUR': 'Product Information'
+                    },
+                    'customer_info': {
+                        'USD': 'Customer Information',
+                        'BRL': 'Informações do Cliente',
+                        'EUR': 'Customer Information'
+                    },
+                    'payment_info': {
+                        'USD': 'Payment Information',
+                        'BRL': 'Informações de Pagamento',
+                        'EUR': 'Payment Information'
+                    },
+                    'order_summary': {
+                        'USD': 'Order Summary',
+                        'BRL': 'Resumo do Pedido',
+                        'EUR': 'Order Summary'
+                    },
+                    'first_name': {
+                        'USD': 'First Name',
+                        'BRL': 'Nome',
+                        'EUR': 'First Name'
+                    },
+                    'last_name': {
+                        'USD': 'Last Name',
+                        'BRL': 'Sobrenome',
+                        'EUR': 'Last Name'
+                    },
+                    'email': {
+                        'USD': 'Email',
+                        'BRL': 'E-mail',
+                        'EUR': 'Email'
+                    },
+                    'phone': {
+                        'USD': 'Phone',
+                        'BRL': 'Telefone',
+                        'EUR': 'Phone'
+                    },
+                    'address': {
+                        'USD': 'Address',
+                        'BRL': 'Endereço',
+                        'EUR': 'Address'
+                    },
+                    'city': {
+                        'USD': 'City',
+                        'BRL': 'Cidade',
+                        'EUR': 'City'
+                    },
+                    'state': {
+                        'USD': 'State',
+                        'BRL': 'Estado',
+                        'EUR': 'State'
+                    },
+                    'zip_code': {
+                        'USD': 'Zip Code',
+                        'BRL': 'CEP',
+                        'EUR': 'Zip Code'
+                    },
+                    'country': {
+                        'USD': 'Country',
+                        'BRL': 'País',
+                        'EUR': 'Country'
+                    },
+                    'payment_method': {
+                        'USD': 'Payment Method',
+                        'BRL': 'Método de Pagamento',
+                        'EUR': 'Payment Method'
+                    },
+                    'observations': {
+                        'USD': 'Observations',
+                        'BRL': 'Observações',
+                        'EUR': 'Observations'
+                    },
+                    'total': {
+                        'USD': 'Total',
+                        'BRL': 'Total',
+                        'EUR': 'Total'
+                    },
+                    'checkout_button': {
+                        'USD': 'Complete Purchase',
+                        'BRL': 'Finalizar Compra',
+                        'EUR': 'Complete Purchase'
+                    },
+                    'required_fields': {
+                        'USD': 'Please fill in all required fields.',
+                        'BRL': 'Por favor, preencha todos os campos obrigatórios.',
+                        'EUR': 'Please fill in all required fields.'
+                    },
+                    'order_success': {
+                        'USD': 'Order completed successfully!',
+                        'BRL': 'Pedido realizado com sucesso!',
+                        'EUR': 'Order completed successfully!'
+                    },
+                    'confirmation_email': {
+                        'USD': 'You will receive a confirmation email shortly.',
+                        'BRL': 'Você receberá um e-mail de confirmação em breve.',
+                        'EUR': 'You will receive a confirmation email shortly.'
+                    }
+                };
+                
+                return translations[contentKey] ? 
+                    translations[contentKey][this.userCurrency] || 
+                    translations[contentKey]['USD'] : 
+                    contentKey;
+            }
+            
+            updatePageContent() {
+                try {
+                    // Update page title
+                    const pageTitle = document.querySelector('title');
+                    if (pageTitle) {
+                        pageTitle.textContent = `${this.translateContent('checkout_title')} - Heat-Resistant Mat | 67 Beauty Hub`;
+                    }
+                    
+                    // Update form labels
+                    const firstNameLabel = document.querySelector('label[for="firstName"]');
+                    if (firstNameLabel) firstNameLabel.textContent = this.translateContent('first_name');
+                    
+                    const lastNameLabel = document.querySelector('label[for="lastName"]');
+                    if (lastNameLabel) lastNameLabel.textContent = this.translateContent('last_name');
+                    
+                    const emailLabel = document.querySelector('label[for="email"]');
+                    if (emailLabel) emailLabel.textContent = this.translateContent('email');
+                    
+                    const phoneLabel = document.querySelector('label[for="phone"]');
+                    if (phoneLabel) phoneLabel.textContent = this.translateContent('phone');
+                    
+                    const addressLabel = document.querySelector('label[for="address"]');
+                    if (addressLabel) addressLabel.textContent = this.translateContent('address');
+                    
+                    const cityLabel = document.querySelector('label[for="city"]');
+                    if (cityLabel) cityLabel.textContent = this.translateContent('city');
+                    
+                    const stateLabel = document.querySelector('label[for="state"]');
+                    if (stateLabel) stateLabel.textContent = this.translateContent('state');
+                    
+                    const zipCodeLabel = document.querySelector('label[for="zipCode"]');
+                    if (zipCodeLabel) zipCodeLabel.textContent = this.translateContent('zip_code');
+                    
+                    const countryLabel = document.querySelector('label[for="country"]');
+                    if (countryLabel) countryLabel.textContent = this.translateContent('country');
+                    
+                    const paymentLabel = document.querySelector('label[for="paymentMethod"]');
+                    if (paymentLabel) paymentLabel.textContent = this.translateContent('payment_method');
+                    
+                    const observationsLabel = document.querySelector('label[for="observations"]');
+                    if (observationsLabel) observationsLabel.textContent = this.translateContent('observations');
+                    
+                    // Update placeholders
+                    const firstNameInput = document.getElementById('firstName');
+                    if (firstNameInput) firstNameInput.placeholder = this.translateContent('first_name');
+                    
+                    const lastNameInput = document.getElementById('lastName');
+                    if (lastNameInput) lastNameInput.placeholder = this.translateContent('last_name');
+                    
+                    const emailInput = document.getElementById('email');
+                    if (emailInput) emailInput.placeholder = this.translateContent('email');
+                    
+                    
+                    const observationsInput = document.getElementById('observations');
+                    if (observationsInput) observationsInput.placeholder = this.translateContent('observations');
+                    
+                    // Update checkout button
+                    const checkoutButton = document.querySelector('button[onclick="processCheckout()"]');
+                    if (checkoutButton) checkoutButton.textContent = this.translateContent('checkout_button');
+                    
+                    console.log('Checkout page content updated successfully');
+                    
+                } catch (error) {
+                    console.error('Error updating checkout page content:', error);
+                }
+            }
+        }
+        
+        // Initialize checkout translator when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            new CheckoutTranslator();
+        });
+    </script>
+
+</body>
+</html>

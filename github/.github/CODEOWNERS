@@ -1,0 +1,18 @@
+# Global code owners
+* @SEU-USUARIO
+
+# Frontend files
+*.html @SEU-USUARIO
+*.css @SEU-USUARIO
+*.js @SEU-USUARIO
+
+# Backend/Scraper files
+Aliexpress Scraper/ @SEU-USUARIO
+
+# Documentation
+README.md @SEU-USUARIO
+CONTRIBUTING.md @SEU-USUARIO
+LICENSE @SEU-USUARIO
+
+# GitHub configuration
+.github/ @SEU-USUARIO

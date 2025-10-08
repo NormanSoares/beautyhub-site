@@ -1,0 +1,2683 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>67 Beauty Hub - Beleza e Conforto</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    
+    <style>
+        /* User Authentication Styles */
+        .user-auth {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: #d4af37;
+            border: 2px solid #d4af37;
+        }
+
+        .login-btn:hover {
+            background: #d4af37;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .register-btn {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid #d4af37;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #d4af37;
+            font-weight: 500;
+        }
+
+        .user-avatar:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        .user-avatar i.fa-user-circle {
+            font-size: 1.2rem;
+        }
+
+        .user-avatar i.fa-chevron-down {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .user-avatar.active i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            min-width: 180px;
+            z-index: 1000;
+            display: none;
+            animation: dropdownSlide 0.3s ease;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        @keyframes dropdownSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .user-dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .user-dropdown a:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+        }
+
+        .user-dropdown i {
+            width: 16px;
+            text-align: center;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .user-auth {
+                margin-right: 10px;
+            }
+
+            .auth-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .user-avatar {
+                padding: 6px 10px;
+                font-size: 14px;
+            }
+
+            .user-dropdown {
+                right: -10px;
+                min-width: 160px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .auth-btn {
+                padding: 8px 12px;
+            }
+
+            .user-avatar span {
+                display: none;
+            }
+        }
+
+        /* Product Section Interactive Styles */
+        .product-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(212, 175, 55, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            border-radius: 15px;
+        }
+        
+        .product-overlay i {
+            font-size: 2rem;
+            color: white;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover .product-overlay {
+            opacity: 1;
+        }
+        
+        .product-card:hover .product-overlay i {
+            transform: translateX(0);
+        }
+        
+        .product-action-btn {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .product-card:hover .product-action-btn {
+            background: linear-gradient(135deg, #b8941f, #9a7d1a);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-icon {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        /* Dropdown Menu Styles */
+        .nav-item.dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            padding: 10px 0;
+            list-style: none;
+            margin: 0;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .dropdown-link:hover {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+        }
+
+        .dropdown-link i {
+            font-size: 1.1rem;
+        }
+
+        .dropdown-toggle i {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle i {
+            transform: rotate(180deg);
+        }
+
+        /* Product Checkout Overlay Styles */
+        .product-checkout-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(212, 175, 55, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            border-radius: 15px;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            pointer-events: none;
+        }
+
+
+
+        .product-checkout-overlay i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .product-checkout-overlay span {
+            font-size: 1.1rem;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .featured-item:hover .product-checkout-overlay {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .featured-item:hover .product-checkout-overlay i {
+            transform: translateY(0);
+        }
+
+        .featured-item:hover .product-checkout-overlay span {
+            transform: translateY(0);
+        }
+
+        .featured-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
+        }
+
+        .featured-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Allow the entire card to be clickable while keeping overlay interactive */
+        .featured-item * { pointer-events: none; }
+        .product-checkout-overlay * { pointer-events: auto; }
+        .featured-item { cursor: pointer; }
+
+        .featured-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .product-price {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+
+
+
+        .cart-count {
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            min-width: 20px;
+        }
+
+        .cart-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 350px;
+            max-width: 400px;
+            z-index: 1000;
+            display: none;
+            animation: cartSlideDown 0.3s ease;
+        }
+
+        .cart-dropdown.show {
+            display: block;
+        }
+
+        @keyframes cartSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .cart-header h3 {
+            color: #d4af37;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .close-cart:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .cart-items {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .empty-cart i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            gap: 15px;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-price {
+            color: #d4af37;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* quantities removed - hide legacy class */
+        .cart-item-quantity { display: none; }
+
+        .quantity-btn { display: none; }
+
+        .quantity-btn:hover { display: none; }
+
+        .quantity-input { display: none; }
+
+        .remove-item {
+            background: #ff4757;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .remove-item:hover {
+            background: #ff3742;
+        }
+
+        .cart-footer {
+            padding: 20px;
+            border-top: 1px solid #e0e0e0;
+            background: #f8f9fa;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .cart-total {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .checkout-btn:hover {
+            background: linear-gradient(135deg, #b8941f, #9a7d1a);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Mobile Responsiveness for Cart */
+        @media (max-width: 768px) {
+            .cart-dropdown {
+                min-width: 300px;
+                right: -50px;
+            }
+            
+            .shopping-cart {
+                margin-right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cart-dropdown {
+                min-width: 280px;
+                right: -80px;
+            }
+        }
+
+        /* Product Sidebar Styles */
+        .product-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: none;
+        }
+
+        .product-sidebar.show {
+            display: block !important;
+        }
+
+        .sidebar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .sidebar-content {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-sidebar.show .sidebar-content {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .close-sidebar {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .close-sidebar:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .sidebar-body {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .product-detail-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .product-detail-image {
+            width: 100%;
+            max-width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-detail-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .product-detail-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .product-detail-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 30px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .quantity-label {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .quantity-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quantity-btn-large {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .quantity-btn-large:hover {
+            background: linear-gradient(135deg, #b8941f, #9a7d1a);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .quantity-btn-large:active {
+            transform: scale(0.95);
+        }
+
+        .quantity-display {
+            background: white;
+            border: 3px solid #d4af37;
+            border-radius: 15px;
+            width: 80px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d4af37;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .price-summary {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+        }
+
+        .price-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .price-line:last-child {
+            margin-bottom: 0;
+        }
+
+        .price-line.total {
+            border-top: 2px solid #d4af37;
+            padding-top: 10px;
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: #d4af37;
+        }
+
+        .sidebar-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .action-btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .update-cart-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .update-cart-btn:hover {
+            background: linear-gradient(135deg, #20c997, #17a2b8);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .remove-cart-btn {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .remove-cart-btn:hover {
+            background: linear-gradient(135deg, #c82333, #bd2130);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+        }
+
+        .view-cart-btn {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .view-cart-btn:hover {
+            background: linear-gradient(135deg, #495057, #343a40);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .checkout-btn:hover {
+            background: linear-gradient(135deg, #b8941f, #9a7d1a);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Mobile Responsiveness for Sidebar */
+        @media (max-width: 768px) {
+            .sidebar-content {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .product-detail-image {
+                max-width: 200px;
+                height: 200px;
+            }
+            
+            .product-detail-name {
+                font-size: 1.3rem;
+            }
+            
+            .product-detail-price {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-content {
+                width: 100%;
+            }
+            
+            .sidebar-body {
+                padding: 20px;
+            }
+            
+            .product-detail-card {
+                padding: 20px;
+            }
+        }
+        
+        /* Force Hero Section Visibility */
+        .hero {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            z-index: 100 !important;
+        }
+        
+        .hero-content {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            z-index: 101 !important;
+        }
+        
+        .hero-subtitle,
+        .hero-description {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            color: #fff !important;
+            background: rgba(0, 0, 0, 0.5) !important;
+            padding: 15px 25px !important;
+            border-radius: 15px !important;
+            margin: 10px 0 !important;
+        }
+        
+        .hero-buttons {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            gap: 1rem !important;
+            justify-content: center !important;
+        }
+        
+        .hero-logo {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            justify-content: center !important;
+            margin-bottom: 2rem !important;
+        }
+        
+        .hero-logo-image {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            height: 200px !important;
+            width: auto !important;
+            max-width: 100% !important;
+            object-fit: contain !important;
+            filter: drop-shadow(0 8px 16px rgba(212, 175, 55, 0.3)) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <div class="global-background-video" style="z-index: -10 !important;">
+        <video autoplay muted loop playsinline preload="auto" style="z-index: -10 !important;">
+            <source src="background-video.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos.
+        </video>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-container">
+                    <img src="Logo.png?v=1" alt="67 Beauty Hub" class="logo-image" />
+                    <div class="logo-text">
+                        <span class="logo-brand">67 BEAUTY HUB</span>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#products" class="nav-link">Produtos</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Seções <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="Produtos de beleza/beauty-store.html" class="dropdown-link"><i class="fas fa-palette"></i> Seção Beleza</a></li>
+                        <li><a href="Produtos de conforto/comfort-store.html" class="dropdown-link"><i class="fas fa-home"></i> Seção Conforto</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">Sobre</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contato</a>
+                </li>
+            </ul>
+            
+            <!-- Shopping Cart Section -->
+
+            <!-- Product Quick View Sidebar -->
+            <div class="product-sidebar" id="productSidebar">
+                <div class="sidebar-overlay" onclick="closeProductSidebar()"></div>
+                <div class="sidebar-content">
+                    <div class="sidebar-header">
+                        <h3><i class="fas fa-box"></i> Produto Selecionado</h3>
+                        <button onclick="closeProductSidebar()" class="close-sidebar">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar-body" id="sidebarBody">
+                        <!-- Product details will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Authentication Section -->
+            <div class="user-auth" id="userAuthSection">
+                <!-- Login/Register buttons (shown when not logged in) -->
+                <div class="auth-buttons" id="authButtons">
+                    <button class="auth-btn login-btn" onclick="openLoginModal()">
+                        <i class="fas fa-sign-in-alt"></i> Entrar
+                    </button>
+                    <button class="auth-btn register-btn" onclick="openRegisterModal()">
+                        <i class="fas fa-user-plus"></i> Cadastrar
+                    </button>
+                </div>
+                
+                <!-- User menu (shown when logged in) -->
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <div class="user-avatar" onclick="toggleUserDropdown()">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userName">Usuário</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#" onclick="viewProfile()">
+                            <i class="fas fa-user"></i> Meu Perfil
+                        </a>
+                        <a href="#" onclick="viewMyReviews()">
+                            <i class="fas fa-star"></i> Minhas Avaliações
+                        </a>
+                        <a href="#" onclick="logoutUser()">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content" style="display: block !important; visibility: visible !important; opacity: 1 !important; z-index: 100 !important;">
+            <div class="hero-logo" style="display: flex !important; visibility: visible !important; opacity: 1 !important; justify-content: center !important; margin-bottom: 2rem !important;">
+                <img src="Logo.png?v=1" alt="67 Beauty Hub" class="hero-logo-image" style="display: block !important; visibility: visible !important; opacity: 1 !important; height: 200px !important; width: auto !important; max-width: 100% !important; object-fit: contain !important; filter: drop-shadow(0 8px 16px rgba(212, 175, 55, 0.3)) !important;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                <div style="display: none; font-size: 3rem; color: #d4af37; font-weight: bold; text-align: center; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 15px; border: 2px solid #d4af37;">67 BEAUTY HUB</div>
+            </div>
+            <p class="hero-subtitle" style="display: block !important; visibility: visible !important; opacity: 1 !important;">Produtos de Beleza e Conforto</p>
+            <p class="hero-description" style="display: block !important; visibility: visible !important; opacity: 1 !important;">Descubra nossa seleção exclusiva de produtos de beleza e conforto, cuidadosamente escolhidos para sua rotina de cuidados pessoais.</p>
+            <div class="hero-buttons" style="display: flex !important; visibility: visible !important; opacity: 1 !important;">
+                <a href="#products" class="btn btn-primary">Nossos Produtos</a>
+                <a href="#contact" class="btn btn-secondary">Fazer Pedido</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <h2 class="section-title">Nossos Produtos</h2>
+            <p class="section-subtitle">Seleção cuidadosa de produtos de beleza e conforto para sua rotina diária</p>
+            
+            <div class="products-grid">
+                <div class="product-card" onclick="openBeautyStore()" style="cursor: pointer;">
+                    <div class="product-icon">
+                        <img src="Imagens/Beauty Products.jpg" alt="Produtos de Beleza" class="product-image" />
+                        <div class="product-overlay">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <h3>Produtos de Beleza</h3>
+                    <p>Maquiagem, skincare, produtos capilares e tudo que você precisa para realçar sua beleza natural.</p>
+                    <div class="product-features">
+                        <span class="feature-tag">Maquiagem</span>
+                        <span class="feature-tag">Skincare</span>
+                        <span class="feature-tag">Cabelos</span>
+                    </div>
+                    <div class="product-action-btn">
+                        <i class="fas fa-sparkles"></i> Explorar Seção Beleza
+                    </div>
+                </div>
+                
+                <div class="product-card" onclick="openComfortStore()" style="cursor: pointer;">
+                    <div class="product-icon">
+                        <img src="Imagens/comfort Products.jpg" alt="Produtos de Conforto" class="product-image" />
+                        <div class="product-overlay">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <h3>Produtos de Conforto</h3>
+                    <p>Itens para seu bem-estar e conforto pessoal, criando um ambiente acolhedor em casa.</p>
+                    <div class="product-features">
+                        <span class="feature-tag">Bem-estar</span>
+                        <span class="feature-tag">Conforto</span>
+                        <span class="feature-tag">Relaxamento</span>
+                    </div>
+                    <div class="product-action-btn">
+                        <i class="fas fa-home"></i> Explorar Seção Conforto
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-overlay"></div>
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="about-text-container">
+                        <h2>Sobre o 67 Beauty Hub</h2>
+                        <p>No 67 Beauty Hub, acreditamos que a beleza e o conforto andam juntos. Somos especialistas em produtos de beleza e conforto, oferecendo uma seleção cuidadosa de itens para sua rotina diária.</p>
+                        <p>Com anos de experiência no mercado, selecionamos apenas produtos de alta qualidade que combinam eficácia, segurança e conforto para você.</p>
+                        <div class="about-features">
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Produtos de alta qualidade</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Seleção cuidadosa</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Entrega rápida e segura</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="Imagens/WhatsApp Image 2025-09-19 at 10.19.43_1918c57e.jpg" alt="67 Beauty Hub" class="about-image-content" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section id="featured" class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Produtos em Destaque</h2>
+            <p class="section-subtitle">Nossos produtos mais procurados e recomendados</p>
+            
+            <div class="featured-grid">
+                <!-- Primeira linha - 5 blocos -->
+                <div class="featured-item" onclick="window.location.href='Produtos de beleza/2 Pack PHOERA Foundation + Combo/checkout-phoera.html'">
+                    <div class="featured-image">
+                        <img src="Produtos de beleza/2 Pack PHOERA Foundation + Combo/Apresentação 1.png" alt="Produto 1" class="featured-product-image" />
+                        <div class="product-checkout-overlay" onclick="window.location.href='Produtos de beleza/2 Pack PHOERA Foundation + Combo/checkout-phoera.html'">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Comprar Agora</span>
+                        </div>
+                    </div>
+                    <div class="featured-content">
+                        <h3>2 Pack PHOERA Foundation</h3>
+                        <p>Elimine manchas, olheiras e imperfeições com cobertura total que dura 12+ horas. Acabamento matte que não derrete no calor. Kit com 2 bases + extras.</p>
+                        <div class="product-price">R$ 91,68</div>
+                        
+                    </div>
+                </div>
+                
+                <div class="featured-item" onclick="window.location.href='Produtos de beleza/Alligator Hair Clips + Combo/checkout-alligator-clips.html'">
+                    <div class="featured-image">
+                        <img src="Produtos de beleza/Alligator Hair Clips + Combo/Nude Pink (6 Pieces).png" alt="Produto 2" class="featured-product-image" />
+                        <div class="product-checkout-overlay" onclick="window.location.href='Produtos de beleza/Alligator Hair Clips + Combo/checkout-alligator-clips.html'">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Comprar Agora</span>
+                        </div>
+                    </div>
+                    <div class="featured-content">
+                        <h3>Alligator Hair Clips</h3>
+                        <p>Pare de perder grampos que quebram. Estes não escorregam, não quebram e seguram qualquer penteado firme. Kit com 6 peças em tons nude.</p>
+                        <div class="product-price">$3.54</div>
+                        
+                    </div>
+                </div>
+                
+                <div class="featured-item" onclick="window.location.href='Produtos de beleza/Heat-Resistant Mat + Combo/checkout-heat-resistant-mat.html'">
+                    <div class="featured-image">
+                        <img src="Produtos de beleza/Heat-Resistant Mat + Combo/Apresentação 1.png" alt="Produto 3" class="featured-product-image" />
+                        <div class="product-checkout-overlay" onclick="window.location.href='Produtos de beleza/Heat-Resistant Mat + Combo/checkout-heat-resistant-mat.html'">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Comprar Agora</span>
+                        </div>
+                    </div>
+                    <div class="featured-content">
+                        <h3>Heat-Resistant Mat</h3>
+                        <p>Proteja sua mesa de queimaduras e danos. Resiste a temperaturas altas sem derreter. Impermeável e fácil de limpar.</p>
+                        <div class="product-price">$2.29</div>
+                        
+                    </div>
+                </div>
+                
+                <div class="featured-item" onclick="window.location.href='Produtos de beleza/LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/checkout-golden-sakura.html'">
+                    <div class="featured-image">
+                        <img src="Produtos de beleza/LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/Apresentação.png" alt="Golden Sakura Skin Care" class="featured-product-image" />
+                        <div class="product-checkout-overlay" onclick="window.location.href='Produtos de beleza/LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/checkout-golden-sakura.html'">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Comprar Agora</span>
+                        </div>
+                    </div>
+                    <div class="featured-content">
+                        <h3>LAIKOU Skincare</h3>
+                        <p>Reduza rugas, manchas e sinais de envelhecimento. Vitamina C + ouro 24k para pele mais firme e iluminada em 30 dias.</p>
+                        <div class="product-price">$5.99</div>
+                        
+                    </div>
+                </div>
+                
+                
+                
+                <!-- Segunda linha - 5 blocos -->
+                
+                
+                <div class="featured-item" onclick="window.location.href='Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/checkout-wrinkle-reducer.html'">
+                    <div class="featured-image">
+                        <img src="Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/Apresentação.png" alt="Vara de Skincare - Wrinkle Reducer" class="featured-product-image" />
+                        <div class="product-checkout-overlay" onclick="window.location.href='Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/checkout-wrinkle-reducer.html'">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Comprar Agora</span>
+                        </div>
+                    </div>
+                    <div class="featured-content">
+                        <h3>Vara de Skincare - Wrinkle Reducer</h3>
+                        <p>Elimine rugas e linhas de expressão em casa. Luz vermelha + massagem + 7 funções. Resultados visíveis em 2 semanas.</p>
+                        <div class="product-price">$17.45</div>
+                        
+                    </div>
+                </div>
+                
+                <div class="featured-item" onclick="window.location.href='Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/checkout-sofa-cover.html'">
+                    <div class="featured-image">
+                        <img src="Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person's Couch/Apresentação.jpg" alt="Detachable Sofa Cover" class="featured-product-image" />
+                        <div class="product-checkout-overlay" onclick="window.location.href='Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/checkout-sofa-cover.html'">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Comprar Agora</span>
+                        </div>
+                    </div>
+                    <div class="featured-content">
+                        <h3>Detachable Sofa Cover</h3>
+                        <p>Acabe com sofás desgastados e manchados. Transforme qualquer móvel em um lounge confortável. Remove e lava em segundos.</p>
+                        <div class="product-price">R$ 159,90</div>
+                        
+                    </div>
+                </div>
+                
+                
+                <div class="featured-item" onclick="window.location.href='Produtos de conforto/Human Dog bad/checkout-human-dog-bed.html'">
+                    <div class="featured-image">
+                        <img src="Produtos de conforto/Human Dog bad/Apresentação.png" alt="Human Dog Bed" class="featured-product-image" />
+                        <div class="product-checkout-overlay" onclick="window.location.href='Produtos de conforto/Human Dog bad/checkout-human-dog-bed.html'">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Comprar Agora</span>
+                        </div>
+                    </div>
+                    <div class="featured-content">
+                        <h3>Human Dog Bed</h3>
+                        <p>Acabe com dores nas costas e no pescoço. Cama gigante que suporta até 150kg. Conforto total para relaxar.</p>
+                        <div class="product-price">R$ 299,90</div>
+                        
+                    </div>
+                </div>
+                
+                <!-- Terceira linha - 3 blocos adicionais -->
+                
+                <div class="featured-item" onclick="window.location.href='Produtos de conforto/SNOOZE BUNDLE/checkout-snooze-bundle.html'">
+                    <div class="featured-image">
+                        <img src="Produtos de conforto/SNOOZE BUNDLE/apresentação 1.jpg" alt="Snooze Bundle" class="featured-product-image" />
+                        <div class="product-checkout-overlay" onclick="window.location.href='Produtos de conforto/SNOOZE BUNDLE/checkout-snooze-bundle.html'">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Comprar Agora</span>
+                        </div>
+                    </div>
+                    <div class="featured-content">
+                        <h3>Snooze Bundle</h3>
+                        <p>Acabe com noites mal dormidas em viagens. Conforto total para dormir em qualquer lugar. Compacto e prático.</p>
+                        <div class="product-price">R$ 89,90</div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Entre em Contato</h2>
+            <p class="section-subtitle">Faça seu pedido e descubra os melhores produtos de beleza e conforto</p>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Endereço</h4>
+                            <p>Rua da Beleza, 67<br>Centro - São Paulo, SP</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Telefone</h4>
+                            <p>(11) 99999-9999</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>contato@67beautyhub.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Horário de Funcionamento</h4>
+                            <p>Seg - Sex: 9h às 19h<br>Sáb: 9h às 17h</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Seu nome" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Seu email" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" placeholder="Seu telefone" />
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Sua mensagem" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Fazer Pedido</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>67 Beauty Hub</h3>
+                    <p>Onde a beleza encontra o conforto. Sua jornada de bem-estar começa aqui.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#services">Serviços</a></li>
+                        <li><a href="#about">Sobre</a></li>
+                        <li><a href="#contact">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Produtos</h4>
+                    <ul>
+                        <li><a href="#">Produtos de Beleza</a></li>
+                        <li><a href="#">Produtos de Conforto</a></li>
+                        <li><a href="#">Skincare</a></li>
+                        <li><a href="#">Bem-estar</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 67 Beauty Hub. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="script.js"></script>
+    
+    <script>
+        // Navigation Functions for Product Sections
+        function openBeautyStore() {
+            window.location.href = 'Produtos de beleza/beauty-store.html';
+        }
+
+        function openComfortStore() {
+            window.location.href = 'Produtos de conforto/comfort-store.html';
+        }
+
+
+
+        function showProductSidebar(productId, productData, currentQuantity = 1) {
+            console.log('🎯 Opening sidebar for product:', productId, 'with quantity:', currentQuantity);
+            
+            const sidebar = document.getElementById('productSidebar');
+            const sidebarBody = document.getElementById('sidebarBody');
+            
+            console.log('🔍 Sidebar element:', sidebar);
+            console.log('🔍 SidebarBody element:', sidebarBody);
+            
+            if (!sidebar) {
+                console.error('❌ Sidebar element not found');
+                return;
+            }
+            
+            if (!sidebarBody) {
+                console.error('❌ SidebarBody element not found');
+                return;
+            }
+            
+            console.log('✅ Elements found, creating content...');
+            
+            // Get translated product data
+            const translatedProductData = getProductData(productId);
+            const displayName = translatedProductData ? translatedProductData.name : productData.name;
+            
+            // Create sidebar content (quantidade removida)
+            sidebarBody.innerHTML = `
+                <div class="product-detail-card">
+                    <img src="${productData.image}" alt="${displayName}" class="product-detail-image">
+                    <h2 class="product-detail-name">${displayName}</h2>
+                    <p class="product-detail-description">${productData.description}</p>
+                    <div class="product-detail-price">${productData.price}</div>
+                    <div class="sidebar-actions">
+                    </div>
+                </div>
+            `;
+            
+            console.log('✅ Content created, showing sidebar...');
+            
+            // Show sidebar
+            sidebar.style.display = 'block';
+            sidebar.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            
+            console.log('🎨 Sidebar display:', sidebar.style.display);
+            console.log('🎨 Sidebar classes:', sidebar.className);
+            console.log('🎨 Sidebar computed style:', window.getComputedStyle(sidebar).display);
+            console.log('🎨 Sidebar visibility:', window.getComputedStyle(sidebar).visibility);
+            console.log('🎨 Sidebar opacity:', window.getComputedStyle(sidebar).opacity);
+            console.log('🎨 Sidebar z-index:', window.getComputedStyle(sidebar).zIndex);
+            
+            console.log('🎉 Sidebar should be visible now');
+            
+            // Force a repaint
+            sidebar.offsetHeight;
+        }
+
+        function updateSidebarQuantity() { /* no-op: quantities removed */ }
+
+        function updateSidebarTotalPrice() { /* no-op: quantities removed */ }
+
+
+
+
+        function closeProductSidebar() {
+            const sidebar = document.getElementById('productSidebar');
+            if (sidebar) {
+                sidebar.classList.remove('show');
+                sidebar.style.display = 'none';
+            }
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+
+        // Quantities removed: enforce unique items only
+        function updateQuantity() { /* no-op: quantities removed */ }
+
+
+
+
+
+
+        function showNotification(message, color = '#d4af37') {
+            // Create notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${color};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+                font-weight: 500;
+                max-width: 300px;
+            `;
+            notification.innerHTML = message;
+            
+            // Add animation CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideInRight {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+                style.remove();
+            }, 3000);
+        }
+
+        function getProductData(productId) {
+            console.log(`Getting product data for: ${productId}`);
+            const products = {
+                'phoera-foundation': {
+                    nameKey: 'product_phoera_foundation',
+                    price: 'R$ 91,68',
+                    image: 'Produtos de beleza/2 Pack PHOERA Foundation + Combo/Apresentação 1.png',
+                    description: 'Base de alta cobertura, acabamento natural e longa duração. Ideal para todos os tipos de pele.',
+                    category: 'Beleza',
+                    checkoutUrl: 'Produtos de beleza/2 Pack PHOERA Foundation + Combo/checkout-phoera.html'
+                },
+                'hair-clips': {
+                    nameKey: 'product_hair_clips',
+                    price: '$2.31',
+                    image: 'Produtos de beleza/Alligator Hair Clips + Combo/Nude Pink (6 Pieces).png',
+                    description: 'Prendedores resistentes e práticos, ideais para separar e fixar mechas durante penteados, cortes ou maquiagens.',
+                    category: 'Beleza',
+                    checkoutUrl: 'Produtos de beleza/Alligator Hair Clips + Combo/checkout-alligator-clips.html'
+                },
+                'heat-resistant-mat': {
+                    nameKey: 'product_heat_resistant_mat',
+                    price: '$2.29',
+                    image: 'Produtos de beleza/Heat-Resistant Mat + Combo/Apresentação 1.png',
+                    description: 'Tapete resistente ao calor, ideal para proteger superfícies de danos causados por ferramentas de styling.',
+                    category: 'Beleza',
+                    checkoutUrl: 'Produtos de beleza/Heat-Resistant Mat + Combo/checkout-heat-resistant-mat.html'
+                },
+                'laikou-skincare': {
+                    nameKey: 'product_laikou_skincare',
+                    price: '$5.99',
+                    image: 'Produtos de beleza/LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/Apresentação.png',
+                    description: 'Linha de cuidados com a pele inspirada na flor de cerejeira dourada, com fórmulas nutritivas.',
+                    category: 'Beleza',
+                    checkoutUrl: 'Produtos de beleza/LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/checkout-golden-sakura.html'
+                },
+                'wrinkle-reducer': {
+                    nameKey: 'product_wrinkle_reducer',
+                    price: '$17.45',
+                    image: 'Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/Apresentação.png',
+                    description: 'Dispositivo de terapia com luz vermelha que estimula o colágeno, suaviza linhas finas e reduz rugas.',
+                    category: 'Beleza',
+                    checkoutUrl: 'Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/checkout-wrinkle-reducer.html'
+                },
+                'sofa-cover': {
+                    nameKey: 'product_sofa_cover',
+                    price: 'R$ 159,90',
+                    image: 'Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/Apresentação.jpg',
+                    description: 'Design versátil e confortável, ideal como sofá, puff ou lounge. Fácil de remover e limpar.',
+                    category: 'Conforto',
+                    checkoutUrl: 'Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/checkout-sofa-cover.html'
+                },
+                'human-dog-bed': {
+                    nameKey: 'product_human_dog_bed',
+                    price: 'R$ 299,90',
+                    image: 'Produtos de conforto/Human Dog bad/Apresentação.png',
+                    description: 'Cama gigante e aconchegante, projetada para adultos relaxarem com conforto. Macia e espaçosa.',
+                    category: 'Conforto',
+                    checkoutUrl: 'Produtos de conforto/Human Dog bad/checkout-human-dog-bed.html'
+                },
+                'snooze-bundle': {
+                    nameKey: 'product_snooze_bundle',
+                    price: 'R$ 89,90',
+                    image: 'Produtos de conforto/SNOOZE BUNDLE/apresentação 1.jpg',
+                    description: 'Torna suas viagens muito mais confortáveis, proporcionando descanso, praticidade e aconchego.',
+                    category: 'Conforto',
+                    checkoutUrl: 'Produtos de conforto/SNOOZE BUNDLE/checkout-snooze-bundle.html'
+                }
+            };
+            
+            const product = products[productId];
+            console.log(`Product found:`, product);
+            console.log(`Global translator available:`, !!window.globalTranslator);
+            
+            if (product && window.globalTranslator) {
+                // Get translated name using the global translator
+                product.name = window.globalTranslator.translateContent(product.nameKey);
+                console.log(`Translated name: ${product.name}`);
+            } else if (product) {
+                // Fallback to default names if translator not available
+                const defaultNames = {
+                    'product_phoera_foundation': '2 Pack PHOERA Foundation',
+                    'product_hair_clips': 'Alligator Hair Clips',
+                    'product_heat_resistant_mat': 'Heat-Resistant Mat',
+                    'product_laikou_skincare': 'LAIKOU Skincare',
+                    'product_wrinkle_reducer': 'Wrinkle Reducer - Red Light Therapy',
+                    'product_sofa_cover': 'Detachable Sofa Cover',
+                    'product_human_dog_bed': 'Human Dog Bed',
+                    'product_snooze_bundle': 'Snooze Bundle'
+                };
+                product.name = defaultNames[product.nameKey] || product.nameKey;
+                console.log(`Fallback name: ${product.name}`);
+            }
+            
+            console.log(`Final product data:`, product);
+            return product;
+        }
+
+        function createCheckoutPage(product) {
+            // Criar página de checkout em nova aba
+            const checkoutWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
+            
+            checkoutWindow.document.write('<!DOCTYPE html>');
+            checkoutWindow.document.write('<html lang="pt-BR">');
+            checkoutWindow.document.write('<head>');
+            checkoutWindow.document.write('<meta charset="UTF-8">');
+            checkoutWindow.document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+            checkoutWindow.document.write('<title>Checkout - ' + product.name + ' | 67 Beauty Hub</title>');
+            checkoutWindow.document.write('<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">');
+            checkoutWindow.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">');
+            checkoutWindow.document.write('<style>');
+            checkoutWindow.document.write('* { margin: 0; padding: 0; box-sizing: border-box; }');
+            checkoutWindow.document.write('body { font-family: "Poppins", sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; }');
+            checkoutWindow.document.write('.checkout-container { max-width: 800px; margin: 0 auto; padding: 20px; }');
+            checkoutWindow.document.write('.checkout-header { text-align: center; margin-bottom: 30px; }');
+            checkoutWindow.document.write('.checkout-header h1 { color: #d4af37; font-size: 2.5rem; margin-bottom: 10px; }');
+            checkoutWindow.document.write('.checkout-header p { color: #666; font-size: 1.1rem; }');
+            checkoutWindow.document.write('.checkout-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }');
+            checkoutWindow.document.write('.product-info { text-align: center; }');
+            checkoutWindow.document.write('.product-image { width: 100%; max-width: 300px; border-radius: 15px; margin-bottom: 20px; }');
+            checkoutWindow.document.write('.product-name { font-size: 1.8rem; color: #333; margin-bottom: 15px; }');
+            checkoutWindow.document.write('.product-description { color: #666; margin-bottom: 20px; line-height: 1.6; }');
+            checkoutWindow.document.write('.product-price { font-size: 2.5rem; color: #d4af37; font-weight: 700; margin-bottom: 30px; }');
+            checkoutWindow.document.write('.form-group { margin-bottom: 20px; }');
+            checkoutWindow.document.write('.form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #333; }');
+            checkoutWindow.document.write('.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; transition: border-color 0.3s ease; }');
+            checkoutWindow.document.write('.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #d4af37; }');
+            checkoutWindow.document.write('.checkout-btn { width: 100%; background: linear-gradient(135deg, #d4af37, #b8941f); color: white; border: none; padding: 18px; border-radius: 10px; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }');
+            checkoutWindow.document.write('.checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3); }');
+            checkoutWindow.document.write('.back-btn { position: absolute; top: 20px; left: 20px; background: #f8f9fa; color: #666; border: 2px solid #e0e0e0; padding: 10px 20px; border-radius: 8px; text-decoration: none; transition: all 0.3s ease; }');
+            checkoutWindow.document.write('.back-btn:hover { background: #e9ecef; color: #333; }');
+            checkoutWindow.document.write('</style>');
+            checkoutWindow.document.write('</head>');
+            checkoutWindow.document.write('<body>');
+            checkoutWindow.document.write('<a href="javascript:window.close()" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>');
+            checkoutWindow.document.write('<div class="checkout-container">');
+            checkoutWindow.document.write('<div class="checkout-header">');
+            checkoutWindow.document.write('<h1><i class="fas fa-credit-card"></i> Finalizar Compra</h1>');
+            checkoutWindow.document.write('<p>Complete seu pedido com segurança</p>');
+            checkoutWindow.document.write('</div>');
+            checkoutWindow.document.write('<div class="checkout-content">');
+            checkoutWindow.document.write('<div class="product-info">');
+            checkoutWindow.document.write('<img src="' + product.image + '" alt="' + product.name + '" class="product-image">');
+            checkoutWindow.document.write('<h2 class="product-name">' + product.name + '</h2>');
+            checkoutWindow.document.write('<p class="product-description">' + product.description + '</p>');
+            checkoutWindow.document.write('<div class="product-price">' + product.price + '</div>');
+            checkoutWindow.document.write('</div>');
+            checkoutWindow.document.write('<form class="checkout-form" onsubmit="processCheckout(event)">');
+            checkoutWindow.document.write('<div class="form-group"><label for="name">Nome Completo</label><input type="text" id="name" name="name" required></div>');
+            checkoutWindow.document.write('<div class="form-group"><label for="email">E-mail</label><input type="email" id="email" name="email" required></div>');
+            checkoutWindow.document.write('<div class="form-group"><label for="phone">Telefone</label><input type="tel" id="phone" name="phone" required></div>');
+            checkoutWindow.document.write('<div class="form-group"><label for="address">Endereço Completo</label><textarea id="address" name="address" rows="3" required></textarea></div>');
+            checkoutWindow.document.write('<div class="form-group"><label for="payment">Forma de Pagamento</label>');
+            checkoutWindow.document.write('<select id="payment" name="payment" required>');
+            checkoutWindow.document.write('<option value="">Selecione...</option>');
+            checkoutWindow.document.write('<option value="pix">PIX</option>');
+            checkoutWindow.document.write('<option value="credit">Cartão de Crédito</option>');
+            checkoutWindow.document.write('<option value="debit">Cartão de Débito</option>');
+            checkoutWindow.document.write('<option value="boleto">Boleto Bancário</option>');
+            checkoutWindow.document.write('</select></div>');
+            checkoutWindow.document.write('<button type="submit" class="checkout-btn"><i class="fas fa-check"></i> Finalizar Pedido</button>');
+            checkoutWindow.document.write('</form>');
+            checkoutWindow.document.write('</div>');
+            checkoutWindow.document.write('</div>');
+            checkoutWindow.document.write('<script>');
+            checkoutWindow.document.write('function processCheckout(e) {');
+            checkoutWindow.document.write('e.preventDefault();');
+            checkoutWindow.document.write('alert("Pedido realizado com sucesso!");');
+            checkoutWindow.document.write('window.close();');
+            checkoutWindow.document.write('}');
+            checkoutWindow.document.write('</scr' + 'ipt>');
+            checkoutWindow.document.write('</body>');
+            checkoutWindow.document.write('</html>');
+            
+            checkoutWindow.document.close();
+        }
+
+        // Add hover effects for product cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.cursor = 'pointer';
+                });
+            });
+        });
+
+        // Store navigation functions
+        // Initialize system
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar sistema de login
+            initializeLoginSystem();
+            
+        });
+
+        // Sistema de Login
+        let loginModal = null;
+        let loginTimer = null;
+        let isLoggedIn = false;
+
+        function initializeLoginSystem() {
+            // Verificar se já está logado
+            if (localStorage.getItem('userLoggedIn') === 'true') {
+                isLoggedIn = true;
+                return;
+            }
+
+            // Iniciar timer de 15 segundos
+            loginTimer = setTimeout(() => {
+                if (!isLoggedIn) {
+                    showLoginModal();
+                }
+            }, 15000);
+        }
+
+        // Sistema de persistência de login
+        function saveLoginState(state) {
+            localStorage.setItem('beautyHub_loginState', state);
+            localStorage.setItem('beautyHub_loginTime', Date.now());
+        }
+
+        function getLoginState() {
+            const state = localStorage.getItem('beautyHub_loginState');
+            const loginTime = localStorage.getItem('beautyHub_loginTime');
+            
+            // Se passou mais de 24 horas, limpar o estado
+            if (loginTime && (Date.now() - parseInt(loginTime)) > 24 * 60 * 60 * 1000) {
+                localStorage.removeItem('beautyHub_loginState');
+                localStorage.removeItem('beautyHub_loginTime');
+                return null;
+            }
+            
+            return state;
+        }
+
+        function shouldShowLoginModal() {
+            const loginState = getLoginState();
+            return !loginState; // Só mostra se não há estado salvo
+        }
+
+        function showLoginModal() {
+            // Verificar se deve mostrar o modal
+            if (!shouldShowLoginModal()) {
+                return;
+            }
+
+            // Criar modal de login
+            loginModal = document.createElement('div');
+            loginModal.id = 'loginModal';
+            loginModal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: fadeIn 0.3s ease;
+            `;
+
+            loginModal.innerHTML = `
+                <div style="background: white; padding: 40px; border-radius: 15px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: slideIn 0.3s ease;">
+                    <div style="margin-bottom: 20px;">
+                        <i class="fas fa-user-circle" style="font-size: 60px; color: #d4af37; margin-bottom: 15px;"></i>
+                        <h2 style="color: #333; margin-bottom: 10px;">Bem-vindo à 67 Beauty Hub</h2>
+                        <p style="color: #666; margin-bottom: 30px;">Faça login para continuar navegando</p>
+                    </div>
+                    
+                    <form id="loginForm" style="text-align: left;">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Email</label>
+                            <input type="email" id="loginEmail" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.3s ease;" placeholder="seu@email.com" />
+                        </div>
+                        
+                        <div style="margin-bottom: 30px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Senha</label>
+                            <input type="password" id="loginPassword" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.3s ease;" placeholder="Sua senha" />
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                            <button type="submit" style="flex: 1; background: linear-gradient(135deg, #d4af37, #b8941f); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                                <i class="fas fa-sign-in-alt"></i> Entrar
+                            </button>
+                            
+                            <button type="button" onclick="skipLogin()" style="flex: 1; background: #f8f9fa; color: #666; border: 2px solid #e0e0e0; padding: 12px 20px; border-radius: 8px; font-size: 16px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                                <i class="fas fa-times"></i> Pular
+                            </button>
+                        </div>
+                        
+                        <div style="text-align: center; font-size: 14px; color: #666;">
+                            <p>Não tem conta? <a href="#" style="color: #d4af37; text-decoration: none;">Cadastre-se aqui</a></p>
+                        </div>
+                    </form>
+                </div>
+            `;
+
+            // Adicionar CSS para animações
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideIn {
+                    from { transform: translateY(-50px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+                #loginModal input:focus {
+                    outline: none;
+                    border-color: #d4af37;
+                }
+            `;
+            document.head.appendChild(style);
+
+            document.body.appendChild(loginModal);
+
+            // Adicionar evento de submit
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Simular validação (em produção, validar com servidor)
+            if (email && password) {
+                // Login bem-sucedido
+                isLoggedIn = true;
+                localStorage.setItem('userLoggedIn', 'true');
+                localStorage.setItem('userEmail', email);
+                
+                // Salvar estado de login bem-sucedido
+                saveLoginState('success');
+                
+                // Mostrar mensagem de sucesso
+                showLoginSuccess();
+                
+                // Fechar modal após 2 segundos
+                setTimeout(() => {
+                    closeLoginModal();
+                }, 2000);
+            } else {
+                alert('Por favor, preencha todos os campos.');
+            }
+        }
+
+        function showLoginSuccess() {
+            if (loginModal) {
+                loginModal.innerHTML = `
+                    <div style="background: white; padding: 40px; border-radius: 15px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                        <div style="color: #28a745; font-size: 60px; margin-bottom: 20px;">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h2 style="color: #333; margin-bottom: 10px;">Login realizado com sucesso!</h2>
+                        <p style="color: #666;">Bem-vindo à 67 Beauty Hub!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function skipLogin() {
+            // Salvar estado de rejeição
+            saveLoginState('rejected');
+            closeLoginModal();
+        }
+
+        function closeLoginModal() {
+            if (loginModal) {
+                loginModal.remove();
+                loginModal = null;
+            }
+        }
+
+        // Limpar timer se usuário sair da página
+        window.addEventListener('beforeunload', function() {
+            if (loginTimer) {
+                clearTimeout(loginTimer);
+            }
+        });
+
+        // Header Authentication System
+        function initializeHeaderAuth() {
+            checkUserLoginStatus();
+        }
+
+        function checkUserLoginStatus() {
+            const userData = localStorage.getItem('userLogin');
+            if (userData) {
+                const user = JSON.parse(userData);
+                showUserMenu(user.name);
+            } else {
+                showAuthButtons();
+            }
+        }
+
+        function showAuthButtons() {
+            document.getElementById('authButtons').style.display = 'flex';
+            document.getElementById('userMenu').style.display = 'none';
+        }
+
+        function showUserMenu(userName) {
+            document.getElementById('authButtons').style.display = 'none';
+            document.getElementById('userMenu').style.display = 'block';
+            document.getElementById('userName').textContent = userName;
+        }
+
+        function openLoginModal() {
+            // Usar o sistema existente de login
+            if (typeof showLoginModal === 'function') {
+                showLoginModal();
+            } else {
+                // Fallback: criar modal simples
+                createSimpleLoginModal();
+            }
+        }
+
+        function openRegisterModal() {
+            createRegisterModal();
+        }
+
+        function createSimpleLoginModal() {
+            const modal = document.createElement('div');
+            modal.id = 'headerLoginModal';
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.7); z-index: 10000; display: flex; 
+                align-items: center; justify-content: center;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 40px; border-radius: 15px; max-width: 400px; width: 90%; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                        <h3 style="color: #d4af37; margin: 0;"><i class="fas fa-sign-in-alt"></i> Entrar na sua conta</h3>
+                        <button onclick="closeHeaderModal()" style="background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <form id="headerLoginForm">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Nome</label>
+                            <input type="text" id="headerLoginName" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="Seu nome completo" />
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">E-mail</label>
+                            <input type="email" id="headerLoginEmail" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="seu@email.com" />
+                        </div>
+                        
+                        <button type="submit" style="width: 100%; background: linear-gradient(135deg, #d4af37, #b8941f); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <i class="fas fa-sign-in-alt"></i> Entrar
+                        </button>
+                    </form>
+                    
+                    <div style="text-align: center; margin-top: 20px; font-size: 14px; color: #666;">
+                        <p>Não tem conta? <a href="#" onclick="switchToHeaderRegister()" style="color: #d4af37; text-decoration: none;">Cadastre-se aqui</a></p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            document.getElementById('headerLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('headerLoginName').value;
+                const email = document.getElementById('headerLoginEmail').value;
+                
+                if (name && email) {
+                    // Salvar dados do usuário
+                    const userData = { name, email, loginDate: new Date().toISOString() };
+                    localStorage.setItem('userLogin', JSON.stringify(userData));
+                    
+                    // Salvar estado de login bem-sucedido
+                    saveLoginState('success');
+                    
+                    // Mostrar sucesso
+                    showHeaderLoginSuccess(name);
+                    
+                    // Atualizar interface
+                    setTimeout(() => {
+                        closeHeaderModal();
+                        showUserMenu(name);
+                    }, 2000);
+                }
+            });
+        }
+
+        function createRegisterModal() {
+            const modal = document.createElement('div');
+            modal.id = 'headerRegisterModal';
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.7); z-index: 10000; display: flex; 
+                align-items: center; justify-content: center;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 40px; border-radius: 15px; max-width: 500px; width: 90%; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                        <h3 style="color: #d4af37; margin: 0;"><i class="fas fa-user-plus"></i> Criar nova conta</h3>
+                        <button onclick="closeHeaderModal()" style="background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <form id="headerRegisterForm">
+                        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                            <div style="flex: 1;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Nome</label>
+                                <input type="text" id="headerRegisterFirstName" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="Nome" />
+                            </div>
+                            <div style="flex: 1;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Sobrenome</label>
+                                <input type="text" id="headerRegisterLastName" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="Sobrenome" />
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">E-mail</label>
+                            <input type="email" id="headerRegisterEmail" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="seu@email.com" />
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" required />
+                                <span style="font-size: 14px; color: #666;">Aceito os termos de uso e política de privacidade</span>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" style="width: 100%; background: linear-gradient(135deg, #d4af37, #b8941f); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <i class="fas fa-user-plus"></i> Criar Conta
+                        </button>
+                    </form>
+                    
+                    <div style="text-align: center; margin-top: 20px; font-size: 14px; color: #666;">
+                        <p>Já tem conta? <a href="#" onclick="switchToHeaderLogin()" style="color: #d4af37; text-decoration: none;">Entre aqui</a></p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            document.getElementById('headerRegisterForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const firstName = document.getElementById('headerRegisterFirstName').value;
+                const lastName = document.getElementById('headerRegisterLastName').value;
+                const email = document.getElementById('headerRegisterEmail').value;
+                
+                if (firstName && lastName && email) {
+                    const fullName = firstName + ' ' + lastName;
+                    const userData = { name: fullName, email, loginDate: new Date().toISOString() };
+                    localStorage.setItem('userLogin', JSON.stringify(userData));
+                    
+                    // Salvar estado de login bem-sucedido
+                    saveLoginState('success');
+                    
+                    showHeaderLoginSuccess(fullName);
+                    
+                    setTimeout(() => {
+                        closeHeaderModal();
+                        showUserMenu(fullName);
+                    }, 2000);
+                }
+            });
+        }
+
+        function showHeaderLoginSuccess(name) {
+            const modal = document.getElementById('headerLoginModal') || document.getElementById('headerRegisterModal');
+            if (modal) {
+                modal.innerHTML = `
+                    <div style="background: white; padding: 40px; border-radius: 15px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                        <div style="color: #28a745; font-size: 60px; margin-bottom: 20px;">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h2 style="color: #333; margin-bottom: 10px;">Bem-vindo, ${name}!</h2>
+                        <p style="color: #666;">Login realizado com sucesso!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function closeHeaderModal() {
+            const loginModal = document.getElementById('headerLoginModal');
+            const registerModal = document.getElementById('headerRegisterModal');
+            if (loginModal) loginModal.remove();
+            if (registerModal) registerModal.remove();
+        }
+
+        function switchToHeaderRegister() {
+            closeHeaderModal();
+            createRegisterModal();
+        }
+
+        function switchToHeaderLogin() {
+            closeHeaderModal();
+            createSimpleLoginModal();
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            const avatar = document.querySelector('.user-avatar');
+            
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+                avatar.classList.remove('active');
+            } else {
+                dropdown.classList.add('show');
+                avatar.classList.add('active');
+            }
+        }
+
+        function viewProfile() {
+            alert('Funcionalidade de perfil em desenvolvimento');
+        }
+
+        function viewMyReviews() {
+            alert('Suas avaliações em desenvolvimento');
+        }
+
+        function logoutUser() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                localStorage.removeItem('userLogin');
+                showAuthButtons();
+                
+                // Fechar dropdown
+                document.getElementById('userDropdown').classList.remove('show');
+                document.querySelector('.user-avatar').classList.remove('active');
+            }
+        }
+
+
+
+        // Fechar dropdown ao clicar fora
+        document.addEventListener('click', function(e) {
+            const userMenu = document.querySelector('.user-menu');
+            if (userMenu && !userMenu.contains(e.target)) {
+                document.getElementById('userDropdown').classList.remove('show');
+                document.querySelector('.user-avatar').classList.remove('active');
+            }
+        });
+
+
+        // Inicializar sistema de autenticação no header
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeHeaderAuth();
+            
+            // Forçar o vídeo de background a tocar
+            const backgroundVideo = document.querySelector('.global-background-video video');
+            if (backgroundVideo) {
+                console.log('Vídeo de background encontrado');
+                backgroundVideo.play().catch(e => {
+                    console.log('Erro ao tocar vídeo:', e);
+                });
+            } else {
+                console.log('Vídeo de background não encontrado');
+            }
+        });
+
+    </script>
+
+	<script>
+
+
+
+		// Global Translation System for Main Page
+		class GlobalTranslator {
+			constructor() {
+				this.baseCurrency = 'USD';
+				this.exchangeRates = {
+					'USD': 1.00,
+					'BRL': 5.20,
+					'EUR': 0.85
+				};
+				
+				this.currencySymbols = {
+					'USD': '$',
+					'BRL': 'R$',
+					'EUR': '€'
+				};
+				
+				this.userCountry = null;
+				this.userCurrency = 'USD';
+				this.isInitialized = false;
+				this.init();
+			}
+			
+			async init() {
+				try {
+					await this.detectUserLocation();
+					this.updatePageContent();
+					this.isInitialized = true;
+					console.log(`Global translator initialized. Currency: ${this.userCurrency}`);
+				} catch (error) {
+					console.error('Error initializing global translator:', error);
+					this.userCurrency = 'USD';
+					this.updatePageContent();
+				}
+			}
+			
+            async detectUserLocation() {
+                try {
+                    let countryCode = null;
+                    
+                    // Check if running from file:// protocol
+                    if (window.location.protocol === 'file:') {
+                        console.log('Running from file:// protocol, using fallback detection');
+                        // Try to detect from browser language
+                        const browserLang = navigator.language || navigator.userLanguage;
+                        if (browserLang.startsWith('pt')) {
+                            countryCode = 'BR';
+                            console.log('Detected Portuguese language, assuming Brazil');
+                        } else if (browserLang.startsWith('es')) {
+                            countryCode = 'ES';
+                            console.log('Detected Spanish language, assuming Spain');
+                        } else {
+                            countryCode = 'US';
+                            console.log('Using default US location');
+                        }
+                    } else {
+                        try {
+                            const response = await fetch('https://ipapi.co/json/', { 
+                                timeout: 5000,
+                                mode: 'cors'
+                            });
+                            if (response.ok) {
+                                const data = await response.json();
+                                countryCode = data.country_code;
+                                console.log('Location detected via ipapi.co:', countryCode);
+                            }
+                        } catch (e) {
+                            console.log('ipapi.co failed, trying alternative...');
+                        }
+                        
+                        if (!countryCode) {
+                            try {
+                                const response = await fetch('https://ipinfo.io/json', { 
+                                    timeout: 5000,
+                                    mode: 'cors'
+                                });
+                                if (response.ok) {
+                                    const data = await response.json();
+                                    countryCode = data.country;
+                                    console.log('Location detected via ipinfo.io:', countryCode);
+                                }
+                            } catch (e) {
+                                console.log('ipinfo.io also failed');
+                            }
+                        }
+                    }
+					
+					this.userCountry = countryCode;
+					
+					const countryToCurrency = {
+						// Real Brasileiro (BRL) - Brasil
+						'BR': 'BRL',
+						
+						// Euro (EUR) - Países da Zona do Euro (incluindo Portugal)
+						'PT': 'EUR', 'DE': 'EUR', 'FR': 'EUR', 'IT': 'EUR', 'ES': 'EUR', 'NL': 'EUR', 'BE': 'EUR', 'AT': 'EUR', 'IE': 'EUR', 'FI': 'EUR', 'GR': 'EUR', 'LU': 'EUR', 'MT': 'EUR', 'CY': 'EUR', 'SK': 'EUR', 'SI': 'EUR', 'EE': 'EUR', 'LV': 'EUR', 'LT': 'EUR', 'AD': 'EUR', 'MC': 'EUR', 'SM': 'EUR', 'VA': 'EUR', 'ME': 'EUR', 'XK': 'EUR',
+						
+						// Dólar Americano (USD) - América do Norte e outros países
+						'US': 'USD', 'CA': 'USD', 'MX': 'USD', 'AR': 'USD', 'CL': 'USD', 'CO': 'USD', 'PE': 'USD', 'UY': 'USD', 'BO': 'USD', 'PY': 'USD', 'VE': 'USD', 'EC': 'USD', 'GY': 'USD', 'SR': 'USD', 'GF': 'USD', 'FK': 'USD', 'BZ': 'USD', 'GT': 'USD', 'HN': 'USD', 'SV': 'USD', 'NI': 'USD', 'CR': 'USD', 'PA': 'USD', 'CU': 'USD', 'JM': 'USD', 'HT': 'USD', 'DO': 'USD', 'PR': 'USD', 'VI': 'USD', 'AG': 'USD', 'BB': 'USD', 'DM': 'USD', 'GD': 'USD', 'KN': 'USD', 'LC': 'USD', 'VC': 'USD', 'TT': 'USD', 'BS': 'USD', 'AU': 'USD', 'NZ': 'USD', 'JP': 'USD', 'KR': 'USD', 'SG': 'USD', 'HK': 'USD', 'TW': 'USD', 'TH': 'USD', 'MY': 'USD', 'ID': 'USD', 'PH': 'USD', 'VN': 'USD', 'IN': 'USD', 'PK': 'USD', 'BD': 'USD', 'LK': 'USD', 'MM': 'USD', 'KH': 'USD', 'LA': 'USD', 'BN': 'USD', 'FJ': 'USD', 'PG': 'USD', 'SB': 'USD', 'VU': 'USD', 'NC': 'USD', 'PF': 'USD', 'WS': 'USD', 'TO': 'USD', 'KI': 'USD', 'TV': 'USD', 'NR': 'USD', 'MH': 'USD', 'FM': 'USD', 'PW': 'USD', 'AS': 'USD', 'GU': 'USD', 'MP': 'USD', 'CK': 'USD', 'NU': 'USD', 'TK': 'USD', 'WF': 'USD', 'NF': 'USD', 'PN': 'USD', 'GS': 'USD', 'SH': 'USD', 'AC': 'USD', 'TA': 'USD', 'IO': 'USD', 'CX': 'USD', 'CC': 'USD', 'HM': 'USD', 'AQ': 'USD', 'BV': 'USD', 'TF': 'USD', 'UM': 'USD'
+					};
+					
+					this.userCurrency = countryToCurrency[this.userCountry] || 'USD';
+					
+					// Debug: Log detection results
+					console.log('🌍 Currency Detection Results:');
+					console.log('📍 User Country:', this.userCountry);
+					console.log('💰 User Currency:', this.userCurrency);
+					console.log('💱 Exchange Rate:', this.exchangeRates[this.userCurrency]);
+					console.log('💱 Currency Symbol:', this.currencySymbols[this.userCurrency]);
+					
+				} catch (error) {
+					console.error('Error in location detection:', error);
+					this.userCurrency = 'USD';
+					this.userCountry = 'Unknown';
+				}
+			}
+			
+			translateContent(contentKey) {
+				const translations = {
+					'hero_subtitle': {
+						'USD': 'Beauty and Comfort Products',
+						'BRL': 'Produtos de Beleza e Conforto',
+						'EUR': 'Beauty and Comfort Products'
+					},
+					'hero_description': {
+						'USD': 'Discover our exclusive selection of beauty and comfort products, carefully chosen for your personal care routine.',
+						'BRL': 'Descubra nossa seleção exclusiva de produtos de beleza e conforto, cuidadosamente escolhidos para sua rotina de cuidados pessoais.',
+						'EUR': 'Discover our exclusive selection of beauty and comfort products, carefully chosen for your personal care routine.'
+					},
+					'products_title': {
+						'USD': 'Our Products',
+						'BRL': 'Nossos Produtos',
+						'EUR': 'Our Products'
+					},
+					'products_subtitle': {
+						'USD': 'Careful selection of beauty and comfort products for your daily routine',
+						'BRL': 'Seleção cuidadosa de produtos de beleza e conforto para sua rotina diária',
+						'EUR': 'Careful selection of beauty and comfort products for your daily routine'
+					},
+					'beauty_section': {
+						'USD': 'Beauty Products',
+						'BRL': 'Produtos de Beleza',
+						'EUR': 'Beauty Products'
+					},
+					'beauty_description': {
+						'USD': 'Makeup, skincare, hair products and everything you need to enhance your natural beauty.',
+						'BRL': 'Maquiagem, skincare, produtos capilares e tudo que você precisa para realçar sua beleza natural.',
+						'EUR': 'Makeup, skincare, hair products and everything you need to enhance your natural beauty.'
+					},
+					'comfort_section': {
+						'USD': 'Comfort Products',
+						'BRL': 'Produtos de Conforto',
+						'EUR': 'Comfort Products'
+					},
+					'comfort_description': {
+						'USD': 'Items for your well-being and personal comfort, creating a cozy environment at home.',
+						'BRL': 'Itens para seu bem-estar e conforto pessoal, criando um ambiente acolhedor em casa.',
+						'EUR': 'Items for your well-being and personal comfort, creating a cozy environment at home.'
+					},
+					'explore_beauty': {
+						'USD': 'Explore Beauty Section',
+						'BRL': 'Explorar Seção Beleza',
+						'EUR': 'Explore Beauty Section'
+					},
+					'explore_comfort': {
+						'USD': 'Explore Comfort Section',
+						'BRL': 'Explorar Seção Conforto',
+						'EUR': 'Explore Comfort Section'
+					},
+					'about_title': {
+						'USD': 'About 67 Beauty Hub',
+						'BRL': 'Sobre o 67 Beauty Hub',
+						'EUR': 'About 67 Beauty Hub'
+					},
+					'about_description': {
+						'USD': 'At 67 Beauty Hub, we believe that beauty and comfort go hand in hand. We are specialists in beauty and comfort products, offering a careful selection of items for your daily routine.',
+						'BRL': 'No 67 Beauty Hub, acreditamos que a beleza e o conforto andam juntos. Somos especialistas em produtos de beleza e conforto, oferecendo uma seleção cuidadosa de itens para sua rotina diária.',
+						'EUR': 'At 67 Beauty Hub, we believe that beauty and comfort go hand in hand. We are specialists in beauty and comfort products, offering a careful selection of items for your daily routine.'
+					},
+					'about_description2': {
+						'USD': 'With years of experience in the market, we select only high-quality products that combine effectiveness, safety and comfort for you.',
+						'BRL': 'Com anos de experiência no mercado, selecionamos apenas produtos de alta qualidade que combinam eficácia, segurança e conforto para você.',
+						'EUR': 'With years of experience in the market, we select only high-quality products that combine effectiveness, safety and comfort for you.'
+					},
+					'footer_text': {
+						'USD': '© 2024 67 Beauty Hub. All rights reserved.',
+						'BRL': '© 2024 67 Beauty Hub. Todos os direitos reservados.',
+						'EUR': '© 2024 67 Beauty Hub. All rights reserved.'
+					},
+					// Product name translations
+					'product_phoera_foundation': {
+						'USD': '2 Pack PHOERA Foundation',
+						'BRL': '2 Pack PHOERA Foundation',
+						'EUR': '2 Pack PHOERA Foundation'
+					},
+					'product_hair_clips': {
+						'USD': 'Alligator Hair Clips',
+						'BRL': 'Prendedores de Cabelo Jacaré',
+						'EUR': 'Alligator Hair Clips'
+					},
+					'product_heat_resistant_mat': {
+						'USD': 'Heat-Resistant Mat',
+						'BRL': 'Tapete Resistente ao Calor',
+						'EUR': 'Heat-Resistant Mat'
+					},
+					'product_laikou_skincare': {
+						'USD': 'LAIKOU Skincare',
+						'BRL': 'LAIKOU Skincare',
+						'EUR': 'LAIKOU Skincare'
+					},
+					'product_wrinkle_reducer': {
+						'USD': 'Wrinkle Reducer - Red Light Therapy',
+						'BRL': 'Redutor de Rugas - Terapia de Luz Vermelha',
+						'EUR': 'Wrinkle Reducer - Red Light Therapy'
+					},
+					'product_sofa_cover': {
+						'USD': 'Detachable Sofa Cover',
+						'BRL': 'Capa de Sofá Removível',
+						'EUR': 'Detachable Sofa Cover'
+					},
+					'product_human_dog_bed': {
+						'USD': 'Human Dog Bed',
+						'BRL': 'Cama Humana Gigante',
+						'EUR': 'Human Dog Bed'
+					},
+					'product_snooze_bundle': {
+						'USD': 'Snooze Bundle',
+						'BRL': 'Kit Snooze',
+						'EUR': 'Snooze Bundle'
+					}
+				};
+				
+				return translations[contentKey] ? 
+					translations[contentKey][this.userCurrency] || 
+					translations[contentKey]['USD'] : 
+					contentKey;
+			}
+			
+			convertPrice(usdPrice) {
+				const rate = this.exchangeRates[this.userCurrency];
+				const convertedPrice = usdPrice * rate;
+				return this.formatPrice(convertedPrice);
+			}
+			
+			formatPrice(price) {
+				const symbol = this.currencySymbols[this.userCurrency];
+				
+				if (this.userCurrency === 'BRL') {
+					return `${symbol} ${price.toFixed(2).replace('.', ',')}`;
+				} else {
+					return `${symbol}${price.toFixed(2)}`;
+				}
+			}
+			
+			convertPriceFromText(priceText) {
+				// Extract numeric value from price text
+				const numericValue = parseFloat(priceText.replace(/[^\d.,]/g, '').replace(',', '.'));
+				if (isNaN(numericValue)) return priceText;
+				
+				// Determine if it's USD or BRL based on symbol
+				if (priceText.includes('$') && !priceText.includes('R$')) {
+					// USD price - convert to user currency
+					return this.convertPrice(numericValue);
+				} else if (priceText.includes('R$')) {
+					// BRL price - convert to user currency
+					const usdPrice = numericValue / this.exchangeRates['BRL'];
+					return this.convertPrice(usdPrice);
+				}
+				
+				return priceText;
+			}
+			
+			updateAllPrices() {
+				try {
+					const priceElements = document.querySelectorAll('.product-price');
+					console.log(`Found ${priceElements.length} price elements to update`);
+					
+					priceElements.forEach((element, index) => {
+						const originalPrice = element.textContent;
+						const convertedPrice = this.convertPriceFromText(originalPrice);
+						element.textContent = convertedPrice;
+						console.log(`Price ${index + 1}: ${originalPrice} → ${convertedPrice}`);
+					});
+					
+					
+					console.log('All prices updated successfully');
+				} catch (error) {
+					console.error('Error updating prices:', error);
+				}
+			}
+			
+			updatePageContent() {
+				try {
+					// Update hero section
+					const heroSubtitle = document.querySelector('.hero-subtitle');
+					if (heroSubtitle) {
+						const translatedText = this.translateContent('hero_subtitle');
+						heroSubtitle.textContent = translatedText || 'Produtos de Beleza e Conforto';
+					}
+					
+					const heroDescription = document.querySelector('.hero-description');
+					if (heroDescription) {
+						const translatedText = this.translateContent('hero_description');
+						heroDescription.textContent = translatedText || 'Descubra nossa seleção exclusiva de produtos de beleza e conforto, cuidadosamente escolhidos para sua rotina de cuidados pessoais.';
+					}
+					
+					// Update products section
+					const productsTitle = document.querySelector('.section-title');
+					if (productsTitle) {
+						productsTitle.textContent = this.translateContent('products_title');
+					}
+					
+					const productsSubtitle = document.querySelector('.section-subtitle');
+					if (productsSubtitle) {
+						productsSubtitle.textContent = this.translateContent('products_subtitle');
+					}
+					
+					// Update product cards
+					const productCards = document.querySelectorAll('.product-card');
+					if (productCards.length >= 2) {
+						// Beauty card
+						const beautyTitle = productCards[0].querySelector('h3');
+						const beautyDesc = productCards[0].querySelector('p');
+						const beautyBtn = productCards[0].querySelector('.product-action-btn');
+						
+						if (beautyTitle) beautyTitle.textContent = this.translateContent('beauty_section');
+						if (beautyDesc) beautyDesc.textContent = this.translateContent('beauty_description');
+						if (beautyBtn) beautyBtn.innerHTML = `<i class="fas fa-sparkles"></i> ${this.translateContent('explore_beauty')}`;
+						
+						// Comfort card
+						const comfortTitle = productCards[1].querySelector('h3');
+						const comfortDesc = productCards[1].querySelector('p');
+						const comfortBtn = productCards[1].querySelector('.product-action-btn');
+						
+						if (comfortTitle) comfortTitle.textContent = this.translateContent('comfort_section');
+						if (comfortDesc) comfortDesc.textContent = this.translateContent('comfort_description');
+						if (comfortBtn) comfortBtn.innerHTML = `<i class="fas fa-home"></i> ${this.translateContent('explore_comfort')}`;
+					}
+					
+					// Update about section
+					const aboutTitle = document.querySelector('.about-text h2');
+					if (aboutTitle) {
+						aboutTitle.textContent = this.translateContent('about_title');
+					}
+					
+					const aboutDesc = document.querySelector('.about-text p');
+					if (aboutDesc) {
+						aboutDesc.textContent = this.translateContent('about_description');
+					}
+					
+					// Update footer
+					const footerText = document.querySelector('.footer-bottom p');
+					if (footerText) {
+						footerText.textContent = this.translateContent('footer_text');
+					}
+					
+					// Update product names in featured items
+					this.updateProductNames();
+					
+					// Update all prices based on user currency
+					this.updateAllPrices();
+					
+					console.log('Main page content updated successfully');
+					
+				} catch (error) {
+					console.error('Error updating main page content:', error);
+				}
+			}
+			
+			updateProductNames() {
+				try {
+					// Update product names in featured items section
+					const featuredItems = document.querySelectorAll('.featured-item');
+					console.log(`Found ${featuredItems.length} featured items to update`);
+					
+					featuredItems.forEach((item, index) => {
+						const productId = this.getProductIdFromElement(item);
+						console.log(`Featured item ${index + 1}: productId = ${productId}`);
+						
+						if (productId) {
+							const productData = getProductData(productId);
+							console.log(`Product data for ${productId}:`, productData);
+							
+							if (productData && productData.name) {
+								// Update alt text of product images
+								const img = item.querySelector('.featured-product-image');
+								if (img) {
+									img.alt = productData.name;
+									console.log(`Updated image alt text: ${productData.name}`);
+								}
+								
+								// Update product title (h3 element)
+								const titleElement = item.querySelector('h3');
+								if (titleElement) {
+									titleElement.textContent = productData.name;
+									console.log(`Updated title: ${productData.name}`);
+								}
+								
+								// Update product description (p element)
+								const descriptionElement = item.querySelector('p');
+								if (descriptionElement && productData.description) {
+									descriptionElement.textContent = productData.description;
+									console.log(`Updated description: ${productData.description}`);
+								}
+								
+								// Update product price
+								const priceElement = item.querySelector('.product-price');
+								if (priceElement && productData.price) {
+									priceElement.textContent = productData.price;
+									console.log(`Updated price: ${productData.price}`);
+								}
+								
+								// Update any product name displays in the item
+								const nameElements = item.querySelectorAll('[data-product-name]');
+								nameElements.forEach(nameEl => {
+									nameEl.textContent = productData.name;
+								});
+							} else {
+								console.warn(`No product data found for ${productId}`);
+							}
+						} else {
+							console.warn(`No product ID found for featured item ${index + 1}`);
+						}
+					});
+					
+					
+					console.log('Product names updated successfully');
+				} catch (error) {
+					console.error('Error updating product names:', error);
+				}
+			}
+			
+			getProductIdFromElement(element) {
+				// Try to extract product ID from onclick attribute
+				const onclickAttr = element.getAttribute('onclick');
+				if (onclickAttr) {
+					// Extract product ID from checkout URL
+					const match = onclickAttr.match(/checkout-([^.]+)\.html/);
+					if (match) {
+						return match[1];
+					}
+				}
+				return null;
+			}
+			
+		}
+		
+		// Initialize global translator when page loads
+		document.addEventListener('DOMContentLoaded', function() {
+			window.globalTranslator = new GlobalTranslator();
+			window.globalTranslator.init();
+		});
+	</script>
+	</body>
+	</html>

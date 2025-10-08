@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Sistema de Preços Alligator</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+        .test-container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .color-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0; }
+        .color-option { padding: 15px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s ease; }
+        .color-option:hover { border-color: #d4af37; transform: translateY(-2px); }
+        .color-option.selected { border-color: #d4af37; background: #fff9e6; box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2); }
+        .price-display { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center; }
+        .price { font-size: 2rem; font-weight: bold; color: #d4af37; margin: 10px 0; }
+        .price-info { font-size: 0.9rem; color: #666; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>?? Teste - Sistema de Preços Alligator</h1>
+        <p>Clique em uma cor para ver o preço atualizado:</p>
+        
+        <div class="color-options">
+            <div class="color-option selected" data-color="nude-pink">
+                <strong>Nude Pink</strong><br>
+                <small>$2.31</small>
+            </div>
+            <div class="color-option" data-color="black">
+                <strong>Black</strong><br>
+                <small>$3.94</small>
+            </div>
+            <div class="color-option" data-color="yellow">
+                <strong>Yellow</strong><br>
+                <small>$4.27</small>
+            </div>
+            <div class="color-option" data-color="purple">
+                <strong>Purple</strong><br>
+                <small>$4.25</small>
+            </div>
+            <div class="color-option" data-color="green">
+                <strong>Green</strong><br>
+                <small>$3.84</small>
+            </div>
+            <div class="color-option" data-color="pink">
+                <strong>Pink</strong><br>
+                <small>$4.09</small>
+            </div>
+            <div class="color-option" data-color="red">
+                <strong>Red</strong><br>
+                <small>$3.97</small>
+            </div>
+        </div>
+        
+        <div class="price-display">
+            <h3>Preço Atual da Oferta Básica:</h3>
+            <div class="price" id="currentPrice">$2.31</div>
+            <div class="price-info" id="priceInfo">Nude Pink - Margem: 50%</div>
+        </div>
+    </div>
+
+    <script>
+        const ALLIGATOR_PRICES = {
+            "nude-pink": { profitPrice: "$2.31", margin: "50%", stock: 6 },
+            "black": { profitPrice: "$3.94", margin: "50%", stock: 4 },
+            "yellow": { profitPrice: "$4.27", margin: "50%", stock: 15 },
+            "purple": { profitPrice: "$4.25", margin: "50%", stock: 17 },
+            "green": { profitPrice: "$3.84", margin: "50%", stock: 12 },
+            "pink": { profitPrice: "$4.09", margin: "50%", stock: 10 },
+            "red": { profitPrice: "$3.97", margin: "50%", stock: 15 }
+        };
+
+        function updateTestDisplay(colorValue) {
+            const priceData = ALLIGATOR_PRICES[colorValue];
+            if (priceData) {
+                document.getElementById("currentPrice").textContent = priceData.profitPrice;
+                document.getElementById("priceInfo").textContent = 
+                    colorValue.charAt(0).toUpperCase() + colorValue.slice(1) + " - Margem: " + priceData.margin;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const colorOptions = document.querySelectorAll(".color-option");
+            
+            colorOptions.forEach(option => {
+                option.addEventListener("click", function() {
+                    colorOptions.forEach(opt => opt.classList.remove("selected"));
+                    this.classList.add("selected");
+                    const colorValue = this.getAttribute("data-color");
+                    updateTestDisplay(colorValue);
+                });
+            });
+            
+            updateTestDisplay("nude-pink");
+        });
+    </script>
+</body>
+</html>

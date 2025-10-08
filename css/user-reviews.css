@@ -1,0 +1,236 @@
+/* User Review Form Styles */
+.user-review-form {
+    background: linear-gradient(135deg, #f8f9fa, #fff);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 30px 0;
+    border: 2px solid #d4af37;
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+}
+
+.review-form-container h4 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.review-form-container h4 i {
+    color: #d4af37;
+}
+
+.review-form-group {
+    margin-bottom: 20px;
+}
+
+.review-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+.star-rating {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.star-rating i {
+    font-size: 1.8rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.star-rating i:hover,
+.star-rating i.active {
+    color: #ffd700;
+    transform: scale(1.1);
+}
+
+.star-rating i.fas {
+    color: #ffd700;
+}
+
+.review-form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+    transition: all 0.3s ease;
+}
+
+.review-form-group textarea:focus {
+    outline: none;
+    border-color: #d4af37;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.char-count {
+    display: block;
+    text-align: right;
+    color: #666;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.submit-review-btn {
+    background: linear-gradient(135deg, #d4af37, #b8941f);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.submit-review-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+.submit-review-btn:active {
+    transform: translateY(0);
+}
+
+.submit-review-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Dynamic User Review Styles */
+.user-review-item {
+    background: linear-gradient(135deg, #fff9e6, #fff);
+    border: 2px solid #d4af37;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.user-review-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
+}
+
+.user-review-badge {
+    position: absolute;
+    top: -8px;
+    right: 15px;
+    background: linear-gradient(135deg, #d4af37, #b8941f);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+.user-review-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d4af37, #b8941f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    margin: 0 auto 15px;
+}
+
+.user-review-avatar i {
+    font-size: 1.8rem;
+    color: white;
+}
+
+.user-review-stars {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    margin-bottom: 15px;
+}
+
+.user-review-stars i {
+    color: #ffd700;
+    font-size: 1.1rem;
+}
+
+.user-review-text {
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-style: italic;
+    text-align: center;
+}
+
+.user-review-author {
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 15px;
+}
+
+.user-review-author strong {
+    color: #333;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.user-review-date {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Mobile Responsiveness for Review Form */
+@media (max-width: 768px) {
+    .user-review-form {
+        padding: 20px;
+        margin: 20px 0;
+    }
+
+    .review-form-container h4 {
+        font-size: 1.2rem;
+    }
+
+    .star-rating i {
+        font-size: 1.5rem;
+    }
+
+    .user-review-item {
+        padding: 20px;
+    }
+
+    .user-review-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .user-review-avatar i {
+        font-size: 1.5rem;
+    }
+}
+
+
+
+
+
+

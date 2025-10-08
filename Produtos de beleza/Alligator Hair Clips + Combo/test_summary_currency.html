@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Conversor de Moedas do Resumo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .currency-selector {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .summary-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .summary-row.total {
+            border-top: 2px solid #d4af37;
+            padding-top: 15px;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        select {
+            padding: 8px 12px;
+            border: 2px solid #d4af37;
+            border-radius: 6px;
+            background: white;
+            color: #333;
+            font-size: 14px;
+            margin: 0 10px;
+        }
+        .debug-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .test-scenarios {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+        }
+        .scenario {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #d4af37;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>💱 Teste - Conversor de Moedas do Resumo</h1>
+        <p>Teste o conversor de moedas individual do resumo do pedido:</p>
+        
+        <div class="currency-selector">
+            <label><strong>Moeda do Resumo:</strong></label>
+            <select id="summaryCurrencySelector">
+                <option value="USD">🇺🇸 Dólar Americano (USD)</option>
+                <option value="BRL">🇧🇷 Real Brasileiro (BRL)</option>
+                <option value="EUR">🇪🇺 Euro (EUR)</option>
+                <option value="AOA">🇦🇴 Kwanza Angolano (AOA)</option>
+            </select>
+        </div>
+        
+        <div class="summary-section">
+            <h3>📋 Resumo do Pedido</h3>
+            <div id="selectedOffers">
+                <div class="summary-row">
+                    <span>Alligator Hair Clips (Nude Pink)</span>
+                    <span id="offerPrice">$2.31</span>
+                </div>
+            </div>
+            <div class="summary-row total">
+                <span>Total</span>
+                <span id="totalAmount">$2.31</span>
+            </div>
+        </div>
+        
+        <div class="test-scenarios">
+            <h4>🧪 Cenários de Teste:</h4>
+            <div class="scenario">
+                <strong>USD → BRL:</strong> $2.31 deve virar R$ 12,18
+            </div>
+            <div class="scenario">
+                <strong>USD → EUR:</strong> $2.31 deve virar €2,13
+            </div>
+            <div class="scenario">
+                <strong>USD → AOA:</strong> $2.31 deve virar Kz 2,125
+            </div>
+        </div>
+        
+        <div class="debug-info">
+            <h4>Debug - Conversor do Resumo:</h4>
+            <div id="debugInfo">
+                Aguardando interação...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Preços em USD (base)
+        const basePriceUSD = 2.31;
+        
+        // Taxas de conversão
+        const exchangeRates = {
+            'USD': { symbol: '$', rate: 1, locale: 'en-US', currency: 'USD' },
+            'BRL': { symbol: 'R$', rate: 5.27, locale: 'pt-BR', currency: 'BRL' },
+            'EUR': { symbol: '€', rate: 0.92, locale: 'de-DE', currency: 'EUR' },
+            'AOA': { symbol: 'Kz', rate: 920, locale: 'pt-AO', currency: 'AOA' }
+        };
+
+        let summaryCurrency = 'USD';
+
+        function formatSummaryPrice(price, currency = summaryCurrency) {
+            const rate = exchangeRates[currency];
+            const convertedPrice = price * rate.rate;
+            
+            if (currency === 'BRL') {
+                return `R$ ${convertedPrice.toFixed(2).replace('.', ',')}`;
+            } else if (currency === 'USD') {
+                return `$${convertedPrice.toFixed(2)}`;
+            } else if (currency === 'EUR') {
+                return `€${convertedPrice.toFixed(2)}`;
+            } else if (currency === 'AOA') {
+                return `Kz ${convertedPrice.toLocaleString()}`;
+            }
+            return `${rate.symbol}${convertedPrice.toFixed(2)}`;
+        }
+
+        function updateSummary() {
+            // Atualizar preço da oferta
+            const offerPriceElement = document.getElementById('offerPrice');
+            offerPriceElement.textContent = formatSummaryPrice(basePriceUSD);
+            
+            // Atualizar total
+            const totalElement = document.getElementById('totalAmount');
+            totalElement.textContent = formatSummaryPrice(basePriceUSD);
+            
+            // Atualizar debug
+            const debugInfo = document.getElementById('debugInfo');
+            const rate = exchangeRates[summaryCurrency];
+            debugInfo.innerHTML = `
+                <strong>Moeda do resumo:</strong> ${summaryCurrency}<br>
+                <strong>Preço base (USD):</strong> $${basePriceUSD.toFixed(2)}<br>
+                <strong>Taxa de conversão:</strong> 1 USD = ${rate.rate} ${summaryCurrency}<br>
+                <strong>Preço convertido:</strong> ${formatSummaryPrice(basePriceUSD)}<br>
+                <strong>Símbolo da moeda:</strong> ${rate.symbol}<br>
+                <strong>Timestamp:</strong> ${new Date().toLocaleTimeString()}
+            `;
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Currency selection
+            const summaryCurrencySelector = document.getElementById('summaryCurrencySelector');
+            summaryCurrencySelector.addEventListener('change', function() {
+                summaryCurrency = this.value;
+                console.log('Summary currency changed to:', summaryCurrency);
+                updateSummary();
+            });
+            
+            // Initialize
+            updateSummary();
+        });
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,40 @@
+{
+  "name": "67-beauty-hub",
+  "version": "1.0.0",
+  "description": "Site editável para 67 Beauty Hub com sistema de scraping do AliExpress",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 3000",
+    "dev": "npx http-server . -p 3000 -o",
+    "build": "echo 'Build completed'",
+    "deploy": "gh-pages -d .",
+    "test": "echo 'No tests specified'",
+    "lint": "echo 'No linting configured'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SEU-USUARIO/67-beauty-hub.git"
+  },
+  "keywords": [
+    "beauty",
+    "ecommerce",
+    "scraping",
+    "aliexpress",
+    "nodejs",
+    "puppeteer"
+  ],
+  "author": "67 Beauty Hub",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SEU-USUARIO/67-beauty-hub/issues"
+  },
+  "homepage": "https://SEU-USUARIO.github.io/67-beauty-hub",
+  "devDependencies": {
+    "gh-pages": "^6.0.0",
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

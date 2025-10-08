@@ -1,0 +1,33 @@
+<!-- Formulário de Review para Usuários Logados -->
+<div id="userReviewForm" class="user-review-form" style="display: none;">
+    <div class="review-form-container">
+        <h4><i class="fas fa-edit"></i> Deixe sua avaliação</h4>
+        <form id="submitReviewForm">
+            <div class="review-form-group">
+                <label>Avaliação:</label>
+                <div class="star-rating" id="starRating">
+                    <i class="far fa-star" data-rating="1"></i>
+                    <i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i>
+                    <i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                </div>
+                <input type="hidden" id="selectedRating" value="0">
+            </div>
+            <div class="review-form-group">
+                <label for="reviewText">Sua avaliação:</label>
+                <textarea id="reviewText" rows="4" placeholder="Conte-nos sobre sua experiência com o produto..." maxlength="500"></textarea>
+                <small class="char-count">0/500 caracteres</small>
+            </div>
+            <button type="submit" class="submit-review-btn">
+                <i class="fas fa-paper-plane"></i> Enviar Avaliação
+            </button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+

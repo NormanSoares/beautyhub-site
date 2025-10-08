@@ -1,0 +1,3723 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Alligator Hair Clips | 67 Beauty Hub</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=Ab2ftZVJCplquKwOY1cWgvWMivADwMhbUs-OhehwO4hVh_VW9lS87qLkRUVD39yEeoh7YGXzBeuq1Dlh&currency=USD&intent=capture"></script>
+    <!-- Review System -->
+    <script src="../../js/review-system.js"></script>
+    <!-- Alligator Price Integration System -->
+    <script src="alligator_price_integration.js"></script>
+    <script src="premium_price_integration.js"></script>
+    <script src="complete_price_integration.js"></script>
+    <style>
+        body {
+            background: #f0e6d2;
+        }
+        
+        .checkout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            margin-top: 50px;
+        }
+        
+        .checkout-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .unified-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        
+        .checkout-bottom {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        
+        .form-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 40px;
+            grid-column: 1 / -1;
+        }
+        
+        .checkout-header h1 {
+            color: #d4af37;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Flag Dropdown Styles */
+        .flag-dropdown-container {
+            position: relative;
+            display: inline-block;
+            margin-left: 20px;
+        }
+        
+        .flag-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: white;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1);
+        }
+        
+        .flag-dropdown:hover {
+            border-color: #b8941f;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
+        }
+        
+        .selected-flag {
+            font-size: 1.5rem;
+            user-select: none;
+        }
+        
+        .dropdown-arrow {
+            color: #d4af37;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .flag-dropdown.open .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .flag-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #d4af37;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
+            z-index: 1000;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .flag-dropdown-menu.open {
+            max-height: 400px;
+            overflow-y: auto;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+        
+        .flag-dropdown-menu.open::-webkit-scrollbar {
+            display: none; /* WebKit browsers (Chrome, Safari, Edge) */
+        }
+        
+        .flag-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .flag-option:hover {
+            background-color: #fff9e6;
+        }
+        
+        .flag-option:last-child {
+            border-radius: 0 0 6px 6px;
+        }
+        
+        @media (max-width: 768px) {
+            .flag-dropdown-container {
+                margin-top: 20px;
+            }
+            
+            .flag-dropdown {
+                padding: 10px 15px;
+            }
+            
+            .selected-flag {
+                font-size: 1.3rem;
+            }
+        }
+        
+        .offer-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        
+        .product-summary {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .product-image {
+            width: 300px;
+            height: 400px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            margin: 0 auto 20px;
+            display: block;
+            object-fit: cover;
+        }
+        
+        .product-details h3 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .product-details p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .offer-options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .offer-option {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .offer-option:hover {
+            border-color: #d4af37;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
+        }
+        
+        .offer-option.selected {
+            border-color: #d4af37;
+            background: linear-gradient(135deg, #fff9e6, #fff);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .offer-checkbox {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 20px;
+            height: 20px;
+            accent-color: #d4af37;
+            cursor: pointer;
+        }
+        
+        .offer-option.has-checkbox {
+            padding-left: 50px;
+        }
+        
+        .offer-option.has-checkbox .option-header {
+            margin-left: 10px;
+        }
+        
+        .offer-image-container {
+            text-align: left;
+            margin: 15px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .offer-image {
+            max-width: 120px;
+            max-height: 120px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+        
+        .offer-description-container {
+            flex: 1;
+        }
+        
+        .gallery-main {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .gallery-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(212, 175, 55, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .gallery-nav-btn.prev-btn {
+            left: 15px;
+        }
+        
+        .gallery-nav-btn.next-btn {
+            right: 15px;
+        }
+        
+        .gallery-nav-btn:hover {
+            background: rgba(184, 148, 31, 0.95);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+        
+        .gallery-nav-btn:disabled {
+            background: rgba(204, 204, 204, 0.7);
+            cursor: not-allowed;
+            transform: translateY(-50%);
+            box-shadow: none;
+        }
+        
+        .gallery-main-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease-in-out, opacity 0.3s ease;
+        }
+        
+        
+        .gallery-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .gallery-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-indicator.active {
+            background: #d4af37;
+            transform: scale(1.2);
+        }
+        
+        .gallery-indicator:hover {
+            background: #d4af37;
+            transform: scale(1.1);
+        }
+        
+        /* Responsivo para galeria */
+        @media (max-width: 768px) {
+            .gallery-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .gallery-nav-btn.prev-btn {
+                left: 10px;
+            }
+            
+            .gallery-nav-btn.next-btn {
+                right: 10px;
+            }
+            
+            .gallery-main {
+                max-width: 100%;
+            }
+            
+            .gallery-main-image {
+                height: 350px;
+            }
+            
+            .product-image {
+                height: 300px;
+            }
+        }
+        
+        /* Animações da galeria */
+        .gallery-main-image {
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .gallery-main-image.slide-left {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        
+        .gallery-main-image.slide-right {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        
+        .gallery-main-image.slide-in-left {
+            animation: slideInFromRight 0.5s ease-in-out forwards;
+        }
+        
+        .gallery-main-image.slide-in-right {
+            animation: slideInFromLeft 0.5s ease-in-out forwards;
+        }
+        
+        @keyframes slideInFromRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideInFromLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .offer-option .option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .offer-option h4 {
+            color: #333;
+            font-size: 1.3rem;
+            margin: 0;
+        }
+        
+        .offer-option .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #d4af37;
+        }
+        
+        .offer-option .description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+        
+        .offer-option .discount {
+            background: #d4af37;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+        }
+        
+        .summary-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .summary-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            text-align: center;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 10px;
+        }
+        
+        .form-section .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .form-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-section h3 i {
+            color: #d4af37;
+            font-size: 1.2rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+            color: #333;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .form-group input:hover,
+        .form-group select:hover,
+        .form-group textarea:hover {
+            border-color: #d4af37;
+        }
+        
+        .checkout-summary {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .summary-row.total {
+            border-top: 2px solid #d4af37;
+            padding-top: 15px;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #d4af37;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+        
+        .checkout-btn:active {
+            transform: translateY(0);
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .back-link a {
+            color: #d4af37;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .product-summary {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .offer-options {
+                gap: 15px;
+            }
+            
+            .offer-option {
+                padding: 15px;
+            }
+            
+            .summary-section {
+                position: static;
+                order: -1;
+            }
+            
+            .checkout-container {
+                padding: 20px 10px;
+            }
+            
+            .offer-section, .summary-section {
+                padding: 20px;
+            }
+            
+            .offer-image-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .offer-image {
+                max-width: 150px;
+                max-height: 150px;
+                margin: 0 auto 10px;
+            }
+            
+            .product-gallery {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .gallery-thumbnail {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .unified-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .checkout-bottom {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* Reviews Section Styles */
+        .reviews-section {
+            background: white url('background da reviews.webp') center center / cover no-repeat;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .reviews-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            z-index: 1;
+        }
+        
+        .reviews-section > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .reviews-header h3 {
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .reviews-header h3 i {
+            color: #d4af37;
+            font-size: 1.8rem;
+        }
+
+        .reviews-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .review-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .review-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.15);
+            border-color: #d4af37;
+        }
+
+        .clickable-review {
+            cursor: pointer;
+        }
+
+        .clickable-review:hover {
+            background: #f0f0f0;
+        }
+
+        .review-image {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .review-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            margin: 0 auto;
+        }
+
+        .review-avatar i {
+            font-size: 2.2rem;
+            color: white;
+        }
+
+        .review-stars {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-bottom: 15px;
+        }
+
+        .review-stars i {
+            color: #ffd700;
+            font-size: 1.1rem;
+        }
+
+        .review-stars i.far {
+            color: #ddd;
+        }
+
+        .review-text-container {
+            margin-bottom: 20px;
+        }
+
+        .review-text {
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .review-text::before {
+            content: '"';
+            font-size: 2rem;
+            color: #d4af37;
+            opacity: 0.5;
+        }
+
+        .review-text::after {
+            content: '"';
+            font-size: 2rem;
+            color: #d4af37;
+            opacity: 0.5;
+        }
+
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: #d4af37;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 0;
+            margin: 0;
+            display: block;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+
+        .read-more-btn:hover {
+            color: #b8941f;
+            transform: scale(1.05);
+        }
+
+        /* Review Modal Styles */
+        .review-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            padding: 30px;
+            border-bottom: 1px solid #e0e0e0;
+            gap: 20px;
+        }
+
+        .modal-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .modal-avatar i {
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .modal-author-info {
+            flex: 1;
+        }
+
+        .modal-author-info h3 {
+            color: #333;
+            font-size: 1.4rem;
+            margin: 0 0 8px 0;
+        }
+
+        .modal-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 5px;
+        }
+
+        .modal-stars i {
+            color: #ffd700;
+            font-size: 1rem;
+        }
+
+        .modal-stars i.far {
+            color: #ddd;
+        }
+
+        .modal-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #999;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-body p {
+            color: #333;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin: 0;
+            white-space: pre-line;
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #e0e0e0;
+            background: #f8f9fa;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .verified-purchase {
+            color: #28a745;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .review-author {
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 15px;
+        }
+
+        .review-author strong {
+            color: #333;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .review-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+
+
+        .reviews-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa, #fff);
+            border-radius: 12px;
+            border: 2px solid #d4af37;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 5px;
+        }
+
+        .stat-stars {
+            display: flex;
+            justify-content: center;
+            gap: 2px;
+            margin-bottom: 8px;
+        }
+
+        .stat-stars i {
+            color: #ffd700;
+            font-size: 1rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Reviews Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .reviews-section {
+                padding: 25px 20px;
+                margin-bottom: 20px;
+            }
+
+            .reviews-header h3 {
+                font-size: 1.6rem;
+            }
+
+            .reviews-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .review-item {
+                padding: 20px;
+            }
+
+            .review-avatar {
+                width: 60px;
+                height: 60px;
+            }
+
+            .review-avatar i {
+                font-size: 1.8rem;
+            }
+
+            .reviews-stats {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .reviews-stats {
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .reviews-header h3 {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+
+        /* Final Presentation Section */
+        .final-presentation {
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0;
+        }
+
+        .presentation-content {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .presentation-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .presentation-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg, 
+                rgba(212, 175, 55, 0.8) 0%, 
+                rgba(184, 148, 31, 0.7) 50%, 
+                rgba(0, 0, 0, 0.6) 100%
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .presentation-text h2 {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .presentation-text p {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .presentation-features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .feature-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .feature-badge:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .feature-badge i {
+            color: #d4af37;
+            font-size: 1.2rem;
+        }
+
+        .feature-badge span {
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Mobile Responsiveness for Final Presentation */
+        @media (max-width: 768px) {
+            .final-presentation {
+                margin-top: 20px;
+            }
+
+            .presentation-content {
+                height: 300px;
+            }
+
+            .presentation-overlay {
+                padding: 20px 15px;
+            }
+
+            .presentation-text h2 {
+                font-size: 1.8rem;
+                margin-bottom: 12px;
+            }
+
+            .presentation-text p {
+                font-size: 1rem;
+                margin-bottom: 25px;
+            }
+
+            .presentation-features {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+
+            .feature-badge {
+                padding: 10px 16px;
+                gap: 8px;
+            }
+
+            .feature-badge span {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .presentation-content {
+                height: 250px;
+            }
+
+            .presentation-text h2 {
+                font-size: 1.5rem;
+            }
+
+            .presentation-features {
+                gap: 12px;
+            }
+            
+            .product-image {
+                height: 250px;
+            }
+        }
+
+        /* User Review Form Styles */
+        .user-review-form {
+            background: linear-gradient(135deg, #f8f9fa, #fff);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #d4af37;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .review-form-container h4 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .review-form-container h4 i {
+            color: #d4af37;
+        }
+
+        .review-form-group {
+            margin-bottom: 20px;
+        }
+
+        .review-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .star-rating i {
+            font-size: 1.8rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .star-rating i:hover,
+        .star-rating i.active {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .star-rating i.fas {
+            color: #ffd700;
+        }
+
+        .review-form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .review-form-group textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .char-count {
+            display: block;
+            text-align: right;
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        .submit-review-btn {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .submit-review-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .submit-review-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-review-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Dynamic User Review Styles */
+        .user-review-item {
+            background: linear-gradient(135deg, #fff9e6, #fff);
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .user-review-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
+        }
+
+        .user-review-badge {
+            position: absolute;
+            top: -8px;
+            right: 15px;
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+        }
+
+        .user-review-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            margin: 0 auto 15px;
+        }
+
+        .user-review-avatar i {
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .user-review-stars {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-bottom: 15px;
+        }
+
+        .user-review-stars i {
+            color: #ffd700;
+            font-size: 1.1rem;
+        }
+
+        .user-review-text {
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .user-review-author {
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 15px;
+        }
+
+        .user-review-author strong {
+            color: #333;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .user-review-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsiveness for Review Form */
+        @media (max-width: 768px) {
+            .user-review-form {
+                padding: 20px;
+                margin: 20px 0;
+            }
+
+            .review-form-container h4 {
+                font-size: 1.2rem;
+            }
+
+            .star-rating i {
+                font-size: 1.5rem;
+            }
+
+            .user-review-item {
+                padding: 20px;
+            }
+
+            .user-review-avatar {
+                width: 50px;
+                height: 50px;
+            }
+
+            .user-review-avatar i {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-container">
+                    <img src="../../Logo.png" alt="67 Beauty Hub" class="logo-image">
+                    <div class="logo-text">
+                        <span class="logo-brand">67 BEAUTY HUB</span>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#products" class="nav-link">Produtos</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#about" class="nav-link">Sobre</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contact" class="nav-link">Contato</a>
+                </li>
+            </ul>
+            
+            <!-- Flag Dropdown Selector -->
+            <div class="flag-dropdown-container">
+                <div class="flag-dropdown" id="flagDropdown">
+                    <div class="selected-flag" id="selectedFlag">🇺🇸</div>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </div>
+                <div class="flag-dropdown-menu" id="flagDropdownMenu">
+                    <!-- Países selecionados -->
+                    <div class="flag-option" data-currency="USD" data-flag="🇺🇸" data-country="Estados Unidos">🇺🇸 Estados Unidos</div>
+                    <div class="flag-option" data-currency="BRL" data-flag="🇧🇷" data-country="Brasil">🇧🇷 Brasil</div>
+                    <div class="flag-option" data-currency="EUR" data-flag="🇵🇹" data-country="Portugal">🇵🇹 Portugal</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="checkout-container">
+        <div class="checkout-header">
+            <h1><i class="fas fa-shopping-cart"></i> Finalizar Compra</h1>
+            <p>Escolha sua oferta e complete seu pedido com segurança</p>
+        </div>
+
+
+        <div class="checkout-layout">
+            <!-- Seção Unificada: Produto + Ofertas -->
+            <div class="unified-section">
+                <div class="product-info">
+                    <div class="product-summary">
+                        <img src="Escolhas/Nude Pink (6 Pieces).png" alt="Alligator Hair Clips - Nude Pink" class="product-image" id="mainProductImage">
+                        <div class="product-details">
+                            <h3>Alligator Hair Clips</h3>
+                            <p>Prendedores resistentes e práticos, ideais para separar e fixar mechas durante penteados, cortes ou maquiagens. Seguram firmemente sem escorregar.</p>
+                        </div>
+                        
+                        <!-- Galeria de Imagens -->
+                        <div class="product-gallery-section">
+                            <div class="simple-gallery">
+                                <div class="gallery-main">
+                                    <button class="gallery-nav-btn prev-btn" id="prevBtn">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <img src="Galeria/Screenshot 2025-09-20 023036.png" alt="Alligator Hair Clips" class="gallery-main-image" id="galleryMainImage">
+                                    <button class="gallery-nav-btn next-btn" id="nextBtn">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="gallery-indicators" id="galleryIndicators">
+                                <!-- Indicadores serão gerados pelo JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="offers-info">
+                    <h3 style="color: #333; margin-bottom: 20px; text-align: center;"><i class="fas fa-gift"></i> Escolha Sua Oferta</h3>
+                    
+                    <div class="offer-options">
+                        <div class="offer-option color-selection-box selected" data-option="basic">
+                            <div class="option-header">
+                                <h4>Alligator Hair Clips</h4>
+                                <div class="price">$3.54</div>
+                            </div>
+                            <div class="discount">48% OFF</div>
+                            <div class="description">Chega de grampos que escorregam e não seguram o cabelo. Os Alligator Hair Clips fixam firmemente cada mecha, facilitando penteados, cortes e maquiagens sem incômodos.</div>
+                            
+                            <!-- Seleção de cor com imagens -->
+                            <div class="color-selection" style="margin: 15px 0;">
+                                <h5 style="color: #333; margin-bottom: 10px; font-size: 1rem;">Escolha a cor:</h5>
+                                <div class="color-options" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="black">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolhas/Black (6 Pieces).png" alt="Black" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>Black</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="green">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolhas/Green (6 pieces).png" alt="Green" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>Green</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="nude-pink">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolhas/Nude Pink (6 Pieces).png" alt="Nude Pink" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>Nude Pink</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="pink">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolhas/Pink (6 Pieces).png" alt="Pink" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>Pink</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="purple">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolhas/Purple (6 pieces).png" alt="Purple" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>Purple</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="red">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolhas/Red (6 pieces).png" alt="Red" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>Red</span>
+                                    </div>
+                                    <div class="color-option" style="display: flex; flex-direction: column; align-items: center; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; text-align: center;" data-color="yellow">
+                                        <div class="color-image-container" style="width: 50px; height: 50px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid #ddd; cursor: pointer; transition: all 0.3s ease;">
+                                            <img src="Escolhas/Yellow (6 Pieces).png" alt="Yellow" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <span>Yellow</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="offer-option has-checkbox" data-option="premium">
+                            <input type="checkbox" class="offer-checkbox" id="offer-premium" data-option="premium">
+                            <div class="option-header">
+                                <h4>Oferta Premium</h4>
+                                <div class="price">$2.89</div>
+                            </div>
+                            <!-- Layout lado a lado: imagem à esquerda, descrição à direita -->
+                            <div style="display: flex; align-items: center; gap: 15px; margin: 15px 0;">
+                                <div class="premium-product-image" style="flex-shrink: 0;">
+                                    <div class="offer-image" style="width: 120px; height: 120px; border-radius: 8px; overflow: hidden; border: 2px solid #e0e0e0; transition: all 0.3s ease;">
+                                        <img src="Towel cloth-pink.png" alt="Towel cloth pink" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                    </div>
+                                </div>
+                                <div style="flex: 1;">
+                            <div class="description">Towel Cloth – Pink é macia, superabsorvente e durável, garantindo conforto e praticidade no seu dia a dia.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="offer-option has-checkbox" data-option="complete">
+                            <input type="checkbox" class="offer-checkbox" id="offer-complete" data-option="complete">
+                            <div class="option-header">
+                                <h4>Oferta Completa</h4>
+                                <div class="price">$11.36</div>
+                            </div>
+                            <!-- Layout lado a lado: imagem à esquerda, descrição à direita -->
+                            <div style="display: flex; align-items: center; gap: 15px; margin: 15px 0;">
+                                <div class="complete-product-image" style="flex-shrink: 0;">
+                                    <div class="offer-image" style="width: 120px; height: 120px; border-radius: 8px; overflow: hidden; border: 2px solid #e0e0e0; transition: all 0.3s ease;">
+                                        <img src="10pcsTouMing-blue.png" alt="Estojo organizador" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                    </div>
+                                </div>
+                                <div style="flex: 1;">
+                            <div class="description">Cansada de perder ou quebrar peças frágeis no dia a dia? O kit 10pcs TouMing - Blue oferece praticidade e durabilidade, com design transparente e resistente que facilita a organização e evita desperdícios.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Formulário e Resumo -->
+            <div class="checkout-bottom">
+                <div class="form-section">
+                    <form class="checkout-form" id="checkoutForm">
+                        <div class="form-section">
+                            <h3><i class="fas fa-envelope"></i> Informações de Contato</h3>
+                                <div class="form-group">
+                                    <label for="email">E-mail *</label>
+                                <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                            </div>
+                        </div>
+
+                    <h3><i class="fas fa-credit-card"></i> Método de Pagamento</h3>
+                    <!-- Updated structure -->
+                    
+                    <div class="form-group">
+                        <label for="paymentMethod">Forma de Pagamento *</label>
+                        <select id="paymentMethod" name="paymentMethod" required>
+                            <option value="">Selecione</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="pix">PIX</option>
+                        </select>
+                    </div>
+
+                    <div id="paypal-payment-button" style="display: none;"></div>
+                    <div id="pix-payment-info" style="display: none;">
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border: 2px solid #d4af37; text-align: center;">
+                            <h4 style="color: #d4af37; margin-bottom: 15px;"><i class="fas fa-qrcode"></i> Pagamento via PIX</h4>
+                            <p style="color: #666; margin-bottom: 15px;">Após confirmar o pedido, você receberá as instruções de pagamento PIX por email.</p>
+                            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                                <strong>Chave PIX:</strong> contato@67beautyhub.com
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="observations">Observações (opcional)</label>
+                        <textarea id="observations" name="observations" rows="3" placeholder="Alguma observação especial sobre seu pedido?"></textarea>
+                    </div>
+
+                        <button type="submit" class="checkout-btn">
+                            <i class="fas fa-check"></i> Confirmar Pedido
+                        </button>
+                    </form>
+
+                </div>
+
+                <div class="summary-section">
+                    <h3><i class="fas fa-receipt"></i> Resumo do Pedido</h3>
+                    <div class="checkout-summary">
+                        <div id="selectedOffers">
+                            <!-- Ofertas selecionadas serão inseridas aqui dinamicamente -->
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="totalAmount">$3.54</span>
+                        </div>
+                        
+                        <!-- Currency Selector for Summary -->
+                        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; text-align: center;">
+                            <div>
+                                <label style="display: block; color: #555; font-size: 14px; margin-bottom: 5px;">
+                                    <i class="fas fa-exchange-alt"></i> Moeda do Resumo
+                                </label>
+                                <select id="summaryCurrencySelector" style="padding: 8px 12px; border: 2px solid #d4af37; border-radius: 6px; background: white; color: #333; font-size: 14px; width: 100%; max-width: 250px;">
+                                    <option value="USD">🇺🇸 Dólar Americano (USD)</option>
+                                    <option value="BRL">🇧🇷 Real Brasileiro (BRL)</option>
+                                    <option value="EUR">🇪🇺 Euro (EUR)</option>
+                                    <option value="AOA">🇦🇴 Kwanza Angolano (AOA)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; text-align: center;">
+                        <h4 style="color: #333; margin-bottom: 10px;"><i class="fas fa-shield-alt"></i> Compra Segura</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">Seus dados estão protegidos com criptografia SSL</p>
+                        <div style="display: flex; justify-content: center; gap: 15px; font-size: 1.5rem; color: #d4af37; margin-bottom: 20px;">
+                            <i class="fas fa-lock"></i>
+                            <i class="fas fa-credit-card"></i>
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Review antigo removido - usando o novo sistema -->
+
+    <!-- Seção de Reviews -->
+    <div class="reviews-section" style="margin: 40px auto; max-width: 1200px; padding: 0 20px;">
+        <div class="reviews-header">
+            <h3><i class="fas fa-star"></i> O que nossos clientes estão dizendo</h3>
+            <p>Mais de 850 clientes satisfeitas com nossos produtos</p>
+            
+            <!-- Botão para adicionar review -->
+            <div style="margin-top: 20px;">
+                <button id="addReviewBtn" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 25px; font-size: 16px; cursor: pointer; transition: all 0.3s ease;">
+                    <i class="fas fa-plus"></i> Adicionar sua Review
+                </button>
+            </div>
+        </div>
+        
+        <div class="reviews-container">
+            <div class="review-item clickable-review" 
+                 data-review-id="sarah"
+                 data-author="Sarah M."
+                 data-date="1 semana atrás"
+                 data-stars="5">
+                <div class="review-image">
+                    <img src="Reviews/Upload 1.avif" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"They are great. for styling my daughter's hair. ♥️"</p>
+                    <div class="review-author">
+                        <strong>Sarah M.</strong>
+                        <span class="review-date">Compra verificada - 1 semana atrás</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item clickable-review" 
+                 data-review-id="jessica"
+                 data-author="Jessica R."
+                 data-date="3 dias atrás"
+                 data-stars="4">
+                <div class="review-image">
+                    <img src="Reviews/Upload 2.avif" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="review-text">"Great quality clips! I use them daily for my hair routine. They're strong and durable. Only wish they came in more colors..."</p>
+                    <div class="review-author">
+                        <strong>Jessica R.</strong>
+                        <span class="review-date">Compra verificada - 3 dias atrás</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item clickable-review" 
+                 data-review-id="amanda"
+                 data-author="Amanda L."
+                 data-date="2 semanas atrás"
+                 data-stars="5">
+                <div class="review-image">
+                    <div class="review-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Perfect for my salon! Professional quality clips that don't break easily. My clients love how comfortable they are..."</p>
+                    <div class="review-author">
+                        <strong>Amanda L.</strong>
+                        <span class="review-date">Compra verificada - 2 semanas atrás</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item clickable-review" 
+                 data-review-id="maria"
+                 data-author="Maria Santos"
+                 data-date="5 dias atrás"
+                 data-stars="4.5">
+                <div class="review-image">
+                    <div class="review-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="review-text">"Excelente qualidade! Uso para prender o cabelo enquanto faço maquiagem. São resistentes e não machucam o cabelo..."</p>
+                    <div class="review-author">
+                        <strong>Maria Santos</strong>
+                        <span class="review-date">Compra verificada - 5 dias atrás</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulário de Review para Usuários Logados -->
+        <div id="userReviewForm" class="user-review-form" style="display: none;">
+            <div class="review-form-container">
+                <h4><i class="fas fa-edit"></i> Deixe sua avaliação</h4>
+                <form id="submitReviewForm">
+                    <div class="review-form-group">
+                        <label>Avaliação:</label>
+                        <div class="star-rating" id="starRating">
+                            <i class="far fa-star" data-rating="1"></i>
+                            <i class="far fa-star" data-rating="2"></i>
+                            <i class="far fa-star" data-rating="3"></i>
+                            <i class="far fa-star" data-rating="4"></i>
+                            <i class="far fa-star" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" id="selectedRating" value="0">
+                    </div>
+                    <div class="review-form-group">
+                        <label for="reviewText">Sua avaliação:</label>
+                        <textarea id="reviewText" rows="4" placeholder="Conte-nos sobre sua experiência com o produto..." maxlength="500"></textarea>
+                        <small class="char-count">0/500 caracteres</small>
+                    </div>
+                    <button type="submit" class="submit-review-btn">
+                        <i class="fas fa-paper-plane"></i> Enviar Avaliação
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="reviews-stats">
+            <div class="stat-item">
+                <div class="stat-number" id="averageRating">4.6</div>
+                <div class="stat-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <div class="stat-label">Avaliação média</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="totalReviews">856</div>
+                <div class="stat-label">Clientes satisfeitas</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">96%</div>
+                <div class="stat-label">Recomendariam</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%; text-align: center;">
+            <h3 style="color: #d4af37; margin-bottom: 20px;"><i class="fas fa-user"></i> Faça Login</h3>
+            <form id="loginForm">
+                <div style="margin-bottom: 15px;">
+                    <input type="email" id="loginEmail" placeholder="Seu email" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <input type="password" id="loginPassword" placeholder="Sua senha" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button type="submit" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Login</button>
+                    <button type="button" id="closeLoginModal" style="background: #666; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Review -->
+    <div id="reviewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;">
+            <h3 style="color: #d4af37; margin-bottom: 20px;"><i class="fas fa-star"></i> Adicionar Review</h3>
+            <form id="reviewForm">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Seu Nome:</label>
+                    <input type="text" id="reviewerName" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Avaliação:</label>
+                    <div id="starRating" style="display: flex; gap: 5px; justify-content: center; margin: 10px 0;">
+                        <i class="fas fa-star" data-rating="1" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
+                        <i class="fas fa-star" data-rating="2" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
+                        <i class="fas fa-star" data-rating="3" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
+                        <i class="fas fa-star" data-rating="4" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
+                        <i class="fas fa-star" data-rating="5" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Sua Review:</label>
+                    <textarea id="reviewText" required placeholder="Conte-nos sua experiência com o produto..." style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; min-height: 100px; resize: vertical;"></textarea>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Foto (opcional):</label>
+                    <input type="file" id="reviewImage" accept="image/*" style="width: 100%; padding: 8px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                    <div id="imagePreview" style="margin-top: 10px; text-align: center;"></div>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button type="submit" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Enviar Review</button>
+                    <button type="button" id="closeReviewModal" style="background: #666; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Seção Final de Apresentação -->
+    <div class="final-presentation" style="background-image: url('Cabelos sempre perfeitos.webp'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 400px;">
+        <div class="presentation-content">
+            <div class="presentation-overlay" style="background: rgba(0, 0, 0, 0.4); padding: 60px 20px; text-align: center; min-height: 400px; display: flex; align-items: center; justify-content: center;">
+                <div class="presentation-text" style="color: white;">
+                    <h2 style="color: #d4af37; font-size: 2.5rem; margin-bottom: 20px;">✨ Cabelos Sempre Perfeitos</h2>
+                    <p style="font-size: 1.2rem; margin-bottom: 30px; color: white;">Descubra a praticidade e qualidade dos nossos prendedores profissionais</p>
+                    <div class="presentation-features" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                        <div class="feature-badge" style="background: rgba(212, 175, 55, 0.9); color: white; padding: 10px 20px; border-radius: 25px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-award"></i>
+                            <span>Qualidade Profissional</span>
+                        </div>
+                        <div class="feature-badge" style="background: rgba(212, 175, 55, 0.9); color: white; padding: 10px 20px; border-radius: 25px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-shipping-fast"></i>
+                            <span>Entrega Rápida</span>
+                        </div>
+                        <div class="feature-badge" style="background: rgba(212, 175, 55, 0.9); color: white; padding: 10px 20px; border-radius: 25px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-heart"></i>
+                            <span>Satisfação Garantida</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados das ofertas para Alligator Hair Clips
+        const offers = {
+            basic: {
+                name: 'Oferta Básica', // Será substituído pela cor selecionada
+                prices: {
+                    USD: 3.54, // Preço otimizado com margem real (Nude Pink)
+                    BRL: 18.64,
+                    EUR: 3.26,
+                    AOA: 3257
+                },
+                discount: 0,
+                shipping: {
+                    USD: 8.90,
+                    BRL: 46.90,
+                    EUR: 8.18,
+                    AOA: 8180
+                }
+            },
+            premium: {
+                name: 'Towel cloth-pink',
+                prices: {
+                    USD: 2.89,
+                    BRL: 15.24,
+                    EUR: 2.66,
+                    AOA: 2659
+                },
+                discount: 0,
+                shipping: {
+                    USD: 8.90,
+                    BRL: 46.90,
+                    EUR: 8.18,
+                    AOA: 8180
+                }
+            },
+            complete: {
+                name: '10pcsTouMing-blue',
+                prices: {
+                    USD: 11.36,
+                    BRL: 59.84,
+                    EUR: 10.45,
+                    AOA: 10451
+                },
+                discount: 0,
+                shipping: {
+                    USD: 2.04,
+                    BRL: 10.75,
+                    EUR: 1.88,
+                    AOA: 1877
+                }
+            }
+        };
+
+        let selectedOffers = ['basic']; // Array para múltiplas seleções
+        let selectedColor = null; // Cor selecionada para a oferta básica
+
+        // Currency System
+        let currentCurrency = 'USD';
+        let summaryCurrency = 'USD'; // Moeda do resumo do pedido
+        let exchangeRates = {
+            'USD': { symbol: '$', rate: 1, locale: 'en-US', currency: 'USD' },
+            'BRL': { symbol: 'R$', rate: 5.27, locale: 'pt-BR', currency: 'BRL' },
+            'EUR': { symbol: '€', rate: 0.92, locale: 'de-DE', currency: 'EUR' },
+            'AOA': { symbol: 'Kz', rate: 920, locale: 'pt-AO', currency: 'AOA' }
+        };
+
+        // Event listeners movidos para DOMContentLoaded
+
+        // Update currency display in checkout
+        function updateCurrencyDisplay() {
+            // Atualizar apenas preços das ofertas nas checkboxes usando preços pré-calculados
+            document.querySelectorAll('.offer-option').forEach(offerElement => {
+                const offerKey = offerElement.dataset.option;
+                const offer = offers[offerKey];
+                const priceElement = offerElement.querySelector('.price');
+                
+                if (offer && priceElement) {
+                    const price = offer.prices[currentCurrency];
+                    if (price) {
+                        if (currentCurrency === 'USD') {
+                            priceElement.textContent = `$${price.toFixed(2)}`;
+                        } else if (currentCurrency === 'BRL') {
+                            priceElement.textContent = `R$ ${price.toFixed(2).replace('.', ',')}`;
+                        } else if (currentCurrency === 'EUR') {
+                            priceElement.textContent = `€${price.toFixed(2)}`;
+                        } else if (currentCurrency === 'AOA') {
+                            priceElement.textContent = `Kz ${price.toLocaleString()}`;
+                        }
+                    }
+                }
+            });
+            // NÃO atualizar resumo do pedido - apenas as checkboxes
+        }
+
+        // Função para atualizar resumo do pedido
+        function updateOrderSummary() {
+            const selectedOffersContainer = document.getElementById('selectedOffers');
+            let total = 0;
+
+            console.log('Updating order summary. Selected offers:', selectedOffers);
+            console.log('Summary currency:', summaryCurrency);
+
+            if (!selectedOffersContainer) {
+                console.error('selectedOffersContainer not found!');
+                return;
+            }
+
+            // Limpar ofertas anteriores
+            selectedOffersContainer.innerHTML = '';
+
+            // Calcular total para cada oferta selecionada
+            selectedOffers.forEach(offerKey => {
+                const offer = offers[offerKey];
+                console.log('Processing offer:', offerKey, offer);
+                
+                if (offer) {
+                    // Usar preços pré-calculados diretamente
+                    const basePrice = offer.prices[summaryCurrency];
+                    console.log('Base price for', offerKey, ':', basePrice, 'in summary currency:', summaryCurrency);
+                    
+                    // Aplicar desconto se houver
+                    const discountAmount = (basePrice * offer.discount / 100);
+                    const offerTotal = basePrice - discountAmount;
+                
+                total += offerTotal;
+
+                // Adicionar linha da oferta no resumo
+                const offerRow = document.createElement('div');
+                offerRow.className = 'summary-row';
+                offerRow.innerHTML = `
+                    <span>${offer.name}</span>
+                        <span>${formatSummaryPrice(offerTotal)}</span>
+                `;
+                selectedOffersContainer.appendChild(offerRow);
+                    
+                    console.log('Added offer to summary:', offer.name, 'Price:', offerTotal, 'Formatted:', formatSummaryPrice(offerTotal));
+                } else {
+                    console.error('Offer not found for key:', offerKey);
+                }
+            });
+
+            // Atualizar total
+            const totalElement = document.getElementById('totalAmount');
+            if (totalElement) {
+                totalElement.textContent = formatSummaryPrice(total);
+                console.log('Updated total:', formatSummaryPrice(total));
+            } else {
+                console.error('totalAmount element not found!');
+            }
+        }
+
+        // Format price for display
+        function formatPrice(price) {
+            console.log('Formatting price:', price, 'for currency:', currentCurrency);
+            if (currentCurrency === 'BRL') {
+                return `R$ ${price.toFixed(2).replace('.', ',')}`;
+            } else if (currentCurrency === 'USD') {
+                return `$${price.toFixed(2)}`;
+            } else if (currentCurrency === 'EUR') {
+                return `€${price.toFixed(2)}`;
+            } else if (currentCurrency === 'AOA') {
+                return `Kz ${price.toLocaleString()}`;
+            }
+            return price.toString();
+        }
+
+        // Format price for summary display (uses summaryCurrency)
+        function formatSummaryPrice(price) {
+            console.log('Formatting summary price:', price, 'for summary currency:', summaryCurrency);
+            if (summaryCurrency === 'BRL') {
+                return `R$ ${price.toFixed(2).replace('.', ',')}`;
+            } else if (summaryCurrency === 'USD') {
+                return `$${price.toFixed(2)}`;
+            } else if (summaryCurrency === 'EUR') {
+                return `€${price.toFixed(2)}`;
+            } else if (summaryCurrency === 'AOA') {
+                return `Kz ${price.toLocaleString()}`;
+            }
+            return price.toString();
+        }
+
+        // Formulário de checkout
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Coletar dados do formulário
+            const formData = new FormData(this);
+            const orderData = {};
+            formData.forEach((value, key) => {
+                orderData[key] = value;
+            });
+            
+            // Adicionar dados das ofertas selecionadas
+            orderData.selectedOffers = selectedOffers;
+            orderData.offerNames = selectedOffers.map(key => offers[key].name);
+            
+            // Calcular total
+            let total = 0;
+            selectedOffers.forEach(offerKey => {
+                const offer = offers[offerKey];
+                const discountAmount = (offer.price * offer.discount / 100);
+                const offerTotal = offer.price - discountAmount;
+                total += offerTotal;
+            });
+            
+            orderData.total = total;
+            
+            // Processar pagamento
+            const offerNames = selectedOffers.map(key => offers[key].name).join(', ');
+            alert(`Pedido realizado com sucesso!\n\nProduto: Alligator Hair Clips\nOfertas: ${offerNames}\nTotal: ${formatPrice(orderData.total)}\n\nVocê receberá um e-mail de confirmação em breve.`);
+            
+            // Redirecionar para página inicial
+            window.location.href = 'index.html';
+        });
+
+
+
+
+        // Currency System - Variables already declared above
+
+        // Auto-detect user language and set currency accordingly
+        function detectUserLanguageAndCurrency() {
+            const userLanguage = navigator.language || navigator.userLanguage;
+            const languageCode = userLanguage.toLowerCase();
+            
+            console.log('Detected browser language:', userLanguage);
+            
+            let detectedCurrency = 'USD';
+            
+            if (languageCode.startsWith('pt')) {
+                detectedCurrency = 'BRL';
+                console.log('Portuguese detected → BRL');
+            } else if (languageCode.startsWith('es')) {
+                detectedCurrency = 'EUR';
+                console.log('Spanish detected → EUR');
+            } else if (languageCode.startsWith('en')) {
+                if (languageCode.includes('gb') || languageCode.includes('uk')) {
+                    detectedCurrency = 'GBP';
+                    console.log('British English detected → GBP');
+                } else if (languageCode.includes('ca')) {
+                    detectedCurrency = 'CAD';
+                    console.log('Canadian English detected → CAD');
+                } else if (languageCode.includes('au')) {
+                    detectedCurrency = 'AUD';
+                    console.log('Australian English detected → AUD');
+                } else {
+                    detectedCurrency = 'USD';
+                    console.log('English detected → USD');
+                }
+            } else if (languageCode.startsWith('fr') || languageCode.startsWith('de') || languageCode.startsWith('it')) {
+                detectedCurrency = 'EUR';
+                console.log('European language detected → EUR');
+            }
+            
+            return detectedCurrency;
+        }
+        
+        // Toggle flag dropdown
+        function toggleFlagDropdown() {
+            const dropdown = document.querySelector('.flag-dropdown');
+            const menu = document.getElementById('flagDropdownMenu');
+            
+            dropdown.classList.toggle('open');
+            menu.classList.toggle('open');
+        }
+        
+        // Select flag option
+        function selectFlagOption(currency, flag) {
+            const selectedFlag = document.getElementById('selectedFlag');
+            selectedFlag.textContent = flag;
+            
+            // Close dropdown
+            const dropdown = document.querySelector('.flag-dropdown');
+            const menu = document.getElementById('flagDropdownMenu');
+            dropdown.classList.remove('open');
+            menu.classList.remove('open');
+            
+            // Change currency
+            currentCurrency = currency;
+            updateCurrencyDisplay();
+        }
+        
+
+        // Initialize currency system
+        function initializeCurrency() {
+            // Check if user has a saved currency preference
+            const savedCurrency = localStorage.getItem('selectedCurrency');
+            let detectedCurrency;
+            
+            if (savedCurrency && exchangeRates[savedCurrency]) {
+                detectedCurrency = savedCurrency;
+                console.log('Using saved currency preference:', savedCurrency);
+            } else {
+                detectedCurrency = detectUserLanguageAndCurrency();
+                console.log('Auto-detected currency:', detectedCurrency);
+            }
+            
+            currentCurrency = detectedCurrency;
+            
+            // Update selected flag
+            const selectedFlag = document.getElementById('selectedFlag');
+            const flagOption = document.querySelector(`[data-currency="${detectedCurrency}"]`);
+            if (flagOption && selectedFlag) {
+                selectedFlag.textContent = flagOption.dataset.flag;
+            }
+            
+            console.log('🌍 Auto-set currency:', currentCurrency, 'from browser:', navigator.language);
+            
+            updateCurrencyDisplay();
+        }
+
+
+        // Format price for display (main page) - REMOVED DUPLICATE FUNCTION
+        
+
+
+
+        
+        // Add event listeners for flag selection
+        document.querySelectorAll('.flag-option').forEach(flag => {
+            flag.addEventListener('click', function() {
+                const currency = this.dataset.currency;
+                const flagEmoji = this.dataset.flag;
+                selectFlagOption(currency, flagEmoji);
+            });
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const container = document.querySelector('.flag-dropdown-container');
+            if (container && !container.contains(event.target)) {
+                const dropdown = document.querySelector('.flag-dropdown');
+                const menu = document.getElementById('flagDropdownMenu');
+                dropdown.classList.remove('open');
+                menu.classList.remove('open');
+            }
+        });
+        
+
+        // Review Modal Functions
+        function openReviewModal(author, date, stars, fullText) {
+            // Criar modal dinâmico para mostrar review completa
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); z-index: 1000; 
+                display: flex; justify-content: center; align-items: center;
+            `;
+            
+            const starCount = parseFloat(stars);
+            let starsHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= starCount) {
+                    starsHTML += '<i class="fas fa-star" style="color: #d4af37;"></i>';
+                } else {
+                    starsHTML += '<i class="far fa-star" style="color: #ddd;"></i>';
+                }
+            }
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; text-align: center;">
+                    <h3 style="color: #d4af37; margin-bottom: 20px;">Review Completa</h3>
+                    <div style="margin-bottom: 15px;">
+                        <strong>${author}</strong>
+                        <div style="margin: 10px 0;">${starsHTML}</div>
+                        <span style="color: #666; font-size: 14px;">Compra verificada - ${date}</span>
+                    </div>
+                    <p style="text-align: left; line-height: 1.6; margin-bottom: 20px;">"${fullText}"</p>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: #d4af37; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Fechar</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function closeReviewModal() {
+            const modal = document.getElementById('reviewModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Add click listeners to reviews
+        document.addEventListener('DOMContentLoaded', function() {
+            const clickableReviews = document.querySelectorAll('.clickable-review');
+            clickableReviews.forEach(review => {
+                review.addEventListener('click', function() {
+                    const author = this.dataset.author;
+                    const date = this.dataset.date;
+                    const stars = this.dataset.stars;
+                    
+                    // Get review text based on ID
+                    const reviewTexts = {
+                        'sarah': "They are great. for styling my daughter's hair. ♥️",
+                        'jessica': "Great quality clips! I use them daily for my hair routine. They're strong and durable. Only wish they came in more colors, but the functionality is perfect. They grip well without being too tight and are comfortable to wear for extended periods.",
+                        'amanda': "Perfect for my salon! Professional quality clips that don't break easily. My clients love how comfortable they are and they hold all hair types securely. These have become a staple in my toolkit. Highly recommend for both personal and professional use!",
+                        'maria': "Excelente qualidade! Uso para prender o cabelo enquanto faço maquiagem. São resistentes e não machucam o cabelo. Muito práticas e funcionais. Recomendo para quem precisa de presilhas confiáveis no dia a dia."
+                    };
+                    
+                    const reviewId = this.dataset.reviewId;
+                    const fullText = reviewTexts[reviewId] || "Review completo não disponível.";
+                    
+                    openReviewModal(author, date, stars, fullText);
+                });
+            });
+            
+            // Close modal when clicking overlay
+            document.getElementById('reviewModal').addEventListener('click', function(e) {
+                if (e.target === this || e.target.classList.contains('modal-overlay')) {
+                    closeReviewModal();
+                }
+            });
+        });
+
+        // Sistema de Reviews Dinâmicas para Usuários Logados - Variáveis já declaradas no script principal
+
+        // Verificar se usuário está logado
+        function checkUserLogin() {
+            const userData = localStorage.getItem('userLogin');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                showReviewForm();
+                loadUserReviews();
+                return true;
+            }
+            return false;
+        }
+
+        // Mostrar formulário de review para usuários logados
+        function showReviewForm() {
+            const reviewForm = document.getElementById('userReviewForm');
+            if (reviewForm) {
+                reviewForm.style.display = 'block';
+            }
+        }
+
+        // Carregar reviews de usuários logados
+        function loadUserReviews() {
+            const reviewsContainer = document.querySelector('.reviews-container');
+            if (!reviewsContainer || userReviews.length === 0) return;
+
+            // Adicionar reviews de usuários no início do container
+            userReviews.forEach((review, index) => {
+                const reviewElement = createUserReviewElement(review, index);
+                reviewsContainer.insertBefore(reviewElement, reviewsContainer.firstChild);
+            });
+
+            updateReviewStats();
+        }
+
+        // Criar elemento de review do usuário
+        function createUserReviewElement(review, index) {
+            const reviewDiv = document.createElement('div');
+            reviewDiv.className = 'review-item user-review-item clickable-review';
+            reviewDiv.setAttribute('data-review-id', `user-${index}`);
+            reviewDiv.setAttribute('data-author', review.author);
+            reviewDiv.setAttribute('data-date', review.date);
+            reviewDiv.setAttribute('data-stars', review.rating);
+
+            const starsHTML = generateStarsHTML(review.rating);
+            
+            reviewDiv.innerHTML = `
+                <div class="user-review-badge">Cliente Verificado</div>
+                <div class="review-image">
+                    <div class="user-review-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <div class="user-review-stars">
+                        ${starsHTML}
+                    </div>
+                    <p class="user-review-text">"${review.text}"</p>
+                    <div class="user-review-author">
+                        <strong>${review.author}</strong>
+                        <span class="user-review-date">Compra verificada - ${review.date}</span>
+                    </div>
+                </div>
+            `;
+
+            // Adicionar event listener para modal
+            reviewDiv.addEventListener('click', function() {
+                openReviewModal(review.author, review.date, review.rating, review.text);
+            });
+
+            return reviewDiv;
+        }
+
+        // Gerar HTML das estrelas
+        function generateStarsHTML(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            const emptyStars = 5 - Math.ceil(rating);
+            
+            let starsHTML = '';
+            for (let i = 0; i < fullStars; i++) {
+                starsHTML += '<i class="fas fa-star"></i>';
+            }
+            if (hasHalfStar) {
+                starsHTML += '<i class="fas fa-star-half-alt"></i>';
+            }
+            for (let i = 0; i < emptyStars; i++) {
+                starsHTML += '<i class="far fa-star"></i>';
+            }
+            return starsHTML;
+        }
+
+        // Atualizar estatísticas das reviews
+        function updateReviewStats() {
+            const totalReviews = 4 + userReviews.length; // 4 reviews fixas + reviews de usuários
+            const totalRating = (4.6 * 4 + userReviews.reduce((sum, review) => sum + review.rating, 0)) / totalReviews;
+            
+            document.getElementById('totalReviews').textContent = totalReviews;
+            document.getElementById('averageRating').textContent = totalRating.toFixed(1);
+        }
+
+        // Sistema de avaliação por estrelas
+        function initializeStarRating() {
+            const stars = document.querySelectorAll('.star-rating i');
+            const selectedRatingInput = document.getElementById('selectedRating');
+            
+            stars.forEach((star, index) => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    selectedRatingInput.value = rating;
+                    
+                    // Atualizar visual das estrelas
+                    stars.forEach((s, i) => {
+                        if (i < rating) {
+                            s.className = 'fas fa-star';
+                        } else {
+                            s.className = 'far fa-star';
+                        }
+                    });
+                });
+
+                star.addEventListener('mouseenter', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    stars.forEach((s, i) => {
+                        if (i < rating) {
+                            s.style.color = '#ffd700';
+                        } else {
+                            s.style.color = '#ddd';
+                        }
+                    });
+                });
+            });
+
+            // Reset ao sair do hover
+            document.querySelector('.star-rating').addEventListener('mouseleave', function() {
+                const currentRating = parseInt(selectedRatingInput.value);
+                stars.forEach((s, i) => {
+                    if (i < currentRating) {
+                        s.style.color = '#ffd700';
+                    } else {
+                        s.style.color = '#ddd';
+                    }
+                });
+            });
+        }
+
+        // Contador de caracteres
+        function initializeCharacterCounter() {
+            const textarea = document.getElementById('reviewText');
+            const charCount = document.querySelector('.char-count');
+            
+            if (textarea && charCount) {
+                textarea.addEventListener('input', function() {
+                    const length = this.value.length;
+                    charCount.textContent = `${length}/500 caracteres`;
+                    
+                    if (length > 450) {
+                        charCount.style.color = '#e74c3c';
+                    } else {
+                        charCount.style.color = '#666';
+                    }
+                });
+            }
+        }
+
+        // Submeter review
+        function initializeReviewSubmission() {
+            const form = document.getElementById('submitReviewForm');
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const rating = parseInt(document.getElementById('selectedRating').value);
+                const text = document.getElementById('reviewText').value.trim();
+                
+                if (rating === 0) {
+                    alert('Por favor, selecione uma avaliação com estrelas.');
+                    return;
+                }
+                
+                if (text.length < 10) {
+                    alert('Por favor, escreva pelo menos 10 caracteres na sua avaliação.');
+                    return;
+                }
+                
+                // Criar nova review
+                const newReview = {
+                    author: currentUser.name,
+                    rating: rating,
+                    text: text,
+                    date: 'Agora mesmo',
+                    timestamp: Date.now()
+                };
+                
+                // Adicionar à lista de reviews
+                userReviews.unshift(newReview);
+                localStorage.setItem('userReviews', JSON.stringify(userReviews));
+                
+                // Recarregar reviews
+                location.reload();
+            });
+        }
+
+        // Inicializar sistema de reviews
+        function initializeReviewSystem() {
+            if (checkUserLogin()) {
+                initializeStarRating();
+                initializeCharacterCounter();
+                initializeReviewSubmission();
+            }
+        }
+
+        // Inicializar resumo após DOM carregado
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing...');
+            console.log('Selected offers on load:', selectedOffers);
+            console.log('Current currency on load:', currentCurrency);
+            console.log('Offers data:', offers);
+            updateOrderSummary();
+            initializeReviewSystem();
+            
+            // Event listeners para checkboxes (exceto oferta básica)
+            document.querySelectorAll('.offer-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const option = this.dataset.option;
+                    const offerElement = this.closest('.offer-option');
+                    
+                    if (this.checked) {
+                        if (!selectedOffers.includes(option)) {
+                            selectedOffers.push(option);
+                        }
+                        offerElement.classList.add('selected');
+        } else {
+                        selectedOffers = selectedOffers.filter(offer => offer !== option);
+                        offerElement.classList.remove('selected');
+                    }
+                    
+                    // Garantir que pelo menos uma oferta esteja selecionada
+                    if (selectedOffers.length === 0) {
+                        this.checked = true;
+                        selectedOffers.push(option);
+                        offerElement.classList.add('selected');
+                    }
+                    
+                    updateOrderSummary();
+                });
+            });
+            
+            // Garantir que a oferta básica esteja sempre selecionada
+            if (!selectedOffers.includes('basic')) {
+                selectedOffers.push('basic');
+            }
+
+            // Event listeners para cliques nas ofertas (exceto oferta básica)
+            document.querySelectorAll('.offer-option:not(.color-selection-box)').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    // Não processar clique se for no checkbox
+                    if (e.target.type === 'checkbox') return;
+                    
+                    const checkbox = this.querySelector('.offer-checkbox');
+                    if (checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                        checkbox.dispatchEvent(new Event('change'));
+                    }
+                });
+            });
+            
+            // Event listener para o dropdown de países
+            const flagDropdown = document.getElementById('flagDropdown');
+            if (flagDropdown) {
+                flagDropdown.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleFlagDropdown();
+                });
+            }
+            
+            // Event listeners para opções de país
+            document.querySelectorAll('.flag-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const currency = this.dataset.currency;
+                    const flag = this.dataset.flag;
+                    const country = this.dataset.country;
+                    
+                    // Update selected flag
+                    document.getElementById('selectedFlag').textContent = flag;
+                    
+                    // Close dropdown
+                    const dropdown = document.querySelector('.flag-dropdown');
+                    const menu = document.getElementById('flagDropdownMenu');
+                    dropdown.classList.remove('open');
+                    menu.classList.remove('open');
+                    
+                    // Change currency
+                    currentCurrency = currency;
+                    updateCurrencyDisplay();
+                    
+                    console.log('Currency changed to:', currency);
+                });
+            });
+            
+            // Event listener para o seletor de moeda do resumo
+            const summaryCurrencySelector = document.getElementById('summaryCurrencySelector');
+            if (summaryCurrencySelector) {
+                summaryCurrencySelector.addEventListener('change', function() {
+                    summaryCurrency = this.value;
+                    console.log('Summary currency changed to:', summaryCurrency);
+                    // Atualizar apenas o resumo do pedido
+                    updateOrderSummary();
+                });
+            }
+        });
+        
+
+        // Funcionalidade para imagens selecionáveis
+            document.addEventListener('DOMContentLoaded', function() {
+            // Mapeamento das cores para suas imagens
+            const colorImageMap = {
+                'black': 'Escolhas/Black (6 Pieces).png',
+                'green': 'Escolhas/Green (6 pieces).png',
+                'nude-pink': 'Escolhas/Nude Pink (6 Pieces).png',
+                'pink': 'Escolhas/Pink (6 Pieces).png',
+                'purple': 'Escolhas/Purple (6 pieces).png',
+                'red': 'Escolhas/Red (6 pieces).png',
+                'yellow': 'Escolhas/Yellow (6 Pieces).png'
+            };
+            
+            // Função para atualizar imagem principal
+            function updateMainProductImage(colorValue) {
+                const mainImage = document.getElementById('mainProductImage');
+                if (mainImage && colorImageMap[colorValue]) {
+                    mainImage.src = colorImageMap[colorValue];
+                    mainImage.alt = `Alligator Hair Clips - ${colorValue}`;
+                }
+            }
+            
+            // Adicionar event listeners para as opções de cor
+            const colorOptions = document.querySelectorAll('.color-option');
+            
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const colorValue = this.getAttribute('data-color');
+                    const colorName = this.querySelector('span').textContent;
+                    
+                    // Remover seleção de outras cores
+                    colorOptions.forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Adicionar classe selected à cor selecionada
+                    this.classList.add('selected');
+                    
+                    // Capturar a cor selecionada
+                    selectedColor = {
+                        name: colorName,
+                        image: colorImageMap[colorValue]
+                    };
+                    
+                    console.log('Cor selecionada:', selectedColor);
+                    
+                    // Atualizar imagem principal
+                    updateMainProductImage(colorValue);
+                    
+                    // Atualizar resumo do pedido
+                    updateOrderSummary();
+                });
+            });
+            
+            // Selecionar Nude Pink como padrão
+            const nudePinkOption = document.querySelector('.color-option[data-color="nude-pink"]');
+            if (nudePinkOption) {
+                nudePinkOption.classList.add('selected');
+                // Definir cor padrão selecionada
+                selectedColor = {
+                    name: 'Nude Pink',
+                    image: 'Escolhas/Nude Pink (6 Pieces).png'
+                };
+            }
+            
+            // Sistema de galeria de produtos
+            function initializeProductGallery() {
+            const galleryImages = [
+                { src: 'Galeria/Screenshot 2025-09-20 023036.png' },
+                { src: 'Galeria/Screenshot 2025-09-20 023101.png' },
+                { src: 'Galeria/Screenshot 2025-09-20 023256.png' },
+                { src: 'Galeria/ssdfs.png' },
+                { src: 'Galeria/Whisk_9dc8cad069040e18750461ad2431c6abdr.jpeg' },
+                { src: 'Galeria/Whisk_aff77479497b37e8d5a42b64951f0f26dr.jpeg' }
+            ];
+            
+            let currentImageIndex = 0;
+            const mainImage = document.getElementById('galleryMainImage');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const indicatorsContainer = document.getElementById('galleryIndicators');
+            
+            // Criar indicadores
+            galleryImages.forEach((_, index) => {
+                const indicator = document.createElement('div');
+                indicator.className = 'gallery-indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicator.addEventListener('click', () => goToImage(index));
+                indicatorsContainer.appendChild(indicator);
+            });
+            
+            function updateImage(direction = null) {
+                const currentImage = galleryImages[currentImageIndex];
+                
+                // Aplicar transição de saída
+                if (direction === 'next') {
+                    mainImage.classList.add('slide-right');
+                } else if (direction === 'prev') {
+                    mainImage.classList.add('slide-left');
+                }
+                
+                setTimeout(() => {
+                    mainImage.src = currentImage.src;
+                    mainImage.alt = `Alligator Hair Clips - Imagem ${currentImageIndex + 1}`;
+                    
+                    // Remover classes de saída e aplicar entrada
+                    mainImage.classList.remove('slide-left', 'slide-right');
+                    
+                    if (direction === 'next') {
+                        mainImage.classList.add('slide-in-left');
+                    } else if (direction === 'prev') {
+                        mainImage.classList.add('slide-in-right');
+                    }
+                    
+                    // Remover classes de entrada após animação
+                    setTimeout(() => {
+                        mainImage.classList.remove('slide-in-left', 'slide-in-right');
+                    }, 500);
+                }, 250);
+                
+                // Atualizar indicadores
+                const indicators = document.querySelectorAll('.gallery-indicator');
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentImageIndex);
+                });
+                
+                // Atualizar botões
+                prevBtn.disabled = currentImageIndex === 0;
+                nextBtn.disabled = currentImageIndex === galleryImages.length - 1;
+            }
+            
+            function goToImage(index) {
+                currentImageIndex = index;
+                updateImage();
+            }
+            
+            function nextImage() {
+                if (currentImageIndex < galleryImages.length - 1) {
+                    currentImageIndex++;
+                    updateImage('next');
+                }
+            }
+            
+            function prevImage() {
+                if (currentImageIndex > 0) {
+                    currentImageIndex--;
+                    updateImage('prev');
+                }
+            }
+            
+            // Event listeners
+            prevBtn.addEventListener('click', prevImage);
+            nextBtn.addEventListener('click', nextImage);
+            
+            // Slideshow automático
+            let slideshowInterval;
+            const slideshowDelay = 4000; // 4 segundos
+            
+            function startSlideshow() {
+                slideshowInterval = setInterval(() => {
+                    if (currentImageIndex < galleryImages.length - 1) {
+                        nextImage();
+                    } else {
+                        currentImageIndex = 0;
+                        updateImage('next');
+                    }
+                }, slideshowDelay);
+            }
+            
+            function stopSlideshow() {
+                if (slideshowInterval) {
+                    clearInterval(slideshowInterval);
+                    slideshowInterval = null;
+                }
+            }
+            
+            // Pausar slideshow ao interagir
+            prevBtn.addEventListener('click', () => {
+                stopSlideshow();
+                setTimeout(startSlideshow, 10000); // Reiniciar após 10 segundos
+            });
+            nextBtn.addEventListener('click', () => {
+                stopSlideshow();
+                setTimeout(startSlideshow, 10000); // Reiniciar após 10 segundos
+            });
+            
+            // Pausar slideshow ao passar o mouse sobre a galeria
+            const galleryContainer = document.querySelector('.simple-gallery');
+            if (galleryContainer) {
+                galleryContainer.addEventListener('mouseenter', stopSlideshow);
+                galleryContainer.addEventListener('mouseleave', startSlideshow);
+            }
+            
+            // Inicializar
+            updateImage();
+            
+            // Iniciar slideshow automático
+            startSlideshow();
+            
+            console.log('🖼️ Galeria de produtos inicializada com', galleryImages.length, 'imagens');
+            }
+            
+            // Inicializar galeria de produtos
+            initializeProductGallery();
+            
+            // Adicionar estilos para seleção
+            const style = document.createElement('style');
+            style.textContent = `
+                .color-option.selected {
+                    border-color: #d4af37 !important;
+                    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2) !important;
+                }
+                .color-option.selected .color-image-container {
+                    border-color: #d4af37 !important;
+                }
+                .color-image-container:hover {
+                    transform: scale(1.05);
+                    border-color: #d4af37 !important;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+
+    <!-- Sistema de Reviews JavaScript -->
+    <script>
+        // Sistema de Reviews
+        let currentUser = null;
+        let userReviews = JSON.parse(localStorage.getItem('userReviews')) || [];
+        let selectedRating = 0;
+
+        // Verificar se usuário está logado
+        function checkLogin() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                return true;
+            }
+            return false;
+        }
+
+        // Mostrar modal de login
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        // Fechar modal de login
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        // Mostrar modal de review
+        function showReviewModal() {
+            if (!checkLogin()) {
+                showLoginModal();
+                return;
+            }
+            document.getElementById('reviewModal').style.display = 'flex';
+        }
+
+        // Fechar modal de review
+        function closeReviewModal() {
+            document.getElementById('reviewModal').style.display = 'none';
+            document.getElementById('reviewForm').reset();
+            selectedRating = 0;
+            updateStarDisplay();
+            document.getElementById('imagePreview').innerHTML = '';
+        }
+
+
+        // Atualizar display das estrelas
+        function updateStarDisplay() {
+            const stars = document.querySelectorAll('#starRating i');
+            stars.forEach((star, index) => {
+                if (index < selectedRating) {
+                    star.style.color = '#d4af37';
+                } else {
+                    star.style.color = '#ddd';
+                }
+            });
+        }
+
+        // Event listeners para sistema de reviews
+        document.addEventListener('DOMContentLoaded', function() {
+            // Botão adicionar review
+            const addReviewBtn = document.getElementById('addReviewBtn');
+            if (addReviewBtn) {
+                addReviewBtn.addEventListener('click', showReviewModal);
+            }
+
+            // Fechar modais
+            document.getElementById('closeLoginModal').addEventListener('click', closeLoginModal);
+            document.getElementById('closeReviewModal').addEventListener('click', closeReviewModal);
+
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                // Simular login (em produção, validar com backend)
+                if (email && password) {
+                    currentUser = { email: email, name: email.split('@')[0] };
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    closeLoginModal();
+                    showReviewModal();
+                } else {
+                    alert('Por favor, preencha todos os campos');
+                }
+            });
+
+            // Sistema de estrelas
+            const stars = document.querySelectorAll('#starRating i');
+            stars.forEach((star, index) => {
+                star.addEventListener('click', function() {
+                    selectedRating = index + 1;
+                    updateStarDisplay();
+                });
+                star.addEventListener('mouseenter', function() {
+                    for (let i = 0; i <= index; i++) {
+                        stars[i].style.color = '#d4af37';
+                    }
+                });
+                star.addEventListener('mouseleave', function() {
+                    updateStarDisplay();
+                });
+            });
+
+            // Preview de imagem
+            document.getElementById('reviewImage').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                const preview = document.getElementById('imagePreview');
+                
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.innerHTML = `
+                            <img src="${e.target.result}" style="max-width: 200px; max-height: 200px; border-radius: 8px; border: 2px solid #ddd;">
+                        `;
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.innerHTML = '';
+                }
+            });
+
+            // Formulário de review
+            document.getElementById('reviewForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (selectedRating === 0) {
+                    alert('Por favor, selecione uma avaliação');
+                    return;
+                }
+
+                const reviewData = {
+                    id: Date.now().toString(),
+                    name: document.getElementById('reviewerName').value,
+                    rating: selectedRating,
+                    text: document.getElementById('reviewText').value,
+                    image: null,
+                    date: new Date().toLocaleDateString('pt-BR'),
+                    verified: true
+                };
+
+                // Processar imagem se houver
+                const imageFile = document.getElementById('reviewImage').files[0];
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        reviewData.image = e.target.result;
+                        saveReview(reviewData);
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    saveReview(reviewData);
+                }
+            });
+
+            // Carregar reviews existentes
+            loadUserReviews();
+        });
+
+        // Salvar review
+        function saveReview(reviewData) {
+            userReviews.push(reviewData);
+            localStorage.setItem('userReviews', JSON.stringify(userReviews));
+            
+            // Adicionar review ao DOM
+            addReviewToDOM(reviewData);
+            
+            closeReviewModal();
+            alert('Review adicionada com sucesso!');
+        }
+
+        // Adicionar review ao DOM
+        function addReviewToDOM(reviewData) {
+            const reviewsContainer = document.querySelector('.reviews-container');
+            const reviewElement = document.createElement('div');
+            reviewElement.className = 'review-item clickable-review';
+            reviewElement.setAttribute('data-review-id', reviewData.id);
+            reviewElement.setAttribute('data-author', reviewData.name);
+            reviewElement.setAttribute('data-date', reviewData.date);
+            reviewElement.setAttribute('data-stars', reviewData.rating);
+            
+            let imageHtml = '';
+            if (reviewData.image) {
+                imageHtml = `<img src="${reviewData.image}" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            } else {
+                imageHtml = `<div class="review-avatar"><i class="fas fa-user"></i></div>`;
+            }
+
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= reviewData.rating) {
+                    starsHtml += '<i class="fas fa-star"></i>';
+                } else {
+                    starsHtml += '<i class="far fa-star"></i>';
+                }
+            }
+
+            reviewElement.innerHTML = `
+                <div class="review-image">
+                    ${imageHtml}
+                </div>
+                <div class="review-content">
+                    <div class="review-stars">
+                        ${starsHtml}
+                    </div>
+                    <p class="review-text">"${reviewData.text}"</p>
+                    <div class="review-author">
+                        <strong>${reviewData.name}</strong>
+                        <span class="review-date">Compra verificada - ${reviewData.date}</span>
+                    </div>
+                </div>
+            `;
+
+            // Adicionar event listener para o modal
+            reviewElement.addEventListener('click', function() {
+                openReviewModal(reviewData.name, reviewData.date, reviewData.rating, reviewData.text);
+            });
+
+            reviewsContainer.insertBefore(reviewElement, reviewsContainer.firstChild);
+        }
+
+        // Carregar reviews do usuário
+        function loadUserReviews() {
+            userReviews.forEach(review => {
+                addReviewToDOM(review);
+            });
+        }
+
+        // Event listeners para imagens das reviews
+    </script>
+
+    <script>
+        // Payment method control
+        function setupPaymentMethodControl() {
+            const paymentMethodSelect = document.getElementById('paymentMethod');
+            const paypalButton = document.getElementById('paypal-payment-button');
+            const pixInfo = document.getElementById('pix-payment-info');
+            
+            if (paymentMethodSelect) {
+                paymentMethodSelect.addEventListener('change', function() {
+                    const selectedMethod = this.value;
+                    
+                    // Hide all payment options first
+                    if (paypalButton) paypalButton.style.display = 'none';
+                    if (pixInfo) pixInfo.style.display = 'none';
+                    
+                    // Show selected payment method
+                    switch(selectedMethod) {
+                        case 'paypal':
+                            if (paypalButton) paypalButton.style.display = 'block';
+                            break;
+                        case 'pix':
+                            if (pixInfo) pixInfo.style.display = 'block';
+                            break;
+                    }
+                });
+            }
+        }
+        
+        // Initialize payment method control and PayPal
+        document.addEventListener('DOMContentLoaded', function() {
+            setupPaymentMethodControl();
+            initializePayPal();
+        });
+
+        // PayPal integration
+        function initializePayPal() {
+            // Wait for PayPal SDK to be loaded
+            if (typeof paypal === 'undefined') {
+                console.log('PayPal SDK not loaded yet, retrying...');
+                setTimeout(initializePayPal, 100);
+                return;
+            }
+
+            console.log('PayPal SDK loaded, initializing buttons...');
+
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                    return new Promise((resolve, reject) => {
+                        try {
+                            // Validate required variables
+                            if (!selectedOffers || !Array.isArray(selectedOffers) || selectedOffers.length === 0) {
+                                throw new Error('No offers selected');
+                            }
+                            
+                            if (!currentCurrency) {
+                                currentCurrency = 'USD'; // Fallback
+                            }
+                            
+                            // Get total from order summary (converted to USD for PayPal)
+                            const totalElement = document.getElementById('totalAmount');
+                            let totalAmount = 0;
+                            
+                            if (totalElement) {
+                                const totalText = totalElement.textContent;
+                                const totalValue = parseFloat(totalText.replace(/[^\d.,]/g, '').replace(',', '.'));
+                                
+                                // Convert to USD if needed
+                                if (summaryCurrency === 'BRL') {
+                                    totalAmount = totalValue / 5.2; // Convert BRL to USD
+                                } else if (summaryCurrency === 'EUR') {
+                                    totalAmount = totalValue / 0.92; // Convert EUR to USD
+                                } else {
+                                    totalAmount = totalValue; // Already USD
+                                }
+                            } else {
+                                // Fallback to calculation
+                                totalAmount = selectedOffers.reduce((total, offerType) => {
+                                    if (!offers[offerType]) {
+                                        console.warn('Offer not found:', offerType);
+                                        return total;
+                                    }
+                                    
+                                    const price = offers[offerType].prices && offers[offerType].prices[currentCurrency] 
+                                        ? offers[offerType].prices[currentCurrency] 
+                                        : offers[offerType].price || 0;
+                                    
+                                    return total + price;
+                                }, 0);
+                            }
+                            
+                            const productNames = selectedOffers.map(offerType => {
+                                let productName = offers[offerType] ? offers[offerType].name : 'Produto';
+                                
+                                // Se for a oferta básica e há cor selecionada, usar apenas o nome da cor
+                                if (offerType === 'basic' && selectedColor) {
+                                    productName = selectedColor.name;
+                                }
+                                
+                                return productName;
+                            }).join(' + ');
+                            
+                            console.log('PayPal order creation:', {
+                                selectedOffers: selectedOffers,
+                                totalAmount: totalAmount,
+                                currency: currentCurrency,
+                                productNames: productNames
+                            });
+                            
+                            if (totalAmount <= 0) {
+                                throw new Error('Invalid total amount: ' + totalAmount);
+                            }
+                            
+                            // Create order with timeout
+                            const orderPromise = actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: totalAmount.toFixed(2),
+                                        currency_code: 'USD'
+                                    },
+                                    description: productNames || 'Alligator Hair Clips Products'
+                                }]
+                            });
+                            
+                            // Add timeout to prevent hanging
+                            const timeoutPromise = new Promise((_, timeoutReject) => {
+                                setTimeout(() => {
+                                    timeoutReject(new Error('PayPal order creation timeout'));
+                                }, 8000);
+                            });
+                            
+                            Promise.race([orderPromise, timeoutPromise])
+                                .then(resolve)
+                                .catch(reject);
+                                
+                        } catch (error) {
+                            console.error('Error creating PayPal order:', error);
+                            reject(error);
+                        }
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                        console.log('PayPal payment approved:', details);
+                    alert('Pagamento aprovado! ID da transação: ' + details.id);
+                    processCheckout();
+                    }).catch(function(error) {
+                        console.error('PayPal payment error:', error);
+                        alert('Erro no processamento do pagamento. Tente novamente.');
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal error:', err);
+                    alert('Erro no PayPal. Tente novamente ou escolha outra forma de pagamento.');
+                },
+                onCancel: function(data) {
+                    console.log('PayPal payment cancelled:', data);
+                }
+            }).render('#paypal-payment-button').then(function() {
+                console.log('PayPal buttons rendered successfully');
+            }).catch(function(error) {
+                console.error('Error rendering PayPal buttons:', error);
+                // Retry after a delay
+                setTimeout(() => {
+                    console.log('Retrying PayPal button initialization...');
+                    initializePayPal();
+                }, 2000);
+            });
+        }
+    </script>
+
+    <script>
+        // Função de processamento de checkout
+        function processCheckout() {
+            const email = document.getElementById('email').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const observations = document.getElementById('observations').value;
+
+            if (!email || !paymentMethod) {
+                alert('Por favor, preencha o email e selecione uma forma de pagamento.');
+                return;
+            }
+            
+            // Validar se a oferta básica está selecionada e se uma cor foi escolhida
+            if (selectedOffers.includes('basic') && !selectedColor) {
+                alert('Por favor, selecione uma cor para os Alligator Hair Clips.');
+                return;
+            }
+            
+            const orderData = {
+                id: 'ORDER_' + Date.now(),
+                products: selectedOffers.map(offerType => {
+                    const product = {
+                        ...offers[offerType],
+                        totalPrice: offers[offerType].prices[currentCurrency]
+                    };
+                    
+                    // Se for a oferta básica e há cor selecionada, usar apenas o nome da cor
+                    if (offerType === 'basic' && selectedColor) {
+                        product.selectedColor = selectedColor;
+                        product.name = selectedColor.name;
+                    }
+                    
+                    return product;
+                }),
+                customer: {
+                    email
+                },
+                paymentMethod,
+                observations,
+                total: selectedOffers.reduce((total, offerType) => total + offers[offerType].prices[currentCurrency], 0),
+                date: new Date().toISOString()
+            };
+            
+            // Save order
+            let orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            orders.push(orderData);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            // Show specific message based on payment method
+            let successMessage = `Pedido realizado com sucesso!\n\nProdutos: ${orderData.products.map(p => p.name).join(' + ')}\nTotal: ${formatPrice(orderData.total)}\n\n`;
+            
+            switch(paymentMethod) {
+                case 'paypal':
+                    successMessage += 'O pagamento via PayPal foi processado. Você receberá um email de confirmação em breve.';
+                    break;
+                case 'pix':
+                    successMessage += 'Você receberá as instruções de pagamento PIX por email. Após o pagamento, seu pedido será processado.';
+                    break;
+                default:
+                    successMessage += 'Você receberá um email de confirmação em breve.';
+            }
+            
+            alert(successMessage);
+            
+            // Redirect to home page
+            window.location.href = '../../index.html';
+        }
+
+        // Checkout Translation System (without currency converter)
+        class CheckoutTranslator {
+            constructor() {
+                this.userCountry = null;
+                this.userCurrency = 'USD';
+                this.isInitialized = false;
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    await this.detectUserLocation();
+                    this.updatePageContent();
+                    this.isInitialized = true;
+                    console.log(`Checkout translator initialized. Currency: ${this.userCurrency}`);
+                } catch (error) {
+                    console.error('Error initializing checkout translator:', error);
+                    this.userCurrency = 'USD';
+                    this.updatePageContent();
+                }
+            }
+            
+            async detectUserLocation() {
+                try {
+                    let countryCode = null;
+                    
+                    // Check if running from file:// protocol
+                    if (window.location.protocol === 'file:') {
+                        console.log('Running from file:// protocol, using fallback detection');
+                        // Try to detect from browser language
+                        const browserLang = navigator.language || navigator.userLanguage;
+                        if (browserLang.startsWith('pt')) {
+                            countryCode = 'BR';
+                            console.log('Detected Portuguese language, assuming Brazil');
+                        } else if (browserLang.startsWith('es')) {
+                            countryCode = 'ES';
+                            console.log('Detected Spanish language, assuming Spain');
+                        } else {
+                            countryCode = 'US';
+                            console.log('Using default US location');
+                        }
+                    } else {
+                        try {
+                            const response = await fetch('https://ipapi.co/json/', { 
+                                timeout: 5000,
+                                mode: 'cors'
+                            });
+                            if (response.ok) {
+                                const data = await response.json();
+                                countryCode = data.country_code;
+                                console.log('Location detected via ipapi.co:', countryCode);
+                            }
+                        } catch (e) {
+                            console.log('ipapi.co failed, trying alternative...');
+                        }
+                        
+                        if (!countryCode) {
+                            try {
+                                const response = await fetch('https://ipinfo.io/json', { 
+                                    timeout: 5000,
+                                    mode: 'cors'
+                                });
+                                if (response.ok) {
+                                    const data = await response.json();
+                                    countryCode = data.country;
+                                    console.log('Location detected via ipinfo.io:', countryCode);
+                                }
+                            } catch (e) {
+                                console.log('ipinfo.io also failed');
+                            }
+                        }
+                    }
+                    
+                    this.userCountry = countryCode;
+                    
+                    const countryToCurrency = {
+                        'BR': 'BRL',
+                        'US': 'USD', 'CA': 'USD', 'MX': 'USD', 'AR': 'USD', 'CL': 'USD', 'CO': 'USD', 'PE': 'USD', 'UY': 'USD', 'BO': 'USD', 'PY': 'USD', 'VE': 'USD', 'EC': 'USD', 'GY': 'USD', 'SR': 'USD', 'GF': 'USD', 'FK': 'USD', 'BZ': 'USD', 'GT': 'USD', 'HN': 'USD', 'SV': 'USD', 'NI': 'USD', 'CR': 'USD', 'PA': 'USD', 'CU': 'USD', 'JM': 'USD', 'HT': 'USD', 'DO': 'USD', 'PR': 'USD', 'VI': 'USD', 'AG': 'USD', 'BB': 'USD', 'DM': 'USD', 'GD': 'USD', 'KN': 'USD', 'LC': 'USD', 'VC': 'USD', 'TT': 'USD', 'BS': 'USD', 'AU': 'USD', 'NZ': 'USD', 'JP': 'USD', 'KR': 'USD', 'SG': 'USD', 'HK': 'USD', 'TW': 'USD', 'TH': 'USD', 'MY': 'USD', 'ID': 'USD', 'PH': 'USD', 'VN': 'USD', 'IN': 'USD', 'PK': 'USD', 'BD': 'USD', 'LK': 'USD', 'MM': 'USD', 'KH': 'USD', 'LA': 'USD', 'BN': 'USD', 'FJ': 'USD', 'PG': 'USD', 'SB': 'USD', 'VU': 'USD', 'NC': 'USD', 'PF': 'USD', 'WS': 'USD', 'TO': 'USD', 'KI': 'USD', 'TV': 'USD', 'NR': 'USD', 'MH': 'USD', 'FM': 'USD', 'PW': 'USD', 'AS': 'USD', 'GU': 'USD', 'MP': 'USD', 'CK': 'USD', 'NU': 'USD', 'TK': 'USD', 'WF': 'USD', 'NF': 'USD', 'PN': 'USD', 'GS': 'USD', 'SH': 'USD', 'AC': 'USD', 'TA': 'USD', 'IO': 'USD', 'CX': 'USD', 'CC': 'USD', 'HM': 'USD', 'AQ': 'USD', 'BV': 'USD', 'TF': 'USD', 'UM': 'USD',
+                        'DE': 'EUR', 'FR': 'EUR', 'IT': 'EUR', 'ES': 'EUR', 'NL': 'EUR', 'BE': 'EUR', 'AT': 'EUR', 'PT': 'EUR', 'IE': 'EUR', 'FI': 'EUR', 'GR': 'EUR', 'LU': 'EUR', 'MT': 'EUR', 'CY': 'EUR', 'SK': 'EUR', 'SI': 'EUR', 'EE': 'EUR', 'LV': 'EUR', 'LT': 'EUR', 'AD': 'EUR', 'MC': 'EUR', 'SM': 'EUR', 'VA': 'EUR', 'ME': 'EUR', 'XK': 'EUR'
+                    };
+                    
+                    this.userCurrency = countryToCurrency[this.userCountry] || 'USD';
+                    console.log(`Final detection - Country: ${this.userCountry}, Currency: ${this.userCurrency}`);
+                    
+                } catch (error) {
+                    console.error('Error in location detection:', error);
+                    this.userCurrency = 'USD';
+                    this.userCountry = 'Unknown';
+                }
+            }
+            
+            translateContent(contentKey) {
+                const translations = {
+                    'checkout_title': {
+                        'USD': 'Checkout',
+                        'BRL': 'Finalizar Compra',
+                        'EUR': 'Checkout'
+                    },
+                    'product_info': {
+                        'USD': 'Product Information',
+                        'BRL': 'Informações do Produto',
+                        'EUR': 'Product Information'
+                    },
+                    'customer_info': {
+                        'USD': 'Customer Information',
+                        'BRL': 'Informações do Cliente',
+                        'EUR': 'Customer Information'
+                    },
+                    'payment_info': {
+                        'USD': 'Payment Information',
+                        'BRL': 'Informações de Pagamento',
+                        'EUR': 'Payment Information'
+                    },
+                    'order_summary': {
+                        'USD': 'Order Summary',
+                        'BRL': 'Resumo do Pedido',
+                        'EUR': 'Order Summary'
+                    },
+                    'first_name': {
+                        'USD': 'First Name',
+                        'BRL': 'Nome',
+                        'EUR': 'First Name'
+                    },
+                    'last_name': {
+                        'USD': 'Last Name',
+                        'BRL': 'Sobrenome',
+                        'EUR': 'Last Name'
+                    },
+                    'email': {
+                        'USD': 'Email',
+                        'BRL': 'E-mail',
+                        'EUR': 'Email'
+                    },
+                    'phone': {
+                        'USD': 'Phone',
+                        'BRL': 'Telefone',
+                        'EUR': 'Phone'
+                    },
+                    'address': {
+                        'USD': 'Address',
+                        'BRL': 'Endereço',
+                        'EUR': 'Address'
+                    },
+                    'city': {
+                        'USD': 'City',
+                        'BRL': 'Cidade',
+                        'EUR': 'City'
+                    },
+                    'state': {
+                        'USD': 'State',
+                        'BRL': 'Estado',
+                        'EUR': 'State'
+                    },
+                    'zip_code': {
+                        'USD': 'Zip Code',
+                        'BRL': 'CEP',
+                        'EUR': 'Zip Code'
+                    },
+                    'country': {
+                        'USD': 'Country',
+                        'BRL': 'País',
+                        'EUR': 'Country'
+                    },
+                    'payment_method': {
+                        'USD': 'Payment Method',
+                        'BRL': 'Método de Pagamento',
+                        'EUR': 'Payment Method'
+                    },
+                    'observations': {
+                        'USD': 'Observations',
+                        'BRL': 'Observações',
+                        'EUR': 'Observations'
+                    },
+                    'total': {
+                        'USD': 'Total',
+                        'BRL': 'Total',
+                        'EUR': 'Total'
+                    },
+                    'checkout_button': {
+                        'USD': 'Complete Purchase',
+                        'BRL': 'Finalizar Compra',
+                        'EUR': 'Complete Purchase'
+                    },
+                    'required_fields': {
+                        'USD': 'Please fill in all required fields.',
+                        'BRL': 'Por favor, preencha todos os campos obrigatórios.',
+                        'EUR': 'Please fill in all required fields.'
+                    },
+                    'order_success': {
+                        'USD': 'Order completed successfully!',
+                        'BRL': 'Pedido realizado com sucesso!',
+                        'EUR': 'Order completed successfully!'
+                    },
+                    'confirmation_email': {
+                        'USD': 'You will receive a confirmation email shortly.',
+                        'BRL': 'Você receberá um e-mail de confirmação em breve.',
+                        'EUR': 'You will receive a confirmation email shortly.'
+                    }
+                };
+                
+                return translations[contentKey] ? 
+                    translations[contentKey][this.userCurrency] || 
+                    translations[contentKey]['USD'] : 
+                    contentKey;
+            }
+            
+            updatePageContent() {
+                try {
+                    // Update page title
+                    const pageTitle = document.querySelector('title');
+                    if (pageTitle) {
+                        pageTitle.textContent = `${this.translateContent('checkout_title')} - Alligator Hair Clips | 67 Beauty Hub`;
+                    }
+                    
+                    // Update form labels
+                    const firstNameLabel = document.querySelector('label[for="firstName"]');
+                    if (firstNameLabel) firstNameLabel.textContent = this.translateContent('first_name');
+                    
+                    const lastNameLabel = document.querySelector('label[for="lastName"]');
+                    if (lastNameLabel) lastNameLabel.textContent = this.translateContent('last_name');
+                    
+                    const emailLabel = document.querySelector('label[for="email"]');
+                    if (emailLabel) emailLabel.textContent = this.translateContent('email');
+                    
+                    const phoneLabel = document.querySelector('label[for="phone"]');
+                    if (phoneLabel) phoneLabel.textContent = this.translateContent('phone');
+                    
+                    const addressLabel = document.querySelector('label[for="address"]');
+                    if (addressLabel) addressLabel.textContent = this.translateContent('address');
+                    
+                    const cityLabel = document.querySelector('label[for="city"]');
+                    if (cityLabel) cityLabel.textContent = this.translateContent('city');
+                    
+                    const stateLabel = document.querySelector('label[for="state"]');
+                    if (stateLabel) stateLabel.textContent = this.translateContent('state');
+                    
+                    const zipCodeLabel = document.querySelector('label[for="zipCode"]');
+                    if (zipCodeLabel) zipCodeLabel.textContent = this.translateContent('zip_code');
+                    
+                    const countryLabel = document.querySelector('label[for="country"]');
+                    if (countryLabel) countryLabel.textContent = this.translateContent('country');
+                    
+                    const paymentLabel = document.querySelector('label[for="paymentMethod"]');
+                    if (paymentLabel) paymentLabel.textContent = this.translateContent('payment_method');
+                    
+                    const observationsLabel = document.querySelector('label[for="observations"]');
+                    if (observationsLabel) observationsLabel.textContent = this.translateContent('observations');
+                    
+                    // Update placeholders
+                    const firstNameInput = document.getElementById('firstName');
+                    if (firstNameInput) firstNameInput.placeholder = this.translateContent('first_name');
+                    
+                    const lastNameInput = document.getElementById('lastName');
+                    if (lastNameInput) lastNameInput.placeholder = this.translateContent('last_name');
+                    
+                    const emailInput = document.getElementById('email');
+                    if (emailInput) emailInput.placeholder = this.translateContent('email');
+                    
+                    
+                    const observationsInput = document.getElementById('observations');
+                    if (observationsInput) observationsInput.placeholder = this.translateContent('observations');
+                    
+                    // Update checkout button
+                    const checkoutButton = document.querySelector('button[onclick="processCheckout()"]');
+                    if (checkoutButton) checkoutButton.textContent = this.translateContent('checkout_button');
+                    
+                    console.log('Checkout page content updated successfully');
+                    
+                } catch (error) {
+                    console.error('Error updating checkout page content:', error);
+                }
+            }
+        }
+        
+        // Initialize checkout translator when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            new CheckoutTranslator();
+        });
+    </script>
+
+</body>
+</html>
+
+

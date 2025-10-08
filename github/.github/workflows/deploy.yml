@@ -1,0 +1,48 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: 'Aliexpress Scraper/package-lock.json'
+        
+    - name: Install dependencies
+      run: |
+        cd "Aliexpress Scraper"
+        npm ci
+        
+    - name: Build project
+      run: |
+        echo "Building project..."
+        # Adicione comandos de build aqui se necessário
+        
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        exclude_assets: |
+          Aliexpress Scraper/node_modules
+          Aliexpress Scraper/logs
+          Aliexpress Scraper/*.log
+          Aliexpress Scraper/aliexpress_response_*.html
+          Aliexpress Scraper/aliexpress_response.json
+          Aliexpress Scraper/aliexpress_full_data.csv
+          Aliexpress Scraper/debug_*.json
+          Aliexpress Scraper/debug_*.html

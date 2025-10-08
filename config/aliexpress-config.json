@@ -1,0 +1,109 @@
+{
+  "aliexpress": {
+    "api": {
+      "baseUrl": "https://api.aliexpress.com",
+      "version": "v1",
+      "timeout": 30000
+    },
+    "webhook": {
+      "endpoint": "https://67-beauty-hub-abc123.vercel.app/api/aliexpress-callback.php",
+      "secret": "67beautyhub_webhook_secret_2024",
+      "events": [
+        "order_created",
+        "order_paid",
+        "order_shipped",
+        "order_delivered",
+        "order_cancelled",
+        "order_refunded"
+      ]
+    },
+    "stores": {
+      "phoera_official": {
+        "storeId": "PHOERA_STORE_001",
+        "name": "PHOERA Official Store",
+        "sellerId": "123456789",
+        "location": "China",
+        "products": [
+          "PHOERA Foundation",
+          "2 Pack PHOERA Foundation + Combo"
+        ],
+        "shipping": {
+          "standard": {
+            "time": "15-25 days",
+            "cost": 0
+          },
+          "express": {
+            "time": "7-15 days",
+            "cost": 15.99
+          }
+        }
+      },
+      "hair_tools_pro": {
+        "storeId": "HAIR_TOOLS_001",
+        "name": "Hair Tools Pro Store",
+        "sellerId": "987654321",
+        "location": "China",
+        "products": [
+          "Alligator Hair Clips",
+          "Hair Styling Tools"
+        ],
+        "shipping": {
+          "standard": {
+            "time": "10-20 days",
+            "cost": 0
+          },
+          "express": {
+            "time": "5-10 days",
+            "cost": 12.99
+          }
+        }
+      }
+    },
+    "order": {
+      "statusMapping": {
+        "created": "Pedido Criado",
+        "paid": "Pagamento Confirmado",
+        "shipped": "Enviado",
+        "delivered": "Entregue",
+        "cancelled": "Cancelado",
+        "refunded": "Reembolsado"
+      },
+      "defaultSettings": {
+        "currency": "BRL",
+        "language": "pt",
+        "timezone": "America/Sao_Paulo"
+      }
+    },
+    "tracking": {
+      "providers": [
+        "AliExpress Standard Shipping",
+        "ePacket",
+        "DHL",
+        "FedEx",
+        "UPS"
+      ],
+      "updateInterval": 30000
+    },
+    "notifications": {
+      "email": {
+        "enabled": true,
+        "templates": {
+          "order_created": "order_created.html",
+          "order_shipped": "order_shipped.html",
+          "order_delivered": "order_delivered.html"
+        }
+      },
+      "sms": {
+        "enabled": false,
+        "provider": "twilio"
+      }
+    }
+  },
+  "integration": {
+    "enabled": true,
+    "debug": true,
+    "logLevel": "info",
+    "retryAttempts": 3,
+    "retryDelay": 5000
+  }
+}

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Preços Otimizados Alligator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .color-option {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+        .color-option:hover {
+            border-color: #d4af37;
+            transform: translateY(-2px);
+        }
+        .color-option.selected {
+            border-color: #d4af37;
+            background: #fff9e6;
+        }
+        .price-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d4af37;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .profit-info {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        .profit-positive {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .profit-negative {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎨 Teste - Preços Otimizados Alligator Hair Clips</h1>
+        <p>Selecione uma cor para ver o preço otimizado e análise de lucratividade:</p>
+        
+        <div class="color-selection">
+            <div class="color-option selected" data-color="nude-pink">
+                <div>Nude Pink</div>
+                <small>Estoque: 6</small>
+            </div>
+            <div class="color-option" data-color="black">
+                <div>Black</div>
+                <small>Estoque: 4</small>
+            </div>
+            <div class="color-option" data-color="yellow">
+                <div>Yellow</div>
+                <small>Estoque: 15</small>
+            </div>
+            <div class="color-option" data-color="purple">
+                <div>Purple</div>
+                <small>Estoque: 17</small>
+            </div>
+            <div class="color-option" data-color="green">
+                <div>Green</div>
+                <small>Estoque: 12</small>
+            </div>
+            <div class="color-option" data-color="pink">
+                <div>Pink</div>
+                <small>Estoque: 10</small>
+            </div>
+            <div class="color-option" data-color="red">
+                <div>Red</div>
+                <small>Estoque: 15</small>
+            </div>
+        </div>
+        
+        <div class="price-display" id="currentPrice">$3.54</div>
+        
+        <div class="profit-info" id="profitInfo">
+            <h3>💰 Análise de Lucratividade</h3>
+            <p><strong>Preço de compra:</strong> $1.39</p>
+            <p><strong>Preço de venda:</strong> $3.54</p>
+            <p><strong>Lucro líquido:</strong> <span class="profit-positive">$0.75</span></p>
+            <p><strong>Margem real:</strong> <span class="profit-positive">21.19%</span></p>
+            <p><strong>Total taxas AliExpress:</strong> $0.90</p>
+        </div>
+    </div>
+    
+    <div class="test-container">
+        <h2>📊 Comparação de Preços - Antes vs Depois</h2>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Cor</th>
+                    <th>Preço Original</th>
+                    <th>Preço Antigo</th>
+                    <th>Preço Otimizado</th>
+                    <th>Aumento</th>
+                    <th>Lucro/Unidade</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="comparisonTable">
+                <!-- Será preenchido pelo JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="test-container">
+        <h2>🎯 Resumo Executivo</h2>
+        <div id="executiveSummary">
+            <!-- Será preenchido pelo JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Preços otimizados
+        const OPTIMIZED_PRICES = {
+            "nude-pink": {
+                originalPrice: "$1.39",
+                oldPrice: "$2.31",
+                newPrice: "$3.54",
+                profit: 0.75,
+                margin: 21.19,
+                stock: 6
+            },
+            "black": {
+                originalPrice: "$2.84",
+                oldPrice: "$3.94", 
+                newPrice: "$5.88",
+                profit: 1.25,
+                margin: 21.19,
+                stock: 4
+            },
+            "yellow": {
+                originalPrice: "$3.13",
+                oldPrice: "$4.27",
+                newPrice: "$6.35", 
+                profit: 1.35,
+                margin: 21.19,
+                stock: 15
+            },
+            "purple": {
+                originalPrice: "$3.11",
+                oldPrice: "$4.25",
+                newPrice: "$6.32",
+                profit: 1.34,
+                margin: 21.19,
+                stock: 17
+            },
+            "green": {
+                originalPrice: "$2.75",
+                oldPrice: "$3.84",
+                newPrice: "$5.73",
+                profit: 1.22,
+                margin: 21.19,
+                stock: 12
+            },
+            "pink": {
+                originalPrice: "$2.97",
+                oldPrice: "$4.09",
+                newPrice: "$6.09",
+                profit: 1.29,
+                margin: 21.19,
+                stock: 10
+            },
+            "red": {
+                originalPrice: "$2.86",
+                oldPrice: "$3.97",
+                newPrice: "$5.91",
+                profit: 1.25,
+                margin: 21.19,
+                stock: 15
+            }
+        };
+
+        // Função para atualizar display
+        function updateDisplay(selectedColor) {
+            const priceData = OPTIMIZED_PRICES[selectedColor];
+            if (!priceData) return;
+
+            // Atualizar preço
+            document.getElementById('currentPrice').textContent = priceData.newPrice;
+
+            // Atualizar informações de lucro
+            const profitInfo = document.getElementById('profitInfo');
+            profitInfo.innerHTML = `
+                <h3>💰 Análise de Lucratividade - ${selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)}</h3>
+                <p><strong>Preço de compra:</strong> ${priceData.originalPrice}</p>
+                <p><strong>Preço de venda:</strong> ${priceData.newPrice}</p>
+                <p><strong>Lucro líquido:</strong> <span class="profit-positive">$${priceData.profit.toFixed(2)}</span></p>
+                <p><strong>Margem real:</strong> <span class="profit-positive">${priceData.margin}%</span></p>
+                <p><strong>Estoque:</strong> ${priceData.stock} unidades</p>
+                <p><strong>Lucro total potencial:</strong> <span class="profit-positive">$${(priceData.profit * priceData.stock).toFixed(2)}</span></p>
+            `;
+        }
+
+        // Função para criar tabela de comparação
+        function createComparisonTable() {
+            const tbody = document.getElementById('comparisonTable');
+            tbody.innerHTML = '';
+
+            Object.entries(OPTIMIZED_PRICES).forEach(([color, data]) => {
+                const increase = ((parseFloat(data.newPrice.replace('$', '')) - parseFloat(data.oldPrice.replace('$', ''))) / parseFloat(data.oldPrice.replace('$', '')) * 100);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${color.charAt(0).toUpperCase() + color.slice(1)}</td>
+                    <td>${data.originalPrice}</td>
+                    <td>${data.oldPrice}</td>
+                    <td><strong>${data.newPrice}</strong></td>
+                    <td>+${increase.toFixed(1)}%</td>
+                    <td class="profit-positive">$${data.profit.toFixed(2)}</td>
+                    <td><span class="profit-positive">✅ Lucrativo</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Função para criar resumo executivo
+        function createExecutiveSummary() {
+            const totalOldProfit = Object.values(OPTIMIZED_PRICES).reduce((sum, data) => {
+                const oldProfit = parseFloat(data.oldPrice.replace('$', '')) - parseFloat(data.originalPrice.replace('$', '')) - 1.20; // Aproximação das taxas
+                return sum + (oldProfit > 0 ? oldProfit : 0) * data.stock;
+            }, 0);
+
+            const totalNewProfit = Object.values(OPTIMIZED_PRICES).reduce((sum, data) => {
+                return sum + (data.profit * data.stock);
+            }, 0);
+
+            const improvement = totalNewProfit - totalOldProfit;
+
+            document.getElementById('executiveSummary').innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background: #e8f5e8; padding: 15px; border-radius: 8px;">
+                        <h3>💰 Lucro Total Potencial</h3>
+                        <p style="font-size: 24px; font-weight: bold; color: #28a745;">$${totalNewProfit.toFixed(2)}</p>
+                        <p>Com preços otimizados</p>
+                    </div>
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px;">
+                        <h3>📈 Melhoria</h3>
+                        <p style="font-size: 24px; font-weight: bold; color: #856404;">+$${improvement.toFixed(2)}</p>
+                        <p>vs preços anteriores</p>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: #d1ecf1; border-radius: 8px;">
+                    <h3>🎯 Benefícios dos Preços Otimizados:</h3>
+                    <ul>
+                        <li>✅ <strong>Todas as cores são lucrativas</strong> (margem mínima 15%)</li>
+                        <li>💰 <strong>Lucro real por unidade:</strong> $0.75 - $1.35</li>
+                        <li>📊 <strong>Margem real:</strong> 21.19% (considerando todas as taxas)</li>
+                        <li>🎨 <strong>Preços diferenciados por cor</strong> (baseado no custo real)</li>
+                        <li>💎 <strong>Total de 79 unidades</strong> com potencial de lucro</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        // Event listeners para seleção de cor
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remover seleção anterior
+                document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+                
+                // Adicionar seleção atual
+                this.classList.add('selected');
+                
+                // Atualizar display
+                const selectedColor = this.getAttribute('data-color');
+                updateDisplay(selectedColor);
+            });
+        });
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            createComparisonTable();
+            createExecutiveSummary();
+            updateDisplay('nude-pink'); // Cor padrão
+        });
+    </script>
+</body>
+</html>
+
+

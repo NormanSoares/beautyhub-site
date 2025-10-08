@@ -1,0 +1,21 @@
+{
+  "timestamp": "2025-10-07T17:54:55.877Z",
+  "products": [
+    {
+      "name": "Alligator Hair Clips",
+      "currentPrice": "$3.54",
+      "lastCheck": "2025-10-07T17:54:55.877Z"
+    },
+    {
+      "name": "Towel cloth-pink",
+      "currentPrice": "$2.89",
+      "lastCheck": "2025-10-07T17:54:55.877Z"
+    },
+    {
+      "name": "10pcsTouMing-blue",
+      "currentPrice": "$11.36",
+      "lastCheck": "2025-10-07T17:54:55.877Z"
+    }
+  ],
+  "source": "aliexpress_api"
+}
