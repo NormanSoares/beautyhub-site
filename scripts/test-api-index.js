@@ -1,95 +1,54 @@
 /**
- * Script para testar o endpoint /api/
- * 
- * Execute: node scripts/test-api-index.js
+ * Script de teste para a API Index
+ * Testa o endpoint principal da API
  */
 
 const https = require('https');
 const http = require('http');
 
-// Configurações de teste
-const TEST_CONFIG = {
-    // URL do endpoint (ajuste conforme necessário)
-    url: process.env.API_URL || 'http://localhost:3001/api/',
-    
-    // Dados de teste para POST
-    testActions: [
-        {
-            name: 'Get Stats',
-            data: { action: 'get_stats', data: {} }
-        },
-        {
-            name: 'Get Health',
-            data: { action: 'get_health', data: {} }
-        },
-        {
-            name: 'Get Endpoints',
-            data: { action: 'get_endpoints', data: {} }
-        },
-        {
-            name: 'Test Connection',
-            data: { action: 'test_connection', data: {} }
-        }
-    ]
-};
+// Configurações
+const BASE_URL = process.env.TEST_URL || 'http://localhost:3001';
+const ENDPOINT = '/api/';
 
 /**
  * Faz requisição HTTP
  */
-function makeRequest(url, data = null, method = 'GET') {
+function makeRequest(url, options = {}) {
     return new Promise((resolve, reject) => {
-        const urlObj = new URL(url);
-        const isHttps = urlObj.protocol === 'https:';
+        const isHttps = url.startsWith('https://');
         const client = isHttps ? https : http;
         
-        const postData = data ? JSON.stringify(data) : null;
-        
-        const options = {
-            hostname: urlObj.hostname,
-            port: urlObj.port || (isHttps ? 443 : 80),
-            path: urlObj.pathname + urlObj.search,
-            method: method,
+        const req = client.request(url, {
+            method: options.method || 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'User-Agent': 'BeautyHub-API-Test/1.0'
+                ...options.headers
             }
-        };
-        
-        if (postData) {
-            options.headers['Content-Length'] = Buffer.byteLength(postData);
-        }
-        
-        const req = client.request(options, (res) => {
-            let responseData = '';
-            
-            res.on('data', (chunk) => {
-                responseData += chunk;
-            });
-            
+        }, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
             res.on('end', () => {
                 try {
-                    const parsedData = JSON.parse(responseData);
+                    const jsonData = JSON.parse(data);
                     resolve({
-                        statusCode: res.statusCode,
+                        status: res.statusCode,
                         headers: res.headers,
-                        data: parsedData
+                        data: jsonData
                     });
-                } catch (error) {
+                } catch (err) {
                     resolve({
-                        statusCode: res.statusCode,
+                        status: res.statusCode,
                         headers: res.headers,
-                        data: responseData
+                        data: data
                     });
                 }
             });
         });
         
-        req.on('error', (error) => {
-            reject(error);
-        });
+        req.on('error', reject);
         
-        if (postData) {
-            req.write(postData);
+        if (options.body) {
+            req.write(JSON.stringify(options.body));
         }
         
         req.end();
@@ -100,170 +59,274 @@ function makeRequest(url, data = null, method = 'GET') {
  * Testa endpoint GET
  */
 async function testGetEndpoint() {
-    console.log('\n🧪 Testando endpoint GET /api/...');
+    console.log('🧪 Testando endpoint GET...');
     
     try {
-        const response = await makeRequest(TEST_CONFIG.url);
+        const response = await makeRequest(`${BASE_URL}${ENDPOINT}`);
         
-        console.log(`Status: ${response.statusCode}`);
-        console.log('Resposta:');
-        console.log(JSON.stringify(response.data, null, 2));
+        console.log('✅ Status:', response.status);
+        console.log('📄 Resposta:', JSON.stringify(response.data, null, 2));
         
-        // Verificar se a resposta contém as informações esperadas
-        const hasAPIInfo = response.data.api && response.data.api.name;
-        const hasHealth = response.data.health;
-        const hasStats = response.data.stats;
-        const hasEndpoints = response.data.endpoints;
-        
-        console.log('\nVerificações:');
-        console.log(`✅ API Info: ${hasAPIInfo ? 'Presente' : 'Ausente'}`);
-        console.log(`✅ Health: ${hasHealth ? 'Presente' : 'Ausente'}`);
-        console.log(`✅ Stats: ${hasStats ? 'Presente' : 'Ausente'}`);
-        console.log(`✅ Endpoints: ${hasEndpoints ? 'Presente' : 'Ausente'}`);
-        
-        return {
-            success: response.statusCode === 200,
-            statusCode: response.statusCode,
-            hasAllData: hasAPIInfo && hasHealth && hasStats && hasEndpoints
-        };
-        
-    } catch (error) {
-        console.error('❌ Erro no teste GET:', error.message);
-        return { success: false, error: error.message };
-    }
-}
-
-/**
- * Testa diferentes ações POST
- */
-async function testPostActions() {
-    console.log('\n🧪 Testando ações POST...');
-    
-    const results = [];
-    
-    for (const test of TEST_CONFIG.testActions) {
-        console.log(`\n📡 Testando: ${test.name}...`);
-        
-        try {
-            const response = await makeRequest(TEST_CONFIG.url, test.data, 'POST');
-            
-            console.log(`Status: ${response.statusCode}`);
-            console.log('Resposta:');
-            console.log(JSON.stringify(response.data, null, 2));
-            
-            results.push({
-                test: test.name,
-                success: response.statusCode === 200,
-                statusCode: response.statusCode,
-                response: response.data
-            });
-            
-            // Aguardar um pouco entre os testes
-            await new Promise(resolve => setTimeout(resolve, 500));
-            
-        } catch (error) {
-            console.error(`❌ Erro no teste ${test.name}:`, error.message);
-            results.push({
-                test: test.name,
-                success: false,
-                error: error.message
-            });
+        if (response.status === 200 && response.data.api) {
+            console.log('✅ Teste GET passou!');
+            return true;
+        } else {
+            console.log('❌ Teste GET falhou!');
+            return false;
         }
+    } catch (error) {
+        console.log('❌ Erro no teste GET:', error.message);
+        return false;
     }
-    
-    return results;
 }
 
 /**
- * Testa endpoint OPTIONS (CORS)
+ * Testa operação get_stats
  */
-async function testOptionsEndpoint() {
-    console.log('\n🧪 Testando endpoint OPTIONS (CORS)...');
+async function testGetStats() {
+    console.log('\n📊 Testando operação get_stats...');
     
     try {
-        const response = await makeRequest(TEST_CONFIG.url, null, 'OPTIONS');
+        const response = await makeRequest(`${BASE_URL}${ENDPOINT}`, {
+            method: 'POST',
+            body: {
+                action: 'get_stats',
+                data: {}
+            }
+        });
         
-        console.log(`Status: ${response.statusCode}`);
-        console.log('Headers CORS:');
-        console.log(`Access-Control-Allow-Origin: ${response.headers['access-control-allow-origin'] || 'Não definido'}`);
-        console.log(`Access-Control-Allow-Methods: ${response.headers['access-control-allow-methods'] || 'Não definido'}`);
-        console.log(`Access-Control-Allow-Headers: ${response.headers['access-control-allow-headers'] || 'Não definido'}`);
+        console.log('✅ Status:', response.status);
+        console.log('📄 Resposta:', JSON.stringify(response.data, null, 2));
         
-        return {
-            success: response.statusCode === 200,
-            statusCode: response.statusCode,
-            corsConfigured: !!response.headers['access-control-allow-origin']
-        };
-        
+        if (response.status === 200 && response.data.success) {
+            console.log('✅ Teste get_stats passou!');
+            return true;
+        } else {
+            console.log('❌ Teste get_stats falhou!');
+            return false;
+        }
     } catch (error) {
-        console.error('❌ Erro no teste OPTIONS:', error.message);
-        return { success: false, error: error.message };
+        console.log('❌ Erro no teste get_stats:', error.message);
+        return false;
     }
 }
 
 /**
- * Função principal
+ * Testa operação get_health
+ */
+async function testGetHealth() {
+    console.log('\n❤️ Testando operação get_health...');
+    
+    try {
+        const response = await makeRequest(`${BASE_URL}${ENDPOINT}`, {
+            method: 'POST',
+            body: {
+                action: 'get_health',
+                data: {}
+            }
+        });
+        
+        console.log('✅ Status:', response.status);
+        console.log('📄 Resposta:', JSON.stringify(response.data, null, 2));
+        
+        if (response.status === 200 && response.data.success) {
+            console.log('✅ Teste get_health passou!');
+            return true;
+        } else {
+            console.log('❌ Teste get_health falhou!');
+            return false;
+        }
+    } catch (error) {
+        console.log('❌ Erro no teste get_health:', error.message);
+        return false;
+    }
+}
+
+/**
+ * Testa operação test_connection
+ */
+async function testConnection() {
+    console.log('\n🔗 Testando operação test_connection...');
+    
+    try {
+        const response = await makeRequest(`${BASE_URL}${ENDPOINT}`, {
+            method: 'POST',
+            body: {
+                action: 'test_connection',
+                data: {}
+            }
+        });
+        
+        console.log('✅ Status:', response.status);
+        console.log('📄 Resposta:', JSON.stringify(response.data, null, 2));
+        
+        if (response.status === 200 && response.data.success) {
+            console.log('✅ Teste test_connection passou!');
+            return true;
+        } else {
+            console.log('❌ Teste test_connection falhou!');
+            return false;
+        }
+    } catch (error) {
+        console.log('❌ Erro no teste test_connection:', error.message);
+        return false;
+    }
+}
+
+/**
+ * Testa operação get_collections
+ */
+async function testGetCollections() {
+    console.log('\n📁 Testando operação get_collections...');
+    
+    try {
+        const response = await makeRequest(`${BASE_URL}${ENDPOINT}`, {
+            method: 'POST',
+            body: {
+                action: 'get_collections',
+                data: {}
+            }
+        });
+        
+        console.log('✅ Status:', response.status);
+        console.log('📄 Resposta:', JSON.stringify(response.data, null, 2));
+        
+        if (response.status === 200 && response.data.success) {
+            console.log('✅ Teste get_collections passou!');
+            return true;
+        } else {
+            console.log('❌ Teste get_collections falhou!');
+            return false;
+        }
+    } catch (error) {
+        console.log('❌ Erro no teste get_collections:', error.message);
+        return false;
+    }
+}
+
+/**
+ * Testa operação inválida
+ */
+async function testInvalidAction() {
+    console.log('\n❌ Testando operação inválida...');
+    
+    try {
+        const response = await makeRequest(`${BASE_URL}${ENDPOINT}`, {
+            method: 'POST',
+            body: {
+                action: 'invalid_action',
+                data: {}
+            }
+        });
+        
+        console.log('✅ Status:', response.status);
+        console.log('📄 Resposta:', JSON.stringify(response.data, null, 2));
+        
+        if (response.status === 200 && !response.data.success) {
+            console.log('✅ Teste operação inválida passou!');
+            return true;
+        } else {
+            console.log('❌ Teste operação inválida falhou!');
+            return false;
+        }
+    } catch (error) {
+        console.log('❌ Erro no teste operação inválida:', error.message);
+        return false;
+    }
+}
+
+/**
+ * Testa CORS
+ */
+async function testCORS() {
+    console.log('\n🌐 Testando CORS...');
+    
+    try {
+        const response = await makeRequest(`${BASE_URL}${ENDPOINT}`, {
+            method: 'OPTIONS',
+            headers: {
+                'Origin': 'https://example.com',
+                'Access-Control-Request-Method': 'POST',
+                'Access-Control-Request-Headers': 'Content-Type'
+            }
+        });
+        
+        console.log('✅ Status:', response.status);
+        console.log('📄 Headers CORS:', {
+            'Access-Control-Allow-Origin': response.headers['access-control-allow-origin'],
+            'Access-Control-Allow-Methods': response.headers['access-control-allow-methods'],
+            'Access-Control-Allow-Headers': response.headers['access-control-allow-headers']
+        });
+        
+        if (response.status === 200) {
+            console.log('✅ Teste CORS passou!');
+            return true;
+        } else {
+            console.log('❌ Teste CORS falhou!');
+            return false;
+        }
+    } catch (error) {
+        console.log('❌ Erro no teste CORS:', error.message);
+        return false;
+    }
+}
+
+/**
+ * Executa todos os testes
  */
 async function runTests() {
-    console.log('🚀 Iniciando testes do endpoint /api/');
-    console.log(`URL: ${TEST_CONFIG.url}`);
+    console.log('🚀 Iniciando testes da API Index...');
+    console.log(`📍 URL base: ${BASE_URL}`);
+    console.log(`🎯 Endpoint: ${ENDPOINT}\n`);
     
-    // Teste GET
-    const getTestResult = await testGetEndpoint();
+    const results = {
+        get: await testGetEndpoint(),
+        getStats: await testGetStats(),
+        getHealth: await testGetHealth(),
+        testConnection: await testConnection(),
+        getCollections: await testGetCollections(),
+        invalidAction: await testInvalidAction(),
+        cors: await testCORS()
+    };
     
-    // Teste OPTIONS
-    const optionsTestResult = await testOptionsEndpoint();
+    console.log('\n📊 Resultados dos testes:');
+    console.log('========================');
+    console.log(`GET Endpoint: ${results.get ? '✅ PASSOU' : '❌ FALHOU'}`);
+    console.log(`get_stats: ${results.getStats ? '✅ PASSOU' : '❌ FALHOU'}`);
+    console.log(`get_health: ${results.getHealth ? '✅ PASSOU' : '❌ FALHOU'}`);
+    console.log(`test_connection: ${results.testConnection ? '✅ PASSOU' : '❌ FALHOU'}`);
+    console.log(`get_collections: ${results.getCollections ? '✅ PASSOU' : '❌ FALHOU'}`);
+    console.log(`Operação inválida: ${results.invalidAction ? '✅ PASSOU' : '❌ FALHOU'}`);
+    console.log(`CORS: ${results.cors ? '✅ PASSOU' : '❌ FALHOU'}`);
     
-    // Testes POST
-    const postResults = await testPostActions();
+    const allPassed = Object.values(results).every(result => result);
     
-    // Resumo dos resultados
-    console.log('\n📊 RESUMO DOS TESTES');
-    console.log('==================');
-    console.log(`GET Test: ${getTestResult.success ? '✅ PASSOU' : '❌ FALHOU'}`);
-    console.log(`OPTIONS Test: ${optionsTestResult.success ? '✅ PASSOU' : '❌ FALHOU'}`);
-    
-    postResults.forEach(result => {
-        const status = result.success ? '✅ PASSOU' : '❌ FALHOU';
-        console.log(`${result.test}: ${status}`);
-        if (!result.success && result.error) {
-            console.log(`  Erro: ${result.error}`);
-        }
-    });
-    
-    const totalTests = 2 + postResults.length; // GET + OPTIONS + POST actions
-    const passedTests = (getTestResult.success ? 1 : 0) + 
-                       (optionsTestResult.success ? 1 : 0) + 
-                       postResults.filter(r => r.success).length;
-    
-    console.log(`\nResultado: ${passedTests}/${totalTests} testes passaram`);
-    
-    if (passedTests === totalTests) {
-        console.log('🎉 Todos os testes passaram!');
-        console.log('✅ API está funcionando corretamente');
+    if (allPassed) {
+        console.log('\n🎉 Todos os testes passaram! A API Index está funcionando corretamente.');
     } else {
-        console.log('⚠️  Alguns testes falharam. Verifique a configuração.');
+        console.log('\n⚠️  Alguns testes falharam. Verifique os logs acima.');
     }
     
-    // Informações adicionais
-    if (getTestResult.hasAllData) {
-        console.log('\n📈 API Status:');
-        console.log('- Informações da API: ✅');
-        console.log('- Status de saúde: ✅');
-        console.log('- Estatísticas: ✅');
-        console.log('- Lista de endpoints: ✅');
-    }
+    return allPassed;
 }
 
-// Executar testes se o script for chamado diretamente
+// Executar testes se chamado diretamente
 if (require.main === module) {
-    runTests().catch(console.error);
+    runTests().then(success => {
+        process.exit(success ? 0 : 1);
+    }).catch(error => {
+        console.error('❌ Erro fatal:', error);
+        process.exit(1);
+    });
 }
 
-module.exports = {
-    runTests,
-    testGetEndpoint,
-    testPostActions,
-    testOptionsEndpoint,
-    makeRequest
+module.exports = { 
+    runTests, 
+    testGetEndpoint, 
+    testGetStats, 
+    testGetHealth, 
+    testConnection,
+    testGetCollections,
+    testInvalidAction,
+    testCORS 
 };

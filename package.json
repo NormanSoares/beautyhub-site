@@ -8,7 +8,9 @@
     "dev": "npx http-server . -p 3000 -o",
     "build": "echo 'Build completed'",
     "deploy": "gh-pages -d .",
-    "test": "echo 'No tests specified'",
+    "test": "node scripts/test-aliexpress-callback.js",
+    "test:callback": "node scripts/test-aliexpress-callback.js",
+    "test:api": "node scripts/test-api-index.js",
     "lint": "echo 'No linting configured'"
   },
   "repository": {
