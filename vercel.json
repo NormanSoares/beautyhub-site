@@ -58,5 +58,8 @@
     "WEBHOOK_SECRET": "67beautyhub_webhook_secret_2024",
     "MONGODB_URI": "@mongodb_uri",
     "ALLOWED_ORIGINS": "*"
-  }
+  },
+  "buildCommand": "echo 'Build completed'",
+  "installCommand": "npm install",
+  "outputDirectory": "."
 }
