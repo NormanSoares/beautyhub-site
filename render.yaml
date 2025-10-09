@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: beautyhub-site
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        fromDatabase:
+          name: mongodb
+          property: connectionString
+      - key: ROCKETDB_URI
+        sync: false
+      - key: NORMANDB_URI
+        sync: false
+      - key: WEBHOOK_SECRET
+        value: 67beautyhub_webhook_secret_2024
+      - key: ALIEXPRESS_WEBHOOK_SECRET
+        value: 67beautyhub_aliexpress_secret_2024
+      - key: ALLOWED_ORIGINS
+        value: https://beautyhub-site.onrender.com
+    healthCheckPath: /api/health
+    autoDeploy: true
