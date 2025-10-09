@@ -20,6 +20,8 @@ console.log('ROCKETDB_URI configurada:', process.env.ROCKETDB_URI ? 'SIM' : 'NÃ
 console.log('NORMANDB_URI configurada:', process.env.NORMANDB_URI ? 'SIM' : 'NÃO');
 console.log('MONGODB_URI configurada:', process.env.MONGODB_URI ? 'SIM' : 'NÃO');
 console.log('MONGODB_URI final:', MONGODB_URI ? 'SIM' : 'NÃO');
+console.log('Valor MONGODB_URI:', MONGODB_URI);
+console.log('Todas as env vars:', Object.keys(process.env).filter(key => key.includes('MONGO') || key.includes('ROCKET') || key.includes('NORMAN')));
 console.log('====================');
 const WEBHOOK_SECRET = process.env.ALIEXPRESS_WEBHOOK_SECRET || '67beautyhub_webhook_secret_2024';
 
