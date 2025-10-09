@@ -1,5 +1,64 @@
 {
+<<<<<<< HEAD
 
+=======
+  "version": 2,
+  "name": "67-beauty-hub",
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/**/*.php",
+      "use": "@vercel/php"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "js/**/*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "css/**/*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "styles.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "Imagens/**/*",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "Produtos de beleza/**/*",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "Produtos de conforto/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "ALIEXPRESS_WEBHOOK_SECRET": "67beautyhub_webhook_secret_2024",
+    "WEBHOOK_SECRET": "67beautyhub_webhook_secret_2024",
+    "MONGODB_URI": "@mongodb_uri",
+    "ALLOWED_ORIGINS": "*"
+  }
+>>>>>>> 6ecb888 (Adicionado backend compatível com Vercel e MongoDB)
 }
 
 
