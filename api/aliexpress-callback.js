@@ -12,7 +12,7 @@ const fs = require('fs').promises;
 const path = require('path');
 
 // Configurações
-const MONGODB_URI = process.env.ROCKETDB_URI || process.env.NORMANDB_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/beautyhub';
+const MONGODB_URI = process.env.MONGODB_URI || process.env.ROCKETDB_URI || process.env.NORMANDB_URI || 'mongodb://localhost:27017/beautyhub';
 
 // Debug: Log da configuração MongoDB
 console.log('=== DEBUG MONGODB ===');
