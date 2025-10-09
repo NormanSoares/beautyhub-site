@@ -118,5 +118,4 @@ build/
 *.tar.gz
 *.zip
 *.rar
-.vercel
 .env*.local

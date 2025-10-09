@@ -12,7 +12,9 @@ Este projeto é um site editável para a 67 Beauty Hub, focado em produtos de be
 ## 🚀 Tecnologias Utilizadas
 
 - **Frontend**: HTML5, CSS3, JavaScript
-- **Backend**: Node.js
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB Atlas
+- **Deployment**: Render
 - **Scraping**: Puppeteer
 - **Process Management**: PM2
 - **Agendamento**: node-cron
@@ -33,12 +35,21 @@ Este projeto é um site editável para a 67 Beauty Hub, focado em produtos de be
 └── github/                   # Configurações do GitHub
 ```
 
-## 🛠️ Instalação e Configuração
+## 🚀 Deployment no Render
+
+Este projeto está configurado para deploy automático no Render. Veja o guia completo em [RENDER-MIGRATION-GUIDE.md](RENDER-MIGRATION-GUIDE.md).
+
+### URLs de Produção:
+- **Site Principal**: `https://beautyhub-site.onrender.com/`
+- **Webhook AliExpress**: `https://beautyhub-site.onrender.com/api/aliexpress-callback`
+- **Health Check**: `https://beautyhub-site.onrender.com/api/health`
+
+## 🛠️ Instalação e Configuração Local
 
 ### Pré-requisitos
 - Node.js (versão 16 ou superior)
 - npm ou yarn
-- PM2 (para gerenciamento de processos)
+- MongoDB Atlas (para banco de dados)
 
 ### Instalação
 
