@@ -25,29 +25,56 @@ console.log('Todas as env vars:', Object.keys(process.env).filter(key => key.inc
 console.log('====================');
 const WEBHOOK_SECRET = process.env.ALIEXPRESS_WEBHOOK_SECRET || '67beautyhub_webhook_secret_2024';
 
-// Cliente MongoDB
+// Cliente MongoDB com connection pooling
 let mongoClient = null;
+let isConnecting = false;
 
 /**
- * Conecta ao MongoDB
+ * Conecta ao MongoDB com retry e connection pooling
  */
 async function connectToMongoDB() {
-    if (mongoClient) {
+    // Se já está conectado e funcionando, retorna
+    if (mongoClient && mongoClient.topology && mongoClient.topology.isConnected()) {
         return mongoClient;
     }
     
+    // Se já está tentando conectar, aguarda
+    if (isConnecting) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return connectToMongoDB();
+    }
+    
+    isConnecting = true;
+    
     try {
+        // Fecha conexão anterior se existir
+        if (mongoClient) {
+            try {
+                await mongoClient.close();
+            } catch (e) {
+                console.log('Erro ao fechar conexão anterior:', e.message);
+            }
+        }
+        
         mongoClient = new MongoClient(MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            maxPoolSize: 10,
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
+            bufferMaxEntries: 0,
+            bufferCommands: false,
+            retryWrites: true,
+            retryReads: true,
         });
         
         await mongoClient.connect();
-        console.log('Conectado ao MongoDB');
+        console.log('Conectado ao MongoDB com connection pooling');
         return mongoClient;
     } catch (error) {
         console.error('Erro ao conectar MongoDB:', error);
+        mongoClient = null;
         throw error;
+    } finally {
+        isConnecting = false;
     }
 }
 
@@ -141,18 +168,20 @@ async function processAliExpressEvent(eventData) {
 /**
  * Processa criação de pedido
  */
-async function handleOrderCreated(orderData) {
+async function handleOrderCreated(orderData, retryCount = 0) {
+    const maxRetries = 3;
     const orderId = orderData.order_id || '';
     const customerEmail = orderData.customer?.email || '';
     
     await writeLog('Novo pedido criado', {
         order_id: orderId,
-        customer_email: customerEmail
+        customer_email: customerEmail,
+        retry: retryCount
     });
     
     try {
         const client = await connectToMongoDB();
-        const db = client.db();
+        const db = client.db('beautyhub');
         
         // Salvar pedido no MongoDB
         await db.collection('orders').insertOne({
@@ -163,14 +192,24 @@ async function handleOrderCreated(orderData) {
             data: orderData
         });
         
+        await writeLog('Pedido salvo com sucesso', { order_id: orderId });
         return { success: true, message: 'Order created successfully' };
     } catch (error) {
         await writeLog('Erro ao salvar pedido', { 
             error: error.message,
             code: error.code,
             name: error.name,
-            stack: error.stack
+            order_id: orderId,
+            retry: retryCount
         });
+        
+        // Retry se não excedeu o limite
+        if (retryCount < maxRetries) {
+            await writeLog(`Tentando novamente (${retryCount + 1}/${maxRetries})`, { order_id: orderId });
+            await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1))); // Backoff exponencial
+            return handleOrderCreated(orderData, retryCount + 1);
+        }
+        
         return { 
             success: false, 
             error: 'Failed to save order',
