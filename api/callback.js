@@ -9,7 +9,16 @@
 const { MongoClient } = require('mongodb');
 
 // Configurações
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/beautyhub';
+const MONGODB_URI = process.env.ROCKETDB_URI || process.env.ROCKETDB || process.env.NORMANDB_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/beautyhub';
+
+// Debug: Log da configuração MongoDB
+console.log('=== DEBUG CALLBACK MONGODB ===');
+console.log('ROCKETDB_URI configurada:', process.env.ROCKETDB_URI ? 'SIM' : 'NÃO');
+console.log('ROCKETDB configurada:', process.env.ROCKETDB ? 'SIM' : 'NÃO');
+console.log('NORMANDB_URI configurada:', process.env.NORMANDB_URI ? 'SIM' : 'NÃO');
+console.log('MONGODB_URI configurada:', process.env.MONGODB_URI ? 'SIM' : 'NÃO');
+console.log('MONGODB_URI final:', MONGODB_URI ? 'SIM' : 'NÃO');
+console.log('==============================');
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '67beautyhub_webhook_secret_2024';
 const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS?.split(',') || ['*'];
 
@@ -274,8 +283,8 @@ export default async function handler(req, res) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     }
     
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Webhook-Signature');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Webhook-Signature, X-AliExpress-Signature, X-Requested-With');
     res.setHeader('Content-Type', 'application/json');
     
     // Handle preflight requests
@@ -319,11 +328,13 @@ export default async function handler(req, res) {
             });
         }
         
-        // Validar método POST
-        if (req.method !== 'POST') {
+        // Validar método HTTP - Permitir POST, GET e OPTIONS
+        const allowedMethods = ['POST', 'GET', 'OPTIONS'];
+        if (!allowedMethods.includes(req.method)) {
             return res.status(405).json({ 
                 error: 'Method not allowed',
-                allowed: ['POST', 'GET']
+                allowed: allowedMethods,
+                received: req.method
             });
         }
         

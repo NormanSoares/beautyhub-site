@@ -12,7 +12,15 @@ const fs = require('fs').promises;
 const path = require('path');
 
 // Configurações
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/beautyhub';
+const MONGODB_URI = process.env.ROCKETDB_URI || process.env.NORMANDB_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/beautyhub';
+
+// Debug: Log da configuração MongoDB
+console.log('=== DEBUG MONGODB ===');
+console.log('ROCKETDB_URI configurada:', process.env.ROCKETDB_URI ? 'SIM' : 'NÃO');
+console.log('NORMANDB_URI configurada:', process.env.NORMANDB_URI ? 'SIM' : 'NÃO');
+console.log('MONGODB_URI configurada:', process.env.MONGODB_URI ? 'SIM' : 'NÃO');
+console.log('MONGODB_URI final:', MONGODB_URI ? 'SIM' : 'NÃO');
+console.log('====================');
 const WEBHOOK_SECRET = process.env.ALIEXPRESS_WEBHOOK_SECRET || '67beautyhub_webhook_secret_2024';
 
 // Cliente MongoDB
@@ -42,25 +50,17 @@ async function connectToMongoDB() {
 }
 
 /**
- * Escreve log em arquivo
+ * Escreve log (apenas console no Vercel)
  */
 async function writeLog(message, data = null) {
     try {
         const timestamp = new Date().toISOString();
         const logMessage = `[${timestamp}] ${message}`;
         const logData = data ? ` | Data: ${JSON.stringify(data)}` : '';
-        const fullMessage = `${logMessage}${logData}\n`;
+        const fullMessage = `${logMessage}${logData}`;
         
-        // Criar diretório de logs se não existir
-        const logDir = path.join(__dirname, 'logs');
-        try {
-            await fs.mkdir(logDir, { recursive: true });
-        } catch (err) {
-            // Diretório já existe
-        }
-        
-        const logFile = path.join(logDir, 'aliexpress-callback.log');
-        await fs.appendFile(logFile, fullMessage);
+        // No Vercel, apenas usar console.log
+        console.log(fullMessage);
     } catch (error) {
         console.error('Erro ao escrever log:', error);
     }
@@ -163,8 +163,21 @@ async function handleOrderCreated(orderData) {
         
         return { success: true, message: 'Order created successfully' };
     } catch (error) {
-        await writeLog('Erro ao salvar pedido', { error: error.message });
-        return { success: false, error: 'Failed to save order' };
+        await writeLog('Erro ao salvar pedido', { 
+            error: error.message,
+            code: error.code,
+            name: error.name,
+            stack: error.stack
+        });
+        return { 
+            success: false, 
+            error: 'Failed to save order',
+            details: {
+                message: error.message,
+                code: error.code,
+                name: error.name
+            }
+        };
     }
 }
 
@@ -351,28 +364,12 @@ async function handleOrderRefunded(orderData) {
  */
 async function saveOrderToFrontend(orderData) {
     try {
-        const dataDir = path.join(__dirname, 'data');
-        await fs.mkdir(dataDir, { recursive: true });
-        
-        const orderFile = path.join(dataDir, 'orders.json');
-        let orders = {};
-        
-        try {
-            const existingData = await fs.readFile(orderFile, 'utf8');
-            orders = JSON.parse(existingData);
-        } catch (err) {
-            // Arquivo não existe, criar novo
-        }
-        
-        const orderId = orderData.order_id || `order_${Date.now()}`;
-        orders[orderId] = {
-            order_id: orderId,
-            timestamp: new Date().toISOString(),
-            data: orderData,
-            status: orderData.event_type || 'unknown'
-        };
-        
-        await fs.writeFile(orderFile, JSON.stringify(orders, null, 2));
+        // No Vercel, apenas logar os dados
+        await writeLog('Dados do pedido para frontend', {
+            order_id: orderData.order_id,
+            event_type: orderData.event_type,
+            timestamp: new Date().toISOString()
+        });
     } catch (error) {
         await writeLog('Erro ao salvar dados para frontend', { error: error.message });
     }
@@ -384,8 +381,8 @@ async function saveOrderToFrontend(orderData) {
 export default async function handler(req, res) {
     // Configurar CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-AliExpress-Signature');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-AliExpress-Signature, X-Requested-With');
     res.setHeader('Content-Type', 'application/json');
     
     // Handle preflight requests
@@ -401,9 +398,14 @@ export default async function handler(req, res) {
             timestamp: new Date().toISOString()
         });
         
-        // Verificar método HTTP
-        if (req.method !== 'POST' && req.method !== 'GET') {
-            return res.status(405).json({ error: 'Method not allowed' });
+        // Verificar método HTTP - Permitir POST, GET e OPTIONS
+        const allowedMethods = ['POST', 'GET', 'OPTIONS'];
+        if (!allowedMethods.includes(req.method)) {
+            return res.status(405).json({ 
+                error: 'Method not allowed',
+                allowed: allowedMethods,
+                received: req.method
+            });
         }
         
         // Endpoint de teste

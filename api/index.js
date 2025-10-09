@@ -9,7 +9,7 @@
 const { MongoClient } = require('mongodb');
 
 // Configurações
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/beautyhub';
+const MONGODB_URI = process.env.NORMANDB_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/beautyhub';
 const API_VERSION = '1.0.0';
 const API_NAME = '67 Beauty Hub API';
 
