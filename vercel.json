@@ -7,10 +7,6 @@
       "use": "@vercel/node"
     },
     {
-      "src": "api/**/*.php",
-      "use": "@vercel/php"
-    },
-    {
       "src": "*.html",
       "use": "@vercel/static"
     },
@@ -43,6 +39,14 @@
     {
       "src": "/api/",
       "dest": "/api/index.js"
+    },
+    {
+      "src": "/api/aliexpress-callback",
+      "dest": "/api/aliexpress-callback.js"
+    },
+    {
+      "src": "/api/aliexpress-callback.php",
+      "dest": "/api/aliexpress-callback.js"
     },
     {
       "src": "/api/(.*)",
