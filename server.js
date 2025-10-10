@@ -24,9 +24,20 @@ import callback from './api/callback.js';
 import health from './api/health.js';
 
 // Rotas da API
-app.all('/api/aliexpress-callback', aliexpressCallback.default || aliexpressCallback);
-app.all('/api/callback', callback.default || callback);
-app.all('/api/health', health.default || health);
+app.all('/api/aliexpress-callback', (req, res) => {
+    const handler = aliexpressCallback.default || aliexpressCallback;
+    return handler(req, res);
+});
+
+app.all('/api/callback', (req, res) => {
+    const handler = callback.default || callback;
+    return handler(req, res);
+});
+
+app.all('/api/health', (req, res) => {
+    const handler = health.default || health;
+    return handler(req, res);
+});
 
 // Rota principal
 app.get('/', (req, res) => {
