@@ -20,7 +20,7 @@ app.use(express.static('.'));
 
 // Importar handlers das APIs
 import aliexpressCallback from './api/aliexpress-callback.js';
-import callback from './api/callback.js';
+import callback from './api/callback-simple.js';
 import health from './api/health.js';
 
 // Rotas da API
