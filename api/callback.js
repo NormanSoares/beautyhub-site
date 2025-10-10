@@ -424,6 +424,9 @@ export default async function handler(req, res) {
     }
 }
 
+// Exportar handler para uso no servidor principal
+export default handler;
+
 // Para desenvolvimento local
 if (process.env.NODE_ENV === 'development') {
     const express = require('express');
