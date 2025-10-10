@@ -22,29 +22,54 @@ console.log('==============================');
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '67beautyhub_webhook_secret_2024';
 const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS?.split(',') || ['*'];
 
-// Cliente MongoDB
+// Cliente MongoDB com connection pooling
 let mongoClient = null;
+let isConnecting = false;
 
 /**
- * Conecta ao MongoDB
+ * Conecta ao MongoDB com retry e connection pooling
  */
 async function connectToMongoDB() {
-    if (mongoClient) {
+    // Se já está conectado e funcionando, retorna
+    if (mongoClient && mongoClient.topology && mongoClient.topology.isConnected()) {
         return mongoClient;
     }
     
+    // Se já está tentando conectar, aguarda
+    if (isConnecting) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return connectToMongoDB();
+    }
+    
+    isConnecting = true;
+    
     try {
+        // Fecha conexão anterior se existir
+        if (mongoClient) {
+            try {
+                await mongoClient.close();
+            } catch (e) {
+                console.log('Erro ao fechar conexão anterior:', e.message);
+            }
+        }
+        
         mongoClient = new MongoClient(MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            maxPoolSize: 10,
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
+            retryWrites: true,
+            retryReads: true,
         });
         
         await mongoClient.connect();
-        console.log('Conectado ao MongoDB');
+        console.log('Conectado ao MongoDB com connection pooling');
         return mongoClient;
     } catch (error) {
         console.error('Erro ao conectar MongoDB:', error);
+        mongoClient = null;
         throw error;
+    } finally {
+        isConnecting = false;
     }
 }
 
@@ -75,12 +100,14 @@ function validateSignature(payload, signature, secret) {
 }
 
 /**
- * Salva dados no MongoDB
+ * Salva dados no MongoDB com retry logic
  */
-async function saveToMongoDB(collection, data) {
+async function saveToMongoDB(collection, data, retryCount = 0) {
+    const maxRetries = 3;
+    
     try {
         const client = await connectToMongoDB();
-        const db = client.db();
+        const db = client.db('beautyhub');
         const result = await db.collection(collection).insertOne({
             ...data,
             timestamp: new Date(),
@@ -91,17 +118,27 @@ async function saveToMongoDB(collection, data) {
         return result;
     } catch (error) {
         console.error('Erro ao salvar no MongoDB:', error);
+        
+        // Retry se não excedeu o limite
+        if (retryCount < maxRetries) {
+            console.log(`Tentando novamente (${retryCount + 1}/${maxRetries})`);
+            await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1))); // Backoff exponencial
+            return saveToMongoDB(collection, data, retryCount + 1);
+        }
+        
         throw error;
     }
 }
 
 /**
- * Atualiza dados no MongoDB
+ * Atualiza dados no MongoDB com retry logic
  */
-async function updateInMongoDB(collection, filter, update) {
+async function updateInMongoDB(collection, filter, update, retryCount = 0) {
+    const maxRetries = 3;
+    
     try {
         const client = await connectToMongoDB();
-        const db = client.db();
+        const db = client.db('beautyhub');
         const result = await db.collection(collection).updateOne(filter, {
             $set: {
                 ...update,
@@ -113,6 +150,14 @@ async function updateInMongoDB(collection, filter, update) {
         return result;
     } catch (error) {
         console.error('Erro ao atualizar no MongoDB:', error);
+        
+        // Retry se não excedeu o limite
+        if (retryCount < maxRetries) {
+            console.log(`Tentando novamente (${retryCount + 1}/${maxRetries})`);
+            await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1))); // Backoff exponencial
+            return updateInMongoDB(collection, filter, update, retryCount + 1);
+        }
+        
         throw error;
     }
 }
