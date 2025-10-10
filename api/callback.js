@@ -7,6 +7,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import crypto from 'crypto';
 
 // Configurações
 const MONGODB_URI = process.env.ROCKETDB_URI || process.env.ROCKETDB || process.env.NORMANDB_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/beautyhub';
@@ -87,7 +88,6 @@ function validateOrigin(origin) {
  * Valida assinatura do webhook
  */
 function validateSignature(payload, signature, secret) {
-    const crypto = require('crypto');
     const expectedSignature = crypto
         .createHmac('sha256', secret)
         .update(payload)
@@ -428,10 +428,10 @@ export default async function handler(req, res) {
 
 // Para desenvolvimento local
 if (process.env.NODE_ENV === 'development') {
-    const express = require('express');
-    const app = express();
+    const express = await import('express');
+    const app = express.default();
     
-    app.use(express.json());
+    app.use(express.default.json());
     
     app.all('/api/callback', async (req, res) => {
         await handler(req, res);
