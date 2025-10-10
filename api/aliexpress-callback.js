@@ -6,10 +6,10 @@
  * Método: POST
  */
 
-const { MongoClient } = require('mongodb');
-const crypto = require('crypto');
-const fs = require('fs').promises;
-const path = require('path');
+import { MongoClient } from 'mongodb';
+import crypto from 'crypto';
+import fs from 'fs/promises';
+import path from 'path';
 
 // Configurações
 const MONGODB_URI = process.env.MONGODB_URI || process.env.ROCKETDB_URI || process.env.NORMANDB_URI || 'mongodb://localhost:27017/beautyhub';

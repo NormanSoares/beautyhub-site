@@ -1,6 +1,7 @@
 {
   "name": "67-beauty-hub",
   "version": "1.0.0",
+  "type": "module",
   "description": "Site editável para 67 Beauty Hub com sistema de scraping do AliExpress",
   "main": "index.html",
   "scripts": {

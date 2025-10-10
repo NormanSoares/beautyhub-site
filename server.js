@@ -3,9 +3,9 @@
  * Serve arquivos estáticos e APIs
  */
 
-const express = require('express');
-const path = require('path');
-const fs = require('fs');
+import express from 'express';
+import path from 'path';
+import fs from 'fs';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,9 +15,9 @@ app.use(express.json());
 app.use(express.static('.'));
 
 // Importar handlers das APIs
-const aliexpressCallback = require('./api/aliexpress-callback');
-const callback = require('./api/callback');
-const health = require('./api/health');
+import aliexpressCallback from './api/aliexpress-callback.js';
+import callback from './api/callback.js';
+import health from './api/health.js';
 
 // Rotas da API
 app.all('/api/aliexpress-callback', aliexpressCallback.default || aliexpressCallback);
