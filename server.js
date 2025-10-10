@@ -22,6 +22,7 @@ app.use(express.static('.'));
 import aliexpressCallback from './api/aliexpress-callback.js';
 import callback from './api/callback-simple.js';
 import health from './api/health.js';
+import scraperMongoDB from './api/scraper-mongodb.js';
 
 // Rotas da API
 app.all('/api/aliexpress-callback', (req, res) => {
@@ -36,6 +37,11 @@ app.all('/api/callback', (req, res) => {
 
 app.all('/api/health', (req, res) => {
     const handler = health.default || health;
+    return handler(req, res);
+});
+
+app.all('/api/scraper', (req, res) => {
+    const handler = scraperMongoDB.default || scraperMongoDB;
     return handler(req, res);
 });
 
