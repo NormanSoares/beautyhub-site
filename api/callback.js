@@ -424,8 +424,7 @@ export default async function handler(req, res) {
     }
 }
 
-// Exportar handler para uso no servidor principal
-export default handler;
+// Handler já exportado na linha 324
 
 // Para desenvolvimento local
 if (process.env.NODE_ENV === 'development') {
