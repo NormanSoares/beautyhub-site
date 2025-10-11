@@ -7,11 +7,14 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
+    "dropshipping": "node server.js",
+    "dropshipping:start": "node start-dropshipping.js",
     "build": "echo 'Build completed'",
     "deploy": "gh-pages -d .",
     "test": "node scripts/test-aliexpress-callback.js",
     "test:callback": "node scripts/test-aliexpress-callback.js",
     "test:api": "node scripts/test-api-index.js",
+    "test:dropshipping": "node -e \"import('./dropshipping-system.js').then(s => console.log('Dropshipping system loaded successfully'))\"",
     "lint": "echo 'No linting configured'"
   },
   "repository": {
@@ -33,11 +36,19 @@
   },
   "homepage": "https://SEU-USUARIO.github.io/67-beauty-hub",
   "dependencies": {
-    "mongodb": "^6.0.0",
-    "express": "^4.18.2",
+    "axios": "^1.12.2",
+    "cheerio": "^1.1.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "puppeteer": "^24.23.0"
+    "express": "^4.21.2",
+    "https-proxy-agent": "^7.0.6",
+    "mongodb": "^6.0.0",
+    "node-cron": "^4.2.1",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.10.1",
+    "puppeteer": "^24.23.0",
+    "socks-proxy-agent": "^8.0.5",
+    "user-agents": "^1.1.668"
   },
   "devDependencies": {
     "gh-pages": "^6.0.0",

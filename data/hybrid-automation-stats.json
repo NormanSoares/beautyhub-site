@@ -1,0 +1,276 @@
+{
+  "totalRuns": 384,
+  "apiSuccess": 247,
+  "scrapingSuccess": 137,
+  "totalProducts": 467,
+  "lastRun": "2025-10-11T22:24:53.422Z",
+  "errors": [
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:23:36.104Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:23:36.649Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:26:39.056Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:28:36.994Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:28:47.801Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:30:52.428Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:30:52.730Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:34:37.153Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:35:53.737Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:36:39.696Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:39:08.062Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:39:08.578Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:39:25.107Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:41:41.354Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:44:08.642Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:45:39.726Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:47:39.754Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:49:08.782Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:50:12.484Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:52:12.593Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:54:09.516Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:54:36.260Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:57:17.338Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:57:25.221Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:59:08.741Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T15:59:25.152Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:03:32.068Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:03:58.493Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:03:59.330Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:08:59.463Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:14:03.763Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:19:00.740Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:24:00.745Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:29:00.747Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:34:00.746Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:39:00.754Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:44:00.753Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:49:00.787Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:54:00.771Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T16:59:00.784Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T17:04:00.786Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T17:09:00.820Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T17:14:00.888Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T17:19:00.826Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T17:24:00.842Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T17:29:00.845Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T17:34:00.847Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T17:39:03.633Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T17:44:06.073Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T17:47:13.662Z"
+    },
+    {
+      "type": "api_error",
+      "message": "Erro na API real: API response: 404",
+      "timestamp": "2025-10-11T17:47:14.326Z"
+    }
+  ],
+  "connectivity": {
+    "aliexpress": {
+      "isOnline": true,
+      "lastCheck": "2025-10-11T22:24:53.426Z",
+      "consecutiveFailures": 0
+    },
+    "amazon": {
+      "isOnline": false,
+      "lastCheck": "2025-10-11T22:24:53.429Z",
+      "consecutiveFailures": 318
+    }
+  }
+}

@@ -1,5 +1,7 @@
-password-- 3kHsgWtPkqMOsBYx
+password-- dilr1234567
 
 User name-- mojojojo946925_db_user
 
 Your current IP address (197.148.41.228)
+
+BATMANRICH_db_user password-- password1234567

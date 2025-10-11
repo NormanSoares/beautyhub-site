@@ -47,15 +47,6 @@
             transform: translateY(-1px);
         }
 
-        .register-btn {
-            background: linear-gradient(135deg, #d4af37, #b8941f);
-            color: white;
-        }
-
-        .register-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-        }
 
         .user-menu {
             position: relative;
@@ -1040,13 +1031,10 @@
 
             <!-- User Authentication Section -->
             <div class="user-auth" id="userAuthSection">
-                <!-- Login/Register buttons (shown when not logged in) -->
+                <!-- Login button (shown when not logged in) -->
                 <div class="auth-buttons" id="authButtons">
-                    <button class="auth-btn login-btn" onclick="openLoginModal()">
-                        <i class="fas fa-sign-in-alt"></i> Entrar
-                    </button>
-                    <button class="auth-btn register-btn" onclick="openRegisterModal()">
-                        <i class="fas fa-user-plus"></i> Cadastrar
+                    <button class="auth-btn login-btn" onclick="openSimpleLoginModal()">
+                        <i class="fas fa-sign-in-alt"></i> Logar
                     </button>
                 </div>
                 
@@ -1760,8 +1748,9 @@
         let isLoggedIn = false;
 
         function initializeLoginSystem() {
-            // Verificar se já está logado
-            if (localStorage.getItem('userLoggedIn') === 'true') {
+            // Verificar se já está logado usando o mesmo sistema
+            const userData = localStorage.getItem('userLogin');
+            if (userData) {
                 isLoggedIn = true;
                 return;
             }
@@ -1795,8 +1784,8 @@
         }
 
         function shouldShowLoginModal() {
-            const loginState = getLoginState();
-            return !loginState; // Só mostra se não há estado salvo
+            const userData = localStorage.getItem('userLogin');
+            return !userData; // Só mostra se não há usuário logado
         }
 
         function showLoginModal() {
@@ -1851,9 +1840,6 @@
                             </button>
                         </div>
                         
-                        <div style="text-align: center; font-size: 14px; color: #666;">
-                            <p>Não tem conta? <a href="#" style="color: #d4af37; text-decoration: none;">Cadastre-se aqui</a></p>
-                        </div>
                     </form>
                 </div>
             `;
@@ -1892,8 +1878,12 @@
             if (email && password) {
                 // Login bem-sucedido
                 isLoggedIn = true;
-                localStorage.setItem('userLoggedIn', 'true');
-                localStorage.setItem('userEmail', email);
+                const userData = {
+                    name: name,
+                    email: email,
+                    provider: 'auto'
+                };
+                localStorage.setItem('userLogin', JSON.stringify(userData));
                 
                 // Salvar estado de login bem-sucedido
                 saveLoginState('success');
@@ -1970,19 +1960,207 @@
             document.getElementById('userName').textContent = userName;
         }
 
-        function openLoginModal() {
-            // Usar o sistema existente de login
-            if (typeof showLoginModal === 'function') {
-                showLoginModal();
-            } else {
-                // Fallback: criar modal simples
-                createSimpleLoginModal();
+        function openSimpleLoginModal() {
+            createSimpleLoginModal();
+        }
+
+        // Sistema de Login Simples
+        function createSimpleLoginModal() {
+            const modalHTML = `
+                <div class="modal-overlay" id="simpleLoginModal">
+                    <div class="modal-container">
+                        <div class="modal-header">
+                            <button class="modal-close" onclick="closeModal('simpleLoginModal')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <h2 class="modal-title">Entrar</h2>
+                            <p class="modal-subtitle">Digite seus dados para acessar</p>
+                        </div>
+                        <div class="modal-body">
+                            <form id="simpleLoginForm" onsubmit="handleSimpleLogin(event)">
+                                <div class="form-group">
+                                    <label for="simpleName">Nome</label>
+                                    <input type="text" id="simpleName" name="name" required placeholder="Seu nome">
+                                </div>
+                                <div class="form-group">
+                                    <label for="simpleEmail">Email</label>
+                                    <input type="email" id="simpleEmail" name="email" required placeholder="seu@email.com">
+                                </div>
+                                <button type="submit" class="btn-modal btn-primary-modal">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Entrar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            setTimeout(() => {
+                document.getElementById('simpleLoginModal').classList.add('show');
+            }, 10);
+        }
+
+        function handleSimpleLogin(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            
+            if (name && email) {
+                const userData = {
+                    name: name,
+                    email: email,
+                    provider: 'simple'
+                };
+                
+                localStorage.setItem('userLogin', JSON.stringify(userData));
+                showUserMenu(userData.name);
+                closeModal('simpleLoginModal');
+                showNotification('Login realizado com sucesso!', 'success');
             }
         }
 
-        function openRegisterModal() {
-            createRegisterModal();
+        // Sistema de Modal Moderno
+        function createModernLoginModal() {
+            const modalHTML = `
+                <div class="modal-overlay" id="loginModal">
+                    <div class="modal-container">
+                        <div class="modal-header">
+                            <button class="modal-close" onclick="closeModal('loginModal')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <h2 class="modal-title">Entrar na sua conta</h2>
+                            <p class="modal-subtitle">Acesse sua conta 67 Beauty Hub</p>
+                        </div>
+                        <div class="modal-body">
+                            <button class="btn-modal btn-google" onclick="loginWithGoogle()">
+                                <i class="fab fa-google"></i>
+                                Entrar com Google
+                            </button>
+                            
+                            <div class="divider">
+                                <span>ou</span>
+                            </div>
+                            
+                            <form id="loginForm" onsubmit="handleLogin(event)">
+                                <div class="form-group">
+                                    <label for="loginEmail">Email</label>
+                                    <input type="email" id="loginEmail" name="email" required placeholder="seu@email.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="loginPassword">Senha</label>
+                                    <input type="password" id="loginPassword" name="password" required placeholder="Sua senha">
+                                </div>
+                                <button type="submit" class="btn-modal btn-primary-modal">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Entrar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            setTimeout(() => {
+                document.getElementById('loginModal').classList.add('show');
+            }, 10);
         }
+
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.remove();
+            }, 300);
+        }
+
+
+        // Integração com Google
+        function loginWithGoogle() {
+            // Simular login com Google
+            const userData = {
+                name: 'Usuário Google',
+                email: 'usuario@gmail.com',
+                provider: 'google'
+            };
+            
+            localStorage.setItem('userLogin', JSON.stringify(userData));
+            showUserMenu(userData.name);
+            closeModal('loginModal');
+            
+            // Mostrar notificação de sucesso
+            showNotification('Login realizado com sucesso via Google!', 'success');
+        }
+
+
+        // Handlers de formulário
+        function handleLogin(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const email = formData.get('email');
+            const password = formData.get('password');
+            
+            if (email && password) {
+                const userData = {
+                    name: email.split('@')[0],
+                    email: email,
+                    provider: 'email'
+                };
+                
+                localStorage.setItem('userLogin', JSON.stringify(userData));
+                showUserMenu(userData.name);
+                closeModal('loginModal');
+                showNotification('Login realizado com sucesso!', 'success');
+            }
+        }
+
+
+        // Sistema de notificações
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 10001;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+                max-width: 300px;
+                font-weight: 500;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Fechar modal ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                const modalId = e.target.id;
+                closeModal(modalId);
+            }
+        });
 
         function createSimpleLoginModal() {
             const modal = document.createElement('div');
@@ -2018,9 +2196,6 @@
                         </button>
                     </form>
                     
-                    <div style="text-align: center; margin-top: 20px; font-size: 14px; color: #666;">
-                        <p>Não tem conta? <a href="#" onclick="switchToHeaderRegister()" style="color: #d4af37; text-decoration: none;">Cadastre-se aqui</a></p>
-                    </div>
                 </div>
             `;
             
@@ -2051,84 +2226,6 @@
             });
         }
 
-        function createRegisterModal() {
-            const modal = document.createElement('div');
-            modal.id = 'headerRegisterModal';
-            modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: rgba(0,0,0,0.7); z-index: 10000; display: flex; 
-                align-items: center; justify-content: center;
-            `;
-            
-            modal.innerHTML = `
-                <div style="background: white; padding: 40px; border-radius: 15px; max-width: 500px; width: 90%; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                        <h3 style="color: #d4af37; margin: 0;"><i class="fas fa-user-plus"></i> Criar nova conta</h3>
-                        <button onclick="closeHeaderModal()" style="background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer;">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    
-                    <form id="headerRegisterForm">
-                        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
-                            <div style="flex: 1;">
-                                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Nome</label>
-                                <input type="text" id="headerRegisterFirstName" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="Nome" />
-                            </div>
-                            <div style="flex: 1;">
-                                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Sobrenome</label>
-                                <input type="text" id="headerRegisterLastName" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="Sobrenome" />
-                            </div>
-                        </div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">E-mail</label>
-                            <input type="email" id="headerRegisterEmail" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="seu@email.com" />
-                        </div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-                                <input type="checkbox" required />
-                                <span style="font-size: 14px; color: #666;">Aceito os termos de uso e política de privacidade</span>
-                            </label>
-                        </div>
-                        
-                        <button type="submit" style="width: 100%; background: linear-gradient(135deg, #d4af37, #b8941f); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                            <i class="fas fa-user-plus"></i> Criar Conta
-                        </button>
-                    </form>
-                    
-                    <div style="text-align: center; margin-top: 20px; font-size: 14px; color: #666;">
-                        <p>Já tem conta? <a href="#" onclick="switchToHeaderLogin()" style="color: #d4af37; text-decoration: none;">Entre aqui</a></p>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            document.getElementById('headerRegisterForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const firstName = document.getElementById('headerRegisterFirstName').value;
-                const lastName = document.getElementById('headerRegisterLastName').value;
-                const email = document.getElementById('headerRegisterEmail').value;
-                
-                if (firstName && lastName && email) {
-                    const fullName = firstName + ' ' + lastName;
-                    const userData = { name: fullName, email, loginDate: new Date().toISOString() };
-                    localStorage.setItem('userLogin', JSON.stringify(userData));
-                    
-                    // Salvar estado de login bem-sucedido
-                    saveLoginState('success');
-                    
-                    showHeaderLoginSuccess(fullName);
-                    
-                    setTimeout(() => {
-                        closeHeaderModal();
-                        showUserMenu(fullName);
-                    }, 2000);
-                }
-            });
-        }
 
         function showHeaderLoginSuccess(name) {
             const modal = document.getElementById('headerLoginModal') || document.getElementById('headerRegisterModal');
@@ -2152,15 +2249,6 @@
             if (registerModal) registerModal.remove();
         }
 
-        function switchToHeaderRegister() {
-            closeHeaderModal();
-            createRegisterModal();
-        }
-
-        function switchToHeaderLogin() {
-            closeHeaderModal();
-            createSimpleLoginModal();
-        }
 
         function toggleUserDropdown() {
             const dropdown = document.getElementById('userDropdown');
@@ -2186,6 +2274,7 @@
         function logoutUser() {
             if (confirm('Tem certeza que deseja sair?')) {
                 localStorage.removeItem('userLogin');
+                isLoggedIn = false;
                 showAuthButtons();
                 
                 // Fechar dropdown

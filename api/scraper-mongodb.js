@@ -233,6 +233,34 @@ async function scrapeProduct(url) {
 }
 
 /**
+ * Listar produtos salvos no MongoDB
+ */
+async function listProducts(req, res) {
+    try {
+        const client = await connectToMongoDB();
+        const db = client.db('beautyhub');
+        const collection = db.collection('products');
+        
+        const products = await collection.find({}).toArray();
+        
+        return res.status(200).json({
+            success: true,
+            data: products,
+            count: products.length,
+            timestamp: new Date().toISOString()
+        });
+        
+    } catch (error) {
+        console.error('Erro ao listar produtos:', error);
+        return res.status(500).json({
+            success: false,
+            error: error.message,
+            timestamp: new Date().toISOString()
+        });
+    }
+}
+
+/**
  * Handler da API
  */
 export default async function handler(req, res) {
@@ -256,6 +284,11 @@ export default async function handler(req, res) {
                 timestamp: new Date().toISOString(),
                 mongodb_uri: MONGODB_URI ? 'configurado' : 'não configurado'
             });
+        }
+        
+        // Listar produtos salvos
+        if (req.method === 'GET' && req.query.action === 'products') {
+            return await listProducts(req, res);
         }
         
         // Executar scraping

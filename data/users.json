@@ -1,0 +1,41 @@
+[
+  {
+    "id": "user_1760134926019_1bpaf",
+    "email": "joao@teste.com",
+    "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+    "firstName": "Jo�o",
+    "lastName": "Silva",
+    "phone": "11999999999",
+    "role": "customer",
+    "status": "active",
+    "createdAt": "2025-10-10T22:22:06.019Z",
+    "lastLogin": "2025-10-10T22:22:15.466Z",
+    "profile": {
+      "avatar": null,
+      "bio": "",
+      "location": "",
+      "timezone": "America/Sao_Paulo",
+      "language": "pt-BR"
+    },
+    "preferences": {
+      "currency": "BRL",
+      "notifications": {
+        "email": true,
+        "sms": false,
+        "push": true
+      },
+      "privacy": {
+        "showEmail": false,
+        "showPhone": false,
+        "showLocation": false
+      }
+    },
+    "stats": {
+      "totalOrders": 0,
+      "totalSpent": 0,
+      "lastOrderDate": null,
+      "favoriteCategories": [],
+      "wishlist": []
+    }
+  }
+]

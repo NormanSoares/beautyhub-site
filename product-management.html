@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>67 Beauty Hub - Gerenciamento de Produtos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .controls {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .controls h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #1e7e34;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #138496;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .stat-card p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .products-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .products-header h3 {
+            color: #333;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            border-color: #007bff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .platform-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .platform-badge.aliexpress {
+            background: #ff6b35;
+        }
+
+        .platform-badge.amazon {
+            background: #ff9900;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .rating {
+            color: #ffc107;
+        }
+
+        .stock.in_stock {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .stock.out_of_stock {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-small.edit {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-small.edit:hover {
+            background: #0056b3;
+        }
+
+        .btn-small.view {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-small.view:hover {
+            background: #545b62;
+        }
+
+        .btn-small.link {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-small.link:hover {
+            background: #138496;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛍️ Gerenciamento de Produtos</h1>
+            <p>Gerencie produtos dos fornecedores AliExpress e Amazon</p>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <h3 id="totalProducts">0</h3>
+                <p>Total de Produtos</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="aliexpressProducts">0</h3>
+                <p>AliExpress</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="amazonProducts">0</h3>
+                <p>Amazon</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="inStockProducts">0</h3>
+                <p>Em Estoque</p>
+            </div>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <h3>🔧 Controles</h3>
+            <div class="control-group">
+                <input type="text" id="searchInput" class="search-box" placeholder="Buscar produtos...">
+                <button class="btn btn-primary" onclick="searchProducts()">🔍 Buscar</button>
+                <button class="btn btn-success" onclick="loadAllProducts()">🔄 Atualizar</button>
+                <button class="btn btn-warning" onclick="loadProductsByPlatform('aliexpress')">AliExpress</button>
+                <button class="btn btn-info" onclick="loadProductsByPlatform('amazon')">Amazon</button>
+                <button class="btn btn-primary" onclick="exportProducts()">📊 Exportar</button>
+            </div>
+        </div>
+
+        <!-- Produtos -->
+        <div class="products-container">
+            <div class="products-header">
+                <h3>📦 Produtos dos Fornecedores</h3>
+                <span id="productsCount">0 produtos encontrados</span>
+            </div>
+            
+            <div id="productsContainer" class="loading">
+                Carregando produtos...
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para detalhes do produto -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+        let allProducts = [];
+
+        // Função para fazer requisições
+        async function apiRequest(endpoint, options = {}) {
+            try {
+                const response = await fetch(`${API_BASE}${endpoint}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    },
+                    ...options
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                return await response.json();
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                throw error;
+            }
+        }
+
+        // Carregar estatísticas
+        async function loadStats() {
+            try {
+                const data = await apiRequest('/products/real?action=stats');
+                
+                document.getElementById('totalProducts').textContent = data.data.total;
+                document.getElementById('aliexpressProducts').textContent = data.data.aliexpress;
+                document.getElementById('amazonProducts').textContent = data.data.amazon;
+                document.getElementById('inStockProducts').textContent = data.data.in_stock;
+                
+            } catch (error) {
+                console.error('Erro ao carregar estatísticas:', error);
+            }
+        }
+
+        // Carregar todos os produtos
+        async function loadAllProducts() {
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = '<div class="loading">Carregando produtos...</div>';
+            
+            try {
+                const data = await apiRequest('/products/real?action=list&limit=100');
+                
+                if (!data.success || !data.data || data.data.length === 0) {
+                    container.innerHTML = '<p>Nenhum produto encontrado.</p>';
+                    return;
+                }
+                
+                allProducts = data.data;
+                displayProducts(allProducts);
+                
+            } catch (error) {
+                container.innerHTML = `<div class="error">Erro ao carregar produtos: ${error.message}</div>`;
+            }
+        }
+
+        // Carregar produtos por plataforma
+        async function loadProductsByPlatform(platform) {
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = '<div class="loading">Carregando produtos...</div>';
+            
+            try {
+                const data = await apiRequest(`/products/real?action=list&platform=${platform}&limit=100`);
+                
+                if (!data.success || !data.data || data.data.length === 0) {
+                    container.innerHTML = `<p>Nenhum produto encontrado na plataforma ${platform}.</p>`;
+                    return;
+                }
+                
+                allProducts = data.data;
+                displayProducts(allProducts);
+                
+            } catch (error) {
+                container.innerHTML = `<div class="error">Erro ao carregar produtos: ${error.message}</div>`;
+            }
+        }
+
+        // Buscar produtos
+        async function searchProducts() {
+            const query = document.getElementById('searchInput').value.trim();
+            
+            if (!query) {
+                loadAllProducts();
+                return;
+            }
+            
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = '<div class="loading">Buscando produtos...</div>';
+            
+            try {
+                const data = await apiRequest(`/products/real?action=search&q=${encodeURIComponent(query)}`);
+                
+                if (!data.success || !data.data || data.data.length === 0) {
+                    container.innerHTML = `<p>Nenhum produto encontrado para "${query}".</p>`;
+                    return;
+                }
+                
+                allProducts = data.data;
+                displayProducts(allProducts);
+                
+            } catch (error) {
+                container.innerHTML = `<div class="error">Erro na busca: ${error.message}</div>`;
+            }
+        }
+
+        // Exibir produtos
+        function displayProducts(products) {
+            const container = document.getElementById('productsContainer');
+            const countElement = document.getElementById('productsCount');
+            
+            countElement.textContent = `${products.length} produtos encontrados`;
+            
+                let html = '<div class="products-grid">';
+                products.forEach(product => {
+                    const platformIcon = product.platform === 'aliexpress' ? '🛒' : '📦';
+                    const platformName = product.platform === 'aliexpress' ? 'AliExpress' : 'Amazon';
+                    
+                    html += `
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x300?text=Imagem+Não+Encontrada'">
+                            </div>
+                            <div class="product-header">
+                                <span class="platform-badge ${product.platform}">${platformIcon} ${platformName}</span>
+                                <span class="price">R$ ${product.price}</span>
+                            </div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-details">
+                                <span class="rating">⭐ ${product.rating}</span>
+                                <span class="stock ${product.stock}">${product.stock === 'in_stock' ? '✅ Em Estoque' : '❌ Sem Estoque'}</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn-small edit" onclick="viewProductDetails('${product.id}')">Ver Detalhes</button>
+                                <button class="btn-small view" onclick="editProduct('${product.id}')">Editar</button>
+                                <button class="btn-small link" onclick="openSupplierUrl('${product.url}')">Abrir Link</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            
+            container.innerHTML = html;
+        }
+
+        // Ver detalhes do produto
+        function viewProductDetails(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+            
+            const modal = document.getElementById('productModal');
+            const content = document.getElementById('modalContent');
+            
+            content.innerHTML = `
+                <h2>📦 Detalhes do Produto</h2>
+                <div style="margin: 20px 0;">
+                    <h3>${product.name}</h3>
+                    <p><strong>Plataforma:</strong> ${product.platform === 'aliexpress' ? 'AliExpress' : 'Amazon'}</p>
+                    <p><strong>Preço:</strong> R$ ${product.price}</p>
+                    <p><strong>Avaliação:</strong> ⭐ ${product.rating}</p>
+                    <p><strong>Estoque:</strong> ${product.stock === 'in_stock' ? '✅ Em Estoque' : '❌ Sem Estoque'}</p>
+                    <p><strong>Categoria:</strong> ${product.category}</p>
+                    <p><strong>Fornecedor:</strong> ${product.supplier}</p>
+                    <p><strong>URL:</strong> <a href="${product.url}" target="_blank">${product.url}</a></p>
+                    <p><strong>Descrição:</strong> ${product.description}</p>
+                    <p><strong>Criado em:</strong> ${new Date(product.createdAt).toLocaleString()}</p>
+                    <p><strong>Atualizado em:</strong> ${new Date(product.updatedAt).toLocaleString()}</p>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="openSupplierUrl('${product.url}')">Abrir no Fornecedor</button>
+                    <button class="btn btn-warning" onclick="closeModal()">Fechar</button>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        // Editar produto
+        function editProduct(productId) {
+            alert(`Editar produto: ${productId}\n\nEsta funcionalidade será implementada em breve.`);
+        }
+
+        // Abrir URL do fornecedor
+        function openSupplierUrl(url) {
+            window.open(url, '_blank');
+        }
+
+        // Fechar modal
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        // Exportar produtos
+        function exportProducts() {
+            if (allProducts.length === 0) {
+                alert('Nenhum produto para exportar. Carregue os produtos primeiro.');
+                return;
+            }
+            
+            const csvContent = [
+                ['ID', 'Nome', 'Plataforma', 'Preço', 'Avaliação', 'Estoque', 'Categoria', 'URL'],
+                ...allProducts.map(product => [
+                    product.id,
+                    product.name,
+                    product.platform,
+                    product.price,
+                    product.rating,
+                    product.stock,
+                    product.category,
+                    product.url
+                ])
+            ].map(row => row.join(',')).join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `produtos_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchProducts();
+            }
+        });
+
+        // Fechar modal ao clicar fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('productModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Carregar dados iniciais
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+            loadAllProducts();
+        });
+    </script>
+</body>
+</html>

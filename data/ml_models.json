@@ -1,0 +1,27 @@
+{
+  "sales_prediction": {
+    "accuracy": 0.8688251571518547,
+    "lastTrained": "2025-10-10T22:45:24.524Z",
+    "status": "trained"
+  },
+  "price_prediction": {
+    "accuracy": 0,
+    "lastTrained": null,
+    "status": "not_trained"
+  },
+  "inventory_prediction": {
+    "accuracy": 0,
+    "lastTrained": null,
+    "status": "not_trained"
+  },
+  "sentiment_analysis": {
+    "accuracy": 0,
+    "lastTrained": null,
+    "status": "not_trained"
+  },
+  "churn_prediction": {
+    "accuracy": 0,
+    "lastTrained": null,
+    "status": "not_trained"
+  }
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "NOTIF-1760121558830-m8jkhy",
+    "type": "stock_alert",
+    "severity": "warning",
+    "title": "Alerta de Estoque - Produto Teste",
+    "message": "O produto \"Produto Teste\" tem apenas 3 unidades restantes. Considere reabastecer.",
+    "data": {
+      "id": "test_alert_123",
+      "productName": "Produto Teste",
+      "type": "low",
+      "stock": 3,
+      "timestamp": "2025-10-10T18:39:18.830Z",
+      "supplier": "aliexpress",
+      "url": "https://example.com"
+    },
+    "timestamp": "2025-10-10T18:39:18.831Z",
+    "email": {
+      "recipients": [
+        "admin@67beautyhub.com"
+      ],
+      "subject": "🚨 Alerta de Estoque - Produto Teste",
+      "attachments": []
+    },
+    "webhook": true,
+    "slack": true,
+    "telegram": true
+  }
+]

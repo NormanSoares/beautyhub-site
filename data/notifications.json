@@ -1,0 +1,17 @@
+[
+  {
+    "type": "stock_alert",
+    "severity": "info",
+    "message": "✅ ESTOQUE RESTAURADO: Detachable Sofa Cover Bean Bag Cover Lazy Person's Couch voltou ao estoque com 10 unidades.",
+    "data": {
+      "id": "ALERT-1760121558519-o4ily5",
+      "productId": "detachablesofacoverb_1005009428",
+      "productName": "Detachable Sofa Cover Bean Bag Cover Lazy Person's Couch",
+      "type": "restocked",
+      "stock": 10,
+      "timestamp": "2025-10-10T18:39:18.519Z",
+      "supplier": "aliexpress",
+      "url": "https://pt.aliexpress.com/item/1005009428867608.html?srcSns=sns_Copy&businessType=ProductDetail&spreadType=socialShare&aff_fcid=0d32565f537849408a1bebb595dbecb3-1758370287511-05301-_EI4J8TG&tt=CPS_NORMAL&aff_fsk=_EI4J8TG&afSmartRedirect=y&aff_fcid=470cc8af087b43cbb77110480b9e2404-1758370294298-08282-_AZpU75&tt=CPS_NORMAL&aff_fsk=_AZpU75&aff_platform=portals-tool&sk=_AZpU75&aff_trace_key=470cc8af087b43cbb77110480b9e2404-1758370294298-08282-_AZpU75&terminal_id=128dcc1575c34119966ff11576ff33ed&afSmartRedirect=y"
+    }
+  }
+]
