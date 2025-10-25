@@ -5,12 +5,22 @@
 
 import express from 'express';
 import paymentConfig from '../config/payment-config.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 const router = express.Router();
+
+// Resolve __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // PayPal SDK
 import paypal from '@paypal/checkout-server-sdk';
+// Select environment based on configuration (sandbox in non-production)
+const PayPalEnvironment = paymentConfig.paypal.environment === 'live'
+    ? paypal.core.LiveEnvironment
+    : paypal.core.SandboxEnvironment;
 const paypalClient = new paypal.core.PayPalHttpClient(
-    new paypal.core.LiveEnvironment(
+    new PayPalEnvironment(
         paymentConfig.paypal.clientId,
         paymentConfig.paypal.clientSecret
     )
@@ -425,17 +435,33 @@ async function generateSimulatedPIX(pixData) {
  */
 async function savePaymentRecord(paymentData) {
     try {
-        // Implementar salvamento no MongoDB
-        const db = require('../config/mongodb-config');
-        const collection = db.collection('payments');
-        
-        const result = await collection.insertOne({
+        const paymentsFile = path.join(__dirname, '..', 'data', 'payments.json');
+        const dataDir = path.dirname(paymentsFile);
+        if (!fs.existsSync(dataDir)) {
+            fs.mkdirSync(dataDir, { recursive: true });
+        }
+
+        let payments = [];
+        if (fs.existsSync(paymentsFile)) {
+            try {
+                const content = fs.readFileSync(paymentsFile, 'utf8');
+                payments = JSON.parse(content);
+                if (!Array.isArray(payments)) payments = [];
+            } catch {
+                payments = [];
+            }
+        }
+
+        const record = {
+            id: `payment_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
             ...paymentData,
             createdAt: new Date(),
             updatedAt: new Date()
-        });
-        
-        return { id: result.insertedId, ...paymentData };
+        };
+
+        payments.push(record);
+        fs.writeFileSync(paymentsFile, JSON.stringify(payments, null, 2));
+        return record;
     } catch (error) {
         console.error('❌ Erro save payment record:', error);
         throw error;
@@ -447,18 +473,24 @@ async function savePaymentRecord(paymentData) {
  */
 async function updateOrderStatus(orderId, status) {
     try {
-        const db = require('../config/mongodb-config');
-        const collection = db.collection('orders');
-        
-        await collection.updateOne(
-            { id: orderId },
-            { 
-                $set: { 
-                    status: status,
-                    updatedAt: new Date()
-                }
+        const ordersFile = path.join(__dirname, '..', 'data', 'orders.json');
+        let orders = [];
+        if (fs.existsSync(ordersFile)) {
+            try {
+                const content = fs.readFileSync(ordersFile, 'utf8');
+                orders = JSON.parse(content);
+                if (!Array.isArray(orders)) orders = [];
+            } catch {
+                orders = [];
             }
-        );
+        }
+
+        const index = orders.findIndex(o => o.id === orderId);
+        if (index !== -1) {
+            orders[index].status = status;
+            orders[index].updated_at = new Date().toISOString();
+            fs.writeFileSync(ordersFile, JSON.stringify(orders, null, 2));
+        }
     } catch (error) {
         console.error('❌ Erro update order status:', error);
         throw error;
