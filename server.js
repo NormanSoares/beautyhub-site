@@ -223,6 +223,20 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Rotas explícitas para ativos na raiz
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+app.get('/styles.css', (req, res) => {
+    res.sendFile(path.join(__dirname, 'styles.css'));
+});
+app.get('/Logo.png', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Logo.png'));
+});
+app.get('/background-video.mp4', (req, res) => {
+    res.sendFile(path.join(__dirname, 'background-video.mp4'));
+});
+
 // Tratamento de erros
 app.use((error, req, res, next) => {
     console.error('Erro no servidor:', error);
