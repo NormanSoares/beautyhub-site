@@ -39,6 +39,7 @@
   "homepage": "https://SEU-USUARIO.github.io/67-beauty-hub",
   "dependencies": {
     "@paypal/paypal-server-sdk": "^1.0.0",
+    "@paypal/checkout-server-sdk": "^1.0.3",
     "axios": "^1.12.2",
     "cheerio": "^1.1.2",
     "cors": "^2.8.5",
