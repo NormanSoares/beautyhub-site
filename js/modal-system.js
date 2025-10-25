@@ -10,22 +10,22 @@ function createSimpleLoginModal() {
                     <button class="modal-close" onclick="closeModal('simpleLoginModal')">
                         <i class="fas fa-times"></i>
                     </button>
-                    <h2 class="modal-title">Entrar</h2>
-                    <p class="modal-subtitle">Digite seus dados para acessar</p>
+                    <h2 class="modal-title" data-translate-key="login_title">Login</h2>
+                    <p class="modal-subtitle" data-translate-key="login_subtitle">Enter your data to access</p>
                 </div>
                 <div class="modal-body">
                     <form id="simpleLoginForm" onsubmit="handleSimpleLogin(event)">
                         <div class="form-group">
-                            <label for="simpleName">Nome</label>
-                            <input type="text" id="simpleName" name="name" required placeholder="Seu nome">
+                            <label for="simpleName" data-translate-key="name_label">Name</label>
+                            <input type="text" id="simpleName" name="name" required placeholder="Your name">
                         </div>
                         <div class="form-group">
-                            <label for="simpleEmail">Email</label>
-                            <input type="email" id="simpleEmail" name="email" required placeholder="seu@email.com">
+                            <label for="simpleEmail" data-translate-key="email_label">Email</label>
+                            <input type="email" id="simpleEmail" name="email" required placeholder="your@email.com">
                         </div>
                         <button type="submit" class="btn-modal btn-primary-modal">
                             <i class="fas fa-sign-in-alt"></i>
-                            Entrar
+                            <span data-translate-key="login_btn">Login</span>
                         </button>
                     </form>
                 </div>
@@ -55,7 +55,7 @@ function handleSimpleLogin(event) {
         localStorage.setItem('userLogin', JSON.stringify(userData));
         showUserMenu(userData.name);
         closeModal('simpleLoginModal');
-        showNotification('Login realizado com sucesso!', 'success');
+        showNotification('Login successful!', 'success');
     }
 }
 

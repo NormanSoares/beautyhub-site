@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Section - 67 Beauty Hub</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* Preloader simples */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f0e6d2, #e6d7c3);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        
+        .preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .preloader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(212, 175, 55, 0.3);
+            border-top: 4px solid #d4af37;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Garantir que preços apareçam */
+        .price-original, .price-discount {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        .price-original {
+            color: #999 !important;
+            text-decoration: line-through !important;
+        }
+        .price-discount {
+            background: #4CAF50 !important;
+            color: white !important;
+            padding: 3px 8px !important;
+            border-radius: 4px !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="../Logo.png" alt="67 Beauty Hub Logo">
+                <span>67 Beauty Hub</span>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link" data-translate-key="nav_home">Home</a>
+                <a href="beauty-store.html" class="nav-link active" data-translate-key="nav_beauty">Beauty</a>
+                <a href="../Produtos de conforto/comfort-store.html" class="nav-link" data-translate-key="nav_comfort">Comfort</a>
+            </nav>
+            
+            <!-- Language Selector -->
+            <div class="language-selector">
+                <select id="languageSelect" onchange="changeLanguage(this.value)">
+                    <option value="pt-BR" data-translate-key="lang_portuguese_br">Português (BR)</option>
+                    <option value="pt-PT" data-translate-key="lang_portuguese_pt">Português (PT)</option>
+                    <option value="en-US" data-translate-key="lang_english">English</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 data-translate-key="beauty_hero_title">Beauty Products</h1>
+            <p data-translate-key="beauty_hero_subtitle">Discover our premium beauty collection</p>
+        </div>
+        <video autoplay muted loop class="hero-video">
+            <source src="Background.mp4" type="video/mp4">
+        </video>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <h2 data-translate-key="beauty_products_title">Featured Products</h2>
+            <div class="products-grid">
+                
+                <!-- Product 1 -->
+                <div class="product-card" id="product-1">
+                    <div class="product-image">
+                        <img src="2 Pack PHOERA Foundation + Combo/Apresentação 1.png" alt="Foundation">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title" data-translate-key="product_foundation_title">2 Pack PHOERA Foundation</h3>
+                        <p class="product-description" data-translate-key="product_foundation_desc">Kit completo de base com 2 unidades</p>
+                        <div class="product-price">
+                            <span class="price-original">$45.90</span>
+                            <span class="price-current">$22.90</span>
+                            <span class="price-discount">-50%</span>
+                        </div>
+                        <button class="add-to-cart" data-translate-key="btn_add_to_cart" onclick="addToCart('foundation', 22.90)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" id="product-2">
+                    <div class="product-image">
+                        <img src="Alligator Hair Clips + Combo/Nude Pink (6 Pieces).png" alt="Hair Clips">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title" data-translate-key="product_clips_title">Alligator Hair Clips</h3>
+                        <p class="product-description" data-translate-key="product_clips_desc">6 grampos de cabelo em rosa nude</p>
+                        <div class="product-price">
+                            <span class="price-original">$18.90</span>
+                            <span class="price-current">$15.90</span>
+                            <span class="price-discount">-16%</span>
+                        </div>
+                        <button class="add-to-cart" data-translate-key="btn_add_to_cart" onclick="addToCart('clips', 15.90)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" id="product-3">
+                    <div class="product-image">
+                        <img src="Heat-Resistant Mat/Apresentação 1.png" alt="Heat Mat">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title" data-translate-key="product_mat_title">Heat-Resistant Mat</h3>
+                        <p class="product-description" data-translate-key="product_mat_desc">Tapete resistente ao calor para ferramentas</p>
+                        <div class="product-price">
+                            <span class="price-original">$25.90</span>
+                            <span class="price-current">$25.90</span>
+                        </div>
+                        <button class="add-to-cart" data-translate-key="btn_add_to_cart" onclick="addToCart('mat', 25.90)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" id="product-4">
+                    <div class="product-image">
+                        <img src="LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/Apresentação.png" alt="Vitamin C Cream">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title" data-translate-key="product_vitamin_title">LAIKOU Vitamin C 24K</h3>
+                        <p class="product-description" data-translate-key="product_vitamin_desc">Creme facial com vitamina C e ouro 24K</p>
+                        <div class="product-price">
+                            <span class="price-original">$89.90</span>
+                            <span class="price-current">$59.90</span>
+                            <span class="price-discount">-33%</span>
+                        </div>
+                        <button class="add-to-cart" data-translate-key="btn_add_to_cart" onclick="addToCart('vitamin', 59.90)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" id="product-5">
+                    <div class="product-image">
+                        <img src="Wrinkle Reducer - Red Light Therapy + Combo/Apresentação.png" alt="Wrinkle Reducer">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title" data-translate-key="product_wrinkle_title">Wrinkle Reducer</h3>
+                        <p class="product-description" data-translate-key="product_wrinkle_desc">Redutor de rugas com terapia de luz vermelha</p>
+                        <div class="product-price">
+                            <span class="price-original">$199.90</span>
+                            <span class="price-current">$149.90</span>
+                            <span class="price-discount">-25%</span>
+                        </div>
+                        <button class="add-to-cart" data-translate-key="btn_add_to_cart" onclick="addToCart('wrinkle', 149.90)">Add to Cart</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-translate-key="footer_copyright">&copy; 2024 67 Beauty Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts de Tradução -->
+    <script src="../js/language-controller.js"></script>
+    
+    <!-- JavaScript Otimizado -->
+    <script>
+        // Variáveis globais
+        let currentLanguage = 'pt-BR';
+        let translationSystem = null;
+
+        // Função para adicionar ao carrinho
+        function addToCart(productId, price) {
+            console.log('Adding to cart:', productId, price);
+            alert('Product added to cart!');
+        }
+
+        // Função para mudar idioma
+        function changeLanguage(language) {
+            console.log('Changing language to:', language);
+            currentLanguage = language;
+            localStorage.setItem('userLanguage', language);
+            
+            // Aguardar o sistema de tradução estar disponível
+            if (window.languageController) {
+                window.languageController.updateLanguage(language);
+            } else {
+                // Tentar novamente após um delay
+                setTimeout(() => {
+                    if (window.languageController) {
+                        window.languageController.updateLanguage(language);
+                    }
+                }, 500);
+            }
+        }
+
+        // Inicialização da página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Beauty Store - Página carregada');
+            
+            // Configurar idioma inicial
+            const savedLanguage = localStorage.getItem('userLanguage') || 'pt-BR';
+            const languageSelect = document.getElementById('languageSelect');
+            if (languageSelect) {
+                languageSelect.value = savedLanguage;
+                currentLanguage = savedLanguage;
+            }
+            
+            // Esconder preloader após carregamento
+            setTimeout(function() {
+                const preloader = document.getElementById('preloader');
+                if (preloader) {
+                    preloader.classList.add('hidden');
+                    setTimeout(function() {
+                        preloader.style.display = 'none';
+                    }, 500);
+                }
+            }, 1000);
+        });
+
+        // Aguardar sistema de tradução estar disponível
+        window.addEventListener('load', function() {
+            console.log('🌍 Aguardando sistema de tradução...');
+            
+            // Verificar se o sistema de tradução está disponível
+            const checkTranslationSystem = () => {
+                if (window.languageController) {
+                    console.log('✅ Sistema de tradução disponível');
+                    return true;
+                }
+                return false;
+            };
+
+            // Tentar por até 3 segundos
+            let attempts = 0;
+            const maxAttempts = 30;
+            const interval = setInterval(() => {
+                attempts++;
+                if (checkTranslationSystem() || attempts >= maxAttempts) {
+                    clearInterval(interval);
+                    if (attempts >= maxAttempts) {
+                        console.warn('⚠️ Sistema de tradução não encontrado após 3 segundos');
+                    }
+                }
+            }, 100);
+        });
+    </script>
+
+</body>
+</html>
+
+

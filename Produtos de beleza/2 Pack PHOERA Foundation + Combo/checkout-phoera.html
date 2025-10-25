@@ -1,25 +1,38 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - 2 Pack PHOERA Foundation | 67 Beauty Hub</title>
+    <title>Checkout - Foundation 2-Pack | 67 Beauty Hub</title>
     <link rel="stylesheet" href="../../styles.css">
+    <!-- Scripts do Sistema de Processamento (carregar primeiro) -->
+    <script src="../../js/supplier-order-processor.js"></script>
+    <script src="../../js/payment-gateway.js"></script>
+    <script src="../../js/pix-generator.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=Ab2ftZVJCplquKwOY1cWgvWMivADwMhbUs-OhehwO4hVh_VW9lS87qLkRUVD39yEeoh7YGXzBeuq1Dlh&currency=USD&intent=capture"></script>
+    <!-- PayPal SDK will be loaded dynamically with correct locale -->
     <!-- AliExpress Integration -->
     <script src="../../js/aliexpress-integration.js"></script>
     <!-- Review System -->
     <script src="../../js/review-system.js"></script>
+    <!-- Product Variation Mapping System -->
+    <script src="../../js/product-variation-mapping.js"></script>
+    <!-- Price Cache System -->
+    <script src="../../js/price-cache.js"></script>
+    <!-- Active Prices Sync System -->
+    <script src="../../js/active-prices-sync.js"></script>
+    <!-- Language Controller System -->
+    <script src="../../js/language-controller.js"></script>
+    <script src="../../js/pix-generator.js"></script>
     <style>
         body {
             background: #f0e6d2;
         }
         
         .checkout-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
             margin-top: 50px;
@@ -37,7 +50,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             padding: 30px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.5fr 1fr;
             gap: 40px;
             align-items: start;
         }
@@ -69,104 +82,7 @@
             margin-bottom: 10px;
         }
         
-        /* Flag Dropdown Styles */
-        .flag-dropdown-container {
-            position: relative;
-            display: inline-block;
-            margin-left: 20px;
-        }
-        
-        .flag-dropdown {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 20px;
-            background: white;
-            border: 2px solid #d4af37;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1);
-        }
-        
-        .flag-dropdown:hover {
-            border-color: #b8941f;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
-        }
-        
-        .selected-flag {
-            font-size: 1.5rem;
-            user-select: none;
-        }
-        
-        .dropdown-arrow {
-            color: #d4af37;
-            font-size: 0.9rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .flag-dropdown.open .dropdown-arrow {
-            transform: rotate(180deg);
-        }
-        
-        .flag-dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border: 2px solid #d4af37;
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
-            z-index: 1000;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        
-        .flag-dropdown-menu.open {
-            max-height: 400px;
-            overflow-y: auto;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* Internet Explorer 10+ */
-        }
-        
-        .flag-dropdown-menu.open::-webkit-scrollbar {
-            display: none; /* WebKit browsers (Chrome, Safari, Edge) */
-        }
-        
-        .flag-option {
-            padding: 12px 20px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .flag-option:hover {
-            background-color: #fff9e6;
-        }
-        
-        .flag-option:last-child {
-            border-radius: 0 0 6px 6px;
-        }
-        
-        @media (max-width: 768px) {
-            .flag-dropdown-container {
-                margin-top: 20px;
-            }
-            
-            .flag-dropdown {
-                padding: 10px 15px;
-            }
-            
-            .selected-flag {
-                font-size: 1.3rem;
-            }
-        }
+        /* Flag dropdown styles removed - currency detection is now automatic */
         
         .offer-section {
             background: white;
@@ -184,7 +100,7 @@
         }
         
         .product-image {
-            max-width: 100%;
+            max-width: 70%;
             height: auto;
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
@@ -291,7 +207,7 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 8px;
             margin-top: 15px;
-            padding: 10px;
+            padding: 15px;
             background: #f8f9fa;
             border-radius: 8px;
             border: 1px solid #e9ecef;
@@ -300,10 +216,13 @@
         .small-checkbox-item {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 4px;
-            border-radius: 4px;
+            gap: 8px;
+            padding: 15px 10px;
+            border-radius: 6px;
             transition: background-color 0.2s ease;
+            min-width: 120px;
+            min-height: 70px;
+            flex: 1;
         }
         
         .small-checkbox-item:hover {
@@ -317,16 +236,17 @@
             line-height: 1.2;
             flex: 1;
             min-width: 0;
-            word-break: break-word;
+            word-wrap: break-word;
+            text-align: center;
         }
         
         /* Estilos para as imagens das mini checkboxes */
         .small-checkbox-image {
-            width: 40px;
-            height: 40px;
-            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
             overflow: hidden;
-            margin-right: 8px;
+            margin-right: 4px;
             flex-shrink: 0;
             border: 2px solid #e9ecef;
             transition: border-color 0.2s ease;
@@ -376,10 +296,65 @@
             font-weight: 500;
         }
         
+        /* Mobile Responsiveness for Color Choices */
+        @media (max-width: 768px) {
+            .small-checkboxes-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 15px;
+            }
+            
+            .small-checkbox-item {
+                min-width: 120px;
+                min-height: 65px;
+                padding: 12px 8px;
+                gap: 6px;
+            }
+            
+            .small-checkbox-label {
+                font-size: 10px;
+                line-height: 1.3;
+                word-wrap: break-word;
+                text-align: center;
+            }
+            
+            .small-checkbox-image {
+                width: 30px;
+                height: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .small-checkboxes-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                padding: 12px;
+            }
+            
+            .small-checkbox-item {
+                min-width: 110px;
+                min-height: 60px;
+                padding: 10px 6px;
+                gap: 5px;
+            }
+            
+            .small-checkbox-label {
+                font-size: 9px;
+                line-height: 1.2;
+                word-wrap: break-word;
+                text-align: center;
+            }
+            
+            .small-checkbox-image {
+                width: 26px;
+                height: 26px;
+            }
+        }
+        
         /* Estilos para a galeria de produtos */
         .product-gallery-section {
             margin: 40px 0;
-            padding: 30px;
+            padding: 40px;
             background: #f8f9fa;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -444,7 +419,7 @@
         
         .gallery-main-image {
             width: 100%;
-            height: 500px;
+            height: 600px;
             object-fit: cover;
             display: block;
             transition: transform 0.5s ease-in-out, opacity 0.3s ease;
@@ -509,6 +484,7 @@
             justify-content: center;
             gap: 10px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
         
         .gallery-indicator {
@@ -550,7 +526,7 @@
             }
             
             .gallery-main-image {
-                height: 350px;
+                height: 400px;
             }
         }
         
@@ -765,7 +741,6 @@
             
             .summary-section {
                 position: static;
-                order: -1;
             }
             
             .checkout-container {
@@ -796,6 +771,138 @@
             .checkout-bottom {
                 grid-template-columns: 1fr;
                 gap: 20px;
+            }
+        }
+
+        /* Before & After Slider Styles */
+        .before-after-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .before-after-header {
+            margin-bottom: 30px;
+        }
+        
+        .before-after-header h3 {
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .before-after-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .slider-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            cursor: pointer;
+        }
+        
+        .slider-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .slider-before {
+            z-index: 2;
+        }
+        
+        .slider-after {
+            z-index: 1;
+        }
+        
+        .slider-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 3px;
+            height: 100%;
+            background: #d4af37;
+            z-index: 3;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+        
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: #d4af37;
+            border: 3px solid white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 4;
+            cursor: grab;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .slider-handle:active {
+            cursor: grabbing;
+        }
+        
+        .slider-labels {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            z-index: 3;
+            padding: 0 20px;
+        }
+        
+        .slider-label {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .slider-label.before {
+            background: rgba(212, 175, 55, 0.9);
+        }
+        
+        .slider-label.after {
+            background: rgba(0,0,0,0.9);
+        }
+        
+        @media (max-width: 768px) {
+            .slider-wrapper {
+                height: 300px;
+            }
+            
+            .before-after-header h3 {
+                font-size: 1.5rem;
             }
         }
 
@@ -1555,52 +1662,40 @@
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link">Início</a>
+                    <a href="../../index.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.html#products" class="nav-link">Produtos</a>
+                    <a href="../../index.html#products" class="nav-link">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.html#about" class="nav-link">Sobre</a>
+                    <a href="../../index.html#about" class="nav-link">About</a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.html#contact" class="nav-link">Contato</a>
+                    <a href="../../index.html#contact" class="nav-link">Contact</a>
                 </li>
             </ul>
             
-            <!-- Flag Dropdown Selector -->
-            <div class="flag-dropdown-container">
-                <div class="flag-dropdown" onclick="toggleFlagDropdown()">
-                    <div class="selected-flag" id="selectedFlag">🇺🇸</div>
-                    <i class="fas fa-chevron-down dropdown-arrow"></i>
-                </div>
-                <div class="flag-dropdown-menu" id="flagDropdownMenu">
-                    <!-- Países selecionados -->
-                    <div class="flag-option" data-currency="USD" data-flag="🇺🇸" data-country="Estados Unidos">🇺🇸 Estados Unidos</div>
-                    <div class="flag-option" data-currency="BRL" data-flag="🇧🇷" data-country="Brasil">🇧🇷 Brasil</div>
-                    <div class="flag-option" data-currency="EUR" data-flag="🇵🇹" data-country="Portugal">🇵🇹 Portugal</div>
-                </div>
-            </div>
+            <!-- Currency automatically detected based on browser language -->
         </div>
     </nav>
 
     <div class="checkout-container">
         <div class="checkout-header">
-            <h1><i class="fas fa-shopping-cart"></i> Finalizar Compra</h1>
-            <p>Escolha sua oferta e complete seu pedido com segurança</p>
+            <h1><i class="fas fa-shopping-cart"></i> Checkout</h1>
+            <p>Choose your offer and complete your order securely</p>
         </div>
 
         <!-- Seção de Reviews movida para o final da página -->
 
         <div class="checkout-layout">
-            <!-- Seção Unificada: Produto + Ofertas -->
+            <!-- Unified Section: Product + Offers -->
             <div class="unified-section">
                 <div class="product-info">
                     <div class="product-summary">
                         <img src="Apresentação do Checkout.png" alt="2 Pack PHOERA Foundation" class="product-image" id="mainProductImage">
                         <div class="product-details">
-                            <h3>2 Pack PHOERA Foundation</h3>
-                            <p>Base de alta cobertura, acabamento natural e longa duração. Ideal para todos os tipos de pele. Combo especial com produtos complementares para uma maquiagem perfeita.</p>
+                            <h3 data-translate-key="product_phoera_foundation">2 Pack PHOERA Foundation</h3>
+                            <p>High coverage foundation with natural finish and long lasting. Ideal for all skin types. Special combo with complementary products for perfect makeup.</p>
                         </div>
                     </div>
                     
@@ -1625,16 +1720,16 @@
                 </div>
 
                 <div class="offers-info">
-                    <h3 style="color: #333; margin-bottom: 20px; text-align: center;"><i class="fas fa-gift"></i> Escolha Sua Oferta</h3>
+                    <h3 style="color: #333; margin-bottom: 20px; text-align: center;" data-translate-key="choose_offer"><i class="fas fa-gift"></i> Choose Your Offer</h3>
                     
                     <div class="offer-options">
                         <div class="offer-option selected" data-option="basic">
                             <div class="option-header">
-                                <h4>2 Pack PHOERA Foundation</h4>
+                                <h4 data-translate-key="product_phoera_foundation">2 Pack PHOERA Foundation</h4>
                                 <div class="price">$17.39</div>
                             </div>
-                            <div class="discount">50% OFF</div>
-                            <div class="description">Base falhando no meio do dia? Com 2 unidades da PHOERA você garante alta cobertura, acabamento natural e pele impecável por muito mais tempo.</div>
+                            <div class="discount" data-translate-key="discount_badge">50% OFF</div>
+                            <div class="description" data-translate-key="offer_basic_description">Is your foundation failing by midday? With 2 units of PHOERA you guarantee high coverage, natural finish and flawless skin for much longer.</div>
                             
                             <!-- 16 Pequenas Checkboxes -->
                             <div class="small-checkboxes-container">
@@ -1642,97 +1737,97 @@
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/2 unitys of 102 Nud.jpg" alt="102 Nude" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">2 unities of 102 Nude</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_102_nude">2 unities of 102 Nude</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/2 unitys of 103 warm peach.jpg" data-name="2 unities of 103 Warm Peach">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/2 unitys of 103 warm peach.jpg" alt="103 Warm Peach" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">2 unities of 103 Warm Peach</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_103_warm_peach">2 unities of 103 Warm Peach</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/2 unitys of 104 Buff beige.jpg" data-name="2 unities of 104 Buff Beige">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/2 unitys of 104 Buff beige.jpg" alt="104 Buff Beige" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">2 unities of 104 Buff Beige</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_104_buff_beige">2 unities of 104 Buff Beige</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/2 unitys of 105 Sand.jpg" data-name="2 unities of 105 Sand">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/2 unitys of 105 Sand.jpg" alt="105 Sand" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">2 unities of 105 Sand</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_105_sand">2 unities of 105 Sand</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/2 Unitys of 108 Tan.jpg" data-name="2 unities of 108 Tan">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/2 Unitys of 108 Tan.jpg" alt="108 Tan" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">2 unities of 108 Tan</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_108_tan">2 unities of 108 Tan</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/2 Unitys of 109 Mocha.jpg" data-name="2 unities of 109 Mocha">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/2 Unitys of 109 Mocha.jpg" alt="109 Mocha" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">2 unities of 109 Mocha</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_109_mocha">2 unities of 109 Mocha</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/2 unitys of warm peach.jpg" data-name="2 unities of Warm Peach">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/2 unitys of warm peach.jpg" alt="Warm Peach" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">2 unities of Warm Peach</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_warm_peach">2 unities of Warm Peach</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/2 unitys of Warm Sun.jpg" data-name="2 unities of Warm Sun">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/2 unitys of Warm Sun.jpg" alt="Warm Sun" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">2 unities of Warm Sun</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_warm_sun">2 unities of Warm Sun</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/101 porcelain and 101 porcelain.jpg" data-name="101 Porcelain and 101 Porcelain">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/101 porcelain and 101 porcelain.jpg" alt="101 Porcelain and 101 Porcelain" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">101 Porcelain and 101 Porcelain</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_101_101">101 Porcelain and 101 Porcelain</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/101 porcelain and 102 Nud.jpg" data-name="101 Porcelain and 102 Nude">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/101 porcelain and 102 Nud.jpg" alt="101 Porcelain and 102 Nude" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">101 Porcelain and 102 Nude</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_101_102">101 Porcelain and 102 Nude</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/102 Nude and 104 Buff beige.jpg" data-name="102 Nude and 104 Buff Beige">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/102 Nude and 104 Buff beige.jpg" alt="102 Nude and 104 Buff Beige" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">102 Nude and 104 Buff Beige</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_102_104">102 Nude and 104 Buff Beige</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/102 Nude e 103 warm peach.jpg" data-name="102 Nude and 103 Warm Peach">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/102 Nude e 103 warm peach.jpg" alt="102 Nude and 103 Warm Peach" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">102 Nude and 103 Warm Peach</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_102_103">102 Nude and 103 Warm Peach</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/103 warm peach e 104 Buff beige.jpg" data-name="103 Warm Peach and 104 Buff Beige">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/103 warm peach e 104 Buff beige.jpg" alt="103 Warm Peach and 104 Buff Beige" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">103 Warm Peach and 104 Buff Beige</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_103_104">103 Warm Peach and 104 Buff Beige</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/104 Buff beige 105 Sand.jpg" data-name="104 Buff Beige and 105 Sand">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/104 Buff beige 105 Sand.jpg" alt="104 Buff Beige and 105 Sand" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">104 Buff Beige and 105 Sand</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_104_105">104 Buff Beige and 105 Sand</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/105 Sand and 106 Warm Sun.jpg" data-name="105 Sand and 106 Warm Sun">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/105 Sand and 106 Warm Sun.jpg" alt="105 Sand and 106 Warm Sun" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">105 Sand and 106 Warm Sun</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_105_106">105 Sand and 106 Warm Sun</div>
                                 </div>
                                 <div class="small-checkbox-item" data-image="Escolha/108 Tan and 109 Mocha.jpg" data-name="108 Tan and 109 Mocha">
                                     <div class="small-checkbox-image">
                                         <img src="Escolha/108 Tan and 109 Mocha.jpg" alt="108 Tan and 109 Mocha" class="small-image">
                                     </div>
-                                    <div class="small-checkbox-label">108 Tan and 109 Mocha</div>
+                                    <div class="small-checkbox-label" data-translate-key="choice_108_109">108 Tan and 109 Mocha</div>
                                 </div>
                             </div>
                         </div>
@@ -1740,13 +1835,13 @@
                         <div class="offer-option has-checkbox" data-option="premium">
                             <input type="checkbox" class="offer-checkbox" id="offer-premium" data-option="premium">
                             <div class="option-header">
-                                <h4>Oferta Premium</h4>
+                                <h4>Premium Offer</h4>
                                 <div class="price">$2.50</div>
                             </div>
                             <div class="offer-image-container">
                                 <img src="8pcs Makeup Brush.png" alt="Combo Premium" class="offer-image">
                                 <div class="offer-description-container">
-                                    <div class="description">Chega de sofrer com pincéis que soltam cerdas ou deixam a make manchada. O kit 8pcs Makeup Brush traz pincéis macios e precisos para aplicar base, pó, sombra e blush com acabamento profissional todos os dias.</div>
+                                    <div class="description" data-translate-key="offer_premium_description">No more suffering from brushes that shed bristles or leave your makeup patchy. The 8-Piece Makeup Brush Kit brings soft and precise brushes for applying foundation, powder, eyeshadow and blush with a professional finish every day.</div>
                                 </div>
                             </div>
                         </div>
@@ -1754,13 +1849,13 @@
                         <div class="offer-option has-checkbox" data-option="complete">
                             <input type="checkbox" class="offer-checkbox" id="offer-complete" data-option="complete">
                             <div class="option-header">
-                                <h4>Oferta Completa</h4>
+                                <h4>Complete Offer</h4>
                                 <div class="price">$11.64</div>
                             </div>
                             <div class="offer-image-container">
                                 <img src="2 Pack PHOERA Primer.png" alt="Combo Completo" class="offer-image">
                                 <div class="offer-description-container">
-                                    <div class="description">Cansada da maquiagem que craquela, escorre ou não dura o dia todo? O 2 Pack PHOERA Primer prepara a pele, fecha os poros e garante uma base lisa e uniforme para uma make impecável e de longa duração.</div>
+                                    <div class="description" data-translate-key="offer_complete_description">Tired of makeup that cracks, runs or doesn't last all day? The 2-Pack PHOERA Primer Kit prepares your skin, closes pores and ensures a smooth, even base for flawless, long-lasting makeup.</div>
                                 </div>
                             </div>
                         </div>
@@ -1770,50 +1865,184 @@
 
             <div class="checkout-bottom">
                 <div class="form-section">
-                    <h3><i class="fas fa-envelope"></i> Informações de Contato</h3>
-                    <form class="checkout-form" id="checkoutForm">
+                    <h3><i class="fas fa-user"></i> <span data-translate-key="customer_info">Customer Information</span></h3>
+                    
+                    <!-- Campos movidos para dentro do formulário checkoutForm -->
+                    <!--
+                    <div class="form-row">
                             <div class="form-group">
-                                <label for="email">E-mail *</label>
-                            <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                            <label for="firstName" data-translate-key="first_name">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
                         </div>
+                        <div class="form-group">
+                            <label for="lastName" data-translate-key="last_name">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                        </div>
+                    -->
 
-                    <h3><i class="fas fa-credit-card"></i> Método de Pagamento</h3>
-                    <!-- Updated structure -->
+                    <!--
+                    <div class="form-group">
+                        <label for="email" data-translate-key="email_label">Email *</label>
+                        <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                    </div>
                     
                     <div class="form-group">
-                        <label for="paymentMethod">Forma de Pagamento *</label>
+                        <label for="phone" data-translate-key="phone_label">Phone *</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+1 (555) 123-4567">
+                    </div>
+                    -->
+
+                    <!--
+                    <h3><i class="fas fa-truck"></i> <span data-translate-key="shipping_info">Shipping Information</span></h3>
+                    
+                    <div class="form-group">
+                        <label for="address" data-translate-key="address_label">Address *</label>
+                        <textarea id="address" name="address" rows="3" required placeholder="Street address, apartment, suite, etc."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city" data-translate-key="city_label">City *</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state" data-translate-key="state_label">State/Province *</label>
+                            <input type="text" id="state" name="state" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="zipCode" data-translate-key="zip_code_label">ZIP/Postal Code *</label>
+                            <input type="text" id="zipCode" name="zipCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="country" data-translate-key="country_label">Country *</label>
+                            <select id="country" name="country" required>
+                                <option value="" data-translate-key="select_country">Select Country</option>
+                                <option value="US" data-translate-key="country_us">United States</option>
+                                <option value="BR" data-translate-key="country_br">Brazil</option>
+                                <option value="PT" data-translate-key="country_pt">Portugal</option>
+                                <option value="CA" data-translate-key="country_ca">Canada</option>
+                                <option value="GB" data-translate-key="country_gb">United Kingdom</option>
+                                <option value="DE" data-translate-key="country_de">Germany</option>
+                                <option value="FR" data-translate-key="country_fr">France</option>
+                                <option value="ES" data-translate-key="country_es">Spain</option>
+                                <option value="IT" data-translate-key="country_it">Italy</option>
+                                <option value="AU" data-translate-key="country_au">Australia</option>
+                            </select>
+                        </div>
+                    </div>
+                    -->
+
+                    <form id="checkoutForm">
+                        <!-- Campos de dados do cliente -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName" data-translate-key="first_name">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" data-translate-key="last_name">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" data-translate-key="email_label">Email *</label>
+                            <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone" data-translate-key="phone_label">Phone</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address" data-translate-key="address_label">Address *</label>
+                            <textarea id="address" name="address" rows="3" required placeholder="Street address, apartment, suite, etc."></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city" data-translate-key="city_label">City *</label>
+                                <input type="text" id="city" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state" data-translate-key="state_label">State/Province *</label>
+                                <input type="text" id="state" name="state" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="zipCode" data-translate-key="zip_code_label">ZIP/Postal Code *</label>
+                                <input type="text" id="zipCode" name="zipCode" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="country" data-translate-key="country_label">Country *</label>
+                                <select id="country" name="country" required>
+                                    <option value="" data-translate-key="select_country">Select Country</option>
+                                    <option value="US" data-translate-key="country_us">United States</option>
+                                    <option value="BR" data-translate-key="country_br">Brazil</option>
+                                    <option value="PT" data-translate-key="country_pt">Portugal</option>
+                                    <option value="CA" data-translate-key="country_ca">Canada</option>
+                                    <option value="GB" data-translate-key="country_gb">United Kingdom</option>
+                                    <option value="DE" data-translate-key="country_de">Germany</option>
+                                    <option value="FR" data-translate-key="country_fr">France</option>
+                                    <option value="ES" data-translate-key="country_es">Spain</option>
+                                    <option value="IT" data-translate-key="country_it">Italy</option>
+                                    <option value="AU" data-translate-key="country_au">Australia</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="observations" data-translate-key="observations_label">Order Notes (optional)</label>
+                            <textarea id="observations" name="observations" rows="3" placeholder="Any special instructions for your order?"></textarea>
+                        </div>
+
+                        <!-- Método de Pagamento -->
+                    <h3><i class="fas fa-credit-card"></i> <span data-translate-key="payment_method">Payment Method</span></h3>
+                    
+                    <div class="form-group">
+                        <label for="paymentMethod" data-translate-key="payment_method_label">Payment Method *</label>
                         <select id="paymentMethod" name="paymentMethod" required>
-                            <option value="">Selecione</option>
-                            <option value="paypal">PayPal</option>
-                            <option value="pix">PIX</option>
+                            <option value="" data-translate-key="select_option">Select</option>
+                            <option value="paypal" data-translate-key="paypal_option">PayPal</option>
+                            <option value="pix" id="pix-option" style="display: none;" data-translate-key="pix_option">PIX (Brazil only)</option>
+                            <option value="stripe" id="stripe-option" style="display: none;" data-translate-key="stripe_option">Credit Card (Stripe)</option>
                         </select>
                     </div>
 
                     <div id="paypal-payment-button" style="display: none;"></div>
                     <div id="pix-payment-info" style="display: none;">
                         <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border: 2px solid #d4af37; text-align: center;">
-                            <h4 style="color: #d4af37; margin-bottom: 15px;"><i class="fas fa-qrcode"></i> Pagamento via PIX</h4>
-                            <p style="color: #666; margin-bottom: 15px;">Após confirmar o pedido, você receberá as instruções de pagamento PIX por email.</p>
+                            <h4 style="color: #d4af37; margin-bottom: 15px;"><i class="fas fa-qrcode"></i> <span data-translate-key="pix_payment">PIX Payment</span></h4>
+                            <p style="color: #666; margin-bottom: 15px;" data-translate-key="pix_payment_info">After confirming your order, you will receive PIX payment instructions by email.</p>
                             <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
-                                <strong>Chave PIX:</strong> contato@67beautyhub.com
+                                <strong data-translate-key="pix_key">PIX Key:</strong> contato@67beautyhub.com
                             </div>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="observations">Observações (opcional)</label>
-                        <textarea id="observations" name="observations" rows="3" placeholder="Alguma observação especial sobre seu pedido?"></textarea>
+                    <div id="stripe-payment-info" style="display: none;">
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border: 2px solid #d4af37; text-align: center;">
+                            <h4 style="color: #d4af37; margin-bottom: 15px;"><i class="fas fa-credit-card"></i> <span data-translate-key="stripe_payment">Credit Card Payment</span></h4>
+                            <p style="color: #666; margin-bottom: 15px;" data-translate-key="stripe_payment_info">Secure payment processing with Stripe. Your card information is encrypted and secure.</p>
+                        </div>
                     </div>
 
                         <button type="submit" class="checkout-btn">
-                            <i class="fas fa-check"></i> Confirmar Pedido
+                            <i class="fas fa-check"></i> Confirm Order
                         </button>
                     </form>
 
                 </div>
 
                 <div class="summary-section">
-                    <h3><i class="fas fa-receipt"></i> Resumo do Pedido</h3>
+                    <h3><i class="fas fa-receipt"></i> <span data-translate-key="order_summary">Order Summary</span></h3>
                     <div class="checkout-summary">
                         <div id="selectedOffers">
                             <!-- Ofertas selecionadas serão inseridas aqui dinamicamente -->
@@ -1823,22 +2052,43 @@
                             <span id="totalAmount">$17.39</span>
                         </div>
                         
-                        <!-- Currency Selector for Summary -->
-                        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; text-align: center;">
-                            <div>
-                                <label style="display: block; color: #555; font-size: 14px; margin-bottom: 5px;">
-                                    <i class="fas fa-exchange-alt"></i> Moeda do Resumo
-                                </label>
-                                <select id="summaryCurrencySelector" style="padding: 8px 12px; border: 2px solid #d4af37; border-radius: 6px; background: white; color: #333; font-size: 14px; width: 100%; max-width: 250px;">
-                                    <option value="USD">🇺🇸 Dólar Americano (USD)</option>
-                                    <option value="BRL">🇧🇷 Real Brasileiro (BRL)</option>
-                                    <option value="EUR">🇪🇺 Euro (EUR)</option>
-                                </select>
+                        <!-- Currency automatically detected based on browser language -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+    <!-- Before & After Slider Section -->
+    <div class="before-after-section">
+        <div class="before-after-header">
+            <h3><i class="fas fa-magic"></i> <span data-translate-key="slider_title">See the Instant Transformation</span></h3>
+            <p data-translate-key="slider_description">Drag the slider to see the amazing before and after results with PHOERA Foundation</p>
+        </div>
+        
+        <div class="slider-container">
+            <div class="slider-wrapper" id="beforeAfterSlider">
+                <!-- Before Image (right side) -->
+                <img src="Before .jpeg" alt="Before" class="slider-image slider-before" id="beforeImage">
+                <!-- After Image (left side) -->
+                <img src="After.jpeg" alt="After" class="slider-image slider-after" id="afterImage">
+                <div class="slider-line" id="sliderLine"></div>
+                <div class="slider-handle" id="sliderHandle">
+                    <i class="fas fa-arrows-alt-h"></i>
+                </div>
+                <div class="slider-labels">
+                    <div class="slider-label after">AFTER</div>
+                    <div class="slider-label before">BEFORE</div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <p style="color: #333; font-size: 1.1rem; margin: 0;">
+                <i class="fas fa-star" style="color: #d4af37;"></i> 
+                <strong data-translate-key="slider_results_title">Real results from real customers!</strong> 
+                <span data-translate-key="slider_results_description">This is what you can achieve with just one application of PHOERA Foundation.</span>
+            </p>
         </div>
     </div>
 
@@ -1849,13 +2099,13 @@
         
         <div style="position: relative; z-index: 2;">
             <div class="reviews-header">
-                <h3><i class="fas fa-star"></i> O que nossos clientes estão dizendo</h3>
-                <p>Mais de 1.400 clientes satisfeitas com nossos produtos</p>
+                <h3><i class="fas fa-star"></i> What Our Customers Are Saying</h3>
+                <p>More than 1,400 satisfied customers with our products</p>
                 
                 <!-- Botão para adicionar review -->
                 <div style="margin-top: 20px;">
                     <button id="addReviewBtn" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 25px; font-size: 16px; cursor: pointer; transition: all 0.3s ease;">
-                        <i class="fas fa-plus"></i> Adicionar sua Review
+                        <i class="fas fa-plus"></i> Add Your Review
                     </button>
                 </div>
             </div>
@@ -1864,7 +2114,7 @@
             <div class="review-item clickable-review" 
                  data-review-id="brookie"
                  data-author="Brookie"
-                 data-date="15 dias atrás"
+                 data-date="15 days ago"
                  data-stars="5">
                 <div class="review-image">
                     <div class="review-avatar">
@@ -1882,14 +2132,14 @@
                     <p class="review-text">"It's my absolute favorite foundation, I've bought multiple times! I fell in love the first time I used it, and haven't bought a different foundation since! It's super lightweight but full coverage, matte finish, and I swear it gives me such an airbrushed look!..."</p>
                     <div class="review-author">
                         <strong>Brookie</strong>
-                        <span class="review-date">Compra verificada - 15 dias atrás</span>
+                        <span class="review-date">Verified Purchase - 15 days ago</span>
                     </div>
                 </div>
             </div>
 
             <div class="review-item clickable-review" 
                  data-author="Geauxredd"
-                 data-date="1 semana atrás"
+                 data-date="1 week ago"
                  data-stars="5"
                  data-full-text="I was skeptical about this foundation because of the low price. But then again, for less than $10 I thought why not. It's already cheaper than most drugstore brands. Wasn't sure on the shade match so I just guessed. I ordered 05 Sand. For reference, I'm usually shade 310 in Fit Me Matte & Poreless. I am a normal to dry skin type. Mature, over 40 skin.
 
@@ -1918,14 +2168,14 @@ I've included pics of it in indoor, incandescent light as well as outdoor, natur
                     <p class="review-text">"I was skeptical about this foundation because of the low price. But then again, for less than $10 I thought why not. It's already cheaper than most drugstore brands..."</p>
                     <div class="review-author">
                         <strong>Geauxredd</strong>
-                        <span class="review-date">Compra verificada - 1 semana atrás</span>
+                        <span class="review-date">Verified Purchase - 1 week ago</span>
                     </div>
                 </div>
             </div>
 
             <div class="review-item clickable-review" 
                  data-author="Keith L.Hunter"
-                 data-date="3 dias atrás"
+                 data-date="3 days ago"
                  data-stars="5"
                  data-full-text="Amazing face foundation! For the price esp. I am currently using a much more expensive foundation and needed a lighter shade for the fall/winter time, so I decided to look for something a little cheaper on amazon and came across this. The reviews definitely live up to the hype!!! Highly recommend. Happy with the shades I chose too. I am fair complected. Gives you full coverage without a doubt.">
                 <div class="review-image">
@@ -1944,7 +2194,7 @@ I've included pics of it in indoor, incandescent light as well as outdoor, natur
                     <p class="review-text">"Amazing face foundation! For the price esp. I am currently using a much more expensive foundation and needed a lighter shade for the fall/winter time..."</p>
                     <div class="review-author">
                         <strong>Keith L.Hunter</strong>
-                        <span class="review-date">Compra verificada - 3 dias atrás</span>
+                        <span class="review-date">Verified Purchase - 3 days ago</span>
                     </div>
                 </div>
             </div>
@@ -1974,14 +2224,14 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     <p class="review-text">"Really pleasantly surprised by this stuff. It provides great coverage that goes on smooth and not cakey and the price point is great. I just spent $55 on Il Makiage After Party and wish I hadn't..."</p>
                     <div class="review-author">
                         <strong>MCG</strong>
-                        <span class="review-date">Compra verificada - 2 semanas atrás</span>
+                        <span class="review-date">Verified Purchase - 2 semanas atrás</span>
                     </div>
                 </div>
             </div>
 
             <div class="review-item clickable-review" 
                  data-author="Mary"
-                 data-date="1 semana atrás"
+                 data-date="1 week ago"
                  data-stars="5"
                  data-full-text="I really love this foundation..I got the 101 porcelain and 102 nude and I mix them together..here's the thing.. it is very lightweight but dries fast, but has good coverage..however the application to applying this to your skin is so important when working with this foundation..moisturize and prep you skin first then get a good foundation brush I have double side foundation brush from elf..put the foundation on the back of your hand take your brush and rub some on and then press and swirl into your brush so the foundation is smooth and even on the brush and then LIGHTLY TAP not streak or stroke , but TAP onto you skin all over until your preference, and repeat if desired, it is a buildable foundation! I'm almost 50 years old and less is more for my mature skin! What I love about this foundation is I do NOT have to use ANY powder which is a win in my book for my age! I just spray setting spray after I achieve my look..I am including pictures with indoor lighting and outdoor lighting and close up in the indoor light so you can have a close up view! What you see is what you get! No gimmicks, no other foundations and no filters at all on these pictures. I hope this helps and I hope you have success on this product for your skin if you choose to purchase! I'm REALLY happy with this foundation!!">
                 <div class="review-image">
@@ -2000,7 +2250,7 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     <p class="review-text">"I really love this foundation..I got the 101 porcelain and 102 nude and I mix them together..here's the thing.. it is very lightweight but dries fast, but has good coverage..."</p>
                     <div class="review-author">
                         <strong>Mary</strong>
-                        <span class="review-date">Compra verificada - 1 semana atrás</span>
+                        <span class="review-date">Verified Purchase - 1 week ago</span>
                     </div>
                 </div>
             </div>
@@ -2008,7 +2258,7 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
             <div class="review-item clickable-review" 
                  data-review-id="beatriz"
                  data-author="Beatriz Oliveira"
-                 data-date="4 dias atrás"
+                 data-date="4 days ago"
                  data-stars="5">
                 <div class="review-image">
                     <div class="review-avatar">
@@ -2023,10 +2273,10 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <p class="review-text">"Melhor custo-benefício! A qualidade é igual às bases caras que eu usava antes. Super recomendo!"</p>
+                    <p class="review-text">"Best value for money! The quality is equal to the expensive foundations I used to wear. Highly recommend!"</p>
                     <div class="review-author">
                         <strong>Beatriz Oliveira</strong>
-                        <span class="review-date">Compra verificada - 4 dias atrás</span>
+                        <span class="review-date">Verified Purchase - 4 days ago</span>
                     </div>
                 </div>
             </div>
@@ -2043,15 +2293,15 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star-half-alt"></i>
                 </div>
-                <div class="stat-label">Avaliação média</div>
+                <div class="stat-label">Average Rating</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number">1.456</div>
-                <div class="stat-label">Clientes satisfeitas</div>
+                <div class="stat-label">Satisfied Customers</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number">98%</div>
-                <div class="stat-label">Recomendariam</div>
+                <div class="stat-label">Would Recommend</div>
             </div>
         </div>
 
@@ -2066,7 +2316,7 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
         // Dados das ofertas
         const offers = {
             basic: {
-                name: 'Apresentação do Checkout',
+                name: '2 Pack PHOERA Foundation',
                 prices: {
                     USD: 17.39,
                     BRL: 91.68,
@@ -2118,8 +2368,45 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
         let selectedOffers = ['basic']; // Array para múltiplas seleções
         let selectedColor = null; // Cor selecionada para a oferta básica
 
-
-        // Event listeners para checkboxes
+        // Função para inicializar ofertas
+        function initializeOffers() {
+            console.log('Initializing PHOERA offers...');
+            console.log('Current selectedOffers:', selectedOffers);
+            console.log('Current currentCurrency:', currentCurrency);
+            console.log('Current offers:', offers);
+            
+            // Ensure variables are properly initialized
+            if (!selectedOffers || !Array.isArray(selectedOffers)) {
+                selectedOffers = ['basic'];
+                console.log('Reset selectedOffers to:', selectedOffers);
+            }
+            if (!currentCurrency) {
+                currentCurrency = 'USD';
+                console.log('Reset currentCurrency to:', currentCurrency);
+            }
+            if (!offers || typeof offers !== 'object') {
+                console.warn('Offers object not properly initialized');
+            }
+            if (typeof selectedColor === 'undefined') {
+                selectedColor = null;
+            }
+            
+            // Ensure basic offer is selected by default
+            if (!selectedOffers.includes('basic')) {
+                selectedOffers.push('basic');
+                console.log('Added basic offer to selectedOffers:', selectedOffers);
+            }
+            
+            // Ensure basic offer is visually selected (no checkbox needed)
+            const basicOfferElement = document.querySelector('[data-option="basic"]');
+            if (basicOfferElement) {
+                basicOfferElement.classList.add('selected');
+                console.log('✅ Basic offer element selected');
+            } else {
+                console.warn('⚠️ Basic offer element not found');
+            }
+            
+            // Initialize event listeners for checkboxes
         document.querySelectorAll('.offer-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', function() {
                 const option = this.dataset.option;
@@ -2146,8 +2433,8 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
             });
         });
 
-        // Event listeners para cliques nas ofertas
-        document.querySelectorAll('.offer-option').forEach(option => {
+            // Event listeners para cliques nas ofertas (exceto oferta básica)
+            document.querySelectorAll('.offer-option:not([data-option="basic"])').forEach(option => {
             option.addEventListener('click', function(e) {
                 // Não processar clique se for no checkbox
                 if (e.target.type === 'checkbox') return;
@@ -2159,10 +2446,25 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                 }
             });
         });
+            
+            // Initialize image selection system
+            initializeImageSelection();
+            
+            updateOrderSummary();
+        }
+
+        // Event listeners moved to initializeOffers() function
 
         // Função para atualizar resumo do pedido
         function updateOrderSummary() {
             const selectedOffersContainer = document.getElementById('selectedOffers');
+            const totalElement = document.getElementById('totalAmount');
+            
+            if (!selectedOffersContainer || !totalElement) {
+                console.warn('Order summary elements not found');
+                return;
+            }
+            
             let total = 0;
 
             // Limpar ofertas anteriores
@@ -2171,7 +2473,7 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
             // Calcular total para cada oferta selecionada
             selectedOffers.forEach(offerKey => {
                 const offer = offers[offerKey];
-                const basePrice = offer.prices[currentCurrency];
+                const basePrice = offer.prices[summaryCurrency];
                 const discountAmount = (basePrice * offer.discount / 100);
                 const offerTotal = basePrice - discountAmount;
                 
@@ -2180,18 +2482,23 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                 // Adicionar linha da oferta no resumo
                 const offerRow = document.createElement('div');
                 offerRow.className = 'summary-row';
+                
+                // Get translated offer name dynamically
+                let translatedOfferName = offer.name;
+                if (offerKey === 'basic' && selectedColor && selectedColor.name) {
+                    // Add selected color dynamically for basic offer
+                    translatedOfferName += ` (${selectedColor.name})`;
+                }
+                
                 offerRow.innerHTML = `
-                    <span>${offer.name}</span>
-                    <span>${formatPrice(offerTotal)}</span>
+                    <span>${translatedOfferName}</span>
+                    <span>${formatSummaryPrice(offerTotal)}</span>
                 `;
                 selectedOffersContainer.appendChild(offerRow);
             });
 
             // Atualizar total
-            const totalElement = document.getElementById('totalAmount');
-            if (totalElement) {
-                totalElement.textContent = formatPrice(total);
-            }
+                totalElement.textContent = formatSummaryPrice(total);
         }
 
         // Format price for display (removed - using the correct one below)
@@ -2245,7 +2552,7 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                             <div style="color: #d4af37; margin: 5px 0;">
                                 ${starsHTML}
                             </div>
-                            <span style="color: #666; font-size: 0.9rem;">Compra verificada - ${date}</span>
+                            <span style="color: #666; font-size: 0.9rem;">Verified Purchase - ${date}</span>
                         </div>
                         <button onclick="this.closest('.review-modal').remove()" style="
                             background: none; border: none; font-size: 1.5rem;
@@ -2298,11 +2605,33 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
 
         // Inicializar resumo após DOM carregado
         document.addEventListener('DOMContentLoaded', function() {
-            updateOrderSummary();
+            // Initialize offers first
+            initializeOffers();
+            
+            // Set default color selection dynamically (only if no color is selected)
+            setTimeout(() => {
+                if (!selectedColor) {
+                    const firstColorItem = document.querySelector('.small-checkbox-item');
+                    if (firstColorItem) {
+                        firstColorItem.classList.add('selected');
+                selectedColor = {
+                            name: firstColorItem.dataset.name,
+                            image: firstColorItem.dataset.image
+                };
+                        console.log('Default color set dynamically:', selectedColor);
+                        updateOrderSummary();
+            }
+                }
+            }, 200);
             
             // Event listener para o seletor de moeda do resumo
             const summaryCurrencySelector = document.getElementById('summaryCurrencySelector');
             if (summaryCurrencySelector) {
+                // Set initial currency based on detected currency
+                summaryCurrency = currentCurrency;
+                summaryCurrencySelector.value = currentCurrency;
+                console.log('Summary currency initialized to:', summaryCurrency);
+                
                 summaryCurrencySelector.addEventListener('change', function() {
                     summaryCurrency = this.value;
                     console.log('Summary currency changed to:', summaryCurrency);
@@ -2490,6 +2819,20 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
             return price.toString();
         }
 
+        // Format price for summary (uses summaryCurrency)
+        function formatSummaryPrice(price) {
+            if (summaryCurrency === 'BRL') {
+                return `R$ ${price.toFixed(2).replace('.', ',')}`;
+            } else if (summaryCurrency === 'USD') {
+                return `$${price.toFixed(2)}`;
+            } else if (summaryCurrency === 'EUR') {
+                return `€${price.toFixed(2)}`;
+            } else if (summaryCurrency === 'AOA') {
+                return `Kz ${price.toLocaleString()}`;
+            }
+            return price.toString();
+        }
+
         // Update currency display in checkout
         function updateCurrencyDisplay() {
             // Atualizar apenas preços das ofertas nas checkboxes usando preços pré-calculados
@@ -2571,14 +2914,14 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     weeksAgo: 'weeks ago'
                 },
                 'pt': {
-                    reviewsTitle: 'O que nossos clientes estão dizendo',
-                    reviewsSubtitle: 'Mais de 1.400 clientes satisfeitas com nossos produtos',
-                    avgRating: 'Avaliação média',
-                    satisfiedCustomers: 'Clientes satisfeitas',
-                    wouldRecommend: 'Recomendariam',
-                    verifiedPurchase: 'Compra verificada',
-                    daysAgo: 'dias atrás',
-                    weekAgo: 'semana atrás',
+                    reviewsTitle: 'What our customers are saying',
+                    reviewsSubtitle: 'More than 1,400 satisfied customers with our products',
+                    avgRating: 'Average Rating',
+                    satisfiedCustomers: 'Satisfied Customers',
+                    wouldRecommend: 'Would Recommend',
+                    verifiedPurchase: 'Verified Purchase',
+                    daysAgo: 'days ago',
+                    weekAgo: 'week ago',
                     weeksAgo: 'semanas atrás'
                 }
             };
@@ -2801,58 +3144,8 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
             console.log('💾 Pedido salvo no histórico:', orderRecord.orderId);
         }
 
-        // Função para mostrar status do pedido
-        function showOrderStatus(orderResponse) {
-            const statusModal = document.createElement('div');
-            statusModal.className = 'order-status-modal';
-            statusModal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.8); z-index: 10002; display: flex;
-                align-items: center; justify-content: center; padding: 20px;
-            `;
-
-            statusModal.innerHTML = `
-                <div style="
-                    background: white; border-radius: 15px; padding: 40px;
-                    max-width: 500px; width: 100%; text-align: center;
-                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-                    animation: modalSlideIn 0.3s ease-out;
-                ">
-                    <div style="color: #28a745; font-size: 3rem; margin-bottom: 20px;">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h2 style="color: #333; margin-bottom: 15px;">
-                        Pedido Enviado com Sucesso! 🎉
-                    </h2>
-                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: left;">
-                        <p><strong>ID do Pedido:</strong> ${orderResponse.orderId}</p>
-                        <p><strong>ID do Fornecedor:</strong> ${orderResponse.supplierOrderId}</p>
-                        <p><strong>Fornecedor:</strong> ${orderResponse.supplier}</p>
-                        <p><strong>Entrega Estimada:</strong> ${orderResponse.estimatedDelivery}</p>
-                        <p><strong>Código de Rastreamento:</strong> ${orderResponse.trackingNumber}</p>
-                    </div>
-                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                        <h4 style="color: #1976d2; margin-bottom: 10px;">
-                            <i class="fas fa-info-circle"></i> Informações do Fornecedor
-                        </h4>
-                        <p><strong>Contato:</strong> ${orderResponse.contactInfo.contactPerson}</p>
-                        <p><strong>Email:</strong> ${orderResponse.contactInfo.email}</p>
-                        <p><strong>Telefone:</strong> ${orderResponse.contactInfo.phone}</p>
-                    </div>
-                    <button onclick="this.closest('.order-status-modal').remove(); window.location.href='../../index.html';" 
-                            style="
-                                background: linear-gradient(135deg, #d4af37, #b8941f);
-                                color: white; border: none; padding: 12px 30px;
-                                border-radius: 8px; font-size: 1.1rem; font-weight: 600;
-                                cursor: pointer; transition: all 0.3s ease;
-                            ">
-                        <i class="fas fa-home"></i> Voltar ao Início
-                    </button>
-                </div>
-            `;
-
-            document.body.appendChild(statusModal);
-        }
+        // Função para mostrar status do pedido - REMOVIDA (inadequada para checkout)
+        // Notificações de pedidos devem ficar apenas no dashboard administrativo
 
         // Modificar função de submit do formulário para integrar com fornecedores
         document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
@@ -2941,23 +3234,11 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                 }
             });
             
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(event) {
-                const container = document.querySelector('.flag-dropdown-container');
-                if (container && !container.contains(event.target)) {
-                    const dropdown = document.querySelector('.flag-dropdown');
-                    const menu = document.getElementById('flagDropdownMenu');
-                    dropdown.classList.remove('open');
-                    menu.classList.remove('open');
-                }
-            });
+            // Flag dropdown removed - currency detection is now automatic
             
             // Log sistema de fornecedores
             console.log('🏭 Sistema de fornecedores inicializado');
             console.log('📋 Fornecedores disponíveis:', Object.keys(suppliers));
-            
-            // Inicializar sistema de seleção de imagens
-            initializeImageSelection();
             
             // Inicializar galeria de produtos
             initializeProductGallery();
@@ -2967,6 +3248,10 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
         function initializeImageSelection() {
             const imageItems = document.querySelectorAll('.small-checkbox-item');
             const mainProductImage = document.getElementById('mainProductImage');
+            
+            console.log('🎨 Initializing image selection system...');
+            console.log('📦 Found image items:', imageItems.length);
+            console.log('🖼️ Main product image:', mainProductImage);
             
             // Função para verificar se a imagem carrega
             function testImageLoad(imagePath, callback) {
@@ -2995,6 +3280,8 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                 });
                 
                 item.addEventListener('click', function() {
+                    console.log('🖱️ Color item clicked:', imageName);
+                    
                     // Remover seleção de todos os itens
                     imageItems.forEach(img => img.classList.remove('selected'));
                     
@@ -3007,7 +3294,10 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                         image: imagePath
                     };
                     
-                    console.log('Cor selecionada:', selectedColor);
+                    console.log('✅ Cor selecionada:', selectedColor);
+                    
+                    // Atualizar o resumo do pedido com a nova cor
+                    updateOrderSummary();
                     
                     // Atualizar imagem principal
                     if (mainProductImage && imagePath) {
@@ -3036,21 +3326,28 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                 });
             });
             
-            // Selecionar primeira imagem por padrão
-            if (imageItems.length > 0) {
-                imageItems[0].click();
-            }
+            // Log final da inicialização
+            console.log('✅ Image selection system initialized with', imageItems.length, 'items');
         }
         
         // Sistema de galeria de produtos
         function initializeProductGallery() {
             const galleryImages = [
                 { src: 'Galeria/Kit.jpeg' },
-                { src: 'Galeria/opcional.png' },
-                { src: 'Galeria/opcional 1.png' },
-                { src: 'Galeria/opcional 3.png' },
-                { src: 'Galeria/opcional 4.png' },
-                { src: 'Galeria/Screenshot 2025-09-20 114923.png' }
+                { src: 'Galeria/1760391255800.jpeg' },
+                { src: 'Galeria/1760391294320.jpeg' },
+                { src: 'Galeria/1760391305030.jpeg' },
+                { src: 'Galeria/1760391370056.jpeg' },
+                { src: 'Galeria/1760391521189.jpeg' },
+                { src: 'Galeria/1760391539825.jpeg' },
+                { src: 'Galeria/1760391572969.jpeg' },
+                { src: 'Galeria/1760391595300.webp' },
+                { src: 'Galeria/1760391831146.jpeg' },
+                { src: 'Galeria/1760395908351.jpeg' },
+                { src: 'Galeria/1760395957729.jpeg' },
+                { src: 'Galeria/1760395972251.jpeg' },
+                { src: 'Galeria/beijaflormake_1760395985651.jpeg' },
+                { src: 'Galeria/fashion.paradise.ke_1760391785814.webp' }
             ];
             
             let currentImageIndex = 0;
@@ -3058,6 +3355,9 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             const indicatorsContainer = document.getElementById('galleryIndicators');
+            
+            // Limpar indicadores existentes para evitar duplicação
+            indicatorsContainer.innerHTML = '';
             
             // Criar indicadores
             galleryImages.forEach((_, index) => {
@@ -3147,50 +3447,11 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                 }
             });
             
-            // Slideshow automático
-            let slideshowInterval;
-            const slideshowDelay = 4000; // 4 segundos
-            
-            function startSlideshow() {
-                slideshowInterval = setInterval(() => {
-                    if (currentImageIndex < galleryImages.length - 1) {
-                        nextImage();
-                    } else {
-                        currentImageIndex = 0;
-                        updateImage('next');
-                    }
-                }, slideshowDelay);
-            }
-            
-            function stopSlideshow() {
-                if (slideshowInterval) {
-                    clearInterval(slideshowInterval);
-                    slideshowInterval = null;
-                }
-            }
-            
-            // Pausar slideshow ao interagir
-            prevBtn.addEventListener('click', () => {
-                stopSlideshow();
-                setTimeout(startSlideshow, 10000); // Reiniciar após 10 segundos
-            });
-            nextBtn.addEventListener('click', () => {
-                stopSlideshow();
-                setTimeout(startSlideshow, 10000); // Reiniciar após 10 segundos
-            });
-            
-            // Pausar slideshow ao passar o mouse sobre a galeria
-            const galleryContainer = document.querySelector('.simple-gallery');
-            if (galleryContainer) {
-                galleryContainer.addEventListener('mouseenter', stopSlideshow);
-                galleryContainer.addEventListener('mouseleave', startSlideshow);
-            }
+            // Manual navigation only - no automatic slideshow
+            // Users can navigate using buttons and indicators at their own pace
             
             // Inicializar
             updateImage();
-            
-            // Iniciar slideshow automático
-            startSlideshow();
             
             console.log('🖼️ Galeria de produtos inicializada com', galleryImages.length, 'imagens');
         }
@@ -3278,7 +3539,7 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     closeLoginModal();
                     showReviewModal();
                 } else {
-                    alert('Por favor, preencha todos os campos');
+                    alert('Please fill in all fields');
                 }
             });
 
@@ -3322,7 +3583,7 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                 e.preventDefault();
                 
                 if (selectedRating === 0) {
-                    alert('Por favor, selecione uma avaliação');
+                    alert('Please select a rating');
                     return;
                 }
 
@@ -3403,7 +3664,7 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     <p class="review-text">"${reviewData.text}"</p>
                     <div class="review-author">
                         <strong>${reviewData.name}</strong>
-                        <span class="review-date">Compra verificada - ${reviewData.date}</span>
+                        <span class="review-date">Verified Purchase - ${reviewData.date}</span>
                     </div>
                 </div>
             `;
@@ -3436,7 +3697,7 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     <input type="password" id="loginPassword" placeholder="Senha" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;">
                 </div>
                 <button type="submit" style="background: #d4af37; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; cursor: pointer; margin-right: 10px;">Entrar</button>
-                <button type="button" id="closeLoginModal" style="background: #ccc; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; cursor: pointer;">Cancelar</button>
+                <button type="button" id="closeLoginModal" style="background: #ccc; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; cursor: pointer;">Cancel</button>
             </form>
         </div>
     </div>
@@ -3444,10 +3705,10 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
     <!-- Modal de Review -->
     <div id="reviewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center;">
         <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;">
-            <h3 style="color: #d4af37; margin-bottom: 20px;">Escrever Avaliação</h3>
+            <h3 style="color: #d4af37; margin-bottom: 20px;">Write Review</h3>
             <form id="reviewForm">
                 <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Avaliação:</label>
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Rating:</label>
                     <div id="starRating" style="display: flex; gap: 5px; justify-content: center;">
                         <i class="fas fa-star" data-rating="1" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
                         <i class="fas fa-star" data-rating="2" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
@@ -3457,8 +3718,8 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     </div>
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Título:</label>
-                    <input type="text" id="reviewTitle" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="Título da sua avaliação">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Title:</label>
+                    <input type="text" id="reviewTitle" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="Your review title">
                 </div>
                 <div style="margin-bottom: 15px;">
                     <label style="display: block; margin-bottom: 5px; font-weight: 600;">Comentário:</label>
@@ -3470,8 +3731,8 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     <div id="imagePreview" style="margin-top: 10px;"></div>
                 </div>
                 <div style="text-align: center;">
-                    <button type="submit" style="background: #d4af37; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; cursor: pointer; margin-right: 10px;">Enviar Avaliação</button>
-                    <button type="button" id="closeReviewModal" style="background: #ccc; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; cursor: pointer;">Cancelar</button>
+                    <button type="submit" style="background: #d4af37; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; cursor: pointer; margin-right: 10px;">Submit Review</button>
+                    <button type="button" id="closeReviewModal" style="background: #ccc; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; cursor: pointer;">Cancel</button>
                 </div>
             </form>
         </div>
@@ -3498,31 +3759,410 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                             if (paypalButton) paypalButton.style.display = 'block';
                             break;
                         case 'pix':
-                            if (pixInfo) pixInfo.style.display = 'block';
+                            if (pixInfo) {
+                                pixInfo.style.display = 'block';
+                                // Initialize PIX if not already done
+                                if (pixCheckout && !pixCheckout.currentOrder) {
+                                    initializePIXForOrder();
+                                }
+                            }
                             break;
                     }
                 });
             }
         }
         
-        // Initialize payment method control and PayPal
+        // Global variables for PayPal currency and locale
+        let currentPayPalCurrency = 'USD';
+        let currentPayPalLocale = 'en_US';
+        
+        // PIX System
+        let pixCheckout = null;
+        
+        // Initialize PIX System
+        function initializePIXSystem() {
+            if (typeof PIXCheckout !== 'undefined') {
+                pixCheckout = new PIXCheckout();
+                console.log('PIX System initialized');
+            } else {
+                console.error('PIXCheckout class not found');
+            }
+        }
+        
+        // Setup PIX only for Brazilian customers
+        function setupPIXForBrazilOnly() {
+            const pixOption = document.getElementById('pix-option');
+            const selectedCountry = localStorage.getItem('selectedCountry');
+            const isTestMode = localStorage.getItem('pixTestMode') === 'true';
+            
+            // Debug logs
+            console.log('🔍 PIX Debug Info:');
+            console.log('Selected Country:', selectedCountry);
+            console.log('Is Test Mode:', isTestMode);
+            console.log('PIX Option Element:', pixOption);
+            
+            // Show PIX for Brazil (BR) OR for explicit test mode (any country)
+            if (selectedCountry === 'BR' || isTestMode) {
+                if (pixOption) {
+                    pixOption.style.display = 'block';
+                    if (isTestMode) {
+                        console.log('🧪 PIX Test Mode enabled');
+                        pixOption.textContent = 'PIX (Test Mode)';
+                    } else {
+                        console.log('🇧🇷 Brazilian customer detected - PIX enabled');
+                        pixOption.textContent = 'PIX';
+                    }
+                } else {
+                    console.error('❌ PIX Option element not found!');
+                }
+            } else {
+                if (pixOption) {
+                    pixOption.style.display = 'none';
+                    console.log('🌍 Non-Brazilian customer - PIX disabled');
+                } else {
+                    console.error('❌ PIX Option element not found!');
+                }
+            }
+        }
+        
+        // Test function for Angolan to enable PIX testing
+        function enablePIXTestMode() {
+            localStorage.setItem('pixTestMode', 'true');
+            setupPIXForBrazilOnly();
+            console.log('🧪 PIX Test Mode enabled for Angolan testing');
+            alert('PIX Test Mode enabled! You can now test PIX functionality.');
+        }
+        
+        // Disable test mode
+        function disablePIXTestMode() {
+            localStorage.removeItem('pixTestMode');
+            setupPIXForBrazilOnly();
+            console.log('🧪 PIX Test Mode disabled');
+            alert('PIX Test Mode disabled. PIX will only show for Brazilian customers.');
+        }
+        
+        // Check current PIX status
+        function checkPIXStatus() {
+            console.log('🔍 PIX Status Check:');
+            console.log('localStorage pixTestMode:', localStorage.getItem('pixTestMode'));
+            console.log('User Language:', navigator.language);
+            console.log('PIX Option Element:', document.getElementById('pix-option'));
+            console.log('PIX Option Display:', document.getElementById('pix-option')?.style.display);
+            console.log('PIX Option Text:', document.getElementById('pix-option')?.textContent);
+        }
+        
+        // Initialize PIX for current order
+        function initializePIXForOrder() {
+            if (!pixCheckout) {
+                console.error('PIX System not initialized');
+                return;
+            }
+            
+            // Get current order data
+            const orderData = getCurrentOrderData();
+            if (!orderData) {
+                console.error('No order data available for PIX');
+                return;
+            }
+            
+            // Initialize PIX with order data
+            pixCheckout.initializePIX(orderData);
+        }
+        
+        // Get current order data for PIX (using summary total like PayPal)
+        function getCurrentOrderData() {
+            // Validate required variables
+            if (!selectedOffers || !Array.isArray(selectedOffers) || selectedOffers.length === 0) {
+                console.error('No offers selected');
+                return null;
+            }
+            
+            // Get total from order summary (same as PayPal logic)
+            const totalElement = document.getElementById('totalAmount');
+            let totalAmount = 0;
+            
+            if (totalElement) {
+                const totalText = totalElement.textContent;
+                totalAmount = parseFloat(totalText.replace(/[^\d.,]/g, '').replace(',', '.'));
+                console.log('💰 PIX using summary total:', totalAmount, currentCurrency);
+                console.log('📊 Summary element text:', totalText);
+            } else {
+                console.warn('⚠️ Total element not found, using fallback calculation');
+                // Fallback to calculation
+                selectedOffers.forEach(offerType => {
+                    if (offers[offerType]) {
+                        const offer = offers[offerType];
+                        const price = offer.prices && offer.prices[currentCurrency] 
+                            ? offer.prices[currentCurrency] 
+                            : offer.price || 0;
+                        totalAmount += price;
+                    }
+                });
+            }
+            
+            if (totalAmount <= 0) {
+                console.error('❌ Invalid total amount:', totalAmount);
+                return null;
+            }
+            
+            // Get product names
+            const products = selectedOffers.map(offerType => {
+                if (offers[offerType]) {
+                    let productName = offers[offerType].name;
+                    
+                    // Se for a oferta básica e há cor selecionada, usar apenas o nome da cor
+                    if (offerType === 'basic' && selectedColor) {
+                        productName = selectedColor.name;
+                    }
+                    
+                    return productName;
+                }
+                return 'Produto';
+            });
+            
+            console.log('✅ PIX Order Data:', {
+                total: totalAmount,
+                currency: currentCurrency,
+                products: products
+            });
+            
+            return {
+                id: 'ORDER_' + Date.now(),
+                products: products,
+                total: totalAmount,
+                currency: currentCurrency,
+                description: products.join(' + ')
+            };
+        }
+        
+        // Handle PIX payment
+        function handlePIXPayment(email, observations) {
+            if (!pixCheckout) {
+                alert('PIX system not available. Please try again.');
+                return;
+            }
+            
+            // Get order data
+            const orderData = getCurrentOrderData();
+            if (!orderData) {
+                alert('Unable to process order. Please try again.');
+                return;
+            }
+            
+            // Add customer information
+            orderData.customer = {
+                email: email,
+                observations: observations
+            };
+            
+            // Initialize PIX payment
+            pixCheckout.initializePIX(orderData);
+            
+            // Show success message
+            alert('PIX payment instructions have been generated! Please complete the payment using the QR Code or Copy & Paste method.');
+        }
+
+        // Load PayPal SDK with correct locale and currency based on user's language
+        function loadPayPalWithCorrectLocale() {
+            // Detect user's language and currency
+            const userLanguage = navigator.language || navigator.userLanguage;
+            console.log('Browser language detected:', userLanguage);
+            let paypalLocale = 'en_US'; // Default to English
+            let paypalCurrency = 'USD'; // Default to USD
+            
+            // Map browser language to PayPal locale and currency
+            if (userLanguage.startsWith('pt')) {
+                if (userLanguage.includes('BR') || userLanguage.includes('br')) {
+                    paypalLocale = 'pt_BR'; // Portuguese Brazil
+                    paypalCurrency = 'BRL'; // Brazilian Real
+                } else if (userLanguage.includes('PT') || userLanguage.includes('pt')) {
+                    paypalLocale = 'pt_PT'; // Portuguese Portugal
+                    paypalCurrency = 'EUR'; // Euro
+                } else {
+                    // Generic Portuguese (Angola, etc.) - use USD
+                    paypalLocale = 'pt_PT'; // Portuguese interface
+                    paypalCurrency = 'USD'; // US Dollar for international Portuguese speakers
+                }
+            } else if (userLanguage.startsWith('en')) {
+                paypalLocale = 'en_US'; // English US
+                paypalCurrency = 'USD'; // US Dollar
+            } else if (userLanguage.startsWith('es')) {
+                paypalLocale = 'es_ES'; // Spanish
+                paypalCurrency = 'EUR'; // Euro for Spain
+            } else if (userLanguage.startsWith('fr')) {
+                paypalLocale = 'fr_FR'; // French
+                paypalCurrency = 'EUR'; // Euro for France
+            } else if (userLanguage.startsWith('de')) {
+                paypalLocale = 'de_DE'; // German
+                paypalCurrency = 'EUR'; // Euro for Germany
+            }
+            
+            // Store globally for use in order creation
+            currentPayPalCurrency = paypalCurrency;
+            currentPayPalLocale = paypalLocale;
+            
+            console.log('Detected language:', userLanguage, 'Using PayPal locale:', paypalLocale, 'Currency:', paypalCurrency);
+            
+            // Load PayPal SDK with correct locale and currency
+            const script = document.createElement('script');
+            script.src = `https://www.paypal.com/sdk/js?client-id=Ab2ftZVJCplquKwOY1cWgvWMivADwMhbUs-OhehwO4hVh_VW9lS87qLkRUVD39yEeoh7YGXzBeuq1Dlh&currency=${paypalCurrency}&intent=capture&locale=${paypalLocale}&enable-funding=venmo,card&disable-funding=credit`;
+            script.async = true;
+            script.defer = true;
+            script.onload = function() {
+                console.log('PayPal SDK loaded with locale:', paypalLocale, 'and currency:', paypalCurrency);
+                setTimeout(initializePayPal, 500); // Small delay to ensure SDK is ready
+            };
+            script.onerror = function() {
+                console.error('Failed to load PayPal SDK');
+                // Try with a simpler URL
+                console.log('Retrying with simpler PayPal SDK URL...');
+                const retryScript = document.createElement('script');
+                retryScript.src = 'https://www.paypal.com/sdk/js?client-id=Ab2ftZVJCplquKwOY1cWgvWMivADwMhbUs-OhehwO4hVh_VW9lS87qLkRUVD39yEeoh7YGXzBeuq1Dlh&currency=USD&intent=capture';
+                retryScript.async = true;
+                retryScript.defer = true;
+                retryScript.onload = function() {
+                    console.log('PayPal SDK loaded with fallback URL');
+                    setTimeout(initializePayPal, 500);
+                };
+                retryScript.onerror = function() {
+                    console.error('PayPal SDK failed to load even with fallback URL');
+                };
+                document.head.appendChild(retryScript);
+            };
+            document.head.appendChild(script);
+        }
+
+        // Initialize payment method control, PayPal, PIX and other systems
         document.addEventListener('DOMContentLoaded', function() {
             setupPaymentMethodControl();
-            initializePayPal();
+            loadPayPalWithCorrectLocale();
+            initializePIXSystem();
+            setupPIXForBrazilOnly();
+            initializeBeforeAfterSlider();
+            
+            // Add test functions to global scope for console testing
+            window.enablePIXTestMode = enablePIXTestMode;
+            window.disablePIXTestMode = disablePIXTestMode;
+            window.checkPIXStatus = checkPIXStatus;
+            window.testPIX = function() {
+                console.log('🧪 PIX Test Functions Available:');
+                console.log('enablePIXTestMode() - Enable PIX for Angolan testing');
+                console.log('disablePIXTestMode() - Disable PIX test mode');
+                console.log('checkPIXStatus() - Check current PIX status');
+                console.log('Current test mode:', localStorage.getItem('pixTestMode'));
+            };
+            
+            // Show test info in console
+            console.log('🧪 PIX Test Mode Available!');
+            console.log('Type: testPIX() for available functions');
         });
+
+        // Before & After Slider functionality
+        function initializeBeforeAfterSlider() {
+            const slider = document.getElementById('beforeAfterSlider');
+            const handle = document.getElementById('sliderHandle');
+            const line = document.getElementById('sliderLine');
+            const beforeImage = document.getElementById('beforeImage');
+            const afterImage = document.getElementById('afterImage');
+            
+            if (!slider || !handle || !line || !beforeImage || !afterImage) {
+                console.log('Before & After Slider elements not found');
+                return;
+            }
+            
+            let isDragging = false;
+            let startX = 0;
+            let currentX = 0;
+            
+            // Set initial position (50%)
+            const initialPosition = 50;
+            updateSliderPosition(initialPosition);
+            
+            // Mouse events
+            handle.addEventListener('mousedown', startDrag);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+            
+            // Touch events for mobile
+            handle.addEventListener('touchstart', startDrag);
+            document.addEventListener('touchmove', drag);
+            document.addEventListener('touchend', stopDrag);
+            
+            // Click on slider to move handle
+            slider.addEventListener('click', function(e) {
+                if (!isDragging) {
+                    const rect = slider.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const percentage = (x / rect.width) * 100;
+                    updateSliderPosition(Math.max(0, Math.min(100, percentage)));
+                }
+            });
+            
+            function startDrag(e) {
+                isDragging = true;
+                startX = e.clientX || e.touches[0].clientX;
+                handle.style.cursor = 'grabbing';
+                e.preventDefault();
+            }
+            
+            function drag(e) {
+                if (!isDragging) return;
+                
+                currentX = e.clientX || e.touches[0].clientX;
+                const rect = slider.getBoundingClientRect();
+                const x = currentX - rect.left;
+                const percentage = (x / rect.width) * 100;
+                
+                updateSliderPosition(Math.max(0, Math.min(100, percentage)));
+                e.preventDefault();
+            }
+            
+            function stopDrag() {
+                isDragging = false;
+                handle.style.cursor = 'grab';
+            }
+            
+            function updateSliderPosition(percentage) {
+                // Update handle position
+                handle.style.left = percentage + '%';
+                line.style.left = percentage + '%';
+                
+                // Update before image clip (right side)
+                beforeImage.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+                
+                // Update after image clip (left side)
+                afterImage.style.clipPath = `inset(0 0 0 ${percentage}%)`;
+            }
+            
+            console.log('Before & After Slider initialized successfully');
+        }
 
         // PayPal integration
         function initializePayPal() {
-            // Wait for PayPal SDK to be loaded
+            console.log('PayPal SDK loaded, initializing buttons...');
+            console.log('Current PayPal Locale:', currentPayPalLocale);
+            console.log('Current PayPal Currency:', currentPayPalCurrency);
+            
+            // Check if PayPal SDK is available
             if (typeof paypal === 'undefined') {
-                console.log('PayPal SDK not loaded yet, retrying...');
-                setTimeout(initializePayPal, 100);
+                console.error('PayPal SDK is not available');
                 return;
             }
 
-            console.log('PayPal SDK loaded, initializing buttons...');
+            // Clear any existing buttons
+            const paypalContainer = document.getElementById('paypal-payment-button');
+            if (paypalContainer) {
+                paypalContainer.innerHTML = '';
+            }
 
         paypal.Buttons({
+            locale: currentPayPalLocale,
+            style: {
+                locale: currentPayPalLocale,
+                color: 'gold',
+                shape: 'rect',
+                label: 'paypal'
+            },
             createOrder: function(data, actions) {
                     return new Promise((resolve, reject) => {
                         try {
@@ -3594,7 +4234,7 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     purchase_units: [{
                         amount: {
                             value: totalAmount.toFixed(2),
-                                        currency_code: 'USD'
+                                        currency_code: currentPayPalCurrency
                                     },
                                     description: productNames || 'PHOERA Foundation Products'
                                 }]
@@ -3655,13 +4295,19 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
             const observations = document.getElementById('observations').value;
 
             if (!email || !paymentMethod) {
-                alert('Por favor, preencha o email e selecione uma forma de pagamento.');
+                alert('Please fill in your email and select a payment method.');
                 return;
             }
             
-            // Validar se a oferta básica está selecionada e se uma cor foi escolhida
+            // Handle PIX payment differently
+            if (paymentMethod === 'pix') {
+                handlePIXPayment(email, observations);
+                return;
+            }
+            
+            // Validar se uma cor foi escolhida para a oferta básica
             if (selectedOffers.includes('basic') && !selectedColor) {
-                alert('Por favor, selecione uma cor/tonalidade para a base PHOERA Foundation.');
+                alert('Please select a color/shade for the foundation.');
                 return;
             }
             
@@ -3690,23 +4336,64 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                 date: new Date().toISOString()
             };
             
-            // Save order
+            // Map order for supplier (AliExpress)
+            let mappedOrder = null;
+            if (typeof mapProductOrder === 'function') {
+                try {
+                    // Prepare order data for mapping
+                    const mappingOrderData = {
+                        id: orderData.id,
+                        customer: orderData.customer,
+                        items: orderData.products.map(product => ({
+                            productId: 'phoera_foundation',
+                            name: product.name,
+                            variation: product.selectedColor ? {
+                                type: 'color',
+                                value: product.selectedColor.name,
+                                displayName: product.selectedColor.name
+                            } : null,
+                            quantity: 1,
+                            unitPrice: product.totalPrice,
+                            totalPrice: product.totalPrice
+                        })),
+                        total: orderData.total,
+                        date: orderData.date
+                    };
+                    
+                    // Map the order
+                    mappedOrder = mapProductOrder(mappingOrderData);
+                    console.log('Pedido mapeado para fornecedor:', mappedOrder);
+                } catch (error) {
+                    console.error('Erro ao mapear pedido:', error);
+                }
+            }
+            
+            // Save original order
             let orders = JSON.parse(localStorage.getItem('orders') || '[]');
             orders.push(orderData);
             localStorage.setItem('orders', JSON.stringify(orders));
             
+            // Save mapped order to dashboardData for dashboard synchronization
+            let dashboardData = JSON.parse(localStorage.getItem('dashboardData') || '{}');
+            if (!dashboardData.orders) dashboardData.orders = [];
+            
+            // Use mapped order if available, otherwise use original
+            const orderToSave = mappedOrder || orderData;
+            dashboardData.orders.push(orderToSave);
+            localStorage.setItem('dashboardData', JSON.stringify(dashboardData));
+            
             // Show specific message based on payment method
-            let successMessage = `Pedido realizado com sucesso!\n\nProdutos: ${orderData.products.map(p => p.name).join(' + ')}\nTotal: ${formatPrice(orderData.total)}\n\n`;
+            let successMessage = `Order placed successfully!\n\nProducts: ${orderData.products.map(p => p.name).join(' + ')}\nTotal: ${formatPrice(orderData.total)}\n\n`;
             
             switch(paymentMethod) {
                 case 'paypal':
-                    successMessage += 'O pagamento via PayPal foi processado. Você receberá um email de confirmação em breve.';
+                    successMessage += 'PayPal payment has been processed. You will receive a confirmation email shortly.';
                     break;
                 case 'pix':
-                    successMessage += 'Você receberá as instruções de pagamento PIX por email. Após o pagamento, seu pedido será processado.';
+                    successMessage += 'You will receive PIX payment instructions by email. After payment, your order will be processed.';
                     break;
                 default:
-                    successMessage += 'Você receberá um email de confirmação em breve.';
+                    successMessage += 'You will receive a confirmation email shortly.';
             }
             
             alert(successMessage);
@@ -3757,34 +4444,32 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                             console.log('Using default US location');
                         }
                     } else {
-                        try {
-                            const response = await fetch('https://ipapi.co/json/', { 
-                                timeout: 5000,
-                                mode: 'cors'
-                            });
-                            if (response.ok) {
-                                const data = await response.json();
-                                countryCode = data.country_code;
-                                console.log('Location detected via ipapi.co:', countryCode);
-                            }
-                        } catch (e) {
-                            console.log('ipapi.co failed, trying alternative...');
-                        }
+                        // Use ONLY browser language - NO IP detection
+                        const browserLang = navigator.language || navigator.userLanguage;
+                        console.log('🌍 Browser language detected:', browserLang);
                         
-                        if (!countryCode) {
-                            try {
-                                const response = await fetch('https://ipinfo.io/json', { 
-                                    timeout: 5000,
-                                    mode: 'cors'
-                                });
-                                if (response.ok) {
-                                    const data = await response.json();
-                                    countryCode = data.country;
-                                    console.log('Location detected via ipinfo.io:', countryCode);
-                                }
-                            } catch (e) {
-                                console.log('ipinfo.io also failed');
-                            }
+                        // Set language and currency based ONLY on browser language
+                        if (browserLang.startsWith('pt-PT') || browserLang.startsWith('pt_PT')) {
+                            this.userLanguage = 'pt';
+                            this.userCountry = 'PT';
+                            this.userCurrency = 'EUR';
+                            console.log('🇵🇹 Portuguese (Portugal) detected → EUR');
+                        } else if (browserLang.startsWith('pt-BR') || browserLang.startsWith('pt_BR')) {
+                            this.userLanguage = 'pt';
+                            this.userCountry = 'BR';
+                            this.userCurrency = 'BRL';
+                            console.log('🇧🇷 Portuguese (Brazil) detected → BRL');
+                        } else if (browserLang.startsWith('pt')) {
+                            // Generic Portuguese - default to USD (for Angola and other Portuguese-speaking countries)
+                            this.userLanguage = 'pt';
+                            this.userCountry = 'AO'; // Angola
+                            this.userCurrency = 'USD';
+                            console.log('🇦🇴 Generic Portuguese detected → USD (Angola/International)');
+                        } else {
+                            this.userLanguage = 'en';
+                            this.userCountry = 'US';
+                            this.userCurrency = 'USD';
+                            console.log('🇺🇸 English detected → USD');
                         }
                     }
                     
@@ -3793,7 +4478,7 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     const countryToCurrency = {
                         'BR': 'BRL',
                         'US': 'USD', 'CA': 'USD', 'MX': 'USD', 'AR': 'USD', 'CL': 'USD', 'CO': 'USD', 'PE': 'USD', 'UY': 'USD', 'BO': 'USD', 'PY': 'USD', 'VE': 'USD', 'EC': 'USD', 'GY': 'USD', 'SR': 'USD', 'GF': 'USD', 'FK': 'USD', 'BZ': 'USD', 'GT': 'USD', 'HN': 'USD', 'SV': 'USD', 'NI': 'USD', 'CR': 'USD', 'PA': 'USD', 'CU': 'USD', 'JM': 'USD', 'HT': 'USD', 'DO': 'USD', 'PR': 'USD', 'VI': 'USD', 'AG': 'USD', 'BB': 'USD', 'DM': 'USD', 'GD': 'USD', 'KN': 'USD', 'LC': 'USD', 'VC': 'USD', 'TT': 'USD', 'BS': 'USD', 'AU': 'USD', 'NZ': 'USD', 'JP': 'USD', 'KR': 'USD', 'SG': 'USD', 'HK': 'USD', 'TW': 'USD', 'TH': 'USD', 'MY': 'USD', 'ID': 'USD', 'PH': 'USD', 'VN': 'USD', 'IN': 'USD', 'PK': 'USD', 'BD': 'USD', 'LK': 'USD', 'MM': 'USD', 'KH': 'USD', 'LA': 'USD', 'BN': 'USD', 'FJ': 'USD', 'PG': 'USD', 'SB': 'USD', 'VU': 'USD', 'NC': 'USD', 'PF': 'USD', 'WS': 'USD', 'TO': 'USD', 'KI': 'USD', 'TV': 'USD', 'NR': 'USD', 'MH': 'USD', 'FM': 'USD', 'PW': 'USD', 'AS': 'USD', 'GU': 'USD', 'MP': 'USD', 'CK': 'USD', 'NU': 'USD', 'TK': 'USD', 'WF': 'USD', 'NF': 'USD', 'PN': 'USD', 'GS': 'USD', 'SH': 'USD', 'AC': 'USD', 'TA': 'USD', 'IO': 'USD', 'CX': 'USD', 'CC': 'USD', 'HM': 'USD', 'AQ': 'USD', 'BV': 'USD', 'TF': 'USD', 'UM': 'USD',
-                        'DE': 'EUR', 'FR': 'EUR', 'IT': 'EUR', 'ES': 'EUR', 'NL': 'EUR', 'BE': 'EUR', 'AT': 'EUR', 'PT': 'EUR', 'IE': 'EUR', 'FI': 'EUR', 'GR': 'EUR', 'LU': 'EUR', 'MT': 'EUR', 'CY': 'EUR', 'SK': 'EUR', 'SI': 'EUR', 'EE': 'EUR', 'LV': 'EUR', 'LT': 'EUR', 'AD': 'EUR', 'MC': 'EUR', 'SM': 'EUR', 'VA': 'EUR', 'ME': 'EUR', 'XK': 'EUR'
+                        'DE': 'USD', 'FR': 'USD', 'IT': 'USD', 'ES': 'USD', 'NL': 'USD', 'BE': 'USD', 'AT': 'USD', 'PT': 'BRL', 'IE': 'USD', 'FI': 'USD', 'GR': 'USD', 'LU': 'USD', 'MT': 'USD', 'CY': 'USD', 'SK': 'USD', 'SI': 'USD', 'EE': 'USD', 'LV': 'USD', 'LT': 'USD', 'AD': 'USD', 'MC': 'USD', 'SM': 'USD', 'VA': 'USD', 'ME': 'USD', 'XK': 'USD'
                     };
                     
                     this.userCurrency = countryToCurrency[this.userCountry] || 'USD';
@@ -3807,86 +4492,93 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
             }
             
             translateContent(contentKey) {
+                // Detect user language
+                const browserLang = navigator.language || navigator.userLanguage;
+                const userLanguage = browserLang.startsWith('pt') ? 'pt' : 'en';
+                // Portuguese speakers (Brazil, Portugal, etc.) get BRL translations
+                const languageKey = userLanguage === 'pt' ? 'BRL' : 'USD';
+                
+                console.log(`🌍 Translating ${contentKey}: userLanguage=${userLanguage}, languageKey=${languageKey}`);
+                
                 const translations = {
                     'checkout_title': {
                         'USD': 'Checkout',
-                        'BRL': 'Finalizar Compra',
-                        'EUR': 'Checkout'
+                        'BRL': 'Finalizar Compra'
                     },
                     'product_info': {
                         'USD': 'Product Information',
                         'BRL': 'Informações do Produto',
-                        'EUR': 'Product Information'
+                        'EUR': 'Informações do Produto'
                     },
                     'customer_info': {
                         'USD': 'Customer Information',
                         'BRL': 'Informações do Cliente',
-                        'EUR': 'Customer Information'
+                        'EUR': 'Informações do Cliente'
                     },
                     'payment_info': {
                         'USD': 'Payment Information',
                         'BRL': 'Informações de Pagamento',
-                        'EUR': 'Payment Information'
+                        'EUR': 'Informações de Pagamento'
                     },
                     'order_summary': {
                         'USD': 'Order Summary',
                         'BRL': 'Resumo do Pedido',
-                        'EUR': 'Order Summary'
+                        'EUR': 'Resumo do Pedido'
                     },
                     'first_name': {
                         'USD': 'First Name',
                         'BRL': 'Nome',
-                        'EUR': 'First Name'
+                        'EUR': 'Nome'
                     },
                     'last_name': {
                         'USD': 'Last Name',
                         'BRL': 'Sobrenome',
-                        'EUR': 'Last Name'
+                        'EUR': 'Sobrenome'
                     },
                     'email': {
                         'USD': 'Email',
                         'BRL': 'E-mail',
-                        'EUR': 'Email'
+                        'EUR': 'E-mail'
                     },
                     'phone': {
                         'USD': 'Phone',
                         'BRL': 'Telefone',
-                        'EUR': 'Phone'
+                        'EUR': 'Telefone'
                     },
                     'address': {
                         'USD': 'Address',
                         'BRL': 'Endereço',
-                        'EUR': 'Address'
+                        'EUR': 'Endereço'
                     },
                     'city': {
                         'USD': 'City',
                         'BRL': 'Cidade',
-                        'EUR': 'City'
+                        'EUR': 'Cidade'
                     },
                     'state': {
                         'USD': 'State',
                         'BRL': 'Estado',
-                        'EUR': 'State'
+                        'EUR': 'Estado'
                     },
                     'zip_code': {
                         'USD': 'Zip Code',
                         'BRL': 'CEP',
-                        'EUR': 'Zip Code'
+                        'EUR': 'CEP'
                     },
                     'country': {
                         'USD': 'Country',
                         'BRL': 'País',
-                        'EUR': 'Country'
+                        'EUR': 'País'
                     },
                     'payment_method': {
                         'USD': 'Payment Method',
                         'BRL': 'Método de Pagamento',
-                        'EUR': 'Payment Method'
+                        'EUR': 'Método de Pagamento'
                     },
                     'observations': {
                         'USD': 'Observations',
                         'BRL': 'Observações',
-                        'EUR': 'Observations'
+                        'EUR': 'Observações'
                     },
                     'total': {
                         'USD': 'Total',
@@ -3896,17 +4588,147 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     'checkout_button': {
                         'USD': 'Complete Purchase',
                         'BRL': 'Finalizar Compra',
-                        'EUR': 'Complete Purchase'
+                        'EUR': 'Finalizar Compra'
                     },
                     'required_fields': {
                         'USD': 'Please fill in all required fields.',
                         'BRL': 'Por favor, preencha todos os campos obrigatórios.',
-                        'EUR': 'Please fill in all required fields.'
+                        'EUR': 'Por favor, preencha todos os campos obrigatórios.'
                     },
                     'order_success': {
                         'USD': 'Order completed successfully!',
                         'BRL': 'Pedido realizado com sucesso!',
-                        'EUR': 'Order completed successfully!'
+                        'EUR': 'Pedido realizado com sucesso!'
+                    },
+                    // Product name translations
+                    'product_phoera_foundation': {
+                        'USD': 'Foundation 2-Pack',
+                        'BRL': 'Kit 2 Bases PHOERA',
+                        'EUR': 'Kit 2 Bases PHOERA'
+                    },
+                    // Color choice translations
+                    'choice_102_nude': {
+                        'USD': 'Nude',
+                        'BRL': 'Nude',
+                        'EUR': 'Nude'
+                    },
+                    'choice_103_warm_peach': {
+                        'USD': 'Warm Peach',
+                        'BRL': 'Pêssego Quente',
+                        'EUR': 'Pêssego Quente'
+                    },
+                    'choice_104_buff_beige': {
+                        'USD': 'Buff Beige',
+                        'BRL': 'Bege Suave',
+                        'EUR': 'Bege Suave'
+                    },
+                    'choice_105_sand': {
+                        'USD': 'Sand',
+                        'BRL': 'Areia',
+                        'EUR': 'Areia'
+                    },
+                    'choice_108_tan': {
+                        'USD': 'Tan',
+                        'BRL': 'Bronzeado',
+                        'EUR': 'Bronzeado'
+                    },
+                    'choice_109_mocha': {
+                        'USD': 'Mocha',
+                        'BRL': 'Mocha',
+                        'EUR': 'Mocha'
+                    },
+                    'choice_warm_peach': {
+                        'USD': 'Warm Peach',
+                        'BRL': 'Pêssego Quente',
+                        'EUR': 'Warm Peach'
+                    },
+                    'choice_warm_sun': {
+                        'USD': 'Warm Sun',
+                        'BRL': 'Sol Quente',
+                        'EUR': 'Sol Quente'
+                    },
+                    // Combination choice translations
+                    'choice_101_101': {
+                        'USD': 'Porcelain + Porcelain',
+                        'BRL': 'Porcelana + Porcelana',
+                        'EUR': 'Porcelana + Porcelana'
+                    },
+                    'choice_101_102': {
+                        'USD': 'Porcelain + Nude',
+                        'BRL': 'Porcelana + Nude',
+                        'EUR': 'Porcelana + Nude'
+                    },
+                    'choice_102_104': {
+                        'USD': 'Nude + Buff Beige',
+                        'BRL': 'Nude + Bege Suave',
+                        'EUR': 'Nude + Bege Suave'
+                    },
+                    'choice_102_103': {
+                        'USD': 'Nude + Warm Peach',
+                        'BRL': 'Nude + Pêssego Quente',
+                        'EUR': 'Nude + Pêssego Quente'
+                    },
+                    'choice_103_104': {
+                        'USD': 'Warm Peach + Buff Beige',
+                        'BRL': 'Pêssego Quente + Bege Suave',
+                        'EUR': 'Pêssego Quente + Bege Suave'
+                    },
+                    'choice_104_105': {
+                        'USD': 'Buff Beige + Sand',
+                        'BRL': 'Bege Suave + Areia',
+                        'EUR': 'Bege Suave + Areia'
+                    },
+                    'choice_105_106': {
+                        'USD': 'Sand + Warm Sun',
+                        'BRL': 'Areia + Sol Quente',
+                        'EUR': 'Areia + Sol Quente'
+                    },
+                    'choice_108_109': {
+                        'USD': 'Tan + Mocha',
+                        'BRL': 'Bronzeado + Mocha',
+                        'EUR': 'Bronzeado + Mocha'
+                    },
+                    // Offer interface translations
+                    'choose_offer': {
+                        'USD': 'Choose Your Offer',
+                        'BRL': 'Choose Your Offer',
+                        'EUR': 'Choose Your Offer'
+                    },
+                    'basic_offer': {
+                        'USD': 'Basic Offer',
+                        'BRL': 'Oferta Básica',
+                        'EUR': 'Oferta Básica'
+                    },
+                    'premium_offer': {
+                        'USD': 'Premium Offer',
+                        'BRL': 'Oferta Premium',
+                        'EUR': 'Oferta Premium'
+                    },
+                    'choose_color': {
+                        'USD': 'Choose Color',
+                        'BRL': 'Choose Color',
+                        'EUR': 'Choose Color'
+                    },
+                    'discount_badge': {
+                        'USD': '50% OFF',
+                        'BRL': '50% DESCONTO',
+                        'EUR': '50% OFF'
+                    },
+                    // Offer descriptions
+                    'offer_basic_description': {
+                        'USD': 'Foundation failing in the middle of the day? With 2 PHOERA units you guarantee high coverage, natural finish and flawless skin for much longer.',
+                        'BRL': 'Base falhando no meio do dia? Com 2 unidades da PHOERA você garante alta cobertura, acabamento natural e pele impecável por muito mais tempo.',
+                        'EUR': 'Foundation failing in the middle of the day? With 2 PHOERA units you guarantee high coverage, natural finish and flawless skin for much longer.'
+                    },
+                    'offer_premium_description': {
+                        'USD': 'Tired of brushes that shed bristles or leave your makeup streaky? The 8pcs Makeup Brush kit brings soft and precise brushes to apply foundation, powder, eyeshadow and blush with professional finish every day.',
+                        'BRL': 'Chega de sofrer com pincéis que soltam cerdas ou deixam a make manchada. O Kit 8 Pincéis de Maquiagem traz pincéis macios e precisos para aplicar base, pó, sombra e blush com acabamento profissional todos os dias.',
+                        'EUR': 'Tired of brushes that shed bristles or leave your makeup streaky? The 8pcs Makeup Brush kit brings soft and precise brushes to apply foundation, powder, eyeshadow and blush with professional finish every day.'
+                    },
+                    'offer_complete_description': {
+                        'USD': 'Tired of makeup that cracks, runs or doesn\'t last all day? The 2 Pack PHOERA Primer prepares the skin, closes pores and ensures a smooth, even base for flawless, long-lasting makeup.',
+                        'BRL': 'Cansada da maquiagem que craquela, escorre ou não dura o dia todo? O Kit 2 Primers PHOERA prepara a pele, fecha os poros e garante uma base lisa e uniforme para uma make impecável e de longa duração.',
+                        'EUR': 'Tired of makeup that cracks, runs or doesn\'t last all day? The 2 Pack PHOERA Primer prepares the skin, closes pores and ensures a smooth, even base for flawless, long-lasting makeup.'
                     },
                     'confirmation_email': {
                         'USD': 'You will receive a confirmation email shortly.',
@@ -3916,7 +4738,7 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                 };
                 
                 return translations[contentKey] ? 
-                    translations[contentKey][this.userCurrency] || 
+                    translations[contentKey][languageKey] || 
                     translations[contentKey]['USD'] : 
                     contentKey;
             }
@@ -3981,6 +4803,44 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
                     const checkoutButton = document.querySelector('button[onclick="processCheckout()"]');
                     if (checkoutButton) checkoutButton.textContent = this.translateContent('checkout_button');
                     
+                    // Update product title
+                    const productTitle = document.querySelector('h3[data-translate-key="product_phoera_foundation"]');
+                    if (productTitle) productTitle.textContent = this.translateContent('product_phoera_foundation');
+                    
+                    // Update offer elements
+                    const chooseOfferTitle = document.querySelector('h3[data-translate-key="choose_offer"]');
+                    if (chooseOfferTitle) {
+                        chooseOfferTitle.innerHTML = `<i class="fas fa-gift"></i> ${this.translateContent('choose_offer')}`;
+                    }
+                    
+                    const offerProductTitle = document.querySelector('h4[data-translate-key="product_phoera_foundation"]');
+                    if (offerProductTitle) offerProductTitle.textContent = this.translateContent('product_phoera_foundation');
+                    
+                    const discountBadge = document.querySelector('.discount[data-translate-key="discount_badge"]');
+                    if (discountBadge) discountBadge.textContent = this.translateContent('discount_badge');
+                    
+                    const offerDescription = document.querySelector('.description[data-translate-key="offer_basic_description"]');
+                    if (offerDescription) offerDescription.textContent = this.translateContent('offer_basic_description');
+                    
+                    const premiumDescription = document.querySelector('.description[data-translate-key="offer_premium_description"]');
+                    if (premiumDescription) premiumDescription.textContent = this.translateContent('offer_premium_description');
+                    
+                    const completeDescription = document.querySelector('.description[data-translate-key="offer_complete_description"]');
+                    if (completeDescription) completeDescription.textContent = this.translateContent('offer_complete_description');
+                    
+                    // Update order summary title
+                    const orderSummaryTitle = document.querySelector('span[data-translate-key="order_summary"]');
+                    if (orderSummaryTitle) orderSummaryTitle.textContent = this.translateContent('order_summary');
+                    
+                    // Update color choice labels
+                    const colorChoices = document.querySelectorAll('.small-checkbox-label[data-translate-key]');
+                    colorChoices.forEach(choice => {
+                        const translateKey = choice.getAttribute('data-translate-key');
+                        if (translateKey) {
+                            choice.textContent = this.translateContent(translateKey);
+                        }
+                    });
+                    
                     console.log('Checkout page content updated successfully');
                     
                 } catch (error) {
@@ -3989,11 +4849,73 @@ Overall, if you can find the right shade and have a good setting powder/spray, t
             }
         }
         
-        // Initialize checkout translator when page loads
+        // Sistema CheckoutTranslator removido - usando sistema global unificado
+        
+        // Payment method control
+        function setupPaymentMethodControl() {
+            const paymentMethodSelect = document.getElementById('paymentMethod');
+            const paypalButton = document.getElementById('paypal-payment-button');
+            const pixInfo = document.getElementById('pix-payment-info');
+            
+            if (paymentMethodSelect) {
+                paymentMethodSelect.addEventListener('change', function() {
+                    const selectedMethod = this.value;
+                    
+                    // Hide all payment options first
+                    if (paypalButton) paypalButton.style.display = 'none';
+                    if (pixInfo) pixInfo.style.display = 'none';
+                    
+                    // Show selected payment method
+                    switch(selectedMethod) {
+                        case 'paypal':
+                            if (paypalButton) paypalButton.style.display = 'block';
+                            break;
+                        case 'pix':
+                            if (pixInfo) pixInfo.style.display = 'block';
+                            initializePIXForOrder();
+                            break;
+                    }
+                });
+            }
+        }
+        
+        // Process checkout function
+        function processCheckout() {
+            const email = document.getElementById('email').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const observations = document.getElementById('observations').value;
+
+            if (!email || !paymentMethod) {
+                alert('Please fill in email and select a payment method.');
+                return;
+            }
+            
+            // Handle PIX payment
+            if (paymentMethod === 'pix') {
+                handlePIXPayment(email, observations);
+                return;
+            }
+            
+            // Handle other payment methods
+            alert('Payment method not implemented yet.');
+        }
+        
+
+        // Initialize PIX system when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            new CheckoutTranslator();
+            setupPaymentMethodControl();
+            initializePIXSystem();
+            setupPIXForBrazilOnly();
         });
     </script>
+    
+    <!-- Footer Copyright -->
+    <footer style="text-align: center; padding: 20px; background: #f8f9fa; border-top: 1px solid #e9ecef; margin-top: 40px;">
+        <p style="color: #666; font-size: 14px; margin: 0;">
+            © 2025 67 Beauty Hub - All rights reserved
+        </p>
+    </footer>
+
 
 </body>
 </html>

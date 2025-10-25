@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Comportamento de Mudança de Idioma</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .step { margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background: #f9f9f9; }
+        .step h3 { margin-top: 0; color: #333; }
+        .code { background: #f4f4f4; padding: 10px; border-radius: 5px; font-family: monospace; margin: 10px 0; }
+        .result { background: #e8f5e8; padding: 10px; border-radius: 5px; margin: 10px 0; }
+        .warning { background: #fff3cd; padding: 10px; border-radius: 5px; margin: 10px 0; }
+        select { padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin: 5px; font-size: 16px; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        .simulation { background: #f0f8ff; padding: 15px; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Comportamento de Mudança de Idioma - Beauty Store</h1>
+        
+        <div class="step">
+            <h3>📋 Passo 1: Usuário Seleciona País/Idioma</h3>
+            <div class="simulation">
+                <label>Selecione um país:</label>
+                <select id="countrySelector" onchange="simulateChangeCountry(this.value)">
+                    <option value="BR">🇧🇷 Brasil (R$)</option>
+                    <option value="PT">🇵🇹 Portugal (€)</option>
+                    <option value="US">🇺🇸 United States ($)</option>
+                </select>
+                <button onclick="showCurrentState()">🔍 Ver Estado Atual</button>
+            </div>
+        </div>
+        
+        <div class="step">
+            <h3>⚙️ Passo 2: O que acontece internamente</h3>
+            <div id="internal-process"></div>
+        </div>
+        
+        <div class="step">
+            <h3>💾 Passo 3: localStorage é atualizado</h3>
+            <div id="localstorage-status"></div>
+        </div>
+        
+        <div class="step">
+            <h3>🔄 Passo 4: Página é recarregada</h3>
+            <div id="reload-status"></div>
+        </div>
+        
+        <div class="step">
+            <h3>🌍 Passo 5: Novo idioma é aplicado</h3>
+            <div id="translation-status"></div>
+        </div>
+        
+        <div class="step">
+            <h3>📊 Logs do Console</h3>
+            <div id="console-logs"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simular a função changeCountry da beauty store
+        function simulateChangeCountry(countryCode) {
+            console.log('🌍 [SIMULAÇÃO] Mudando país para:', countryCode);
+            
+            // Passo 1: Salvar seleção no localStorage
+            localStorage.setItem('selectedCountry', countryCode);
+            
+            // Passo 2: Mapear país para idioma e moeda
+            const countryInfo = {
+                'BR': { language: 'pt-BR', currency: 'BRL', country: 'BR' },
+                'PT': { language: 'pt-PT', currency: 'EUR', country: 'PT' },
+                'US': { language: 'en-US', currency: 'USD', country: 'US' }
+            };
+            
+            const info = countryInfo[countryCode] || countryInfo['US'];
+            
+            // Passo 3: Atualizar localStorage com informações de idioma e moeda
+            localStorage.setItem('userLanguage', info.language);
+            localStorage.setItem('userCurrency', info.currency);
+            localStorage.setItem('userCountry', info.country);
+            
+            console.log('🌍 [SIMULAÇÃO] Configurações atualizadas:', info);
+            
+            // Passo 4: Aplicar traduções manualmente (antes do reload)
+            setTimeout(() => {
+                applyManualTranslations();
+            }, 100);
+            
+            // Passo 5: Simular reload da página
+            setTimeout(() => {
+                simulatePageReload();
+            }, 500);
+            
+            // Mostrar processo interno
+            showInternalProcess(countryCode, info);
+        }
+        
+        // Mostrar o processo interno
+        function showInternalProcess(countryCode, info) {
+            const process = `
+                <div class="code">
+                    <strong>1. changeCountry('${countryCode}') é chamada</strong><br>
+                    <strong>2. localStorage.setItem('selectedCountry', '${countryCode}')</strong><br>
+                    <strong>3. Mapeamento de país para idioma:</strong><br>
+                    &nbsp;&nbsp;• País: ${info.country}<br>
+                    &nbsp;&nbsp;• Idioma: ${info.language}<br>
+                    &nbsp;&nbsp;• Moeda: ${info.currency}<br>
+                    <strong>4. localStorage atualizado com:</strong><br>
+                    &nbsp;&nbsp;• userLanguage: '${info.language}'<br>
+                    &nbsp;&nbsp;• userCurrency: '${info.currency}'<br>
+                    &nbsp;&nbsp;• userCountry: '${info.country}'<br>
+                    <strong>5. applyManualTranslations() é chamada</strong><br>
+                    <strong>6. window.location.reload() é executada</strong>
+                </div>
+            `;
+            
+            document.getElementById('internal-process').innerHTML = process;
+        }
+        
+        // Simular aplicação de traduções manuais
+        function applyManualTranslations() {
+            const selectedCountry = localStorage.getItem('selectedCountry') || 'US';
+            const userLanguage = localStorage.getItem('userLanguage') || 'en-US';
+            
+            console.log('🔧 [SIMULAÇÃO] Aplicando traduções manuais para:', userLanguage);
+            
+            // Traduções básicas para demonstração
+            const translations = {
+                'en-US': {
+                    'product_foundation_title': '2 Pack PHOERA Foundation',
+                    'btn_buy_now': 'Buy Now',
+                    'newsletter_title': 'Stay updated with the latest news!'
+                },
+                'pt-BR': {
+                    'product_foundation_title': 'Kit 2 Bases PHOERA',
+                    'btn_buy_now': 'Comprar Agora',
+                    'newsletter_title': 'Fique por dentro das novidades!'
+                },
+                'pt-PT': {
+                    'product_foundation_title': 'Kit 2 Bases PHOERA',
+                    'btn_buy_now': 'Comprar Agora',
+                    'newsletter_title': 'Fique por dentro das novidades!'
+                }
+            };
+            
+            const currentTranslations = translations[userLanguage] || translations['en-US'];
+            
+            console.log('🔧 [SIMULAÇÃO] Traduções aplicadas:', currentTranslations);
+            
+            // Mostrar status das traduções
+            showTranslationStatus(userLanguage, currentTranslations);
+        }
+        
+        // Mostrar status das traduções
+        function showTranslationStatus(userLanguage, translations) {
+            const status = `
+                <div class="result">
+                    <strong>✅ Traduções aplicadas para: ${userLanguage}</strong><br>
+                    <strong>📝 Elementos traduzidos:</strong><br>
+                    ${Object.keys(translations).map(key => 
+                        `• ${key}: "${translations[key]}"`
+                    ).join('<br>')}
+                </div>
+            `;
+            
+            document.getElementById('translation-status').innerHTML = status;
+        }
+        
+        // Simular reload da página
+        function simulatePageReload() {
+            console.log('🔄 [SIMULAÇÃO] Página sendo recarregada...');
+            
+            const reloadStatus = `
+                <div class="warning">
+                    <strong>🔄 Página sendo recarregada...</strong><br>
+                    <strong>📄 language-controller.js será carregado novamente</strong><br>
+                    <strong>🌍 detectUserLanguage() lerá o localStorage</strong><br>
+                    <strong>📚 loadTranslationFile() carregará o arquivo correto</strong><br>
+                    <strong>🎯 applyCurrentPageTranslations() aplicará as traduções</strong>
+                </div>
+            `;
+            
+            document.getElementById('reload-status').innerHTML = reloadStatus;
+            
+            // Simular o que acontece após o reload
+            setTimeout(() => {
+                simulateAfterReload();
+            }, 1000);
+        }
+        
+        // Simular o que acontece após o reload
+        function simulateAfterReload() {
+            const userLanguage = localStorage.getItem('userLanguage') || 'en-US';
+            const selectedCountry = localStorage.getItem('selectedCountry') || 'US';
+            const userCurrency = localStorage.getItem('userCurrency') || 'USD';
+            
+            const afterReload = `
+                <div class="result">
+                    <strong>✅ Após o reload:</strong><br>
+                    <strong>🌍 Idioma detectado:</strong> ${userLanguage}<br>
+                    <strong>🏳️ País selecionado:</strong> ${selectedCountry}<br>
+                    <strong>💰 Moeda:</strong> ${userCurrency}<br>
+                    <strong>📚 Arquivo de tradução carregado:</strong> translation-${userLanguage.replace('-', '-')}.js<br>
+                    <strong>🎯 Traduções aplicadas:</strong> Todos os elementos com data-translate-key
+                </div>
+            `;
+            
+            document.getElementById('reload-status').innerHTML = afterReload;
+        }
+        
+        // Mostrar estado atual
+        function showCurrentState() {
+            const userLanguage = localStorage.getItem('userLanguage') || 'en-US';
+            const selectedCountry = localStorage.getItem('selectedCountry') || 'US';
+            const userCurrency = localStorage.getItem('userCurrency') || 'USD';
+            
+            const status = `
+                <div class="result">
+                    <strong>📊 Estado Atual do localStorage:</strong><br>
+                    <strong>🌍 userLanguage:</strong> ${userLanguage}<br>
+                    <strong>🏳️ selectedCountry:</strong> ${selectedCountry}<br>
+                    <strong>💰 userCurrency:</strong> ${userCurrency}
+                </div>
+            `;
+            
+            document.getElementById('localstorage-status').innerHTML = status;
+        }
+        
+        // Capturar logs do console
+        function captureConsoleLogs() {
+            const originalLog = console.log;
+            const logs = [];
+            
+            console.log = function(...args) {
+                logs.push(args.join(' '));
+                originalLog.apply(console, args);
+            };
+            
+            // Mostrar logs capturados
+            setInterval(() => {
+                if (logs.length > 0) {
+                    const logHtml = logs.slice(-5).map(log => `<div style="background: #f0f0f0; padding: 5px; margin: 2px 0; border-radius: 3px; font-family: monospace; font-size: 12px;">${log}</div>`).join('');
+                    document.getElementById('console-logs').innerHTML = logHtml;
+                }
+            }, 1000);
+        }
+        
+        // Inicializar
+        window.addEventListener('load', () => {
+            showCurrentState();
+            captureConsoleLogs();
+            
+            // Mostrar processo inicial
+            document.getElementById('internal-process').innerHTML = `
+                <div class="warning">
+                    <strong>⏳ Aguardando seleção de país...</strong><br>
+                    Selecione um país no dropdown acima para ver o processo completo.
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

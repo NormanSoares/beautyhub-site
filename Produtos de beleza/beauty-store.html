@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seção Beleza - 67 Beauty Hub</title>
+    <title data-translate-key="page_title">Seção Beleza - 67 Beauty Hub</title>
     <link rel="stylesheet" href="../styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="../js/modal-system.js"></script>
+    <script src="../js/language-controller.js"></script>
+    <script src="../js/language-controller.js"></script>
     
     <style>
         body {
@@ -15,9 +17,39 @@
             overflow-x: hidden;
             scroll-behavior: smooth;
             position: relative;
-        }
-        
-        /* User Authentication Styles */
+         }
+         
+         /* Country/Currency Selector Styles */
+         .country-selector {
+             margin-right: 20px;
+         }
+
+         .country-selector select {
+             padding: 8px 12px;
+             border: 2px solid #d4af37;
+             border-radius: 6px;
+             background: white;
+             color: #333;
+             font-size: 14px;
+             font-weight: 500;
+             cursor: pointer;
+             transition: all 0.3s ease;
+             outline: none;
+             min-width: 150px;
+         }
+
+         .country-selector select:hover {
+             border-color: #b8941f;
+             transform: translateY(-1px);
+             box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+         }
+
+         .country-selector select:focus {
+             border-color: #d4af37;
+             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+         }
+         
+         /* User Authentication Styles */
         .user-auth {
             display: flex;
             align-items: center;
@@ -636,8 +668,8 @@
     
     <!-- Beauty Header -->
     <div class="beauty-header">
-        <h1><i class="fas fa-sparkles"></i> Seção Beleza</h1>
-        <p>Descubra os melhores produtos de beleza e maquiagem para realçar sua naturalidade</p>
+         <h1 data-translate-key="beauty_section_title"><i class="fas fa-sparkles"></i> Seção Beleza</h1>
+         <p data-translate-key="beauty_section_subtitle">Descubra os melhores produtos de beleza e maquiagem para realçar sua naturalidade</p>
     </div>
 
     <!-- Beauty Navigation -->
@@ -647,19 +679,28 @@
                 <img src="../Logo.png" alt="67 Beauty Hub" style="height: 40px; margin-right: 10px;">
                 <span style="font-weight: 700; color: #d4af37;">67 BEAUTY HUB</span>
             </div>
-            <div class="beauty-nav-links">
-                <a href="../index.html"><i class="fas fa-home"></i> Início</a>
-                <a href="../Produtos de conforto/comfort-store.html"><i class="fas fa-couch"></i> Seção Conforto</a>
-                <a href="#features"><i class="fas fa-star"></i> Benefícios</a>
-            </div>
+             <div class="beauty-nav-links">
+                 <a href="../index.html" data-translate-key="nav_home"><i class="fas fa-home"></i> Início</a>
+                 <a href="../Produtos de conforto/comfort-store.html" data-translate-key="nav_comfort_section"><i class="fas fa-couch"></i> Seção Conforto</a>
+                 <a href="#features" data-translate-key="nav_benefits"><i class="fas fa-star"></i> Benefícios</a>
+             </div>
             
-            
-            <!-- User Authentication Section -->
-            <div class="user-auth" id="userAuthSection">
+              
+              <!-- Country/Language Selector -->
+              <div class="country-selector">
+                  <select id="countrySelector" onchange="changeCountry(this.value)">
+                      <option value="BR">🇧🇷 <span data-translate-key="country_brazil">Brasil</span> (R$)</option>
+                      <option value="PT">🇵🇹 <span data-translate-key="country_portugal">Portugal</span> (€)</option>
+                      <option value="US">🇺🇸 <span data-translate-key="country_usa">United States</span> ($)</option>
+                  </select>
+              </div>
+              
+              <!-- User Authentication Section -->
+              <div class="user-auth" id="userAuthSection">
                 <!-- Login/Register buttons (shown when not logged in) -->
                 <div class="auth-buttons" id="authButtons">
                     <button class="auth-btn login-btn" onclick="openSimpleLoginModal()">
-                        <i class="fas fa-sign-in-alt"></i> Logar
+                        <i class="fas fa-sign-in-alt"></i> <span data-translate-key="login">Logar</span>
                     </button>
                 </div>
                 
@@ -798,35 +839,35 @@
     <!-- Features Section -->
     <div class="features-section" id="features">
         <div class="features-container">
-            <h2 class="features-title">Por que escolher nossa Seção Beleza?</h2>
+             <h2 class="features-title" data-translate-key="features_title">Por que escolher nossa Seção Beleza?</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-gem"></i>
                     </div>
-                    <h3 class="feature-title">Produtos Premium</h3>
-                    <p class="feature-description">Selecionamos apenas os melhores produtos de beleza do mercado para garantir qualidade excepcional.</p>
+                     <h3 class="feature-title" data-translate-key="premium_products">Produtos Premium</h3>
+                     <p class="feature-description" data-translate-key="premium_products_desc">Selecionamos apenas os melhores produtos de beleza do mercado para garantir qualidade excepcional.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-shipping-fast"></i>
                     </div>
-                    <h3 class="feature-title">Entrega Rápida</h3>
-                    <p class="feature-description">Frete grátis para todo o Brasil com entrega em 15-25 dias úteis. Rastreamento completo.</p>
+                     <h3 class="feature-title" data-translate-key="fast_delivery">Entrega Rápida</h3>
+                     <p class="feature-description" data-translate-key="fast_delivery_desc">Frete grátis para todo o Brasil com entrega em 15-25 dias úteis. Rastreamento completo.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3 class="feature-title">Garantia Total</h3>
-                    <p class="feature-description">30 dias de garantia em todos os produtos. Satisfação garantida ou seu dinheiro de volta.</p>
+                     <h3 class="feature-title" data-translate-key="total_guarantee">Garantia Total</h3>
+                     <p class="feature-description" data-translate-key="total_guarantee_desc">30 dias de garantia em todos os produtos. Satisfação garantida ou seu dinheiro de volta.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-user-md"></i>
                     </div>
-                    <h3 class="feature-title">Aprovado por Especialistas</h3>
-                    <p class="feature-description">Produtos testados e aprovados por profissionais de beleza e dermatologistas.</p>
+                     <h3 class="feature-title" data-translate-key="expert_approved">Aprovado por Especialistas</h3>
+                     <p class="feature-description" data-translate-key="expert_approved_desc">Produtos testados e aprovados por profissionais de beleza e dermatologistas.</p>
                 </div>
             </div>
         </div>
@@ -867,7 +908,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2024 67 Beauty Hub - Seção Beleza. Todos os direitos reservados.</p>
+         <p data-translate-key="footer_text">&copy; 2024 67 Beauty Hub - Seção Beleza. Todos os direitos reservados.</p>
     </footer>
 
     <script>
@@ -1086,9 +1127,58 @@
             });
         }
 
-        // Currency Detection and Conversion System
-        class CurrencyConverter {
-            constructor() {
+         // Sistema de tradução automático via language-controller.js
+         document.addEventListener('DOMContentLoaded', function() {
+             console.log('🌍 Sistema de tradução automático ativo via language-controller.js');
+             
+             // Inicializar seletor de país
+             initializeCountrySelector();
+         });
+         
+         // Função para inicializar o seletor de país
+         function initializeCountrySelector() {
+             const savedCountry = localStorage.getItem('selectedCountry');
+             const countrySelector = document.getElementById('countrySelector');
+             
+             if (countrySelector && savedCountry) {
+                 countrySelector.value = savedCountry;
+                 console.log('🌍 Seletor de país inicializado com:', savedCountry);
+             } else if (countrySelector) {
+                 // Se não há preferência salva, usar Brasil como padrão
+                 countrySelector.value = 'BR';
+                 console.log('🌍 Seletor de país inicializado com padrão: BR');
+             }
+         }
+         
+         // Função para mudar país (igual à Comfort Store)
+         function changeCountry(countryCode) {
+             console.log('🌍 Changing country to:', countryCode);
+             
+             // Save selection to localStorage
+             localStorage.setItem('selectedCountry', countryCode);
+             
+             // Update language and currency based on country
+             const countryInfo = {
+                 'BR': { language: 'pt-BR', currency: 'BRL', country: 'BR' },
+                 'PT': { language: 'pt-PT', currency: 'EUR', country: 'PT' },
+                 'US': { language: 'en-US', currency: 'USD', country: 'US' }
+             };
+             
+             const info = countryInfo[countryCode] || countryInfo['US'];
+             
+             // Update localStorage with language and currency info
+             localStorage.setItem('userLanguage', info.language);
+             localStorage.setItem('userCurrency', info.currency);
+             localStorage.setItem('userCountry', info.country);
+             
+             console.log('🌍 Updated language settings:', info);
+             
+             // Reload page to apply changes
+             window.location.reload();
+         }
+    </script>
+</body>
+</html>
                 this.baseCurrency = 'USD';
                 this.exchangeRates = {
                     'USD': 1.00,

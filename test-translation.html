@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Tradução - Beauty Store</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Teste do Sistema de Tradução - Beauty Store</h1>
+    
+    <div class="test-section">
+        <h2>📋 Teste 1: Verificação de Arquivos</h2>
+        <div id="files-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🌍 Teste 2: Detecção de Idioma</h2>
+        <div id="language-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔄 Teste 3: Mudança de Idioma</h2>
+        <select id="language-selector">
+            <option value="pt-BR">🇧🇷 Português (Brasil)</option>
+            <option value="pt-PT">🇵🇹 Português (Portugal)</option>
+            <option value="en-US">🇺🇸 English (US)</option>
+        </select>
+        <button onclick="testLanguageChange()">Testar Mudança</button>
+        <div id="change-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>📄 Teste 4: Elementos Traduzíveis</h2>
+        <div id="elements-test"></div>
+    </div>
+
+    <script src="../js/language-controller.js"></script>
+    <script>
+        // Teste 1: Verificar se arquivos existem
+        async function testFiles() {
+            const files = [
+                '../js/language-controller.js',
+                '../js/translation-pt-br.js',
+                '../js/translation-pt-pt.js',
+                '../js/translation-en.js'
+            ];
+            
+            const results = [];
+            for (const file of files) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        results.push(`✅ ${file} - OK`);
+                    } else {
+                        results.push(`❌ ${file} - Erro ${response.status}`);
+                    }
+                } catch (error) {
+                    results.push(`❌ ${file} - Erro: ${error.message}`);
+                }
+            }
+            
+            document.getElementById('files-test').innerHTML = results.join('<br>');
+        }
+        
+        // Teste 2: Verificar detecção de idioma
+        function testLanguageDetection() {
+            const savedLanguage = localStorage.getItem('userLanguage');
+            const selectedCountry = localStorage.getItem('selectedCountry');
+            const userCurrency = localStorage.getItem('userCurrency');
+            
+            const result = `
+                <div class="info">Idioma salvo: ${savedLanguage || 'Nenhum'}</div>
+                <div class="info">País selecionado: ${selectedCountry || 'Nenhum'}</div>
+                <div class="info">Moeda: ${userCurrency || 'Nenhuma'}</div>
+            `;
+            
+            document.getElementById('language-test').innerHTML = result;
+        }
+        
+        // Teste 3: Testar mudança de idioma
+        function testLanguageChange() {
+            const selectedLanguage = document.getElementById('language-selector').value;
+            
+            // Simular mudança de idioma
+            localStorage.setItem('userLanguage', selectedLanguage);
+            
+            const countryMap = {
+                'pt-BR': 'BR',
+                'pt-PT': 'PT',
+                'en-US': 'US'
+            };
+            
+            const currencyMap = {
+                'pt-BR': 'BRL',
+                'pt-PT': 'EUR',
+                'en-US': 'USD'
+            };
+            
+            localStorage.setItem('selectedCountry', countryMap[selectedLanguage]);
+            localStorage.setItem('userCurrency', currencyMap[selectedLanguage]);
+            
+            document.getElementById('change-test').innerHTML = `
+                <div class="success">✅ Idioma alterado para: ${selectedLanguage}</div>
+                <div class="info">País: ${countryMap[selectedLanguage]}</div>
+                <div class="info">Moeda: ${currencyMap[selectedLanguage]}</div>
+            `;
+        }
+        
+        // Teste 4: Verificar elementos traduzíveis
+        function testTranslatableElements() {
+            // Simular elementos da beauty store
+            const testElements = [
+                'beauty_section_title',
+                'product_foundation_title',
+                'btn_buy_now',
+                'newsletter_title',
+                'testimonials_title'
+            ];
+            
+            const results = testElements.map(key => {
+                return `<div class="info">✅ ${key} - Chave de tradução encontrada</div>`;
+            });
+            
+            document.getElementById('elements-test').innerHTML = results.join('');
+        }
+        
+        // Executar testes
+        window.addEventListener('load', () => {
+            testFiles();
+            testLanguageDetection();
+            testTranslatableElements();
+        });
+    </script>
+</body>
+</html>

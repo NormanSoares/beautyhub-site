@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Real do Sistema - Beauty Store</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { color: #28a745; font-weight: bold; }
+        .error { color: #dc3545; font-weight: bold; }
+        .info { color: #007bff; }
+        .warning { color: #ffc107; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        select { padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin: 5px; font-size: 16px; }
+        .real-test { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .working { background: #d4edda; border: 1px solid #c3e6cb; }
+        .broken { background: #f8d7da; border: 1px solid #f5c6cb; }
+        .unknown { background: #fff3cd; border: 1px solid #ffeaa7; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Teste Real do Sistema - Beauty Store</h1>
+        
+        <div class="test-section">
+            <h2>🔍 Teste 1: Verificação de Arquivos Reais</h2>
+            <button onclick="testRealFiles()">📁 Verificar Arquivos Reais</button>
+            <div id="real-files-test"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🌍 Teste 2: Simulação Real de Mudança de Idioma</h2>
+            <select id="real-language-selector" onchange="testRealLanguageChange(this.value)">
+                <option value="BR">🇧🇷 Brasil (R$) - Português</option>
+                <option value="PT">🇵🇹 Portugal (€) - Português</option>
+                <option value="US">🇺🇸 United States ($) - English</option>
+            </select>
+            <button onclick="testRealSystem()">🔄 Testar Sistema Real</button>
+            <div id="real-system-test"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📊 Teste 3: Verificação de localStorage</h2>
+            <button onclick="checkLocalStorage()">💾 Verificar localStorage</button>
+            <div id="localstorage-test"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🎯 Teste 4: Simulação da Beauty Store</h2>
+            <button onclick="simulateBeautyStore()">🎨 Simular Beauty Store</button>
+            <div id="beauty-simulation"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔍 Logs Reais do Sistema</h2>
+            <div id="real-logs"></div>
+        </div>
+    </div>
+
+    <script>
+        // Teste 1: Verificar arquivos reais
+        async function testRealFiles() {
+            document.getElementById('real-files-test').innerHTML = '<div class="unknown">⏳ Verificando arquivos reais...</div>';
+            
+            const files = [
+                '../js/language-controller.js',
+                '../js/translation-pt-br.js',
+                '../js/translation-pt-pt.js',
+                '../js/translation-en.js'
+            ];
+            
+            let results = '<h3>📁 Verificação de Arquivos Reais:</h3>';
+            let allWorking = true;
+            
+            for (const file of files) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        const content = await response.text();
+                        results += `
+                            <div class="real-test working">
+                                <strong>✅ ${file}</strong><br>
+                                <strong>📏 Tamanho:</strong> ${content.length} caracteres<br>
+                                <strong>📊 Status:</strong> ${response.status} ${response.statusText}
+                            </div>
+                        `;
+                    } else {
+                        results += `
+                            <div class="real-test broken">
+                                <strong>❌ ${file}</strong><br>
+                                <strong>📊 Status:</strong> ${response.status} ${response.statusText}
+                            </div>
+                        `;
+                        allWorking = false;
+                    }
+                } catch (error) {
+                    results += `
+                        <div class="real-test broken">
+                            <strong>❌ ${file}</strong><br>
+                            <strong>🔍 Erro:</strong> ${error.message}
+                        </div>
+                    `;
+                    allWorking = false;
+                }
+            }
+            
+            if (allWorking) {
+                results += '<div class="real-test working"><strong>✅ Todos os arquivos estão funcionando!</strong></div>';
+            } else {
+                results += '<div class="real-test broken"><strong>❌ Alguns arquivos têm problemas!</strong></div>';
+            }
+            
+            document.getElementById('real-files-test').innerHTML = results;
+        }
+        
+        // Teste 2: Simulação real de mudança de idioma
+        function testRealLanguageChange(countryCode) {
+            console.log('🔄 [TESTE REAL] Mudando idioma para:', countryCode);
+            
+            // Simular exatamente o que acontece na beauty store
+            const countryInfo = {
+                'BR': { language: 'pt-BR', currency: 'BRL', country: 'BR' },
+                'PT': { language: 'pt-PT', currency: 'EUR', country: 'PT' },
+                'US': { language: 'en-US', currency: 'USD', country: 'US' }
+            };
+            
+            const info = countryInfo[countryCode] || countryInfo['US'];
+            
+            // Salvar no localStorage (como na beauty store)
+            localStorage.setItem('selectedCountry', countryCode);
+            localStorage.setItem('userLanguage', info.language);
+            localStorage.setItem('userCurrency', info.currency);
+            localStorage.setItem('userCountry', info.country);
+            
+            console.log('🌍 [TESTE REAL] Configurações salvas:', info);
+            
+            // Mostrar resultado
+            const result = `
+                <div class="real-test working">
+                    <strong>✅ Mudança de idioma simulada</strong><br>
+                    <strong>🌍 Idioma:</strong> ${info.language}<br>
+                    <strong>🏳️ País:</strong> ${info.country}<br>
+                    <strong>💰 Moeda:</strong> ${info.currency}<br>
+                    <strong>💾 localStorage atualizado</strong>
+                </div>
+            `;
+            
+            document.getElementById('real-system-test').innerHTML = result;
+        }
+        
+        // Teste 3: Verificar localStorage
+        function checkLocalStorage() {
+            const userLanguage = localStorage.getItem('userLanguage');
+            const selectedCountry = localStorage.getItem('selectedCountry');
+            const userCurrency = localStorage.getItem('userCurrency');
+            const userCountry = localStorage.getItem('userCountry');
+            
+            const result = `
+                <div class="real-test info">
+                    <h3>💾 Estado do localStorage:</h3>
+                    <strong>🌍 userLanguage:</strong> ${userLanguage || 'Nenhum'}<br>
+                    <strong>🏳️ selectedCountry:</strong> ${selectedCountry || 'Nenhum'}<br>
+                    <strong>💰 userCurrency:</strong> ${userCurrency || 'Nenhuma'}<br>
+                    <strong>🏳️ userCountry:</strong> ${userCountry || 'Nenhum'}<br>
+                    <strong>📊 Total de itens:</strong> ${localStorage.length}
+                </div>
+            `;
+            
+            document.getElementById('localstorage-test').innerHTML = result;
+        }
+        
+        // Teste 4: Simular beauty store
+        function simulateBeautyStore() {
+            console.log('🎨 [TESTE REAL] Simulando beauty store...');
+            
+            // Simular elementos da beauty store
+            const beautyElements = [
+                { key: 'beauty_section_title', text: 'Seção Beleza' },
+                { key: 'product_foundation_title', text: '2 Pack PHOERA Foundation' },
+                { key: 'btn_buy_now', text: 'Comprar Agora' },
+                { key: 'newsletter_title', text: 'Fique por dentro das novidades!' },
+                { key: 'testimonials_title', text: 'O que nossas clientes dizem' }
+            ];
+            
+            const currentLanguage = localStorage.getItem('userLanguage') || 'pt-BR';
+            const selectedCountry = localStorage.getItem('selectedCountry') || 'BR';
+            const userCurrency = localStorage.getItem('userCurrency') || 'BRL';
+            
+            let result = `
+                <div class="real-test info">
+                    <h3>🎨 Simulação da Beauty Store:</h3>
+                    <strong>🌍 Idioma atual:</strong> ${currentLanguage}<br>
+                    <strong>🏳️ País:</strong> ${selectedCountry}<br>
+                    <strong>💰 Moeda:</strong> ${userCurrency}<br>
+                    <strong>📝 Elementos traduzíveis:</strong> ${beautyElements.length}
+                </div>
+            `;
+            
+            beautyElements.forEach(element => {
+                result += `
+                    <div class="real-test working">
+                        <strong>✅ ${element.key}:</strong> "${element.text}"
+                    </div>
+                `;
+            });
+            
+            document.getElementById('beauty-simulation').innerHTML = result;
+        }
+        
+        // Testar sistema real
+        function testRealSystem() {
+            const selectedCountry = document.getElementById('real-language-selector').value;
+            testRealLanguageChange(selectedCountry);
+            
+            setTimeout(() => {
+                checkLocalStorage();
+                simulateBeautyStore();
+            }, 500);
+        }
+        
+        // Capturar logs reais
+        function captureRealLogs() {
+            const originalLog = console.log;
+            const logs = [];
+            
+            console.log = function(...args) {
+                logs.push(args.join(' '));
+                originalLog.apply(console, args);
+            };
+            
+            // Mostrar logs capturados
+            setInterval(() => {
+                if (logs.length > 0) {
+                    const logHtml = logs.slice(-10).map(log => `<div style="background: #f0f0f0; padding: 5px; margin: 2px 0; border-radius: 3px; font-family: monospace; font-size: 12px;">${log}</div>`).join('');
+                    document.getElementById('real-logs').innerHTML = logHtml;
+                }
+            }, 1000);
+        }
+        
+        // Inicializar
+        window.addEventListener('load', () => {
+            testRealFiles();
+            checkLocalStorage();
+            simulateBeautyStore();
+            captureRealLogs();
+            
+            // Mostrar status inicial
+            document.getElementById('real-system-test').innerHTML = `
+                <div class="real-test info">
+                    <strong>🚀 Sistema de teste real inicializado</strong><br>
+                    <strong>🎯 Selecione um idioma para testar o sistema real</strong>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

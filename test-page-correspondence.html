@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Correspondência Página vs Idioma</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { color: #28a745; font-weight: bold; }
+        .error { color: #dc3545; font-weight: bold; }
+        .info { color: #007bff; }
+        .warning { color: #ffc107; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        select { padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin: 5px; font-size: 16px; }
+        .correspondence-test { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .match { background: #d4edda; border: 1px solid #c3e6cb; }
+        .mismatch { background: #f8d7da; border: 1px solid #f5c6cb; }
+        .element-test { background: #fff3cd; border: 1px solid #ffeaa7; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #f2f2f2; }
+        .beauty-elements { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin: 20px 0; }
+        .element-card { background: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Teste de Correspondência Página vs Idioma</h1>
+        
+        <div class="test-section">
+            <h2>🎯 Simulação do Selector da Beauty Store</h2>
+            <div class="correspondence-test">
+                <label>Selecione um país/idioma:</label>
+                <select id="countrySelector" onchange="simulateLanguageChange(this.value)">
+                    <option value="BR">🇧🇷 Brasil (R$) - Português</option>
+                    <option value="PT">🇵🇹 Portugal (€) - Português</option>
+                    <option value="US">🇺🇸 United States ($) - English</option>
+                </select>
+                <button onclick="testCurrentCorrespondence()">🔍 Verificar Correspondência Atual</button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📊 Teste de Correspondência de Elementos</h2>
+            <div id="correspondence-results"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🎨 Simulação dos Elementos da Beauty Store</h2>
+            <div class="beauty-elements">
+                <div class="element-card">
+                    <h3>🏷️ Título da Seção</h3>
+                    <div id="beauty-section-title" data-translate-key="beauty_section_title">Seção Beleza</div>
+                </div>
+                <div class="element-card">
+                    <h3>🛍️ Produto 1</h3>
+                    <div id="product-foundation-title" data-translate-key="product_foundation_title">2 Pack PHOERA Foundation</div>
+                    <div id="product-foundation-desc" data-translate-key="product_foundation_desc">Elimine manchas, olheiras e imperfeições com cobertura total que dura 12+ horas.</div>
+                    <div id="btn-buy-now-1" data-translate-key="btn_buy_now">Comprar Agora</div>
+                </div>
+                <div class="element-card">
+                    <h3>🛍️ Produto 2</h3>
+                    <div id="product-clips-title" data-translate-key="product_clips_title">Alligator Hair Clips</div>
+                    <div id="product-clips-desc" data-translate-key="product_clips_desc">Pare de perder grampos que quebram. Estes não escorregam, não quebram e seguram qualquer penteado firme.</div>
+                    <div id="btn-buy-now-2" data-translate-key="btn_buy_now">Comprar Agora</div>
+                </div>
+                <div class="element-card">
+                    <h3>📧 Newsletter</h3>
+                    <div id="newsletter-title" data-translate-key="newsletter_title">Fique por dentro das novidades!</div>
+                    <div id="newsletter-desc" data-translate-key="newsletter_description">Receba ofertas exclusivas e dicas de beleza direto no seu e-mail</div>
+                </div>
+                <div class="element-card">
+                    <h3>💬 Depoimentos</h3>
+                    <div id="testimonials-title" data-translate-key="testimonials_title">O que nossas clientes dizem</div>
+                    <div id="testimonial-1" data-translate-key="testimonial_1">"É minha base absoluta favorita, já comprei várias vezes!"</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔍 Logs de Correspondência</h2>
+            <div id="correspondence-logs"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simular as traduções da beauty store
+        const translations = {
+            'pt-BR': {
+                'beauty_section_title': 'Seção Beleza',
+                'product_foundation_title': 'Kit 2 Bases PHOERA',
+                'product_foundation_desc': 'Elimine manchas, olheiras e imperfeições com cobertura total que dura 12+ horas. Acabamento matte que não derrete no calor. Kit com 2 bases + extras.',
+                'product_clips_title': 'Grampos de Cabelo Jacaré',
+                'product_clips_desc': 'Pare de perder grampos que quebram. Estes não escorregam, não quebram e seguram qualquer penteado firme. Kit com 6 peças em tons nude.',
+                'btn_buy_now': 'Comprar Agora',
+                'newsletter_title': 'Fique por dentro das novidades!',
+                'newsletter_description': 'Receba ofertas exclusivas e dicas de beleza direto no seu e-mail',
+                'testimonials_title': 'O que nossas clientes dizem',
+                'testimonial_1': '"É minha base absoluta favorita, já comprei várias vezes! Me apaixonei na primeira vez que usei, e não comprei uma base diferente desde então! É super leve mas com cobertura total, acabamento matte, e juro que dá um look aerografado! Minha pele parece que nem tem muita maquiagem!"'
+            },
+            'pt-PT': {
+                'beauty_section_title': 'Secção Beleza',
+                'product_foundation_title': 'Kit 2 Bases PHOERA',
+                'product_foundation_desc': 'Elimine manchas, olheiras e imperfeições com cobertura total que dura 12+ horas. Acabamento matte que não derrete no calor. Kit com 2 bases + extras.',
+                'product_clips_title': 'Grampos de Cabelo Jacaré',
+                'product_clips_desc': 'Pare de perder grampos que quebram. Estes não escorregam, não quebram e seguram qualquer penteado firme. Kit com 6 peças em tons nude.',
+                'btn_buy_now': 'Comprar Agora',
+                'newsletter_title': 'Fique por dentro das novidades!',
+                'newsletter_description': 'Receba ofertas exclusivas e dicas de beleza direto no seu e-mail',
+                'testimonials_title': 'O que as nossas clientes dizem',
+                'testimonial_1': '"É a minha base absoluta favorita, já comprei várias vezes! Apaixonei-me na primeira vez que usei, e não comprei uma base diferente desde então! É super leve mas com cobertura total, acabamento matte, e juro que dá um look aerografado! A minha pele parece que nem tem muita maquilhagem!"'
+            },
+            'en-US': {
+                'beauty_section_title': 'Beauty Section',
+                'product_foundation_title': '2 Pack PHOERA Foundation',
+                'product_foundation_desc': 'Eliminate spots, dark circles and imperfections with full coverage that lasts 12+ hours. Matte finish that doesn\'t melt in heat. Kit with 2 foundations + extras.',
+                'product_clips_title': 'Alligator Hair Clips',
+                'product_clips_desc': 'Stop losing clips that break. These don\'t slip, don\'t break and hold any hairstyle firm. Kit with 6 pieces in nude tones.',
+                'btn_buy_now': 'Buy Now',
+                'newsletter_title': 'Stay updated with the latest news!',
+                'newsletter_description': 'Receive exclusive offers and beauty tips directly in your email',
+                'testimonials_title': 'What our customers say',
+                'testimonial_1': '"It\'s my absolute favorite foundation, I\'ve bought it several times! I fell in love the first time I used it, and I haven\'t bought a different foundation since then! It\'s super light but with full coverage, matte finish, and I swear it gives an airbrushed look! My skin looks like it doesn\'t even have much makeup!"'
+            }
+        };
+        
+        // Simular mudança de idioma
+        function simulateLanguageChange(countryCode) {
+            console.log('🔄 [SIMULAÇÃO] Mudando idioma para:', countryCode);
+            
+            // Mapear país para idioma
+            const languageMap = {
+                'BR': 'pt-BR',
+                'PT': 'pt-PT',
+                'US': 'en-US'
+            };
+            
+            const language = languageMap[countryCode];
+            
+            // Salvar no localStorage (como na beauty store)
+            localStorage.setItem('selectedCountry', countryCode);
+            localStorage.setItem('userLanguage', language);
+            
+            // Aplicar traduções
+            applyTranslations(language);
+            
+            // Verificar correspondência
+            setTimeout(() => {
+                testCorrespondence(language);
+            }, 500);
+        }
+        
+        // Aplicar traduções aos elementos
+        function applyTranslations(language) {
+            const currentTranslations = translations[language] || translations['en-US'];
+            
+            console.log('🌍 [SIMULAÇÃO] Aplicando traduções para:', language);
+            
+            // Aplicar traduções aos elementos
+            Object.keys(currentTranslations).forEach(key => {
+                const elements = document.querySelectorAll(`[data-translate-key="${key}"]`);
+                elements.forEach(element => {
+                    element.textContent = currentTranslations[key];
+                    console.log(`✅ Traduzido ${key}: "${currentTranslations[key]}"`);
+                });
+            });
+        }
+        
+        // Testar correspondência
+        function testCorrespondence(language) {
+            const currentTranslations = translations[language] || translations['en-US'];
+            const results = [];
+            
+            console.log('🔍 [SIMULAÇÃO] Testando correspondência para:', language);
+            
+            // Verificar cada elemento
+            Object.keys(currentTranslations).forEach(key => {
+                const elements = document.querySelectorAll(`[data-translate-key="${key}"]`);
+                elements.forEach(element => {
+                    const expectedText = currentTranslations[key];
+                    const actualText = element.textContent;
+                    const matches = actualText === expectedText;
+                    
+                    results.push({
+                        key: key,
+                        expected: expectedText,
+                        actual: actualText,
+                        matches: matches
+                    });
+                    
+                    console.log(`${matches ? '✅' : '❌'} ${key}: "${actualText}" ${matches ? '=' : '≠'} "${expectedText}"`);
+                });
+            });
+            
+            // Mostrar resultados
+            showCorrespondenceResults(results, language);
+        }
+        
+        // Mostrar resultados da correspondência
+        function showCorrespondenceResults(results, language) {
+            const totalElements = results.length;
+            const matchingElements = results.filter(r => r.matches).length;
+            const mismatchingElements = results.filter(r => !r.matches).length;
+            
+            let html = `
+                <div class="correspondence-test">
+                    <h3>📊 Resultados da Correspondência - ${language}</h3>
+                    <div class="info">
+                        <strong>📈 Total de elementos:</strong> ${totalElements}<br>
+                        <strong>✅ Correspondentes:</strong> ${matchingElements}<br>
+                        <strong>❌ Não correspondentes:</strong> ${mismatchingElements}<br>
+                        <strong>📊 Taxa de correspondência:</strong> ${((matchingElements / totalElements) * 100).toFixed(1)}%
+                    </div>
+                </div>
+            `;
+            
+            // Mostrar detalhes de cada elemento
+            results.forEach(result => {
+                const statusClass = result.matches ? 'match' : 'mismatch';
+                html += `
+                    <div class="element-test ${statusClass}">
+                        <strong>${result.matches ? '✅' : '❌'} ${result.key}</strong><br>
+                        <strong>Esperado:</strong> "${result.expected}"<br>
+                        <strong>Atual:</strong> "${result.actual}"<br>
+                        <strong>Status:</strong> ${result.matches ? 'Corresponde' : 'NÃO corresponde'}
+                    </div>
+                `;
+            });
+            
+            document.getElementById('correspondence-results').innerHTML = html;
+        }
+        
+        // Testar correspondência atual
+        function testCurrentCorrespondence() {
+            const selectedCountry = document.getElementById('countrySelector').value;
+            const languageMap = {
+                'BR': 'pt-BR',
+                'PT': 'pt-PT',
+                'US': 'en-US'
+            };
+            
+            const language = languageMap[selectedCountry];
+            testCorrespondence(language);
+        }
+        
+        // Capturar logs de correspondência
+        function captureCorrespondenceLogs() {
+            const originalLog = console.log;
+            const logs = [];
+            
+            console.log = function(...args) {
+                logs.push(args.join(' '));
+                originalLog.apply(console, args);
+            };
+            
+            // Mostrar logs capturados
+            setInterval(() => {
+                if (logs.length > 0) {
+                    const logHtml = logs.slice(-10).map(log => `<div style="background: #f0f0f0; padding: 5px; margin: 2px 0; border-radius: 3px; font-family: monospace; font-size: 12px;">${log}</div>`).join('');
+                    document.getElementById('correspondence-logs').innerHTML = logHtml;
+                }
+            }, 1000);
+        }
+        
+        // Inicializar
+        window.addEventListener('load', () => {
+            // Aplicar traduções iniciais
+            applyTranslations('pt-BR');
+            testCorrespondence('pt-BR');
+            captureCorrespondenceLogs();
+            
+            // Mostrar status inicial
+            document.getElementById('correspondence-results').innerHTML = `
+                <div class="correspondence-test">
+                    <h3>🚀 Sistema de Teste Inicializado</h3>
+                    <div class="info">
+                        <strong>🌍 Idioma inicial:</strong> Português (Brasil)<br>
+                        <strong>🎯 Selecione um idioma no dropdown para testar a correspondência</strong>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

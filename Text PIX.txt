@@ -1,0 +1,11 @@
+// Ativar modo teste PIX
+enablePIXTestMode()
+
+// Desativar modo teste PIX  
+disablePIXTestMode()
+
+// Verificar status do PIX
+checkPIXStatus()
+
+// Ver todos os comandos disponíveis
+testPIX()

@@ -1,0 +1,91 @@
+{
+  "products": {
+    "1005008851251479": {
+      "name": "8pcs Makeup Brush Kit",
+      "aliexpress_url": "https://pt.aliexpress.com/item/1005008851251479.html",
+      "expected_data": {
+        "price_range": {
+          "min": 1.0,
+          "max": 5.0,
+          "currency": "USD"
+        },
+        "price_in_aoa": {
+          "min": 1500,
+          "max": 8000,
+          "currency": "AOA"
+        }
+      },
+      "selectors": {
+        "price": [
+          ".notranslate",
+          ".product-price-value",
+          "[data-pl='product-price']",
+          ".price-current"
+        ],
+        "title": [
+          "h1",
+          ".product-title-text",
+          "[data-pl='product-title']"
+        ],
+        "rating": [
+          ".overview-rating-average",
+          ".rating-value"
+        ],
+        "reviews": [
+          ".product-reviewer-reviews",
+          ".review-count"
+        ],
+        "stock": [
+          ".product-quantity-tip",
+          ".stock-info"
+        ],
+        "seller": [
+          ".store-name",
+          ".seller-name"
+        ]
+      },
+      "validation": {
+        "price_check": true,
+        "max_price_usd": 10.0,
+        "min_price_usd": 0.5
+      }
+    },
+    "1005009428867608": {
+      "name": "Detachable Sofa Cover Bean Bag Cover",
+      "aliexpress_url": "https://pt.aliexpress.com/item/1005009428867608.html",
+      "expected_data": {
+        "price_range": {
+          "min": 15.0,
+          "max": 50.0,
+          "currency": "USD"
+        }
+      },
+      "selectors": {
+        "price": [".notranslate", ".product-price-value"],
+        "title": ["h1", ".product-title-text"],
+        "rating": [".overview-rating-average"],
+        "reviews": [".product-reviewer-reviews"],
+        "stock": [".product-quantity-tip"],
+        "seller": [".store-name"]
+      }
+    }
+  },
+  "global_settings": {
+    "currency_conversion": {
+      "AOA_to_USD": 0.0006,
+      "USD_to_AOA": 1666.67
+    },
+    "fallback_data": {
+      "enabled": true,
+      "use_expected_ranges": true
+    }
+  }
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,179 @@
+{
+  "backup_info": {
+    "created_at": "2025-01-27T00:00:00.000Z",
+    "version": "1.0.0",
+    "description": "Backup das configurações do Sistema de Mapeamento de Variações",
+    "author": "67 Beauty Hub"
+  },
+  
+  "mapping_config": {
+    "maxSimilarityThreshold": 0.8,
+    "defaultCurrency": "USD",
+    "supportedCurrencies": ["USD", "BRL", "AOA"],
+    "suppliers": {
+      "aliexpress": {
+        "name": "AliExpress",
+        "currency": "USD",
+        "skuPrefix": "AE-",
+        "urlPattern": "https://pt.aliexpress.com/item/{id}.html"
+      }
+    }
+  },
+  
+  "variation_mappings": {
+    "color": {
+      "102_nude": ["102 nude", "nude 102", "natural beige", "beige natural"],
+      "103_warm_peach": ["103 warm peach", "warm peach 103", "peach warm"],
+      "104_buff_beige": ["104 buff beige", "buff beige 104", "buff beige"],
+      "105_sand": ["105 sand", "sand 105", "sand beige"],
+      "108_tan": ["108 tan", "tan 108", "tan bronze"],
+      "109_mocha": ["109 mocha", "mocha 109", "mocha brown"],
+      "warm_peach": ["warm peach", "peach warm", "peach"],
+      "buff_beige": ["buff beige", "beige buff"],
+      "sand": ["sand", "sand beige"],
+      "tan": ["tan", "tan bronze"],
+      "mocha": ["mocha", "mocha brown"],
+      "nude": ["nude", "natural beige"],
+      "ivory": ["ivory", "ivory beige"],
+      "porcelain": ["porcelain", "porcelain beige"],
+      "honey": ["honey", "honey beige"],
+      "caramel": ["caramel", "caramel brown"],
+      "nude_pink": ["nude pink", "pink nude", "nude"],
+      "black": ["black", "preto", "ebony"],
+      "white": ["white", "branco", "ivory"],
+      "brown": ["brown", "marrom", "tan"],
+      "blonde": ["blonde", "loiro", "gold"],
+      "red": ["red", "vermelho", "auburn"],
+      "gray": ["gray", "cinza", "grey"],
+      "small_pink": ["small pink", "pequeno rosa", "s pink"],
+      "small_blue": ["small blue", "pequeno azul", "s blue"],
+      "small_green": ["small green", "pequeno verde", "s green"],
+      "medium_pink": ["medium pink", "médio rosa", "m pink"],
+      "medium_blue": ["medium blue", "médio azul", "m blue"],
+      "medium_green": ["medium green", "médio verde", "m green"],
+      "large_pink": ["large pink", "grande rosa", "l pink"],
+      "large_blue": ["large blue", "grande azul", "l blue"],
+      "large_green": ["large green", "grande verde", "l green"],
+      "xlarge_pink": ["xlarge pink", "extra grande rosa", "xl pink"],
+      "xlarge_blue": ["xlarge blue", "extra grande azul", "xl blue"],
+      "xlarge_green": ["xlarge green", "extra grande verde", "xl green"],
+      "xxlarge_pink": ["xxlarge pink", "super grande rosa", "xxl pink"],
+      "gold_snail": ["gold snail", "snail gold", "snail"],
+      "sakura": ["sakura", "cherry blossom", "cherry"],
+      "vitamin_c": ["vitamin c", "vit c", "vitamin"]
+    },
+    "size": {
+      "30ml": ["30ml", "30 ml", "30ml bottle", "30ml tube"],
+      "50ml": ["50ml", "50 ml", "50ml bottle", "50ml tube"],
+      "small": ["small", "s", "xs", "pequeno", "p"],
+      "medium": ["medium", "m", "md", "médio"],
+      "large": ["large", "l", "lg", "grande", "g"],
+      "xlarge": ["xlarge", "xl", "extra large", "extra grande"],
+      "xxlarge": ["xxlarge", "xxl", "super large", "super grande"]
+    }
+  },
+  
+  "product_mappings": {
+    "phoera_foundation": {
+      "name": "2 Pack PHOERA Foundation",
+      "supplierId": "aliexpress_100500106836560",
+      "basePrice": 17.39,
+      "variations": {
+        "type": "color",
+        "options": ["102_nude", "103_warm_peach", "104_buff_beige", "105_sand", "108_tan", "109_mocha", "warm_peach", "buff_beige", "sand", "tan", "mocha", "nude", "ivory", "porcelain", "honey", "caramel"]
+      },
+      "offers": {
+        "basic": { "name": "2 Pack PHOERA Foundation", "price": 17.39 },
+        "premium": { "name": "8pcs Makeup Brush Kit", "price": 2.50 },
+        "complete": { "name": "2 Pack PHOERA Primer", "price": 11.64 }
+      }
+    },
+    "alligator_hair_clips": {
+      "name": "Alligator Hair Clips",
+      "supplierId": "aliexpress_100500123456789",
+      "basePrice": 3.54,
+      "variations": {
+        "type": "color",
+        "options": ["nude_pink", "black", "white", "brown", "blonde", "red", "gray"]
+      },
+      "offers": {
+        "basic": { "name": "Alligator Hair Clips", "price": 3.54 },
+        "premium": { "name": "Hair Accessories Kit", "price": 2.89 },
+        "complete": { "name": "Complete Hair Styling Set", "price": 11.36 }
+      }
+    },
+    "wrinkle_reducer": {
+      "name": "Vara de Skincare - Wrinkle Reducer",
+      "supplierId": "aliexpress_100500987654321",
+      "basePrice": 17.45,
+      "variations": null,
+      "quantity": { "min": 1, "max": 10 },
+      "offers": {
+        "basic": { "name": "Vara de Skincare - Wrinkle Reducer", "price": 17.45, "quantityMultiplier": true },
+        "premium": { "name": "Face Mask Therapy", "price": 35.36, "quantityMultiplier": false }
+      }
+    },
+    "heat_resistant_mat": {
+      "name": "Heat-Resistant Mat",
+      "supplierId": "aliexpress_100500456789123",
+      "basePrice": 2.29,
+      "variations": {
+        "type": "size_color",
+        "options": ["small_pink", "small_blue", "small_green", "medium_pink", "medium_blue", "medium_green", "large_pink", "large_blue", "large_green", "xlarge_pink", "xlarge_blue", "xlarge_green", "xxlarge_pink"]
+      },
+      "quantity": { "min": 1, "max": 10 }
+    },
+    "laikou_golden_sakura": {
+      "name": "LAIKOU Vitamin C 24K Golden Sakura",
+      "supplierId": "aliexpress_100500789123456",
+      "basePrice": 24.99,
+      "variations": {
+        "type": "type",
+        "options": ["gold_snail", "sakura", "vitamin_c"]
+      }
+    },
+    "snooze_bundle": {
+      "name": "SNOOZE BUNDLE",
+      "supplierId": "aliexpress_100500321654987",
+      "basePrice": 149.99,
+      "variations": null,
+      "quantity": { "min": 1, "max": 3 }
+    },
+    "human_dog_bed": {
+      "name": "Human Dog Bed",
+      "supplierId": "aliexpress_human_dog_bed_001",
+      "basePrice": 79.99,
+      "variations": null,
+      "quantity": { "min": 1, "max": 2 }
+    },
+  "detachable_sofa_cover": {
+    "name": "Detachable Sofa Cover Bean Bag Cover",
+    "supplierId": "aliexpress_detachable_sofa_cover_001",
+    "basePrice": 34.99,
+    "variations": {
+      "type": "size",
+      "options": ["S", "M", "L", "XL"]
+    },
+    "quantity": { "min": 1, "max": 5 }
+  }
+  },
+  
+  "recovery_instructions": {
+    "step_1": "Restaurar arquivo js/product-variation-mapping.js",
+    "step_2": "Verificar localStorage para dados de pedidos",
+    "step_3": "Validar mapeamentos com validateProductOrder()",
+    "step_4": "Re-mapear pedidos se necessário",
+    "step_5": "Testar sistema com test-mapping-system.html"
+  },
+  
+  "file_structure": {
+    "main_script": "js/product-variation-mapping.js",
+    "documentation": "documentation/SISTEMA_MAPEAMENTO_IMPLEMENTADO.md",
+    "test_file": "test-mapping-system.html",
+    "backup_config": "config/mapping-backup.json",
+    "existing_configs": [
+      "config/product-mapping.json",
+      "config/product-specific-mapping.json"
+    ]
+  }
+}

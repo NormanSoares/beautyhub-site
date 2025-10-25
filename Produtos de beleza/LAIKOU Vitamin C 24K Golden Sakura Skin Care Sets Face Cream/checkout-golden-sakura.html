@@ -1,23 +1,60 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
-    <title>Checkout - Golden Sakura Skin Care | 67 Beauty Hub</title>
+    <title data-translate-key="checkout_title">Checkout - 24K Anti-Aging Kit | 67 Beauty Hub</title>
     <link rel="stylesheet" href="../../styles.css">
+    <!-- Scripts do Sistema de Processamento (carregar primeiro) -->
+    <script src="../../js/supplier-order-processor.js"></script>
+    <script src="../../js/payment-gateway.js"></script>
+    <script src="../../js/pix-generator.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="../../js/aliexpress-integration.js"></script>
+    <!-- Product Variation Mapping System -->
+    <script src="../../js/product-variation-mapping.js"></script>
+    <!-- Global Translation System -->
+    <script src="../../js/language-controller.js"></script>
+    <!-- PIX Payment System -->
+    <script src="../../js/pix-generator.js"></script>
     <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=Ab2ftZVJCplquKwOY1cWgvWMivADwMhbUs-OhehwO4hVh_VW9lS87qLkRUVD39yEeoh7YGXzBeuq1Dlh&currency=USD&intent=capture"></script>
+    <!-- PayPal SDK will be loaded dynamically with correct locale -->
+
+    <!-- Country/Currency System Variables -->
+    <script>
+
+        // Function to format price for display
+        function formatPrice(price) {
+            const currencyInfo = exchangeRates[currentCurrency];
+            if (!currencyInfo) return `$${price.toFixed(2)}`;
+
+            const convertedPrice = price * currencyInfo.rate;
+            return new Intl.NumberFormat(currencyInfo.locale, {
+                style: 'currency',
+                currency: currencyInfo.currency
+            }).format(convertedPrice);
+        }
+
+        // Function to update currency display (if needed)
+        function updateCurrencyDisplay() {
+            // This function can be extended to update price displays throughout the page
+            console.log('Currency updated to:', currentCurrency);
+        }
+    </script>
     <style>
         body { background: #f0e6d2; }
         .checkout-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; margin-top: 50px; }
-        .checkout-layout { display: flex; flex-direction: column; gap: 40px; }
-        .unified-section { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-        .checkout-bottom { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start; }
-        .form-section { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 30px; }
+        .checkout-layout { display: flex; flex-direction: column; gap: 20px; }
+        .unified-section { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+        .checkout-bottom {
+            display: grid !important;
+            grid-template-columns: 2fr 1fr !important;
+            gap: 20px !important;
+            align-items: start !important;
+        }
+        .form-section { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 20px; margin-bottom: 20px; }
         .checkout-header { text-align: center; margin-bottom: 40px; grid-column: 1 / -1; }
         .checkout-header h1 { color: #d4af37; font-size: 2.5rem; margin-bottom: 10px; }
         .product-summary { background: #f8f9fa; padding: 30px; border-radius: 10px; margin-bottom: 30px; text-align: center; }
@@ -46,7 +83,7 @@
             top: -8px;
             right: -8px;
         }
-        .summary-section { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 30px; position: sticky; top: 20px; }
+        .summary-section { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 20px; position: sticky; top: 20px; margin-bottom: 20px; }
         .summary-section h3 { color: #333; margin-bottom: 20px; font-size: 1.4rem; text-align: center; border-bottom: 2px solid #d4af37; padding-bottom: 10px; }
         .form-section .form-section { margin-bottom: 30px; }
         .form-section h3 { color: #333; margin-bottom: 20px; font-size: 1.3rem; border-bottom: 2px solid #d4af37; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
@@ -67,10 +104,11 @@
             .checkout-layout { grid-template-columns: 1fr; gap: 20px; } 
             .form-row { flex-direction: column; } 
             .unified-section { grid-template-columns: 1fr; gap: 20px; } 
-            .checkout-bottom { grid-template-columns: 1fr; gap: 20px; } 
-            .summary-section { position: static; order: -1; } 
+            .summary-section { position: static; } 
             .product-image { height: 350px; }
         }
+        
+        
         
         @media (max-width: 480px) {
             .product-image { height: 280px; }
@@ -232,102 +270,7 @@
             }
         }
         
-        /* Flag Dropdown Styles */
-        .flag-dropdown-container {
-            position: relative;
-            display: inline-block;
-            margin-left: 20px;
-        }
-        
-        .flag-dropdown {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 20px;
-            background: white;
-            border: 2px solid #d4af37;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1);
-        }
-        
-        .flag-dropdown:hover {
-            border-color: #b8941f;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
-        }
-        
-        .selected-flag {
-            font-size: 1.5rem;
-            user-select: none;
-        }
-        
-        .dropdown-arrow {
-            color: #d4af37;
-            font-size: 0.9rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .flag-dropdown.open .dropdown-arrow {
-            transform: rotate(180deg);
-        }
-        
-        .flag-dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border: 2px solid #d4af37;
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
-            z-index: 1000;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        
-        .flag-dropdown-menu.open {
-            max-height: 400px;
-            overflow-y: auto;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* Internet Explorer 10+ */
-        }
-        
-        .flag-dropdown-menu.open::-webkit-scrollbar {
-            display: none; /* WebKit browsers (Chrome, Safari, Edge) */
-        }
-        
-        .flag-option {
-            padding: 12px 20px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .flag-option:hover {
-            background-color: #fff9e6;
-            transform: translateX(5px);
-        }
-        
-        .flag-option:active {
-            background-color: #f0e6d2;
-            transform: translateX(3px);
-        }
-        
-        .flag-option.selected {
-            background-color: #d4af37;
-            color: white;
-            font-weight: 600;
-        }
-        
-        .flag-option:last-child {
-            border-radius: 0 0 6px 6px;
-        }
+        /* Flag dropdown styles removed - currency detection is now automatic */
         
         /* Reviews Section Styles */
         .reviews-section {
@@ -806,32 +749,21 @@
                 </div>
             </div>
             <ul class="nav-menu">
-                <li class="nav-item"><a href="index.html" class="nav-link">Início</a></li>
-                <li class="nav-item"><a href="index.html#products" class="nav-link">Produtos</a></li>
+                <li class="nav-item"><a href="../../index.html" class="nav-link">Início</a></li>
+                <li class="nav-item"><a href="index.html#products" class="nav-link">Products</a></li>
                 <li class="nav-item"><a href="index.html#about" class="nav-link">Sobre</a></li>
                 <li class="nav-item"><a href="index.html#contact" class="nav-link">Contato</a></li>
             </ul>
             
-            <!-- Flag Dropdown Selector -->
-            <div class="flag-dropdown-container">
-                <div class="flag-dropdown" onclick="toggleFlagDropdown()">
-                    <div class="selected-flag" id="selectedFlag">🇺🇸</div>
-                    <i class="fas fa-chevron-down dropdown-arrow"></i>
-                </div>
-                <div class="flag-dropdown-menu" id="flagDropdownMenu">
-                    <!-- Países selecionados -->
-                    <div class="flag-option" data-currency="USD" data-flag="🇺🇸" data-country="Estados Unidos">🇺🇸 Estados Unidos</div>
-                    <div class="flag-option" data-currency="BRL" data-flag="🇧🇷" data-country="Brasil">🇧🇷 Brasil</div>
-                    <div class="flag-option" data-currency="EUR" data-flag="🇵🇹" data-country="Portugal">🇵🇹 Portugal</div>
-                </div>
+            <!-- Currency automatically detected based on browser language -->
             </div>
         </div>
     </nav>
 
     <div class="checkout-container">
         <div class="checkout-header">
-            <h1><i class="fas fa-shopping-cart"></i> Finalizar Compra</h1>
-            <p>Escolha sua oferta e complete seu pedido com segurança</p>
+            <h1><i class="fas fa-shopping-cart"></i> Checkout</h1>
+            <p>Choose your offer and complete your order securely</p>
         </div>
 
         <div class="checkout-layout">
@@ -840,23 +772,23 @@
                     <div class="product-summary">
                         <img src="Apresentação.png" alt="LAIKOU Skincare" class="product-image" id="mainProductImage">
                         <div class="product-details">
-                            <h3>LAIKOU Skincare</h3>
-                            <p>Linha de cuidados com a pele inspirada na flor de cerejeira dourada, com fórmulas nutritivas que hidratam, iluminam e realçam a beleza natural da pele.</p>
+                            <h3 data-translate-key="product_laiou_skincare">LAIKOU Skincare</h3>
+                            <p data-translate-key="product_description">Skincare line inspired by the golden cherry blossom, with nourishing formulas that hydrate, illuminate and enhance the natural beauty of the skin.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="offers-info">
-                    <h3 style="color: #333; margin-bottom: 20px; text-align: center;"><i class="fas fa-gift"></i> Oferta Básica</h3>
+                    <h3 style="color: #333; margin-bottom: 20px; text-align: center;" data-translate-key="offer_basic_title"><i class="fas fa-gift"></i> Basic Offer</h3>
                     
                     <div class="offer-options">
                         <div class="offer-option selected" data-option="basic" style="padding-left: 20px;">
                             <div class="option-header">
-                                <h4>LAIKOU Skincare</h4>
+                                <h4 data-translate-key="product_laiou_skincare">LAIKOU Skincare</h4>
                                 <div class="price" id="offerPrice">$5.99</div>
                             </div>
-                            <div class="discount">70% OFF</div>
-                            <div class="description">Cansada de pele sem brilho e ressecada? LAIKOU hidrata, nutre e devolve a maciez natural, deixando sua pele mais saudável e radiante todos os dias.</div>
+                            <div class="discount" data-translate-key="discount_badge">70% OFF</div>
+                            <div class="description" data-translate-key="offer_basic_description">Cansada de pele sem brilho e ressecada? LAIKOU hidrata, nutre e devolve a maciez natural, deixando sua pele mais saudável e radiante todos os dias.</div>
                             
                             <!-- Seleção de tamanho e cor com imagens -->
                             <div class="color-selection" style="margin: 15px 0;">
@@ -904,7 +836,7 @@
                         </div>
                     </div>
                     <div class="gallery-indicators" id="galleryIndicators">
-                        <!-- Indicadores serão gerados pelo JavaScript -->
+                        <!-- Indicators will be generated by JavaScript -->
                     </div>
                 </div>
             </div>
@@ -912,71 +844,121 @@
             <div class="checkout-bottom">
                 <div class="form-section">
                     <form class="checkout-form" id="checkoutForm">
-                        <div class="form-section">
-                            <h3><i class="fas fa-envelope"></i> Informações de Contato</h3>
+                        <h3><i class="fas fa-user"></i> <span data-translate-key="customer_info">Customer Information</span></h3>
+                            
+                            <div class="form-row">
                                 <div class="form-group">
-                                    <label for="email">E-mail *</label>
-                                <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                                    <label for="firstName" data-translate-key="first_name">First Name *</label>
+                                    <input type="text" id="firstName" name="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName" data-translate-key="last_name">Last Name *</label>
+                                    <input type="text" id="lastName" name="lastName" required>
                             </div>
                         </div>
 
-                    <h3><i class="fas fa-credit-card"></i> Método de Pagamento</h3>
+                            <div class="form-group">
+                                <label for="email" data-translate-key="email_label">Email *</label>
+                                <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                            </div>
                     
                     <div class="form-group">
-                        <label for="paymentMethod">Forma de Pagamento *</label>
-                        <select id="paymentMethod" name="paymentMethod" required>
-                            <option value="">Selecione</option>
-                            <option value="paypal">PayPal</option>
-                            <option value="pix">PIX</option>
+                                <label for="phone" data-translate-key="phone_label">Phone *</label>
+                                <input type="tel" id="phone" name="phone" required placeholder="+1 (555) 123-4567">
+                            </div>
+
+                            <h3><i class="fas fa-truck"></i> <span data-translate-key="shipping_info">Shipping Information</span></h3>
+                            
+                            <div class="form-group">
+                                <label for="address" data-translate-key="address_label">Address *</label>
+                                <textarea id="address" name="address" rows="3" required placeholder="Street address, apartment, suite, etc."></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city" data-translate-key="city_label">City *</label>
+                                    <input type="text" id="city" name="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="state" data-translate-key="state_label">State/Province *</label>
+                                    <input type="text" id="state" name="state" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="zipCode" data-translate-key="zip_code_label">ZIP/Postal Code *</label>
+                                    <input type="text" id="zipCode" name="zipCode" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="country" data-translate-key="country_label">Country *</label>
+                                    <select id="country" name="country" required>
+                                        <option value="" data-translate-key="select_country">Select Country</option>
+                                        <option value="US" data-translate-key="country_us">United States</option>
+                                        <option value="BR" data-translate-key="country_br">Brazil</option>
+                                        <option value="PT" data-translate-key="country_pt">Portugal</option>
+                                        <option value="CA" data-translate-key="country_ca">Canada</option>
+                                        <option value="GB" data-translate-key="country_gb">United Kingdom</option>
+                                        <option value="DE" data-translate-key="country_de">Germany</option>
+                                        <option value="FR" data-translate-key="country_fr">France</option>
+                                        <option value="ES" data-translate-key="country_es">Spain</option>
+                                        <option value="IT" data-translate-key="country_it">Italy</option>
+                                        <option value="AU" data-translate-key="country_au">Australia</option>
                         </select>
+                                </div>
                     </div>
 
+                    <div class="form-group">
+                                <label for="observations" data-translate-key="observations_label">Order Notes (optional)</label>
+                                <textarea id="observations" name="observations" rows="3" placeholder="Any special instructions for your order?"></textarea>
+                    </div>
+
+                            <h3><i class="fas fa-credit-card"></i> <span data-translate-key="payment_method">Payment Method</span></h3>
+                            
+                            <div class="form-group">
+                                <label for="paymentMethod" data-translate-key="payment_method_label">Payment Method *</label>
+                                <select id="paymentMethod" name="paymentMethod" required>
+                                    <option value="" data-translate-key="select_option">Select</option>
+                                    <option value="paypal" data-translate-key="paypal_option">PayPal</option>
+                                    <option value="pix" id="pix-option" style="display: none;" data-translate-key="pix_option">PIX (Brazil only)</option>
+                                    <option value="stripe" id="stripe-option" style="display: none;" data-translate-key="stripe_option">Credit Card (Stripe)</option>
+                                </select>
+                            </div>
 
                     <div id="paypal-payment-button" style="display: none;"></div>
                     <div id="pix-payment-info" style="display: none;">
                         <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border: 2px solid #d4af37; text-align: center;">
-                            <h4 style="color: #d4af37; margin-bottom: 15px;"><i class="fas fa-qrcode"></i> Pagamento via PIX</h4>
-                            <p style="color: #666; margin-bottom: 15px;">Após confirmar o pedido, você receberá as instruções de pagamento PIX por email.</p>
+                                    <h4 style="color: #d4af37; margin-bottom: 15px;"><i class="fas fa-qrcode"></i> <span data-translate-key="pix_payment">PIX Payment</span></h4>
+                                    <p style="color: #666; margin-bottom: 15px;" data-translate-key="pix_payment_info">After confirming your order, you will receive PIX payment instructions by email.</p>
                             <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
-                                <strong>Chave PIX:</strong> contato@67beautyhub.com
+                                        <strong data-translate-key="pix_key">PIX Key:</strong> contato@67beautyhub.com
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="observations">Observações (opcional)</label>
-                        <textarea id="observations" name="observations" rows="3" placeholder="Alguma observação especial sobre seu pedido?"></textarea>
-                    </div>
+                            
+                            <div id="stripe-payment-info" style="display: none;">
+                                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border: 2px solid #d4af37; text-align: center;">
+                                    <h4 style="color: #d4af37; margin-bottom: 15px;"><i class="fas fa-credit-card"></i> <span data-translate-key="stripe_payment">Credit Card Payment</span></h4>
+                                    <p style="color: #666; margin-bottom: 15px;" data-translate-key="stripe_payment_info">Secure payment processing with Stripe. Your card information is encrypted and secure.</p>
+                                </div>
+                            </div>
 
                         <button type="submit" class="checkout-btn">
-                            <i class="fas fa-check"></i> Confirmar Pedido
+                            <i class="fas fa-check"></i> Confirm Order
                         </button>
                     </form>
-
                 </div>
 
                 <div class="summary-section">
-                    <h3><i class="fas fa-receipt"></i> Resumo do Pedido</h3>
+                    <h3><i class="fas fa-receipt"></i> <span data-translate-key="order_summary">Order Summary</span></h3>
                     <div class="checkout-summary">
                         <div id="selectedOffers"></div>
                         <div class="summary-row total">
-                            <span>Total</span>
+                            <span data-translate-key="total">Total</span>
                             <span id="totalAmount">$5.99</span>
                         </div>
                         
-                        <!-- Currency Selector for Summary -->
-                        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; text-align: center;">
-                            <div>
-                                <label style="display: block; color: #555; font-size: 14px; margin-bottom: 5px;">
-                                    <i class="fas fa-exchange-alt"></i> Moeda do Resumo
-                                </label>
-                                <select id="summaryCurrencySelector" style="padding: 8px 12px; border: 2px solid #d4af37; border-radius: 6px; background: white; color: #333; font-size: 14px; width: 100%; max-width: 250px;">
-                                    <option value="USD">🇺🇸 Dólar Americano (USD)</option>
-                                    <option value="BRL">🇧🇷 Real Brasileiro (BRL)</option>
-                                    <option value="EUR">🇪🇺 Euro (EUR)</option>
-                                </select>
-                            </div>
-                        </div>
+                        <!-- Currency automatically detected based on browser language -->
                     </div>
                 </div>
             </div>
@@ -1086,9 +1068,12 @@
                         convertedOfferTotal = offerTotal * 0.92;
                     }
 
+                    // Get translated offer name - no need to show color for this product
+                    let translatedOfferName = offer.name;
+                    
                     selectedOffersContainer.innerHTML = `
                         <div class="summary-row">
-                            <span>${offer.name}</span>
+                            <span>${translatedOfferName}</span>
                             <span>${summaryCurrencySymbol}${convertedOfferTotal.toFixed(2)}</span>
                         </div>
                     `;
@@ -1133,9 +1118,7 @@
             
             const selectedOption = document.querySelector('.color-option.selected');
             const offerName = selectedOption ? offers[selectedOption.dataset.color].name : 'LAIKOU Skincare';
-            alert(`Pedido realizado com sucesso!\n\nProduto: LAIKOU Skincare\nKit: ${offerName}\nTotal: $${orderData.total.toFixed(2)}\n\nVocê receberá um e-mail de confirmação em breve.`);
-            
-            window.location.href = 'index.html';
+            // Sistema de popup de celebração será usado via supplier-order-processor.js
         });
 
 
@@ -1145,7 +1128,7 @@
         // Variáveis para moedas separadas
         let headerCurrency = 'USD'; // Moeda do dropdown do cabeçalho
         let summaryCurrency = 'USD'; // Moeda do seletor do resumo
-        let currentCurrency = 'USD'; // Moeda atual para PayPal (usa a do resumo)
+        currentCurrency = 'USD'; // Moeda atual para PayPal (usa a do resumo)
 
         // Função para converter preços baseado na moeda do cabeçalho
         function convertPrices(currency) {
@@ -1293,34 +1276,8 @@
                 nextBtn.addEventListener('click', nextImage);
                 prevBtn.addEventListener('click', prevImage);
                 
-                // Slideshow automático (opcional)
-                let slideshowInterval;
-                
-                function startSlideshow() {
-                    slideshowInterval = setInterval(() => {
-                        if (currentImageIndex < galleryImages.length - 1) {
-                            nextImage();
-                        } else {
-                            currentImageIndex = 0;
-                            updateImage('next');
-                        }
-                    }, 5000); // 5 segundos
-                }
-                
-                function stopSlideshow() {
-                    clearInterval(slideshowInterval);
-                }
-                
-                // Pausar slideshow ao interagir
-                [nextBtn, prevBtn, ...document.querySelectorAll('.gallery-indicator')].forEach(element => {
-                    element.addEventListener('click', () => {
-                        stopSlideshow();
-                        setTimeout(startSlideshow, 10000); // Reiniciar após 10 segundos
-                    });
-                });
-                
-                // Iniciar slideshow
-                startSlideshow();
+                // Manual navigation only - no automatic slideshow
+                // Users can navigate using buttons and indicators at their own pace
             }
             
             // Inicializar galeria
@@ -1343,6 +1300,11 @@
             // Event listener para o seletor de moeda do resumo (independente)
             const summaryCurrencySelector = document.getElementById('summaryCurrencySelector');
             if (summaryCurrencySelector) {
+                // Set initial currency based on detected currency
+                summaryCurrency = currentCurrency;
+                summaryCurrencySelector.value = currentCurrency;
+                console.log('Summary currency initialized to:', summaryCurrency);
+                
                 summaryCurrencySelector.addEventListener('change', function() {
                     const selectedCurrency = this.value;
                     console.log('Summary currency changed to:', selectedCurrency);
@@ -1357,22 +1319,22 @@
     <!-- Reviews Section (moved to end) -->
     <div class="reviews-section" style="margin: 40px auto; max-width: 1200px; padding: 40px 20px; background-image: url('Background das reviews.png'); background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 15px; position: relative;">
         <div class="reviews-header">
-            <h3><i class="fas fa-star"></i> O que nossos clientes estão dizendo</h3>
-            <p>Mais de 1.400 clientes satisfeitas com nossos produtos</p>
+            <h3 data-translate-key="reviews_title"><i class="fas fa-star"></i> What our customers are saying</h3>
+            <p data-translate-key="reviews_subtitle">More than 1,400 satisfied customers with our products</p>
             
             <!-- Botão para adicionar review -->
             <div style="margin-top: 20px;">
                 <button id="addReviewBtn" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 25px; font-size: 16px; cursor: pointer; transition: all 0.3s ease;">
-                    <i class="fas fa-plus"></i> Adicionar sua Review
+                    <i class="fas fa-plus"></i> Add Your Review
                 </button>
             </div>
         </div>
         
         <div class="reviews-container">
-            <div class="review-item clickable-review" 
+                <div class="review-item clickable-review"
                  data-review-id="customer1"
-                 data-author="Cliente Satisfeita"
-                 data-date="15 dias atrás"
+                 data-author="Satisfied Customer"
+                 data-date="15 days ago"
                  data-stars="5">
                 <div class="review-image">
                     <img src="Reviews/Upload 3.png" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
@@ -1385,17 +1347,17 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <p class="review-text">"Produto excelente! Superou minhas expectativas. Qualidade incrível e entrega rápida. Recomendo para todos!"</p>
+                    <p class="review-text">"Excellent product! Exceeded my expectations. Amazing quality and fast delivery. I recommend it to everyone!"</p>
                     <div class="review-author">
-                        <strong>Cliente Satisfeita</strong>
-                        <span class="review-date">Compra verificada - 15 dias atrás</span>
+                        <strong>Satisfied Customer</strong>
+                        <span class="review-date">Verified Purchase - 15 days ago</span>
                     </div>
                 </div>
             </div>
 
-            <div class="review-item clickable-review" 
+            <div class="review-item clickable-review"
                  data-author="Maria Silva"
-                 data-date="1 semana atrás"
+                 data-date="1 week ago"
                  data-stars="5">
                 <div class="review-image">
                     <img src="Reviews/Upload 1.png" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
@@ -1408,17 +1370,17 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <p class="review-text">"I love 10 out of 10"</p>
+                    <p class="review-text">"I love it 10 out of 10"</p>
                     <div class="review-author">
                         <strong>Maria Silva</strong>
-                        <span class="review-date">Compra verificada - 1 semana atrás</span>
+                        <span class="review-date">Verified Purchase - 1 week ago</span>
                     </div>
                 </div>
             </div>
 
-            <div class="review-item clickable-review" 
+            <div class="review-item clickable-review"
                  data-author="Marie"
-                 data-date="2 semanas atrás"
+                 data-date="2 weeks ago"
                  data-stars="4.5">
                 <div class="review-image">
                     <img src="Reviews/Upload da Marie.png" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
@@ -1431,17 +1393,17 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <p class="review-text">"Moisturizing, there is no allergic reaction that is great. I have a problem with sensitive skin. The silk fit, face cream too, for eyes. . well, I haven't noticed any effect yet, a small size, how will it work for a trial, or will I order more - more give, knife no. Good price and fast delivery (about a week NP)"</p>
+                    <p class="review-text">"Moisturizing, there is no allergic reaction that is great. I have a problem with sensitive skin. The silk fit, face cream too, for eyes. Well, I haven't noticed any effect yet, a small size, how will it work for a trial, or will I order more - more give, knife no. Good price and fast delivery (about a week NP)"</p>
                     <div class="review-author">
                         <strong>Marie</strong>
-                        <span class="review-date">Compra verificada - 2 semanas atrás</span>
+                        <span class="review-date">Verified Purchase - 2 weeks ago</span>
                     </div>
                 </div>
             </div>
 
-            <div class="review-item clickable-review" 
+            <div class="review-item clickable-review"
                  data-author="Jessica"
-                 data-date="1 semana atrás"
+                 data-date="1 week ago"
                  data-stars="5">
                 <div class="review-image">
                     <img src="Reviews/Upload 5.png" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
@@ -1457,7 +1419,7 @@
                     <p class="review-text">"Excellent, left my skin well hydrated"</p>
                     <div class="review-author">
                         <strong>Jessica</strong>
-                        <span class="review-date">Compra verificada - 1 semana atrás</span>
+                        <span class="review-date">Verified Purchase - 1 week ago</span>
                     </div>
                 </div>
             </div>
@@ -1467,21 +1429,21 @@
         <div class="reviews-stats">
             <div class="stat-item">
                 <div class="stat-number">4.8</div>
-                <div class="stat-label">Avaliação Média</div>
+                <div class="stat-label" data-translate-key="average_rating">Average Rating</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number">1,427</div>
-                <div class="stat-label">Avaliações</div>
+                <div class="stat-label" data-translate-key="reviews">Reviews</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number">98%</div>
-                <div class="stat-label">Recomendariam</div>
+                <div class="stat-label" data-translate-key="would_recommend">Would Recommend</div>
             </div>
         </div>
 
-        <!-- Seção para Adicionar Review (apenas para usuários logados) -->
+        <!-- Add Review Section (for logged in users only) -->
         <div class="add-review-section" id="addReviewSection" style="display: none;">
-            <!-- Conteúdo será inserido dinamicamente pelo JavaScript -->
+            <!-- Content will be inserted dynamically by JavaScript -->
         </div>
     </div>
 
@@ -1502,33 +1464,33 @@
     <!-- Modal de Login -->
     <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
         <div style="background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%; text-align: center;">
-            <h3 style="color: #d4af37; margin-bottom: 20px;"><i class="fas fa-user"></i> Faça Login</h3>
+            <h3 style="color: #d4af37; margin-bottom: 20px;" data-translate-key="login_title"><i class="fas fa-user"></i> Login</h3>
             <form id="loginForm">
                 <div style="margin-bottom: 15px;">
-                    <input type="email" id="loginEmail" placeholder="Seu email" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                    <input type="email" id="loginEmail" data-translate-key="email_placeholder" placeholder="Your email" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <input type="password" id="loginPassword" placeholder="Sua senha" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                    <input type="password" id="loginPassword" data-translate-key="password_placeholder" placeholder="Your password" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: center;">
-                    <button type="submit" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Login</button>
-                    <button type="button" id="closeLoginModal" style="background: #666; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Cancelar</button>
+                    <button type="submit" data-translate-key="login_btn" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Login</button>
+                    <button type="button" id="closeLoginModal" data-translate-key="cancel_btn" style="background: #666; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal de Review -->
+    <!-- Review Modal -->
     <div id="reviewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
         <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;">
-            <h3 style="color: #d4af37; margin-bottom: 20px;"><i class="fas fa-star"></i> Adicionar Review</h3>
+            <h3 style="color: #d4af37; margin-bottom: 20px;" data-translate-key="add_review_title"><i class="fas fa-star"></i> Add Review</h3>
             <form id="reviewForm">
                 <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Seu Nome:</label>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;" data-translate-key="your_name_label">Your Name:</label>
                     <input type="text" id="reviewerName" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Avaliação:</label>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;" data-translate-key="rating_label">Rating:</label>
                     <div id="starRating" style="display: flex; gap: 5px; justify-content: center; margin: 10px 0;">
                         <i class="fas fa-star" data-rating="1" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
                         <i class="fas fa-star" data-rating="2" style="font-size: 24px; color: #ddd; cursor: pointer; transition: color 0.3s;"></i>
@@ -1538,23 +1500,23 @@
                     </div>
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Sua Review:</label>
-                    <textarea id="reviewText" required placeholder="Conte-nos sua experiência com o produto..." style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; min-height: 100px; resize: vertical;"></textarea>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;" data-translate-key="your_review_label">Your Review:</label>
+                    <textarea id="reviewText" required data-translate-key="review_placeholder" placeholder="Tell us about your experience with the product..." style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; min-height: 100px; resize: vertical;"></textarea>
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Foto (opcional):</label>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;" data-translate-key="photo_optional_label">Photo (optional):</label>
                     <input type="file" id="reviewImage" accept="image/*" style="width: 100%; padding: 8px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
                     <div id="imagePreview" style="margin-top: 10px; text-align: center;"></div>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: center;">
-                    <button type="submit" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Enviar Review</button>
-                    <button type="button" id="closeReviewModal" style="background: #666; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Cancelar</button>
+                    <button type="submit" data-translate-key="submit_review_btn" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Submit Review</button>
+                    <button type="button" id="closeReviewModal" data-translate-key="cancel_btn" style="background: #666; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Sistema de Reviews JavaScript -->
+    <!-- Review System JavaScript -->
     <script>
         // Sistema de Reviews
         let currentUser = null;
@@ -1638,7 +1600,7 @@
                     closeLoginModal();
                     showReviewModal();
                 } else {
-                    alert('Por favor, preencha todos os campos');
+                    alert('Please fill in all fields');
                 }
             });
 
@@ -1763,7 +1725,7 @@
                     <p class="review-text">"${reviewData.text}"</p>
                     <div class="review-author">
                         <strong>${reviewData.name}</strong>
-                        <span class="review-date">Compra verificada - ${reviewData.date}</span>
+                        <span class="review-date">Verified Purchase - ${reviewData.date}</span>
                     </div>
                 </div>
             `;
@@ -1815,7 +1777,7 @@
                             <div class="modal-stars">
                                 ${starsHTML}
                             </div>
-                            <div class="modal-date">Compra verificada - ${date}</div>
+                            <div class="modal-date">Verified Purchase - ${date}</div>
                         </div>
                         <button class="modal-close" onclick="closeReviewModal()">
                             <i class="fas fa-times"></i>
@@ -1895,19 +1857,163 @@
             }
         }
         
+        // Global variables for PayPal currency and locale
+        let currentPayPalCurrency = 'USD';
+        let currentPayPalLocale = 'en_US';
+        
+        // Setup PIX only for Brazilian customers
+        function setupPIXForBrazilOnly() {
+            const userLanguage = navigator.language || navigator.userLanguage;
+            const pixOption = document.getElementById('pix-option');
+            
+            // Check for test mode (Angolan testing)
+            const isTestMode = localStorage.getItem('pixTestMode') === 'true';
+            const isAngolan = userLanguage.startsWith('pt') && !userLanguage.includes('BR') && !userLanguage.includes('PT');
+            
+            // Show PIX for Brazilian Portuguese (pt-BR) OR for Angolan in test mode
+            if (userLanguage.startsWith('pt-BR') || userLanguage.startsWith('pt_BR') || (isAngolan && isTestMode)) {
+                if (pixOption) {
+                    pixOption.style.display = 'block';
+                    if (isAngolan && isTestMode) {
+                        console.log('🇦🇴 Angolan testing PIX - Test mode enabled');
+                        pixOption.textContent = 'PIX (Test Mode)';
+                    } else {
+                        console.log('🇧🇷 Brazilian customer detected - PIX enabled');
+                    }
+                }
+            } else {
+                if (pixOption) {
+                    pixOption.style.display = 'none';
+                    console.log('🌍 Non-Brazilian customer - PIX disabled');
+                }
+            }
+        }
+        
+        // Test function for Angolan to enable PIX testing
+        function enablePIXTestMode() {
+            localStorage.setItem('pixTestMode', 'true');
+            setupPIXForBrazilOnly();
+            console.log('🧪 PIX Test Mode enabled for Angolan testing');
+            alert('PIX Test Mode enabled! You can now test PIX functionality.');
+        }
+        
+        // Disable test mode
+        function disablePIXTestMode() {
+            localStorage.removeItem('pixTestMode');
+            setupPIXForBrazilOnly();
+            console.log('🧪 PIX Test Mode disabled');
+            alert('PIX Test Mode disabled. PIX will only show for Brazilian customers.');
+        }
+
+        // Function to get current currency for order creation
+        function getCurrentCurrency() {
+            return currentPayPalCurrency;
+        }
+        
         // Initialize payment method control and PayPal
         document.addEventListener('DOMContentLoaded', function() {
             setupPaymentMethodControl();
-            initializePayPal();
+            loadPayPalWithCorrectLocale();
+            setupPIXForBrazilOnly();
+            
+            // Add test functions to global scope for console testing
+            window.enablePIXTestMode = enablePIXTestMode;
+            window.disablePIXTestMode = disablePIXTestMode;
+            window.testPIX = function() {
+                console.log('🧪 PIX Test Functions Available:');
+                console.log('enablePIXTestMode() - Enable PIX for Angolan testing');
+                console.log('disablePIXTestMode() - Disable PIX test mode');
+                console.log('Current test mode:', localStorage.getItem('pixTestMode'));
+            };
+            
+            // Show test info in console
+            console.log('🧪 PIX Test Mode Available!');
+            console.log('Type: testPIX() for available functions');
         });
 
+        // Load PayPal SDK with correct locale and currency based on user's language
+        function loadPayPalWithCorrectLocale() {
+            // Detect user's language and currency
+            const userLanguage = navigator.language || navigator.userLanguage;
+            let paypalLocale = 'en_US'; // Default to English
+            let paypalCurrency = 'USD'; // Default to USD
+            
+            // Map browser language to PayPal locale and currency
+            if (userLanguage.startsWith('pt')) {
+                if (userLanguage.includes('BR') || userLanguage.includes('br')) {
+                    paypalLocale = 'pt_BR'; // Portuguese Brazil
+                    paypalCurrency = 'BRL'; // Brazilian Real
+                } else if (userLanguage.includes('PT') || userLanguage.includes('pt')) {
+                    paypalLocale = 'pt_PT'; // Portuguese Portugal
+                    paypalCurrency = 'EUR'; // Euro
+                } else {
+                    // Generic Portuguese (Angola, etc.) - use USD
+                    paypalLocale = 'pt_PT'; // Portuguese interface
+                    paypalCurrency = 'USD'; // US Dollar for international Portuguese speakers
+                }
+            } else if (userLanguage.startsWith('en')) {
+                paypalLocale = 'en_US'; // English US
+                paypalCurrency = 'USD'; // US Dollar
+            } else if (userLanguage.startsWith('es')) {
+                paypalLocale = 'es_ES'; // Spanish
+                paypalCurrency = 'EUR'; // Euro for Spain
+            } else if (userLanguage.startsWith('fr')) {
+                paypalLocale = 'fr_FR'; // French
+                paypalCurrency = 'EUR'; // Euro for France
+            } else if (userLanguage.startsWith('de')) {
+                paypalLocale = 'de_DE'; // German
+                paypalCurrency = 'EUR'; // Euro for Germany
+            }
+            
+            console.log('Detected language:', userLanguage, 'Using PayPal locale:', paypalLocale, 'Currency:', paypalCurrency);
+            
+            // Store globally for use in order creation
+            currentPayPalCurrency = paypalCurrency;
+            currentPayPalLocale = paypalLocale;
+            
+            // Load PayPal SDK with correct locale and currency
+            const script = document.createElement('script');
+            script.src = `https://www.paypal.com/sdk/js?client-id=Ab2ftZVJCplquKwOY1cWgvWMivADwMhbUs-OhehwO4hVh_VW9lS87qLkRUVD39yEeoh7YGXzBeuq1Dlh&currency=${paypalCurrency}&intent=capture&locale=${paypalLocale}`;
+            script.onload = function() {
+                console.log('PayPal SDK loaded with locale:', paypalLocale, 'and currency:', paypalCurrency);
+                initializePayPal();
+            };
+            script.onerror = function() {
+                console.error('Failed to load PayPal SDK');
+                // Try with a simpler URL
+                console.log('Retrying with simpler PayPal SDK URL...');
+                const retryScript = document.createElement('script');
+                retryScript.src = 'https://www.paypal.com/sdk/js?client-id=Ab2ftZVJCplquKwOY1cWgvWMivADwMhbUs-OhehwO4hVh_VW9lS87qLkRUVD39yEeoh7YGXzBeuq1Dlh&currency=USD&intent=capture';
+                retryScript.async = true;
+                retryScript.defer = true;
+                retryScript.onload = function() {
+                    console.log('PayPal SDK loaded with fallback URL');
+                    setTimeout(initializePayPal, 500);
+                };
+                retryScript.onerror = function() {
+                    console.error('PayPal SDK failed to load even with fallback URL');
+                };
+                document.head.appendChild(retryScript);
+            };
+            document.head.appendChild(script);
+        }
+
         // PayPal integration
+        let paypalRetryCount = 0;
+        const maxPaypalRetries = 50; // Maximum 5 seconds (50 * 100ms)
+        
         function initializePayPal() {
             // Wait for PayPal SDK to be loaded
             if (typeof paypal === 'undefined') {
+                paypalRetryCount++;
+                if (paypalRetryCount < maxPaypalRetries) {
                 console.log('PayPal SDK not loaded yet, retrying...');
                 setTimeout(initializePayPal, 100);
                 return;
+                } else {
+                    console.error('PayPal SDK failed to load after maximum retries');
+                    return;
+                }
             }
 
             console.log('PayPal SDK loaded, initializing buttons...');
@@ -1919,6 +2025,13 @@
             }
 
         paypal.Buttons({
+            locale: currentPayPalLocale,
+            style: {
+                locale: currentPayPalLocale,
+                color: 'gold',
+                shape: 'rect',
+                label: 'paypal'
+            },
             createOrder: function(data, actions) {
                     return new Promise((resolve, reject) => {
                         try {
@@ -1931,24 +2044,24 @@
                                 currentCurrency = 'USD'; // Fallback
                             }
                             
-                            // Get total from order summary (converted to USD for PayPal)
+                            // Get total from order summary (use same currency as summary)
                             const totalElement = document.getElementById('totalAmount');
                             let totalAmount = 0;
                             
+                            console.log('🔍 PayPal Debug - totalElement found:', !!totalElement);
                             if (totalElement) {
                                 const totalText = totalElement.textContent;
+                                console.log('🔍 PayPal Debug - totalText:', totalText);
                                 const totalValue = parseFloat(totalText.replace(/[^\d.,]/g, '').replace(',', '.'));
+                                console.log('🔍 PayPal Debug - totalValue:', totalValue);
                                 
-                                // Convert to USD if needed
-                                if (summaryCurrency === 'BRL') {
-                                    totalAmount = totalValue / 5.2; // Convert BRL to USD
-                                } else if (summaryCurrency === 'EUR') {
-                                    totalAmount = totalValue / 0.92; // Convert EUR to USD
+                                // Use the same currency as the summary (no conversion)
+                                totalAmount = totalValue;
+                                console.log('🔍 PayPal Debug - Using HTML totalAmount:', totalAmount);
                                 } else {
-                                    totalAmount = totalValue; // Already USD
-                                }
-                            } else {
+                                console.log('🔍 PayPal Debug - totalElement NOT found, using fallback');
                                 // Fallback to calculation
+                                console.log('🔍 PayPal Debug - Using fallback calculation');
                                 totalAmount = selectedOffers.reduce((total, offerType) => {
                                     if (!offers[offerType]) {
                                         console.warn('Offer not found:', offerType);
@@ -1961,6 +2074,7 @@
                                     
                                     return total + price;
                                 }, 0);
+                                console.log('🔍 PayPal Debug - Fallback calculated totalAmount:', totalAmount);
                             }
                             
                             const productNames = selectedOffers.map(offerType => 
@@ -1974,6 +2088,7 @@
                                 productNames: productNames
                             });
                             
+                            console.log('🔍 PayPal Debug - Final totalAmount being sent to PayPal:', totalAmount);
                             if (totalAmount <= 0) {
                                 throw new Error('Invalid total amount: ' + totalAmount);
                             }
@@ -1983,7 +2098,7 @@
                     purchase_units: [{
                         amount: {
                             value: totalAmount.toFixed(2),
-                            currency_code: currentCurrency
+                            currency_code: getCurrentCurrency()
                         },
                                     description: productNames || 'LAIKOU Skincare Products'
                                 }]
@@ -2127,13 +2242,54 @@
                 return;
             }
             
-            // Save order
+            // Map order for supplier (AliExpress)
+            let mappedOrder = null;
+            if (typeof mapProductOrder === 'function') {
+                try {
+                    // Prepare order data for mapping
+                    const mappingOrderData = {
+                        id: orderData.id,
+                        customer: orderData.customer,
+                        items: orderData.products.map(product => ({
+                            productId: 'laikou_golden_sakura',
+                            name: product.name,
+                            variation: product.selectedType ? {
+                                type: 'type',
+                                value: product.selectedType.name,
+                                displayName: product.selectedType.name
+                            } : null,
+                            quantity: 1,
+                            unitPrice: product.totalPrice,
+                            totalPrice: product.totalPrice
+                        })),
+                        total: orderData.total,
+                        date: orderData.date
+                    };
+                    
+                    // Map the order
+                    mappedOrder = mapProductOrder(mappingOrderData);
+                    console.log('Pedido mapeado para fornecedor:', mappedOrder);
+                } catch (error) {
+                    console.error('Erro ao mapear pedido:', error);
+                }
+            }
+            
+            // Save original order
             let orders = JSON.parse(localStorage.getItem('orders') || '[]');
             orders.push(orderData);
             localStorage.setItem('orders', JSON.stringify(orders));
             
+            // Save mapped order to dashboardData for dashboard synchronization
+            let dashboardData = JSON.parse(localStorage.getItem('dashboardData') || '{}');
+            if (!dashboardData.orders) dashboardData.orders = [];
+            
+            // Use mapped order if available, otherwise use original
+            const orderToSave = mappedOrder || orderData;
+            dashboardData.orders.push(orderToSave);
+            localStorage.setItem('dashboardData', JSON.stringify(dashboardData));
+            
             // Show specific message based on payment method
-            let successMessage = `Pedido realizado com sucesso!\n\nProdutos: ${orderData.products.map(p => p.name).join(' + ')}\nTotal: ${formatPrice(orderData.total)}\n\n`;
+            let successMessage = `Order placed successfully!\n\nProducts: ${orderData.products.map(p => p.name).join(' + ')}\nTotal: ${formatPrice(orderData.total)}\n\n`;
             
             switch(paymentMethod) {
                 case 'paypal':
@@ -2152,6 +2308,657 @@
             window.location.href = '../../index.html';
         }
     </script>
+
+    <!-- Sistema de Tradução -->
+    <script>
+        class CheckoutTranslator {
+            constructor() {
+                this.userLanguage = 'en';
+                this.userCountry = 'Unknown';
+                this.userCurrency = 'USD';
+                this.init();
+            }
+            
+            async init() {
+                await this.detectUserLocation();
+                this.updatePageContent();
+            }
+            
+            async detectUserLocation() {
+                try {
+                    let countryCode = null;
+                    
+                    // ALWAYS detect browser language first for maximum user experience
+                    const browserLang = navigator.language || navigator.userLanguage;
+                    console.log('🌍 Browser Language Detected:', browserLang);
+                    
+                    if (browserLang.startsWith('pt-BR') || browserLang.startsWith('pt_BR')) {
+                        this.userLanguage = 'pt-BR'; // Brazilian Portuguese
+                        console.log('🇧🇷 Brazilian Portuguese detected');
+                    } else if (browserLang.startsWith('pt-PT') || browserLang.startsWith('pt_PT')) {
+                        this.userLanguage = 'pt-PT'; // European Portuguese
+                        console.log('🇵🇹 European Portuguese detected');
+                    } else if (browserLang.startsWith('pt')) {
+                        // Generic Portuguese - default to European Portuguese (Portugal focus)
+                        this.userLanguage = 'pt-PT';
+                        console.log('🇵🇹 Generic Portuguese detected - defaulting to European Portuguese');
+                    } else {
+                        this.userLanguage = 'en';
+                        console.log('🇺🇸 English language detected');
+                    }
+                    
+                    // Check if running from file:// protocol
+                    if (window.location.protocol === 'file:') {
+                        console.log('Running from file:// protocol, using fallback detection');
+                        if (this.userLanguage === 'pt') {
+                            countryCode = 'BR';
+                            console.log('Detected Portuguese language, assuming Brazil');
+                        } else {
+                            countryCode = 'US';
+                            console.log('Using default US location');
+                        }
+                    } else {
+                        // Use ONLY browser language - NO IP detection
+                        const browserLang = navigator.language || navigator.userLanguage;
+                        console.log('🌍 Browser language detected:', browserLang);
+                        
+                        // Set language and currency based ONLY on browser language
+                        if (browserLang.startsWith('pt-PT') || browserLang.startsWith('pt_PT')) {
+                            this.userLanguage = 'pt';
+                            this.userCountry = 'PT';
+                            this.userCurrency = 'EUR';
+                            console.log('🇵🇹 Portuguese (Portugal) detected → EUR');
+                        } else if (browserLang.startsWith('pt-BR') || browserLang.startsWith('pt_BR')) {
+                            this.userLanguage = 'pt';
+                            this.userCountry = 'BR';
+                            this.userCurrency = 'BRL';
+                            console.log('🇧🇷 Portuguese (Brazil) detected → BRL');
+                        } else if (browserLang.startsWith('pt')) {
+                            // Generic Portuguese - default to USD (for Angola and other Portuguese-speaking countries)
+                            this.userLanguage = 'pt';
+                            this.userCountry = 'AO'; // Angola
+                            this.userCurrency = 'USD';
+                            console.log('🇦🇴 Generic Portuguese detected → USD (Angola/International)');
+                        } else {
+                            this.userLanguage = 'en';
+                            this.userCountry = 'US';
+                            this.userCurrency = 'USD';
+                            console.log('🇺🇸 English detected → USD');
+                        }
+                    }
+                    
+                    this.userCountry = countryCode;
+                    
+                    const countryToCurrency = {
+                        'BR': 'BRL',
+                        'AO': 'USD',  // Angola → Dólar (padrão)
+                        'US': 'USD', 'CA': 'USD', 'MX': 'USD', 'AR': 'USD', 'CL': 'USD', 'CO': 'USD', 'PE': 'USD', 'UY': 'USD', 'BO': 'USD', 'PY': 'USD', 'VE': 'USD', 'EC': 'USD', 'GY': 'USD', 'SR': 'USD', 'GF': 'USD', 'FK': 'USD', 'BZ': 'USD', 'GT': 'USD', 'HN': 'USD', 'SV': 'USD', 'NI': 'USD', 'CR': 'USD', 'PA': 'USD', 'CU': 'USD', 'JM': 'USD', 'HT': 'USD', 'DO': 'USD', 'PR': 'USD', 'VI': 'USD', 'AG': 'USD', 'BB': 'USD', 'DM': 'USD', 'GD': 'USD', 'KN': 'USD', 'LC': 'USD', 'VC': 'USD', 'TT': 'USD', 'BS': 'USD', 'AU': 'USD', 'NZ': 'USD', 'JP': 'USD', 'KR': 'USD', 'SG': 'USD', 'HK': 'USD', 'TW': 'USD', 'TH': 'USD', 'MY': 'USD', 'ID': 'USD', 'PH': 'USD', 'VN': 'USD', 'IN': 'USD', 'PK': 'USD', 'BD': 'USD', 'LK': 'USD', 'MM': 'USD', 'KH': 'USD', 'LA': 'USD', 'BN': 'USD', 'FJ': 'USD', 'PG': 'USD', 'SB': 'USD', 'VU': 'USD', 'NC': 'USD', 'PF': 'USD', 'WS': 'USD', 'TO': 'USD', 'KI': 'USD', 'TV': 'USD', 'NR': 'USD', 'MH': 'USD', 'FM': 'USD', 'PW': 'USD', 'AS': 'USD', 'GU': 'USD', 'MP': 'USD', 'CK': 'USD', 'NU': 'USD', 'TK': 'USD', 'WF': 'USD', 'NF': 'USD', 'PN': 'USD', 'GS': 'USD', 'SH': 'USD', 'AC': 'USD', 'TA': 'USD', 'IO': 'USD', 'CX': 'USD', 'CC': 'USD', 'HM': 'USD', 'AQ': 'USD', 'BV': 'USD', 'TF': 'USD', 'UM': 'USD',
+                        'DE': 'EUR', 'FR': 'EUR', 'IT': 'EUR', 'ES': 'EUR', 'NL': 'EUR', 'BE': 'EUR', 'AT': 'EUR', 'PT': 'EUR', 'IE': 'EUR', 'FI': 'EUR', 'GR': 'EUR', 'LU': 'EUR', 'MT': 'EUR', 'CY': 'EUR', 'SK': 'EUR', 'SI': 'EUR', 'EE': 'EUR', 'LV': 'EUR', 'LT': 'EUR', 'AD': 'EUR', 'MC': 'EUR', 'SM': 'EUR', 'VA': 'EUR', 'ME': 'EUR', 'XK': 'EUR'
+                    };
+                    
+                    this.userCurrency = countryToCurrency[this.userCountry] || 'USD';
+                    console.log(`Final detection - Country: ${this.userCountry}, Currency: ${this.userCurrency}`);
+                    
+                } catch (error) {
+                    console.error('Error in location detection:', error);
+                    this.userCurrency = 'USD';
+                    this.userCountry = 'Unknown';
+                }
+            }
+            
+            translateContent(contentKey) {
+                // Use detected language for content translation - distinguish between Brazilian and European Portuguese
+                let languageKey = 'USD'; // Default to English
+
+                if (this.userLanguage === 'pt-PT' || this.userLanguage === 'pt_PT') {
+                    languageKey = 'EUR'; // European Portuguese for Portugal
+                    console.log(`🇵🇹 European Portuguese detected for ${contentKey}`);
+                } else if (this.userLanguage === 'pt-BR' || this.userLanguage === 'pt_BR') {
+                    languageKey = 'BRL'; // Brazilian Portuguese
+                    console.log(`🇧🇷 Brazilian Portuguese detected for ${contentKey}`);
+                } else if (this.userLanguage === 'pt-AO' || this.userLanguage === 'pt_AO') {
+                    languageKey = 'EUR'; // Angolan Portuguese → European Portuguese (Portugal focus)
+                    console.log(`🇦🇴 Angolan Portuguese detected for ${contentKey} - using European Portuguese`);
+                } else if (this.userLanguage === 'pt') {
+                    languageKey = 'EUR'; // Generic Portuguese defaults to European (Portugal focus)
+                    console.log(`🇵🇹 Generic Portuguese detected for ${contentKey} - defaulting to European Portuguese`);
+                } else {
+                    languageKey = 'USD'; // English for other languages
+                    console.log(`🇺🇸 English detected for ${contentKey}`);
+                }
+
+                console.log(`🌍 Translating ${contentKey}: userLanguage=${this.userLanguage}, languageKey=${languageKey}`);
+                
+                const translations = {
+                    'checkout_title': {
+                        'USD': 'Checkout',
+                        'BRL': 'Finalizar Compra',
+                        'EUR': 'Finalizar Compra'
+                    },
+                    'product_info': {
+                        'USD': 'Product Information',
+                        'BRL': 'Informações do Produto',
+                        'EUR': 'Informações do Produto'
+                    },
+                    'customer_info': {
+                        'USD': 'Customer Information',
+                        'BRL': 'Informações do Cliente',
+                        'EUR': 'Informações do Cliente'
+                    },
+                    'payment_info': {
+                        'USD': 'Payment Information',
+                        'BRL': 'Informações de Pagamento',
+                        'EUR': 'Informações de Pagamento'
+                    },
+                    'order_summary': {
+                        'USD': 'Order Summary',
+                        'BRL': 'Resumo do Pedido',
+                        'EUR': 'Resumo do Pedido'
+                    },
+                    'first_name': {
+                        'USD': 'First Name',
+                        'BRL': 'Nome',
+                        'EUR': 'Nome'
+                    },
+                    'last_name': {
+                        'USD': 'Last Name',
+                        'BRL': 'Sobrenome',
+                        'EUR': 'Sobrenome'
+                    },
+                    'email': {
+                        'USD': 'Email',
+                        'BRL': 'E-mail',
+                        'EUR': 'E-mail'
+                    },
+                    'phone': {
+                        'USD': 'Phone',
+                        'BRL': 'Telefone',
+                        'EUR': 'Telefone'
+                    },
+                    'address': {
+                        'USD': 'Address',
+                        'BRL': 'Endereço',
+                        'EUR': 'Endereço'
+                    },
+                    'city': {
+                        'USD': 'City',
+                        'BRL': 'Cidade',
+                        'EUR': 'Cidade'
+                    },
+                    'state': {
+                        'USD': 'State',
+                        'BRL': 'Estado',
+                        'EUR': 'Estado'
+                    },
+                    'zip_code': {
+                        'USD': 'Zip Code',
+                        'BRL': 'CEP',
+                        'EUR': 'CEP'
+                    },
+                    'country': {
+                        'USD': 'Country',
+                        'BRL': 'País',
+                        'EUR': 'País'
+                    },
+                    'payment_method': {
+                        'USD': 'Payment Method',
+                        'BRL': 'Método de Pagamento',
+                        'EUR': 'Método de Pagamento'
+                    },
+                    'observations': {
+                        'USD': 'Observations',
+                        'BRL': 'Observações',
+                        'EUR': 'Observações'
+                    },
+                    'total': {
+                        'USD': 'Total',
+                        'BRL': 'Total',
+                        'EUR': 'Total'
+                    },
+                    'checkout_button': {
+                        'USD': 'Complete Purchase',
+                        'BRL': 'Finalizar Compra',
+                        'EUR': 'Finalizar Compra'
+                    },
+                    'required_fields': {
+                        'USD': 'Please fill in all required fields.',
+                        'BRL': 'Please fill in all fields obrigatórios.',
+                        'EUR': 'Please fill in all fields obrigatórios.'
+                    },
+                    'order_success': {
+                        'USD': 'Order completed successfully!',
+                        'BRL': 'Order placed successfully!',
+                        'EUR': 'Order placed successfully!'
+                    },
+                    'confirmation_email': {
+                        'USD': 'You will receive a confirmation email shortly.',
+                        'BRL': 'Você receberá um e-mail de confirmação em breve.',
+                        'EUR': 'Você receberá um e-mail de confirmação em breve.'
+                    },
+                    // Product name translations
+                    'product_laiou_skincare': {
+                        'USD': '24K Anti-Aging Kit',
+                        'BRL': 'LAIKOU Cuidados da Pele',
+                        'EUR': '24K Anti-Aging Kit'
+                    },
+                    // Offer interface translations
+                    'offer_basic_title': {
+                        'USD': 'Basic Offer',
+                        'BRL': 'Oferta Básica',
+                        'EUR': 'Oferta Básica'
+                    },
+                    'offer_basic_description': {
+                        'USD': 'Tired of dull and dry skin? LAIKOU hydrates, nourishes and restores natural softness, leaving your skin healthier and radiant every day.',
+                        'BRL': 'Cansada de pele sem brilho e ressecada? LAIKOU hidrata, nutre e devolve a maciez natural, deixando sua pele mais saudável e radiante todos os dias.',
+                        'EUR': 'Tired of dull and dry skin? LAIKOU hydrates, nourishes and restores natural softness, leaving your skin healthier and radiant every day.'
+                    },
+                    'choose_variant': {
+                        'USD': 'Choose your variant:',
+                        'BRL': 'Choose your variant:',
+                        'EUR': 'Choose your variant:'
+                    },
+                    'discount_badge': {
+                        'USD': '70% OFF',
+                        'BRL': '70% OFF',
+                        'EUR': '70% OFF'
+                    }
+                };
+                
+                return translations[contentKey] ? 
+                    translations[contentKey][languageKey] || 
+                    translations[contentKey]['USD'] : 
+                    contentKey;
+            }
+            
+            updatePageContent() {
+                try {
+                    // Update page title
+                    const pageTitle = document.querySelector('title');
+                    if (pageTitle) {
+                        pageTitle.textContent = `${this.translateContent('checkout_title')} - ${this.translateContent('product_laiou_skincare')} | 67 Beauty Hub`;
+                    }
+                    
+                    // Update form labels
+                    const firstNameLabel = document.querySelector('label[for="firstName"]');
+                    if (firstNameLabel) firstNameLabel.textContent = this.translateContent('first_name');
+                    
+                    const lastNameLabel = document.querySelector('label[for="lastName"]');
+                    if (lastNameLabel) lastNameLabel.textContent = this.translateContent('last_name');
+                    
+                    const emailLabel = document.querySelector('label[for="email"]');
+                    if (emailLabel) emailLabel.textContent = this.translateContent('email');
+                    
+                    const phoneLabel = document.querySelector('label[for="phone"]');
+                    if (phoneLabel) phoneLabel.textContent = this.translateContent('phone');
+                    
+                    const addressLabel = document.querySelector('label[for="address"]');
+                    if (addressLabel) addressLabel.textContent = this.translateContent('address');
+                    
+                    const cityLabel = document.querySelector('label[for="city"]');
+                    if (cityLabel) cityLabel.textContent = this.translateContent('city');
+                    
+                    const stateLabel = document.querySelector('label[for="state"]');
+                    if (stateLabel) stateLabel.textContent = this.translateContent('state');
+                    
+                    const zipCodeLabel = document.querySelector('label[for="zipCode"]');
+                    if (zipCodeLabel) zipCodeLabel.textContent = this.translateContent('zip_code');
+                    
+                    const countryLabel = document.querySelector('label[for="country"]');
+                    if (countryLabel) countryLabel.textContent = this.translateContent('country');
+                    
+                    const paymentLabel = document.querySelector('label[for="paymentMethod"]');
+                    if (paymentLabel) paymentLabel.textContent = this.translateContent('payment_method');
+                    
+                    const observationsLabel = document.querySelector('label[for="observations"]');
+                    if (observationsLabel) observationsLabel.textContent = this.translateContent('observations');
+                    
+                    // Update placeholders
+                    const firstNameInput = document.getElementById('firstName');
+                    if (firstNameInput) firstNameInput.placeholder = this.translateContent('first_name');
+                    
+                    const lastNameInput = document.getElementById('lastName');
+                    if (lastNameInput) lastNameInput.placeholder = this.translateContent('last_name');
+                    
+                    const emailInput = document.getElementById('email');
+                    if (emailInput) emailInput.placeholder = this.translateContent('email');
+                    
+                    const observationsInput = document.getElementById('observations');
+                    if (observationsInput) observationsInput.placeholder = this.translateContent('observations');
+                    
+                    // Update checkout button
+                    const checkoutButton = document.querySelector('button[onclick="processCheckout()"]');
+                    if (checkoutButton) checkoutButton.textContent = this.translateContent('checkout_button');
+                    
+                    // Update product title
+                    const productTitle = document.querySelector('h3[data-translate-key="product_laiou_skincare"]');
+                    if (productTitle) productTitle.textContent = this.translateContent('product_laiou_skincare');
+                    
+                    // Update offer elements
+                    const offerBasicTitle = document.querySelector('h3[data-translate-key="offer_basic_title"]');
+                    if (offerBasicTitle) {
+                        offerBasicTitle.innerHTML = `<i class="fas fa-gift"></i> ${this.translateContent('offer_basic_title')}`;
+                    }
+                    
+                    const productTitleInOffer = document.querySelector('h4[data-translate-key="product_laiou_skincare"]');
+                    if (productTitleInOffer) productTitleInOffer.textContent = this.translateContent('product_laiou_skincare');
+                    
+                    const offerDescription = document.querySelector('.description[data-translate-key="offer_basic_description"]');
+                    if (offerDescription) offerDescription.textContent = this.translateContent('offer_basic_description');
+                    
+                    // Update order summary title
+                    const orderSummaryTitle = document.querySelector('span[data-translate-key="order_summary"]');
+                    if (orderSummaryTitle) orderSummaryTitle.textContent = this.translateContent('order_summary');
+                    
+                    const discountBadge = document.querySelector('.discount[data-translate-key="discount_badge"]');
+                    if (discountBadge) discountBadge.textContent = this.translateContent('discount_badge');
+                    
+                    console.log('Checkout page content updated successfully');
+                    
+                } catch (error) {
+                    console.error('Error updating checkout page content:', error);
+                }
+            }
+        }
+        
+        // Initialize checkout translator when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            new CheckoutTranslator();
+
+            // Add event listeners for flag selection
+            document.querySelectorAll('.flag-option').forEach(flag => {
+                flag.addEventListener('click', function() {
+                    const currency = this.dataset.currency;
+                    const flagEmoji = this.dataset.flag;
+                    selectFlagOption(currency, flagEmoji);
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                const dropdown = document.querySelector('.flag-dropdown');
+                const menu = document.getElementById('flagDropdownMenu');
+                if (dropdown && menu && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('open');
+                    menu.classList.remove('open');
+                }
+            });
+        });
+
+        // Flag dropdown functions
+        function toggleFlagDropdown() {
+            const dropdown = document.querySelector('.flag-dropdown');
+            const menu = document.getElementById('flagDropdownMenu');
+            if (dropdown && menu) {
+                dropdown.classList.toggle('open');
+                menu.classList.toggle('open');
+            }
+        }
+
+        function selectFlagOption(currency, flagEmoji) {
+            // Update selected flag
+            const selectedFlag = document.getElementById('selectedFlag');
+            if (selectedFlag) {
+                selectedFlag.textContent = flagEmoji;
+            }
+
+            // Update current currency
+            currentCurrency = currency;
+
+            // Close dropdown
+            const dropdown = document.querySelector('.flag-dropdown');
+            const menu = document.getElementById('flagDropdownMenu');
+            if (dropdown && menu) {
+                dropdown.classList.remove('open');
+                menu.classList.remove('open');
+            }
+
+            // Update all prices
+            updateCurrencyDisplay();
+
+            // Save selection to localStorage
+            localStorage.setItem('selectedCountry', currency);
+
+            console.log(`Country changed to: ${currency}, Flag: ${flagEmoji}`);
+        }
+        
+        // PIX Payment System
+        let pixCheckout = null;
+        
+        // Initialize PIX system
+        function initializePIXSystem() {
+            if (typeof PIXCheckout !== 'undefined') {
+                pixCheckout = new PIXCheckout();
+                console.log('✅ PIX system initialized');
+            } else {
+                console.error('❌ PIX system not available');
+            }
+        }
+        
+        // Setup PIX only for Brazilian customers
+        function setupPIXForBrazilOnly() {
+            const pixOption = document.getElementById('pix-option');
+            const selectedCountry = localStorage.getItem('selectedCountry');
+            const isTestMode = localStorage.getItem('pixTestMode') === 'true';
+            
+            // Debug logs
+            console.log('🔍 PIX Debug Info:');
+            console.log('Selected Country:', selectedCountry);
+            console.log('Is Test Mode:', isTestMode);
+            console.log('PIX Option Element:', pixOption);
+            
+            // Show PIX for Brazil (BR) OR for test mode (any country)
+            if (selectedCountry === 'BR' || isTestMode) {
+                if (pixOption) {
+                    pixOption.style.display = 'block';
+                    if (isTestMode) {
+                        console.log('🧪 PIX Test Mode enabled');
+                        pixOption.textContent = 'PIX (Test Mode)';
+                    } else {
+                        console.log('🇧🇷 Brazilian customer detected - PIX enabled');
+                        pixOption.textContent = 'PIX';
+                    }
+                } else {
+                    console.error('❌ PIX Option element not found!');
+                }
+            } else {
+                if (pixOption) {
+                    pixOption.style.display = 'none';
+                    console.log('🌍 Non-Brazilian customer - PIX disabled');
+                } else {
+                    console.error('❌ PIX Option element not found!');
+                }
+            }
+        }
+        
+        // Enable PIX test mode
+        function enablePIXTestMode() {
+            localStorage.setItem('pixTestMode', 'true');
+            console.log('🧪 PIX Test Mode enabled');
+            setupPIXForBrazilOnly();
+        }
+        
+        // Disable PIX test mode
+        function disablePIXTestMode() {
+            localStorage.removeItem('pixTestMode');
+            console.log('🚫 PIX Test Mode disabled');
+            setupPIXForBrazilOnly();
+        }
+        
+        // Check current PIX status
+        function checkPIXStatus() {
+            console.log('🔍 PIX Status Check:');
+            console.log('localStorage pixTestMode:', localStorage.getItem('pixTestMode'));
+            console.log('User Language:', navigator.language);
+            console.log('PIX Option Element:', document.getElementById('pix-option'));
+            console.log('PIX Option Display:', document.getElementById('pix-option')?.style.display);
+            console.log('PIX Option Text:', document.getElementById('pix-option')?.textContent);
+        }
+        
+        // Initialize PIX for order
+        function initializePIXForOrder() {
+            if (!pixCheckout) {
+                console.error('PIX system not initialized');
+                return;
+            }
+            
+            const orderData = getCurrentOrderData();
+            if (!orderData) {
+                console.error('Failed to get order data for PIX');
+                return;
+            }
+            
+            // Initialize PIX with order data
+            pixCheckout.initializePIX(orderData);
+        }
+        
+        // Get current order data for PIX (using summary total like PayPal)
+        function getCurrentOrderData() {
+            // Validate required variables
+            if (!selectedOffers || !Array.isArray(selectedOffers) || selectedOffers.length === 0) {
+                console.error('No offers selected');
+                return null;
+            }
+            
+            // Get total from order summary (same as PayPal logic)
+            const totalElement = document.getElementById('totalAmount');
+            let totalAmount = 0;
+            
+            if (totalElement) {
+                const totalText = totalElement.textContent;
+                totalAmount = parseFloat(totalText.replace(/[^\d.,]/g, '').replace(',', '.'));
+                console.log('💰 PIX using summary total:', totalAmount, currentCurrency);
+                console.log('📊 Summary element text:', totalText);
+            } else {
+                console.warn('⚠️ Total element not found, using fallback calculation');
+                // Fallback to calculation
+                selectedOffers.forEach(offerType => {
+                    if (offers[offerType]) {
+                        const offer = offers[offerType];
+                        const price = offer.prices && offer.prices[currentCurrency] 
+                            ? offer.prices[currentCurrency] 
+                            : offer.price || 0;
+                        totalAmount += price;
+                    }
+                });
+            }
+            
+            if (totalAmount <= 0) {
+                console.error('❌ Invalid total amount:', totalAmount);
+                return null;
+            }
+            
+            // Get product names
+            const products = selectedOffers.map(offerType => {
+                if (offers[offerType]) {
+                    let productName = offers[offerType].name;
+                    
+                    // Se for a oferta básica e há cor selecionada, usar apenas o nome da cor
+                    if (offerType === 'basic' && selectedColor) {
+                        productName = selectedColor.name;
+                    }
+                    
+                    return productName;
+                }
+                return 'Produto';
+            });
+            
+            console.log('✅ PIX Order Data:', {
+                total: totalAmount,
+                currency: currentCurrency,
+                products: products
+            });
+            
+            return {
+                id: 'ORDER_' + Date.now(),
+                products: products,
+                total: totalAmount,
+                currency: currentCurrency,
+                description: products.join(' + ')
+            };
+        }
+        
+        // Handle PIX payment
+        function handlePIXPayment(email, observations) {
+            if (!pixCheckout) {
+                alert('PIX system not available. Please try again.');
+                return;
+            }
+            
+            const orderData = getCurrentOrderData();
+            if (!orderData) {
+                alert('Failed to get order data. Please try again.');
+                return;
+            }
+            
+            // Initialize PIX with order data
+            pixCheckout.initializePIX(orderData);
+        }
+        
+        
+        // Payment method control
+        function setupPaymentMethodControl() {
+            const paymentMethodSelect = document.getElementById('paymentMethod');
+            const paypalButton = document.getElementById('paypal-payment-button');
+            const pixInfo = document.getElementById('pix-payment-info');
+            
+            if (paymentMethodSelect) {
+                paymentMethodSelect.addEventListener('change', function() {
+                    const selectedMethod = this.value;
+                    
+                    // Hide all payment options first
+                    if (paypalButton) paypalButton.style.display = 'none';
+                    if (pixInfo) pixInfo.style.display = 'none';
+                    
+                    // Show selected payment method
+                    switch(selectedMethod) {
+                        case 'paypal':
+                            if (paypalButton) paypalButton.style.display = 'block';
+                            break;
+                        case 'pix':
+                            if (pixInfo) pixInfo.style.display = 'block';
+                            initializePIXForOrder();
+                            break;
+                    }
+                });
+            }
+        }
+        
+        // Process checkout function
+        function processCheckout() {
+            const email = document.getElementById('email').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const observations = document.getElementById('observations').value;
+
+            if (!email || !paymentMethod) {
+                alert('Please fill in email and select a payment method.');
+                return;
+            }
+            
+            // Handle PIX payment
+            if (paymentMethod === 'pix') {
+                handlePIXPayment(email, observations);
+                return;
+            }
+            
+            // Handle other payment methods
+            alert('Payment method not implemented yet.');
+        }
+        
+        // Initialize PIX system when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setupPaymentMethodControl();
+            initializePIXSystem();
+            setupPIXForBrazilOnly();
+        });
+    </script>
+    
+    <!-- Footer Copyright -->
+    <footer style="text-align: center; padding: 20px; background: #f8f9fa; border-top: 1px solid #e9ecef; margin-top: 40px;">
+        <p style="color: #666; font-size: 14px; margin: 0;">
+            © 2025 67 Beauty Hub - All rights reserved
+        </p>
+    </footer>
+
 
 </body>
 </html>

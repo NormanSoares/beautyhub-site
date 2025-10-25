@@ -1,23 +1,39 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Wrinkle Reducer - Red Light Therapy | 67 Beauty Hub</title>
+    <title>Checkout - 7-in-1 Wrinkle Wand | 67 Beauty Hub</title>
     <link rel="stylesheet" href="../../styles.css">
+    <!-- Scripts do Sistema de Processamento (carregar primeiro) -->
+    <script src="../../js/supplier-order-processor.js"></script>
+    <script src="../../js/payment-gateway.js"></script>
+    <script src="../../js/pix-generator.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=Ab2ftZVJCplquKwOY1cWgvWMivADwMhbUs-OhehwO4hVh_VW9lS87qLkRUVD39yEeoh7YGXzBeuq1Dlh&currency=USD&intent=capture"></script>
+    <!-- PayPal SDK will be loaded dynamically with correct locale -->
     <!-- AliExpress Integration -->
     <script src="../../js/aliexpress-integration.js"></script>
     <!-- Review System -->
     <script src="../../js/review-system.js"></script>
+    <!-- Product Variation Mapping System -->
+    <script src="../../js/product-variation-mapping.js"></script>
+    <!-- Price Cache System -->
+    <script src="../../js/price-cache.js"></script>
+    <!-- Active Prices Sync System -->
+    <script src="../../js/active-prices-sync.js"></script>
+    <!-- Global Translation System -->
+    <script src="../../js/language-controller.js"></script>
+    <!-- PIX Payment System -->
+    <script src="../../js/pix-generator.js"></script>
+    <!-- Wrinkle Reducer Specific JavaScript -->
+    <script src="checkout-wrinkle-reducer.js"></script>
     <style>
         body {
             background: #f0e6d2;
         }
-        
+
         .checkout-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -25,13 +41,13 @@
             margin-top: 50px;
             min-height: 100vh;
         }
-        
+
         .checkout-layout {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-        
+
         .unified-section {
             background: white;
             border-radius: 15px;
@@ -43,14 +59,14 @@
             align-items: start;
             min-height: auto;
         }
-        
+
         .checkout-bottom {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 20px;
             align-items: start;
         }
-        
+
         .form-section {
             background: white;
             border-radius: 15px;
@@ -58,118 +74,21 @@
             padding: 20px;
             margin-bottom: 20px;
         }
-        
-        
+
+
         .checkout-header {
             text-align: center;
             margin-bottom: 40px;
             grid-column: 1 / -1;
         }
-        
+
         .checkout-header h1 {
             color: #d4af37;
             font-size: 2.5rem;
             margin-bottom: 10px;
         }
         
-        /* Flag Dropdown Styles */
-        .flag-dropdown-container {
-            position: relative;
-            display: inline-block;
-            margin-left: 20px;
-        }
-        
-        .flag-dropdown {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 20px;
-            background: white;
-            border: 2px solid #d4af37;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1);
-        }
-        
-        .flag-dropdown:hover {
-            border-color: #b8941f;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
-        }
-        
-        .selected-flag {
-            font-size: 1.5rem;
-            user-select: none;
-        }
-        
-        .dropdown-arrow {
-            color: #d4af37;
-            font-size: 0.9rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .flag-dropdown.open .dropdown-arrow {
-            transform: rotate(180deg);
-        }
-        
-        .flag-dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border: 2px solid #d4af37;
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
-            z-index: 1000;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        
-        .flag-dropdown-menu.open {
-            max-height: 400px;
-            overflow-y: auto;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* Internet Explorer 10+ */
-        }
-        
-        .flag-dropdown-menu.open::-webkit-scrollbar {
-            display: none; /* WebKit browsers (Chrome, Safari, Edge) */
-        }
-        
-        .flag-option {
-            padding: 12px 20px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .flag-option:hover {
-            background-color: #fff9e6;
-        }
-        
-        .flag-option:last-child {
-            border-radius: 0 0 6px 6px;
-        }
-        
-        @media (max-width: 768px) {
-            .flag-dropdown-container {
-                margin-top: 20px;
-            }
-            
-            .flag-dropdown {
-                padding: 10px 15px;
-            }
-            
-            .selected-flag {
-                font-size: 1.3rem;
-            }
-        }
+        /* Flag dropdown styles removed - currency detection is now automatic */
         
         .offer-section {
             background: white;
@@ -261,7 +180,7 @@
             margin-left: 10px;
         }
         
-        /* Estilo específico para oferta básica sem checkbox */
+        /* Specific style for basic offer without checkbox */
         .offer-option[data-option="basic"] {
             padding-left: 20px;
         }
@@ -517,6 +436,7 @@
             justify-content: center;
             gap: 10px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
         
         
@@ -964,7 +884,6 @@
             
             .summary-section {
                 position: static;
-                order: -1;
             }
             
             .offer-section, .summary-section, .form-section {
@@ -998,7 +917,128 @@
                 align-self: flex-start;
             }
         }
+
+        /* Before & After Slider Styles */
+        .before-after-section {
+            margin: 40px auto;
+            max-width: 1200px;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
         
+        .before-after-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .before-after-header h3 {
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .before-after-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .slider-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            cursor: pointer;
+        }
+        
+        .slider-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .slider-before {
+            z-index: 2;
+        }
+        
+        .slider-after {
+            z-index: 1;
+        }
+        
+        .slider-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: #d4af37;
+            z-index: 3;
+            transform: translateX(-50%);
+        }
+        
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background: #d4af37;
+            border-radius: 50%;
+            z-index: 4;
+            cursor: grab;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transform: translate(-50%, -50%);
+        }
+        
+        .slider-handle:active {
+            cursor: grabbing;
+        }
+        
+        .slider-labels {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            z-index: 3;
+            padding: 0 20px;
+        }
+        
+        .slider-label {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .slider-label.after {
+            background: rgba(0,0,0,0.9);
+        }
+        
+        .slider-label.before {
+            background: rgba(212, 175, 55, 0.9);
+        }
+
         /* Reviews Section Styles */
         .reviews-section {
             background: white url('Background das reviews.jpg') center center / cover no-repeat; /* Fixed path */
@@ -1009,7 +1049,7 @@
             position: relative;
             max-width: 1200px;
         }
-        
+
         .reviews-section::before {
             content: '';
             position: absolute;
@@ -1021,16 +1061,13 @@
             border-radius: 15px;
             z-index: 1;
         }
-        
+
         .reviews-section > * {
             position: relative;
             z-index: 2;
         }
+        
 
-        .review-item {
-            position: static !important;
-            z-index: auto !important;
-        }
 
         .reviews-header {
             text-align: center;
@@ -1209,12 +1246,61 @@
             padding: 20px;
         }
 
-        /* Remove border-radius when video is in fullscreen */
-        video:fullscreen,
-        video:-webkit-full-screen,
-        video:-moz-full-screen,
-        video:-ms-fullscreen {
-            border-radius: 0 !important;
+        /* Disable fullscreen functionality */
+        video::-webkit-media-controls-fullscreen-button {
+            display: none !important;
+        }
+        
+        video::-webkit-media-controls {
+            overflow: hidden !important;
+        }
+        
+        video {
+            pointer-events: none;
+        }
+        
+        video::-webkit-media-controls-panel {
+            display: none !important;
+        }
+        
+        /* Custom video controls */
+        .video-controls {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 1000;
+            pointer-events: auto;
+        }
+        
+        .audio-toggle-btn {
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            pointer-events: auto;
+            position: relative;
+        }
+        
+        .audio-toggle-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+        
+        .audio-toggle-btn.audio-on {
+            background: rgba(212, 175, 55, 0.8);
+        }
+        
+        .audio-toggle-btn.audio-on:hover {
+            background: rgba(212, 175, 55, 1);
         }
 
         .video-fallback i {
@@ -1369,91 +1455,81 @@
                 <div class="logo-container">
                     <img src="../../Logo.png" alt="67 Beauty Hub" class="logo-image">
                     <div class="logo-text"><span class="logo-brand">67 BEAUTY HUB</span></div>
-                </div>
+            </div>
             </div>
             <ul class="nav-menu">
-                <li class="nav-item"><a href="../../index.html" class="nav-link">Início</a></li>
-                <li class="nav-item"><a href="../../index.html#products" class="nav-link">Produtos</a></li>
-                <li class="nav-item"><a href="../../index.html#about" class="nav-link">Sobre</a></li>
-                <li class="nav-item"><a href="../../index.html#contact" class="nav-link">Contato</a></li>
+                <li class="nav-item"><a href="../../index.html" class="nav-link" data-translate-key="nav_home">Home</a></li>
+                <li class="nav-item"><a href="../../index.html#products" class="nav-link" data-translate-key="nav_products">Products</a></li>
+                <li class="nav-item"><a href="../../index.html#about" class="nav-link" data-translate-key="nav_about">About</a></li>
+                <li class="nav-item"><a href="../../index.html#contact" class="nav-link" data-translate-key="nav_contact">Contact</a></li>
             </ul>
             
-            <!-- Flag Dropdown Selector -->
-            <div class="flag-dropdown-container">
-                <div class="flag-dropdown" onclick="toggleFlagDropdown()">
-                    <div class="selected-flag" id="selectedFlag">🇺🇸</div>
-                    <i class="fas fa-chevron-down dropdown-arrow"></i>
-                </div>
-                <div class="flag-dropdown-menu" id="flagDropdownMenu">
-                    <!-- Países selecionados -->
-                    <div class="flag-option" data-currency="USD" data-flag="🇺🇸" data-country="Estados Unidos">🇺🇸 Estados Unidos</div>
-                    <div class="flag-option" data-currency="BRL" data-flag="🇧🇷" data-country="Brasil">🇧🇷 Brasil</div>
-                    <div class="flag-option" data-currency="EUR" data-flag="🇵🇹" data-country="Portugal">🇵🇹 Portugal</div>
-                </div>
+            <!-- Currency automatically detected based on browser language -->
+                        </div>
             </div>
         </div>
     </nav>
 
     <div class="checkout-container">
-        <div class="checkout-header">
-            <h1><i class="fas fa-shopping-cart"></i> Finalizar Compra</h1>
-            <p>Escolha sua oferta e complete seu pedido com segurança</p>
-        </div>
+            <div class="checkout-header">
+            <h1><i class="fas fa-shopping-cart"></i> <span data-translate-key="checkout_title">Checkout</span></h1>
+            <p data-translate-key="checkout_subtitle">Choose your offer and complete your order securely</p>
+            </div>
 
         <div class="checkout-layout">
             <div class="unified-section">
                 <div class="product-info">
                     <div class="product-summary">
-                        <img src="Face and Neck Massager Tool, 7-in-1 Color Red-Light-Therapy Wand for Skin Care.png" alt="Vara de Skincare - Wrinkle Reducer" class="product-image" id="mainProductImage" />
+                        <img src="Apresentação.png" alt="Wrinkle Reducer" class="product-image" id="mainProductImage" />
                         <div class="product-details">
-                            <h3>Vara de Skincare - Wrinkle Reducer</h3>
-                            <p>Elimine rugas e linhas de expressão em casa. Luz vermelha + massagem + 7 funções. Resultados visíveis em 2 semanas.</p>
-                        </div>
-                    </div>
+                            <h3 data-translate-key="product_wrinkle_reducer">Wrinkle Reducer</h3>
+                            <p data-translate-key="product_wrinkle_reducer_description">Eliminate wrinkles and expression lines at home. Red light + massage + 7 functions. Visible results in 2 weeks.</p>
                 </div>
+                </div>
+            </div>
 
                 <div class="offer-section">
-                    <h3><i class="fas fa-gift"></i> Escolha sua Oferta</h3>
+                    <h3 data-translate-key="choose_offer"><i class="fas fa-gift"></i> Choose Your Offer</h3>
                     
-                    <div class="offer-options">
+                            <div class="offer-options">
                         <div class="offer-option has-checkbox selected" data-option="basic">
                             <input type="checkbox" class="offer-checkbox" id="offer-basic" data-option="basic" checked>
-                            <div class="option-header">
-                                <h4>Vara de Skincare - Wrinkle Reducer</h4>
+                                    <div class="option-header">
+                                <h4 data-translate-key="product_wrinkle_reducer">Wrinkle Reducer</h4>
                                 <span class="price" id="basic-price">$17.45</span>
-                    </div>
+                                    </div>
                             <div class="discount">50% OFF</div>
-                            <p class="description">Preocupada com rugas e linhas finas? O Redutor de Rugas usa luz vermelha para estimular o colágeno e devolver firmeza à sua pele sem sair de casa.</p>
+                            <p class="description" data-translate-key="offer_basic_description">Worried about wrinkles and fine lines? The Wrinkle Reducer uses red light to stimulate collagen and restore firmness to your skin without leaving home.</p>
                             
                             <!-- Sistema de Quantidade -->
                             <div class="quantity-section" style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e0e0e0;">
-                                <h5 style="color: #333; margin-bottom: 10px; font-size: 1rem;">Quantidade:</h5>
+                                <h5 style="color: #333; margin-bottom: 10px; font-size: 1rem;" data-translate-key="quantity_label">Quantity:</h5>
                                 <div class="quantity-controls" style="display: flex; align-items: center; gap: 15px; justify-content: center;">
                                     <button type="button" class="quantity-btn" id="decreaseQty" style="width: 40px; height: 40px; border: 2px solid #d4af37; background: white; color: #d4af37; border-radius: 50%; cursor: pointer; font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">-</button>
                                     <input type="number" id="productQuantity" value="1" min="1" max="10" style="width: 60px; height: 40px; text-align: center; border: 2px solid #d4af37; border-radius: 8px; font-size: 1.1rem; font-weight: 600; color: #333;">
                                     <button type="button" class="quantity-btn" id="increaseQty" style="width: 40px; height: 40px; border: 2px solid #d4af37; background: white; color: #d4af37; border-radius: 50%; cursor: pointer; font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">+</button>
                                 </div>
-                                <p style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9rem;">Máximo 10 unidades</p>
-                                </div>
+                                <p style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9rem;" data-translate-key="max_10_units">Maximum 10 units</p>
+                            </div>
                             
-                    </div>
+                        </div>
 
                         <div class="offer-option has-checkbox" data-option="premium">
                             <input type="checkbox" class="offer-checkbox" id="offer-premium" data-option="premium">
                             <div class="option-header">
-                                <h4>Face Mask Therapy</h4>
+                                <h4 data-translate-key="offer_premium_title">Face Mask Therapy</h4>
                                 <span class="price" id="premium-price">$35.36</span>
                         </div>
                             <div class="offer-image-container">
                                 <img src="type1 set nobox.png" alt="Face Mask Therapy" class="offer-image">
                                 <div class="offer-description-container">
-                                    <div class="description">Sua pele cansada e com sinais da idade? A Máscara Facial Anti-Idade hidrata profundamente, reduz linhas finas e devolve o brilho jovem ao rosto.</div>
+                                    <div class="description" data-translate-key="offer_premium_description">Tired skin with signs of aging? Anti-Aging Facial Mask Therapy deeply hydrates, reduces fine lines and restores youthful glow to your face.</div>
                         </div>
-                        </div>
-                        </div>
-
                     </div>
                 </div>
+
+                            </div>
+                            </div>
 
                 <!-- Galeria de Imagens -->
                 <div class="product-gallery-section">
@@ -1462,14 +1538,14 @@
                         <button class="gallery-nav-btn prev-btn" id="prevBtn">
                             <i class="fas fa-chevron-left"></i>
                         </button>
-                        <img src="Galeria/516848824_2127249251135000_2813377934115782079_n.jpg" alt="Wrinkle Reducer - Red Light Therapy" class="gallery-main-image" id="galleryMainImage">
+                        <img src="Galeria/516848824_2127249251135000_2813377934115782079_n.jpg" alt="Wrinkle Reducer" class="gallery-main-image" id="galleryMainImage">
                         <button class="gallery-nav-btn next-btn" id="nextBtn">
                             <i class="fas fa-chevron-right"></i>
                         </button>
-                    </div>
+                        </div>
                 </div>
                     <div class="gallery-indicators" id="galleryIndicators">
-                        <!-- Indicadores serão gerados pelo JavaScript -->
+                        <!-- Indicators will be generated by JavaScript -->
                     </div>
                 </div>
             </div>
@@ -1477,123 +1553,209 @@
             <!-- Checkout Form -->
             <div class="checkout-bottom">
                 <div class="form-section">
-                    <h3><i class="fas fa-envelope"></i> Informações de Contato</h3>
+                    <h3><i class="fas fa-user"></i> <span data-translate-key="customer_info">Customer Information</span></h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" data-translate-key="first_name">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" data-translate-key="last_name">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
 
                     <div class="form-group">
-                        <label for="email">E-mail *</label>
+                        <label for="email" data-translate-key="email_label">Email *</label>
                         <input type="email" id="email" name="email" required placeholder="seu@email.com">
                     </div>
 
-                    <h3><i class="fas fa-credit-card"></i> Método de Pagamento</h3>
+                    <div class="form-group">
+                        <label for="phone" data-translate-key="phone_label">Phone *</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+1 (555) 123-4567">
+                    </div>
+
+                    <h3><i class="fas fa-truck"></i> <span data-translate-key="shipping_info">Shipping Information</span></h3>
                     
                     <div class="form-group">
-                        <label for="paymentMethod">Forma de Pagamento *</label>
+                        <label for="address" data-translate-key="address_label">Address *</label>
+                        <textarea id="address" name="address" rows="3" required placeholder="Street address, apartment, suite, etc."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city" data-translate-key="city_label">City *</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state" data-translate-key="state_label">State/Province *</label>
+                            <input type="text" id="state" name="state" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="zipCode" data-translate-key="zip_code_label">ZIP/Postal Code *</label>
+                            <input type="text" id="zipCode" name="zipCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="country" data-translate-key="country_label">Country *</label>
+                            <select id="country" name="country" required>
+                                <option value="" data-translate-key="select_country">Select Country</option>
+                                <option value="US" data-translate-key="country_us">United States</option>
+                                <option value="BR" data-translate-key="country_br">Brazil</option>
+                                <option value="PT" data-translate-key="country_pt">Portugal</option>
+                                <option value="CA" data-translate-key="country_ca">Canada</option>
+                                <option value="GB" data-translate-key="country_gb">United Kingdom</option>
+                                <option value="DE" data-translate-key="country_de">Germany</option>
+                                <option value="FR" data-translate-key="country_fr">France</option>
+                                <option value="ES" data-translate-key="country_es">Spain</option>
+                                <option value="IT" data-translate-key="country_it">Italy</option>
+                                <option value="AU" data-translate-key="country_au">Australia</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="observations" data-translate-key="observations_label">Order Notes (optional)</label>
+                        <textarea id="observations" name="observations" rows="3" placeholder="Any special instructions for your order?"></textarea>
+                    </div>
+
+                    <h3><i class="fas fa-credit-card"></i> <span data-translate-key="payment_method">Payment Method</span></h3>
+                    
+                    <div class="form-group">
+                        <label for="paymentMethod" data-translate-key="payment_method_label">Payment Method *</label>
                         <select id="paymentMethod" name="paymentMethod" required>
-                            <option value="">Selecione</option>
-                            <option value="paypal">PayPal</option>
-                            <option value="pix">PIX</option>
+                            <option value="" data-translate-key="select_option">Select</option>
+                            <option value="paypal" data-translate-key="paypal_option">PayPal</option>
+                            <option value="pix" id="pix-option" style="display: none;" data-translate-key="pix_option">PIX (Brazil only)</option>
+                            <option value="stripe" id="stripe-option" style="display: none;" data-translate-key="stripe_option">Credit Card (Stripe)</option>
                         </select>
                     </div>
 
                     <div id="paypal-payment-button" style="display: none;"></div>
                     <div id="pix-payment-info" style="display: none;">
                         <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border: 2px solid #d4af37; text-align: center;">
-                            <h4 style="color: #d4af37; margin-bottom: 15px;"><i class="fas fa-qrcode"></i> Pagamento via PIX</h4>
-                            <p style="color: #666; margin-bottom: 15px;">Após confirmar o pedido, você receberá as instruções de pagamento PIX por email.</p>
+                            <h4 style="color: #d4af37; margin-bottom: 15px;"><i class="fas fa-qrcode"></i> <span data-translate-key="pix_payment">PIX Payment</span></h4>
+                            <p style="color: #666; margin-bottom: 15px;" data-translate-key="pix_payment_info">After confirming your order, you will receive PIX payment instructions by email.</p>
                             <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
-                                <strong>Chave PIX:</strong> contato@67beautyhub.com
+                                <strong data-translate-key="pix_key">PIX Key:</strong> contato@67beautyhub.com
                             </div>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="observations">Observações (opcional)</label>
-                        <textarea id="observations" name="observations" rows="3" placeholder="Alguma observação especial sobre seu pedido?"></textarea>
+                    <div id="stripe-payment-info" style="display: none;">
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border: 2px solid #d4af37; text-align: center;">
+                            <h4 style="color: #d4af37; margin-bottom: 15px;"><i class="fas fa-credit-card"></i> <span data-translate-key="stripe_payment">Credit Card Payment</span></h4>
+                            <p style="color: #666; margin-bottom: 15px;" data-translate-key="stripe_payment_info">Secure payment processing with Stripe. Your card information is encrypted and secure.</p>
+                        </div>
                     </div>
 
                     <button class="checkout-btn" onclick="processCheckout()">
-                        <i class="fas fa-lock"></i> Finalizar Pedido
-                    </button>
+                        <i class="fas fa-lock"></i> <span data-translate-key="confirm_order">Complete Order</span>
+                        </button>
                 </div>
 
                 <!-- Order Summary -->
                 <div class="summary-section">
-                    <h3><i class="fas fa-receipt"></i> Resumo do Pedido</h3>
+                    <h3><i class="fas fa-receipt"></i> <span data-translate-key="order_summary">Order Summary</span></h3>
                     <div class="checkout-summary">
                         <div id="selectedOffers"></div>
                         <div class="summary-row total">
-                            <span>Total</span>
+                            <span data-translate-key="total">Total</span>
                             <span id="totalAmount">$17.45</span>
-                    </div>
+            </div>
 
-                        <!-- Currency Selector for Summary -->
-                        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; text-align: center;">
-                            <div>
-                                <label style="display: block; color: #555; font-size: 14px; margin-bottom: 5px;">
-                                    <i class="fas fa-exchange-alt"></i> Moeda do Resumo
-                                </label>
-                                <select id="summaryCurrencySelector" style="padding: 8px 12px; border: 2px solid #d4af37; border-radius: 6px; background: white; color: #333; font-size: 14px; width: 100%; max-width: 250px;">
-                                    <option value="USD">🇺🇸 Dólar Americano (USD)</option>
-                                    <option value="BRL">🇧🇷 Real Brasileiro (BRL)</option>
-                                    <option value="EUR">🇪🇺 Euro (EUR)</option>
-                                </select>
-                            </div>
-                        </div>
+                        <!-- Currency automatically detected based on browser language -->
                         </div>
                         </div>
                         </div>
                     </div>
                 </div>
 
-    <!-- Reviews Section (moved to end) -->
-    <div class="reviews-section" style="margin: 40px auto; max-width: 1200px; padding: 40px 20px; background-image: url('Background das reviews.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 15px; position: relative;">
-        <div class="reviews-header">
-            <h3><i class="fas fa-star"></i> O que nossos clientes estão dizendo</h3>
-            <p>Mais de 1.400 clientes satisfeitas com nossos produtos</p>
-            
-            <!-- Botão para adicionar review -->
-            <div style="margin-top: 20px;">
-                <button id="addReviewBtn" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 25px; font-size: 16px; cursor: pointer; transition: all 0.3s ease;">
-                    <i class="fas fa-plus"></i> Adicionar sua Review
-                </button>
+    <!-- Before & After Slider Section -->
+    <div class="before-after-section">
+        <div class="before-after-header">
+            <h3><i class="fas fa-magic"></i> <span data-translate-key="slider_title">See the Instant Transformation</span></h3>
+            <p data-translate-key="slider_description">Drag the slider to see the amazing before and after results with <span data-translate-key="product_wrinkle_reducer">Wrinkle Reducer</span></p>
+        </div>
+        
+        <div class="slider-container">
+            <div class="slider-wrapper" id="beforeAfterSlider">
+                <!-- Before Image (right side) -->
+                <img src="Before.jpeg" alt="Before" class="slider-image slider-before" id="beforeImage">
+                <!-- After Image (left side) -->
+                <img src="After .jpeg" alt="After" class="slider-image slider-after" id="afterImage">
+                <div class="slider-line" id="sliderLine"></div>
+                <div class="slider-handle" id="sliderHandle">
+                    <i class="fas fa-arrows-alt-h"></i>
+                </div>
+                <div class="slider-labels">
+                    <div class="slider-label after">AFTER</div>
+                    <div class="slider-label before">BEFORE</div>
+                </div>
             </div>
         </div>
         
-        <div class="reviews-container">
+        <div style="margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <p style="color: #333; font-size: 1.1rem; margin: 0;">
+                <i class="fas fa-star" style="color: #d4af37;"></i> 
+                <strong data-translate-key="slider_results_title">Real results from real customers!</strong> 
+                <span data-translate-key="slider_results_description">This is what you can achieve with just one application of <span data-translate-key="product_wrinkle_reducer">Wrinkle Reducer</span>.</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Reviews Section (moved to end) -->
+    <div class="reviews-section" style="margin: 40px auto; max-width: 1200px; padding: 40px 20px; background-image: url('Background das reviews.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 15px; position: relative;">
+                <div class="reviews-header">
+            <h3 data-translate-key="reviews_title"><i class="fas fa-star"></i> What our customers are saying</h3>
+            <p data-translate-key="reviews_subtitle">More than 1,400 satisfied customers with our products</p>
+            
+            <!-- Button to add review -->
+            <div style="margin-top: 20px;">
+                <button id="addReviewBtn" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 25px; font-size: 16px; cursor: pointer; transition: all 0.3s ease;">
+                    <i class="fas fa-plus"></i> <span data-translate-key="add_review_btn">Add Your Review</span>
+                </button>
+            </div>
+                </div>
+
+                <div class="reviews-container">
             <div class="review-item clickable-review" 
                  data-review-id="sarah"
                  data-author="Sarah M."
                  data-date="2 weeks ago"
                  data-stars="4">
-                <div class="review-image">
-                    <div class="review-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                </div>
-                <div class="review-content">
-                    <div class="review-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+                        <div class="review-image">
+                            <div class="review-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            <div class="review-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                         <i class="far fa-star"></i>
+                            </div>
+                    <p class="review-text" data-translate-key="review_sarah">"They gave me a rigid facial mask during a facial, and I was hesitant about buying one, but I liked this model better because it is manageable and very comfortable!! I like using it, first I clean my face well, use it, and then add vitamin C and hyaluronic acid serum, then cream (together or alternate). I've been using it for about 3 weeks, at least 3 times a week. It's still too early to see the benefits, but the day after I use it, my husband tells me I look younger :)"</p>
+                            <div class="review-author">
+                                <strong>Sarah M.</strong>
+                        <span class="review-date" data-translate-key="verified_purchase_2_weeks">Verified Purchase • 2 weeks ago</span>
+                            </div>
+                        </div>
                     </div>
-                    <p class="review-text">"They gave me a rigid facial mask during a facial, and I was hesitant about buying one, but I liked this model better because it is manageable and very comfortable!! I like using it, first I clean my face well, use it, and then add vitamin C and hyaluronic acid serum, then cream (together or alternate). I've been using it for about 3 weeks, at least 3 times a week. It's still too early to see the benefits, but the day after I use it, my husband tells me I look younger :)"</p>
-                    <div class="review-author">
-                        <strong>Sarah M.</strong>
-                        <span class="review-date">Verified Purchase • 2 weeks ago</span>
-                    </div>
-                </div>
-            </div>
 
             <div class="review-item clickable-review" 
                  data-review-id="jennifer"
                  data-author="Jennifer K."
                  data-date="1 week ago"
                  data-stars="5">
-                <div class="review-image">
+                        <div class="review-image">
                     <img src="REviews/The mask is of very high quality, with pleasant material. Thanks to the seller. ❤️ 😌.png" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-                </div>
+                            </div>
                 <div class="review-content">
                     <div class="review-stars">
                         <i class="fas fa-star"></i>
@@ -1602,10 +1764,10 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <p class="review-text">"The mask is of very high quality, with pleasant material. Thanks to the seller. ❤️ 😌"</p>
+                    <p class="review-text" data-translate-key="review_jennifer">"The mask is of very high quality, with pleasant material. Thanks to the seller. ❤️ 😌"</p>
                     <div class="review-author">
                         <strong>Jennifer K.</strong>
-                        <span class="review-date">Verified Purchase • 1 week ago</span>
+                        <span class="review-date" data-translate-key="verified_purchase_1_week">Verified Purchase • 1 week ago</span>
                     </div>
                 </div>
             </div>
@@ -1617,31 +1779,31 @@
                  data-stars="5">
                 <div class="review-image">
                     <img src="REviews/Very very impressed with this product! Packaged well and very high quality.png" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-                </div>
-                <div class="review-content">
-                    <div class="review-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="review-text">"Very very impressed with this product! Packaged well and very high quality"</p>
-                    <div class="review-author">
+                        </div>
+                        <div class="review-content">
+                            <div class="review-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                    <p class="review-text" data-translate-key="review_amanda">"Very very impressed with this product! Packaged well and very high quality"</p>
+                            <div class="review-author">
                         <strong>Amanda R.</strong>
-                        <span class="review-date">Verified Purchase • 3 days ago</span>
+                        <span class="review-date" data-translate-key="verified_purchase_3_days">Verified Purchase • 3 days ago</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
             <div class="review-item clickable-review" 
                  data-review-id="michelle"
                  data-author="Michelle T."
                  data-date="5 days ago"
                  data-stars="4">
-                <div class="review-image">
+                        <div class="review-image">
                     <img src="REviews/The material seems to be of good quality and comfortable to wear, it needs to be.png" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-                </div>
+                            </div>
                 <div class="review-content">
                     <div class="review-stars">
                         <i class="fas fa-star"></i>
@@ -1650,10 +1812,10 @@
                         <i class="fas fa-star"></i>
                         <i class="far fa-star"></i>
                     </div>
-                    <p class="review-text">"The material seems to be of good quality and comfortable to wear, it needs to be charged for 5 hours before it can be used."</p>
+                    <p class="review-text" data-translate-key="review_michelle">"The material seems to be of good quality and comfortable to wear, it needs to be charged for 5 hours before it can be used."</p>
                     <div class="review-author">
                         <strong>Michelle T.</strong>
-                        <span class="review-date">Verified Purchase • 5 days ago</span>
+                        <span class="review-date" data-translate-key="verified_purchase_5_days">Verified Purchase • 5 days ago</span>
                     </div>
                 </div>
             </div>
@@ -1665,22 +1827,22 @@
                  data-stars="5">
                 <div class="review-image">
                     <img src="REviews/Perfect...great packaging, arrived quickly, all LEDs work perfectly. Advice.png" alt="Review Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-                </div>
-                <div class="review-content">
-                    <div class="review-stars">
+                        </div>
+                        <div class="review-content">
+                            <div class="review-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="review-text">"Perfect...great packaging, arrived quickly, all LEDs work perfectly. Advice"</p>
-                    <div class="review-author">
+                            </div>
+                    <p class="review-text" data-translate-key="review_lisa">"Perfect...great packaging, arrived quickly, all LEDs work perfectly. Advice"</p>
+                            <div class="review-author">
                         <strong>Lisa W.</strong>
-                        <span class="review-date">Verified Purchase • 2 days ago</span>
+                        <span class="review-date" data-translate-key="verified_purchase_2_days">Verified Purchase • 2 days ago</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
             <div class="review-item clickable-review" 
                  data-review-id="rachel"
@@ -1688,14 +1850,19 @@
                  data-date="1 day ago"
                  data-stars="5">
                 <div class="review-image">
-                    <video controls style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" preload="metadata">
+                    <video id="reviewVideo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" preload="metadata" muted loop>
                         <source src="REviews/Amazon.com- Customer reviews- Face and Neck Massager Tool, 7-in-1 Color Red-Light-Therapy Wand for S.mp4" type="video/mp4">
                         <div class="video-fallback">
                             <i class="fas fa-video"></i>
-                            <p>Video Review Available</p>
-                            <p>Click to play</p>
+                            <p data-translate-key="video_review_available">Video Review Available</p>
+                            <p data-translate-key="click_to_play">Click to play</p>
                         </div>
                     </video>
+                    <div class="video-controls">
+                        <button id="audioToggle" class="audio-toggle-btn" title="Toggle Audio">
+                            <i class="fas fa-volume-mute"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="review-content">
                     <div class="review-stars">
@@ -1705,10 +1872,10 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <p class="review-text">"Excellent product! The red light therapy works amazing and the 7-in-1 functionality is incredible. Highly recommend this wand for anyone looking for professional skincare results at home."</p>
+                    <p class="review-text" data-translate-key="review_rachel">"Excellent product! The red light therapy works amazing and the 7-in-1 functionality is incredible. Highly recommend this wand for anyone looking for professional skincare results at home."</p>
                     <div class="review-author">
                         <strong>Rachel M.</strong>
-                        <span class="review-date">Verified Purchase • 1 day ago</span>
+                        <span class="review-date" data-translate-key="verified_purchase_1_day">Verified Purchase • 1 day ago</span>
                     </div>
                 </div>
             </div>
@@ -1718,14 +1885,14 @@
     <!-- Modal de Review -->
     <div id="reviewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
         <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;">
-            <h3 style="color: #d4af37; margin-bottom: 20px;"><i class="fas fa-star"></i> Adicionar Review</h3>
+            <h3 style="color: #d4af37; margin-bottom: 20px;"><i class="fas fa-star"></i> <span data-translate-key="add_review_modal">Add Review</span></h3>
             <form id="reviewForm">
                 <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Seu Nome:</label>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;" data-translate-key="your_name">Your Name:</label>
                     <input type="text" id="reviewerName" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Avaliação:</label>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;" data-translate-key="rating_label">Rating:</label>
                     <div id="starRating" style="display: flex; gap: 5px; justify-content: center; margin: 10px 0;">
                         <i class="far fa-star" data-rating="1" style="font-size: 2rem; color: #ddd; cursor: pointer; transition: color 0.2s;"></i>
                         <i class="far fa-star" data-rating="2" style="font-size: 2rem; color: #ddd; cursor: pointer; transition: color 0.2s;"></i>
@@ -1735,17 +1902,17 @@
                     </div>
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Sua Review:</label>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;" data-translate-key="your_review">Your Review:</label>
                     <textarea id="reviewText" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; min-height: 100px; resize: vertical;"></textarea>
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Foto (opcional):</label>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;" data-translate-key="photo_optional">Photo (optional):</label>
                     <input type="file" id="reviewImage" accept="image/*" style="width: 100%; padding: 8px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
                     <div id="imagePreview" style="margin-top: 10px; text-align: center;"></div>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: center;">
-                    <button type="submit" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Enviar Review</button>
-                    <button type="button" id="closeReviewModal" style="background: #666; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Cancelar</button>
+                    <button type="submit" style="background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;" data-translate-key="submit_review">Submit Review</button>
+                    <button type="button" id="closeReviewModal" style="background: #666; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;" data-translate-key="cancel">Cancel</button>
                 </div>
             </form>
         </div>
@@ -1754,7 +1921,7 @@
     <script>
         // Currency System for Checkout
         let currentCurrency = 'USD';
-        let summaryCurrency = 'USD'; // Moeda específica para o resumo do pedido
+        let summaryCurrency = 'USD'; // Specific currency for order summary
         let currentLanguage = 'en'; // Idioma independente da moeda
         let exchangeRates = {
             'USD': { symbol: '$', rate: 1, locale: 'en-US', currency: 'USD' },
@@ -1763,29 +1930,7 @@
             'AOA': { symbol: 'Kz', rate: 920, locale: 'pt-AO', currency: 'AOA' }
         };
 
-        // Toggle flag dropdown
-        function toggleFlagDropdown() {
-            const dropdown = document.querySelector('.flag-dropdown');
-            const menu = document.getElementById('flagDropdownMenu');
-            
-            dropdown.classList.toggle('open');
-            menu.classList.toggle('open');
-        }
-        
-        // Select flag option
-        function selectFlagOption(currency, flag) {
-            const selectedFlag = document.getElementById('selectedFlag');
-            selectedFlag.textContent = flag;
-            
-            // Close dropdown
-            const dropdown = document.querySelector('.flag-dropdown');
-            const menu = document.getElementById('flagDropdownMenu');
-            dropdown.classList.remove('open');
-            menu.classList.remove('open');
-            
-            // Change currency
-            changeMainCurrency(currency);
-        }
+        // Currency detection is now automatic - no manual selection needed
         
         // Change main currency (affects everything including summary)
         function changeMainCurrency(currencyCode) {
@@ -1802,14 +1947,14 @@
         // Manual currency selection (user override)
         function setCurrency(currency) {
             currentCurrency = currency;
-            // NÃO alterar o idioma quando mudar a moeda
+            // DO NOT change language when changing currency
             
             // Save user preference (overrides auto-detection)
             localStorage.setItem('preferredCurrency', currency);
             localStorage.setItem('userManuallySelectedCurrency', 'true');
             
             updateCurrencyDisplay();
-            // NÃO chamar updateReviewsLanguage() aqui
+            // DO NOT call updateReviewsLanguage() here
             
             
             // Show confirmation message
@@ -1834,7 +1979,7 @@
         // Show confirmation when user changes language
         function showLanguageChangeConfirmation(language) {
             const languageNames = {
-                'pt': 'Português',
+                'pt': 'Portuguese',
                 'en': 'English'
             };
             
@@ -1864,8 +2009,8 @@
         // Show confirmation when user changes currency
         function showCurrencyChangeConfirmation(currency) {
             const currencyNames = {
-                'USD': '🇺🇸 Dólar Americano',
-                'BRL': '🇧🇷 Real Brasileiro',
+                'USD': '🇺🇸 American Dollar',
+                'BRL': '🇧🇷 Brazilian Real',
                 'EUR': '🇪🇺 Euro'
             };
             
@@ -1904,22 +2049,42 @@
 
         // Update all prices on the page
         function updateAllPrices() {
+            console.log('💰 Updating prices for currency:', currentCurrency);
+            console.log('📊 Offers object:', offers);
+            
+            // Ensure variables are properly initialized
+            if (!currentCurrency) {
+                currentCurrency = 'USD';
+                console.log('⚠️ currentCurrency was undefined, set to USD');
+            }
+            
+            if (!offers || typeof offers !== 'object') {
+                console.error('❌ Offers object not properly initialized');
+                return;
+            }
+            
             // Update basic offer price
             const basicPriceElement = document.getElementById('basic-price');
             if (basicPriceElement && offers.basic) {
-                const usdPrice = offers.basic.prices.USD;
-                const convertedPrice = usdPrice * exchangeRates[currentCurrency].rate;
-                const formattedPrice = formatPrice(convertedPrice, currentCurrency);
+                // Use the price directly from offers object for current currency
+                const price = offers.basic.prices[currentCurrency] || offers.basic.prices.USD;
+                const formattedPrice = formatPrice(price, currentCurrency);
                 basicPriceElement.textContent = formattedPrice;
+                console.log('✅ Basic price updated:', formattedPrice, 'from price:', price);
+            } else {
+                console.warn('⚠️ Basic price element not found or offers.basic not available');
             }
             
             // Update premium offer price
             const premiumPriceElement = document.getElementById('premium-price');
             if (premiumPriceElement && offers.premium) {
-                const usdPrice = offers.premium.prices.USD;
-                const convertedPrice = usdPrice * exchangeRates[currentCurrency].rate;
-                const formattedPrice = formatPrice(convertedPrice, currentCurrency);
+                // Use the price directly from offers object for current currency
+                const price = offers.premium.prices[currentCurrency] || offers.premium.prices.USD;
+                const formattedPrice = formatPrice(price, currentCurrency);
                 premiumPriceElement.textContent = formattedPrice;
+                console.log('✅ Premium price updated:', formattedPrice, 'from price:', price);
+            } else {
+                console.warn('⚠️ Premium price element not found or offers.premium not available');
             }
             
             // Update total amount in summary
@@ -1929,31 +2094,33 @@
 
         // Format price according to currency
         function formatPrice(price, currency) {
-            const symbol = exchangeRates[currency].symbol;
+            const currencySymbols = {
+                'USD': '$',
+                'BRL': 'R$',
+                'EUR': '€',
+                'AOA': 'Kz'
+            };
+            
+            const symbol = currencySymbols[currency] || '$';
             
             if (currency === 'BRL') {
                 return `${symbol} ${price.toFixed(2).replace('.', ',')}`;
+            } else if (currency === 'AOA') {
+                return `${symbol} ${price.toLocaleString()}`;
             } else {
                 return `${symbol}${price.toFixed(2)}`;
             }
         }
 
-        // Função para converter preço para a moeda do resumo
+        // Function to convert price to summary currency
         function convertPriceForSummary(priceUSD) {
             const exchangeRate = exchangeRates[summaryCurrency];
             return priceUSD * exchangeRate.rate;
         }
 
-        // Função para formatar preço do resumo
+        // Function to format summary price
         function formatPriceForSummary(price) {
-            if (summaryCurrency === 'BRL') {
-                return `R$ ${price.toFixed(2).replace('.', ',')}`;
-            } else if (summaryCurrency === 'USD') {
-                return `$${price.toFixed(2)}`;
-            } else if (summaryCurrency === 'EUR') {
-                return `€${price.toFixed(2)}`;
-            }
-            return price.toString();
+            return formatPrice(price, currentCurrency);
         }
 
         // Update reviews language
@@ -1963,21 +2130,12 @@
 
         // Initialize currency system
         document.addEventListener('DOMContentLoaded', function() {
-            // Add click handlers for flag options
-            document.querySelectorAll('.flag-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const currency = this.getAttribute('data-currency');
-                    const flag = this.getAttribute('data-flag');
-                    selectFlagOption(currency, flag);
-                });
-            });
+            // Flag dropdown removed - currency detection is now automatic
             
             // Load saved preferences
             const savedCurrency = localStorage.getItem('selectedCurrency');
             if (savedCurrency && exchangeRates[savedCurrency]) {
                 currentCurrency = savedCurrency;
-                const flag = document.querySelector(`[data-currency="${savedCurrency}"]`).getAttribute('data-flag');
-                document.getElementById('selectedFlag').textContent = flag;
                 updateCurrencyDisplay();
             }
             
@@ -1996,19 +2154,98 @@
                 });
             }
             
+            // Before & After Slider functionality
+            function initializeBeforeAfterSlider() {
+                const slider = document.getElementById('beforeAfterSlider');
+                const handle = document.getElementById('sliderHandle');
+                const line = document.getElementById('sliderLine');
+                const beforeImage = document.getElementById('beforeImage');
+                const afterImage = document.getElementById('afterImage');
+                
+                if (!slider || !handle || !line || !beforeImage || !afterImage) {
+                    console.log('Before & After Slider elements not found');
+                    return;
+                }
+                
+                let isDragging = false;
+                let startX = 0;
+                let currentX = 0;
+                
+                // Set initial position (50%)
+                const initialPosition = 50;
+                updateSliderPosition(initialPosition);
+                
+                // Mouse events
+                handle.addEventListener('mousedown', startDrag);
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', stopDrag);
+                
+                // Touch events for mobile
+                handle.addEventListener('touchstart', startDrag);
+                document.addEventListener('touchmove', drag);
+                document.addEventListener('touchend', stopDrag);
+                
+                // Click on slider to move handle
+                slider.addEventListener('click', function(e) {
+                    if (!isDragging) {
+                        const rect = slider.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const percentage = (x / rect.width) * 100;
+                        updateSliderPosition(Math.max(0, Math.min(100, percentage)));
+                    }
+                });
+                
+                function startDrag(e) {
+                    isDragging = true;
+                    startX = e.clientX || e.touches[0].clientX;
+                    handle.style.cursor = 'grabbing';
+                    e.preventDefault();
+                }
+                
+                function drag(e) {
+                    if (!isDragging) return;
+                    
+                    currentX = e.clientX || e.touches[0].clientX;
+                    const rect = slider.getBoundingClientRect();
+                    const x = currentX - rect.left;
+                    const percentage = (x / rect.width) * 100;
+                    
+                    updateSliderPosition(Math.max(0, Math.min(100, percentage)));
+                    e.preventDefault();
+                }
+                
+                function stopDrag() {
+                    isDragging = false;
+                    handle.style.cursor = 'grab';
+                }
+                
+                function updateSliderPosition(percentage) {
+                    // Update handle position
+                    handle.style.left = percentage + '%';
+                    line.style.left = percentage + '%';
+                    
+                    // Update before image clip (right side)
+                    beforeImage.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+                    
+                    // Update after image clip (left side)
+                    afterImage.style.clipPath = `inset(0 0 0 ${percentage}%)`;
+                }
+                
+                console.log('Before & After Slider initialized successfully');
+            }
+
             // Sistema de galeria de produtos
             function initializeProductGallery() {
                 const galleryImages = [
                     { src: 'Galeria/516848824_2127249251135000_2813377934115782079_n.jpg' },
                     { src: 'Galeria/71dJJYFOQjL._SL1500_.jpg' },
                     { src: 'Galeria/71L1N+QaTmL._SL1500_.jpg' },
-                    { src: 'Galeria/817HWP9F6RL._SL1500_.jpg' },
-                    { src: 'Galeria/S052cd5c603c64089ac481807139e8ad0Q.webp' },
-                    { src: 'Galeria/Sbaed238c364448428b965c54b0951570d.webp' },
-                    { src: 'Galeria/Screenshot 2025-09-20 144606.png' },
-                    { src: 'Galeria/Screenshot 2025-09-20 144640.png' },
-                    { src: 'Galeria/Screenshot 2025-09-20 144719.png' },
-                    { src: 'Galeria/Screenshot 2025-09-20 150819.png' },
+                    { src: 'Galeria/1760613388163.jpeg' },
+                    { src: 'Galeria/1760613503845.jpeg' },
+                    { src: 'Galeria/1760613566236.jpeg' },
+                    { src: 'Galeria/1760613577217.jpeg' },
+                    { src: 'Galeria/1760613621044.jpeg' },
+                    { src: 'Galeria/1760616235671.jpeg' },
                     { src: 'Galeria/Screenshot 2025-09-20 150848.png' },
                     { src: 'Galeria/Screenshot 2025-09-20 150912.png' }
                 ];
@@ -2019,7 +2256,18 @@
                 const nextBtn = document.getElementById('nextBtn');
                 const indicatorsContainer = document.getElementById('galleryIndicators');
                 
+                // Debug: Verificar se os elementos foram encontrados
+                console.log('🔍 Elementos encontrados:');
+                console.log('📷 Main Image:', mainImage ? '✅' : '❌');
+                console.log('⬅️ Prev Button:', prevBtn ? '✅' : '❌');
+                console.log('➡️ Next Button:', nextBtn ? '✅' : '❌');
+                console.log('🔘 Indicators Container:', indicatorsContainer ? '✅' : '❌');
+                
+                // Limpar indicadores existentes para evitar duplicação
+                indicatorsContainer.innerHTML = '';
+                
                 // Criar indicadores
+                console.log('🖼️ Total de imagens na galeria:', galleryImages.length);
                 galleryImages.forEach((_, index) => {
                     const indicator = document.createElement('div');
                     indicator.className = 'gallery-indicator';
@@ -2027,11 +2275,12 @@
                     indicator.addEventListener('click', () => goToImage(index));
                     indicatorsContainer.appendChild(indicator);
                 });
+                console.log('🔘 Total de indicadores criados:', document.querySelectorAll('.gallery-indicator').length);
                 
                 function updateImage(direction = null) {
                     const currentImage = galleryImages[currentImageIndex];
                     
-                    // Aplicar transição de saída
+                    // Apply exit transition
                     if (direction === 'next') {
                         mainImage.classList.add('slide-right');
                     } else if (direction === 'prev') {
@@ -2040,9 +2289,9 @@
                     
                     setTimeout(() => {
                         mainImage.src = currentImage.src;
-                        mainImage.alt = 'Wrinkle Reducer - Red Light Therapy';
+                        mainImage.alt = 'Wrinkle Reducer';
                         
-                        // Aplicar transição de entrada
+                        // Apply entry transition
                         if (direction === 'next') {
                             mainImage.classList.remove('slide-right');
                             mainImage.classList.add('slide-in-left');
@@ -2051,7 +2300,7 @@
                             mainImage.classList.add('slide-in-right');
                         }
                         
-                        // Remover classes de transição após a animação
+                        // Remove transition classes after animation
                         setTimeout(() => {
                             mainImage.classList.remove('slide-in-left', 'slide-in-right');
                         }, 500);
@@ -2063,7 +2312,7 @@
                         indicator.classList.toggle('active', index === currentImageIndex);
                     });
                     
-                    // Atualizar botões
+                    // Update buttons
                     prevBtn.disabled = currentImageIndex === 0;
                     nextBtn.disabled = currentImageIndex === galleryImages.length - 1;
                 }
@@ -2077,61 +2326,152 @@
                 }
                 
                 // Event listeners
-                prevBtn.addEventListener('click', () => {
-                    if (currentImageIndex > 0) {
-                        currentImageIndex--;
-                        updateImage('prev');
-                    }
-                });
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        console.log('⬅️ Botão anterior clicado, índice atual:', currentImageIndex);
+                        if (currentImageIndex > 0) {
+                            currentImageIndex--;
+                            updateImage('prev');
+                            console.log('⬅️ Navegando para imagem:', currentImageIndex);
+                        } else {
+                            console.log('⬅️ Já na primeira imagem');
+                        }
+                    });
+                } else {
+                    console.log('❌ Botão anterior não encontrado!');
+                }
                 
-                nextBtn.addEventListener('click', () => {
-                    if (currentImageIndex < galleryImages.length - 1) {
-                        currentImageIndex++;
-                        updateImage('next');
-                    }
-                });
-                
-                // Inicializar estado dos botões
-                updateImage();
-                
-                // Slideshow automático
-                let slideshowInterval;
-                
-                function startSlideshow() {
-                    slideshowInterval = setInterval(() => {
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        console.log('➡️ Botão próximo clicado, índice atual:', currentImageIndex);
                         if (currentImageIndex < galleryImages.length - 1) {
                             currentImageIndex++;
                             updateImage('next');
+                            console.log('➡️ Navegando para imagem:', currentImageIndex);
                         } else {
-                            currentImageIndex = 0;
-                            updateImage('next');
+                            console.log('➡️ Já na última imagem');
                         }
-                    }, 5000); // 5 segundos
-                }
-                
-                function stopSlideshow() {
-                    clearInterval(slideshowInterval);
-                }
-                
-                // Pausar slideshow ao interagir
-                [nextBtn, prevBtn, ...document.querySelectorAll('.gallery-indicator')].forEach(element => {
-                    element.addEventListener('click', () => {
-                        stopSlideshow();
-                        setTimeout(startSlideshow, 10000); // Reiniciar após 10 segundos
                     });
-                });
+                } else {
+                    console.log('❌ Botão próximo não encontrado!');
+                }
                 
-                // Pausar slideshow ao passar o mouse
-                const galleryMain = document.querySelector('.gallery-main');
-                galleryMain.addEventListener('mouseenter', stopSlideshow);
-                galleryMain.addEventListener('mouseleave', startSlideshow);
+                // Initialize button state
+                updateImage();
                 
-                // Iniciar slideshow
-                startSlideshow();
+                // Manual navigation only - no automatic slideshow
+                // Users can navigate using buttons and indicators at their own pace
             }
             
-            // Inicializar galeria
+            // Initialize gallery
             initializeProductGallery();
+            
+            // Initialize Before & After Slider
+            initializeBeforeAfterSlider();
+            
+            // Video auto-play when reviews section is visible
+            const reviewsSection = document.querySelector('.reviews-section');
+            const reviewVideo = document.getElementById('reviewVideo');
+            const audioToggle = document.getElementById('audioToggle');
+            let isVideoPlaying = false;
+            let isAudioOn = false;
+            
+            // Ensure video is ready for autoplay
+            if (reviewVideo) {
+                reviewVideo.addEventListener('loadeddata', function() {
+                    console.log('Video loaded and ready for autoplay');
+                });
+                
+                reviewVideo.addEventListener('canplay', function() {
+                    console.log('Video can start playing');
+                });
+            }
+            
+            // Intersection Observer for auto-play
+            if (reviewsSection && reviewVideo) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !isVideoPlaying) {
+                            // Force play with user interaction simulation
+                            reviewVideo.currentTime = 0;
+                            reviewVideo.play().then(() => {
+                                isVideoPlaying = true;
+                                console.log('✅ Video started playing automatically');
+                            }).catch(e => {
+                                console.log('❌ Auto-play failed:', e);
+                                // Try again after a short delay
+                                setTimeout(() => {
+                                    reviewVideo.play().then(() => {
+                                        isVideoPlaying = true;
+                                        console.log('✅ Video started playing on retry');
+                                    }).catch(e2 => {
+                                        console.log('❌ Auto-play retry failed:', e2);
+                                    });
+                                }, 1000);
+                            });
+                        } else if (!entry.isIntersecting && isVideoPlaying) {
+                            reviewVideo.pause();
+                            isVideoPlaying = false;
+                            console.log('⏸️ Video paused - section not visible');
+                        }
+                    });
+                }, { threshold: 0.3 });
+                
+                observer.observe(reviewsSection);
+            }
+            
+            // Audio toggle functionality
+            if (audioToggle && reviewVideo) {
+                audioToggle.addEventListener('click', function(e) {
+                    // Prevent event propagation to avoid triggering other click events
+                    e.stopPropagation();
+                    e.preventDefault();
+                    
+                    if (isAudioOn) {
+                        reviewVideo.muted = true;
+                        isAudioOn = false;
+                        this.classList.remove('audio-on');
+                        this.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                    } else {
+                        reviewVideo.muted = false;
+                        isAudioOn = true;
+                        this.classList.add('audio-on');
+                        this.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    }
+                });
+            }
+            
+            // Video autoplay is handled by Intersection Observer - no global click listener needed
+            
+            // Handle video end - restart automatically
+            if (reviewVideo) {
+                reviewVideo.addEventListener('ended', function() {
+                    console.log('🔄 Video ended - restarting automatically');
+                    this.currentTime = 0; // Reset to beginning
+                    this.play().then(() => {
+                        console.log('✅ Video restarted automatically');
+                    }).catch(e => {
+                        console.log('❌ Video restart failed:', e);
+                    });
+                });
+            }
+            
+            // Additional fallback: Play video when page loads if reviews section is visible
+            setTimeout(() => {
+                if (reviewVideo && !isVideoPlaying) {
+                    const rect = reviewsSection.getBoundingClientRect();
+                    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                    
+                    if (isVisible) {
+                        reviewVideo.play().then(() => {
+                            isVideoPlaying = true;
+                            console.log('✅ Video started playing on page load');
+                        }).catch(e => {
+                            console.log('❌ Video play failed on page load:', e);
+                        });
+                    }
+                }
+            }, 2000);
         });
 
         // Add CSS for animations
@@ -2152,12 +2492,19 @@
     </script>
 
     <script>
-        let selectedOffers = ['basic']; // Array para múltiplas seleções
+        // Função de processamento de checkout - REDIRECIONADA para supplier-order-processor.js
+        function processCheckout() {
+            console.log('🔄 processCheckout() chamada - redirecionando para supplier-order-processor.js');
+            // Deixar o supplier-order-processor.js interceptar o formulário
+            return true;
+        }
         
-        // Dados das ofertas com preços em múltiplas moedas
+        let selectedOffers = ['basic']; // Array for multiple selections
+        
+        // Offer data with prices in multiple currencies
         const offers = {
             basic: {
-                name: 'Face and Neck Massager Tool, 7-in-1 Color Red-Light-Therapy Wand for Skin Care',
+                name: 'Wrinkle Reducer',
                 prices: {
                     USD: 17.45,
                     BRL: 92.50,
@@ -2173,7 +2520,7 @@
                 }
             },
             premium: {
-                name: 'type1 set nobox',
+                name: 'Premium Skincare Set',
                 prices: {
                     USD: 35.36,
                     BRL: 187.41,
@@ -2221,7 +2568,7 @@
             // Event listeners para cliques nas ofertas
             document.querySelectorAll('.offer-option').forEach(option => {
                 option.addEventListener('click', function(e) {
-                    // Não processar clique se for no checkbox, botões de quantidade ou input de quantidade
+                    // Don't process click if it's on checkbox, quantity buttons or quantity input
                     if (e.target.type === 'checkbox' || 
                         e.target.classList.contains('quantity-btn') || 
                         e.target.id === 'productQuantity' ||
@@ -2276,7 +2623,7 @@
         }
         });
 
-        // Funções para controle de quantidade
+        // Functions for quantity control
 
         function updateOrderSummary() {
             const selectedOffersContainer = document.getElementById('selectedOffers');
@@ -2287,20 +2634,18 @@
             
             selectedOffers.forEach(offerType => {
                 const offer = offers[offerType];
-                // Obter o preço na moeda atual
-                const offerPriceUSD = offer.prices.USD;
-                // Converter para a moeda do resumo
-                const offerPriceSummary = convertPriceForSummary(offerPriceUSD);
+                // Get price in current currency directly
+                const offerPrice = offer.prices[currentCurrency] || offer.prices.USD;
                 
-                // A oferta premium não deve ser multiplicada pela quantidade
+                // Premium offer should not be multiplied by quantity
                 let offerTotal;
                 let quantityText = '';
                 
                 if (offerType === 'premium') {
-                    offerTotal = offerPriceSummary; // Sem multiplicação
-                    quantityText = ''; // Sem mostrar quantidade
+                    offerTotal = offerPrice; // Without multiplication
+                    quantityText = ''; // Without showing quantity
                 } else {
-                    offerTotal = offerPriceSummary * quantity; // Com multiplicação
+                    offerTotal = offerPrice * quantity; // With multiplication
                     quantityText = quantity > 1 ? `(x${quantity})` : '';
                 }
                 
@@ -2321,13 +2666,13 @@
             }
         }
 
-        function processCheckout() {
+        function processCheckout_OLD() { // DESABILITADA para usar supplier-order-processor.js
             const email = document.getElementById('email').value;
             const paymentMethod = document.getElementById('paymentMethod').value;
             const observations = document.getElementById('observations').value;
 
             if (!email || !paymentMethod) {
-                alert('Por favor, preencha o email e selecione uma forma de pagamento.');
+                alert(translateContent('fill_email_payment') || 'Please fill in the email and select a payment method.');
                 return;
             }
             
@@ -2338,12 +2683,12 @@
                     const offer = offers[offerType];
                     const offerPriceUSD = offer.prices.USD;
                     
-                    // A oferta premium não deve ser multiplicada pela quantidade
+                    // Premium offer should not be multiplied by quantity
                     let totalPrice;
                     if (offerType === 'premium') {
-                        totalPrice = offerPriceUSD; // Sem multiplicação
+                        totalPrice = offerPriceUSD; // Without multiplication
                     } else {
-                        totalPrice = offerPriceUSD * quantity; // Com multiplicação
+                        totalPrice = offerPriceUSD * quantity; // With multiplication
                     }
                     
                     return {
@@ -2362,33 +2707,70 @@
                     const offer = offers[offerType];
                     const offerPriceUSD = offer.prices.USD;
                     
-                    // A oferta premium não deve ser multiplicada pela quantidade
+                    // Premium offer should not be multiplied by quantity
                     if (offerType === 'premium') {
-                        return total + offerPriceUSD; // Sem multiplicação
+                        return total + offerPriceUSD; // Without multiplication
                     } else {
-                        return total + (offerPriceUSD * quantity); // Com multiplicação
+                        return total + (offerPriceUSD * quantity); // With multiplication
                     }
                 }, 0),
                 date: new Date().toISOString()
             };
             
-            // Save order
+            // Map order for supplier (AliExpress)
+            let mappedOrder = null;
+            if (typeof mapProductOrder === 'function') {
+                try {
+                    // Prepare order data for mapping
+                    const mappingOrderData = {
+                        id: orderData.id,
+                        customer: orderData.customer,
+                        items: orderData.products.map(product => ({
+                            productId: 'wrinkle_reducer',
+                            name: product.name,
+                            variation: null, // Wrinkle Reducer has no variations
+                            quantity: product.quantity,
+                            unitPrice: product.totalPrice / product.quantity,
+                            totalPrice: product.totalPrice
+                        })),
+                        total: orderData.total,
+                        date: orderData.date
+                    };
+                    
+                    // Map the order
+                    mappedOrder = mapProductOrder(mappingOrderData);
+                    console.log('Order mapped to supplier:', mappedOrder);
+                } catch (error) {
+                    console.error('Error mapping order:', error);
+                }
+            }
+            
+            // Save original order
             let orders = JSON.parse(localStorage.getItem('orders') || '[]');
             orders.push(orderData);
             localStorage.setItem('orders', JSON.stringify(orders));
             
+            // Save mapped order to dashboardData for dashboard synchronization
+            let dashboardData = JSON.parse(localStorage.getItem('dashboardData') || '{}');
+            if (!dashboardData.orders) dashboardData.orders = [];
+            
+            // Use mapped order if available, otherwise use original
+            const orderToSave = mappedOrder || orderData;
+            dashboardData.orders.push(orderToSave);
+            localStorage.setItem('dashboardData', JSON.stringify(dashboardData));
+            
             // Show specific message based on payment method
-            let successMessage = `Pedido realizado com sucesso!\n\nProdutos: ${orderData.products.map(p => p.name).join(' + ')}\nTotal: R$ ${orderData.total.toFixed(2).replace('.', ',')}\n\n`;
+            let successMessage = `Order placed successfully!\n\nProducts: ${orderData.products.map(p => p.name).join(' + ')}\nTotal: R$ ${orderData.total.toFixed(2).replace('.', ',')}\n\n`;
             
             switch(paymentMethod) {
                 case 'paypal':
-                    successMessage += 'O pagamento via PayPal foi processado. Você receberá um email de confirmação em breve.';
+                    successMessage += translateContent('paypal_processed') || 'PayPal payment has been processed. You will receive a confirmation email shortly.';
                     break;
                 case 'pix':
-                    successMessage += 'Você receberá as instruções de pagamento PIX por email. Após o pagamento, seu pedido será processado.';
+                    successMessage += translateContent('pix_instructions') || 'You will receive PIX payment instructions by email. After payment, your order will be processed.';
                     break;
                 default:
-                    successMessage += 'Você receberá um email de confirmação em breve.';
+                    successMessage += translateContent('confirmation_email') || 'You will receive a confirmation email shortly.';
             }
             
             alert(successMessage);
@@ -2428,21 +2810,147 @@
         // Initialize payment method control and PayPal
         document.addEventListener('DOMContentLoaded', function() {
             setupPaymentMethodControl();
-            initializePayPal();
+            loadPayPalWithCorrectLocale();
+            setupPIXForBrazilOnly();
         });
 
+        // Global variables for PayPal currency and locale
+        let currentPayPalCurrency = 'USD';
+        let currentPayPalLocale = 'en_US';
+        
+        // Setup PIX only for Brazilian customers
+        function setupPIXForBrazilOnly() {
+            const userLanguage = navigator.language || navigator.userLanguage;
+            const pixOption = document.getElementById('pix-option');
+            
+            // Show PIX only for Brazilian Portuguese (pt-BR)
+            if (userLanguage.startsWith('pt-BR') || userLanguage.startsWith('pt_BR')) {
+                if (pixOption) {
+                    pixOption.style.display = 'block';
+                    console.log('🇧🇷 Brazilian customer detected - PIX enabled');
+                }
+            } else {
+                if (pixOption) {
+                    pixOption.style.display = 'none';
+                    console.log('🌍 Non-Brazilian customer - PIX disabled');
+                }
+            }
+        }
+
+        // Load PayPal SDK with correct locale and currency based on user's language
+        function loadPayPalWithCorrectLocale() {
+            // Detect user's language and currency
+            const userLanguage = navigator.language || navigator.userLanguage;
+            console.log('Browser language detected:', userLanguage);
+            let paypalLocale = 'en_US'; // Default to English
+            let paypalCurrency = 'USD'; // Default to USD
+            
+            // Map browser language to PayPal locale and currency
+            if (userLanguage.startsWith('pt')) {
+                if (userLanguage.includes('BR') || userLanguage.includes('br')) {
+                    paypalLocale = 'pt_BR'; // Portuguese Brazil
+                    paypalCurrency = 'BRL'; // Brazilian Real
+                } else if (userLanguage.includes('PT') || userLanguage.includes('pt')) {
+                    paypalLocale = 'pt_PT'; // Portuguese Portugal
+                    paypalCurrency = 'EUR'; // Euro
+                } else {
+                    // Generic Portuguese (Angola, etc.) - use USD
+                    paypalLocale = 'pt_PT'; // Portuguese interface
+                    paypalCurrency = 'USD'; // US Dollar for international Portuguese speakers
+                }
+            } else if (userLanguage.startsWith('en')) {
+                paypalLocale = 'en_US'; // English US
+                paypalCurrency = 'USD'; // US Dollar
+            } else if (userLanguage.startsWith('es')) {
+                paypalLocale = 'es_ES'; // Spanish
+                paypalCurrency = 'EUR'; // Euro for European Spanish
+            } else if (userLanguage.startsWith('fr')) {
+                paypalLocale = 'fr_FR'; // French
+                paypalCurrency = 'EUR'; // Euro
+            } else if (userLanguage.startsWith('de')) {
+                paypalLocale = 'de_DE'; // German
+                paypalCurrency = 'EUR'; // Euro
+            }
+            
+            // Additional check for English browsers
+            if (userLanguage === 'en' || userLanguage === 'en-US' || userLanguage === 'en_US') {
+                paypalLocale = 'en_US';
+                paypalCurrency = 'USD';
+                console.log('Explicit English detection - forcing en_US');
+            }
+            
+            // Store globally for use in order creation
+            currentPayPalCurrency = paypalCurrency;
+            currentPayPalLocale = paypalLocale;
+            
+            console.log('Detected language:', userLanguage, 'Using PayPal locale:', paypalLocale, 'Currency:', paypalCurrency);
+            
+            // Load PayPal SDK with correct locale and currency
+            const script = document.createElement('script');
+            script.src = `https://www.paypal.com/sdk/js?client-id=Ab2ftZVJCplquKwOY1cWgvWMivADwMhbUs-OhehwO4hVh_VW9lS87qLkRUVD39yEeoh7YGXzBeuq1Dlh&currency=${paypalCurrency}&intent=capture&locale=${paypalLocale}`;
+            script.onload = function() {
+                console.log('PayPal SDK loaded with locale:', paypalLocale, 'and currency:', paypalCurrency);
+            // Force locale in window object for PayPal
+            window.paypalLocale = paypalLocale;
+            // Set HTML lang attribute to match PayPal locale
+            document.documentElement.lang = paypalLocale.replace('_', '-');
+            initializePayPal();
+            };
+            script.onerror = function() {
+                console.error('Failed to load PayPal SDK');
+                // Try with a simpler URL
+                console.log('Retrying with simpler PayPal SDK URL...');
+                const retryScript = document.createElement('script');
+                retryScript.src = 'https://www.paypal.com/sdk/js?client-id=Ab2ftZVJCplquKwOY1cWgvWMivADwMhbUs-OhehwO4hVh_VW9lS87qLkRUVD39yEeoh7YGXzBeuq1Dlh&currency=USD&intent=capture';
+                retryScript.async = true;
+                retryScript.defer = true;
+                retryScript.onload = function() {
+                    console.log('PayPal SDK loaded with fallback URL');
+                    setTimeout(initializePayPal, 500);
+                };
+                retryScript.onerror = function() {
+                    console.error('PayPal SDK failed to load even with fallback URL');
+                };
+                document.head.appendChild(retryScript);
+            };
+            document.head.appendChild(script);
+        }
+
+        // Function to get current currency for order creation
+        function getCurrentCurrency() {
+            return currentPayPalCurrency;
+        }
+
         // PayPal integration
+        let paypalRetryCount = 0;
+        const maxPaypalRetries = 50; // Maximum 5 seconds (50 * 100ms)
+        
         function initializePayPal() {
             // Wait for PayPal SDK to be loaded
             if (typeof paypal === 'undefined') {
-                console.log('PayPal SDK not loaded yet, retrying...');
-                setTimeout(initializePayPal, 100);
-                return;
+                paypalRetryCount++;
+                if (paypalRetryCount < maxPaypalRetries) {
+                    console.log('PayPal SDK not loaded yet, retrying...');
+                    setTimeout(initializePayPal, 100);
+                    return;
+                } else {
+                    console.error('PayPal SDK failed to load after maximum retries');
+                    return;
+                }
             }
 
             console.log('PayPal SDK loaded, initializing buttons...');
+            console.log('Current PayPal Locale:', currentPayPalLocale);
+            console.log('Current PayPal Currency:', currentPayPalCurrency);
 
         paypal.Buttons({
+            locale: currentPayPalLocale,
+            style: {
+                locale: currentPayPalLocale,
+                color: 'gold',
+                shape: 'rect',
+                label: 'paypal'
+            },
             createOrder: function(data, actions) {
                     return new Promise((resolve, reject) => {
                         try {
@@ -2457,43 +2965,37 @@
                             
                 const quantity = parseInt(document.getElementById('productQuantity')?.value || 1);
                             
-                            // Get total from order summary (converted to USD for PayPal)
-                            const totalElement = document.getElementById('totalAmount');
-                            let totalAmount = 0;
+                            // PayPal should use the correct currency based on user's language
+                            console.log('🔍 PayPal Debug - Using', currentPayPalCurrency, 'prices for PayPal');
                             
-                            if (totalElement) {
-                                const totalText = totalElement.textContent;
-                                const totalValue = parseFloat(totalText.replace(/[^\d.,]/g, '').replace(',', '.'));
-                                
-                                // Convert to USD if needed
-                                if (summaryCurrency === 'BRL') {
-                                    totalAmount = totalValue / 5.2; // Convert BRL to USD
-                                } else if (summaryCurrency === 'EUR') {
-                                    totalAmount = totalValue / 0.92; // Convert EUR to USD
-                                } else {
-                                    totalAmount = totalValue; // Already USD
+                            // Calculate total in the correct currency
+                            const totalAmount = selectedOffers.reduce((total, offerType) => {
+                                if (!offers[offerType]) {
+                                    console.warn('Offer not found:', offerType);
+                                    return total;
                                 }
-                            } else {
-                                // Fallback to calculation
-                                totalAmount = selectedOffers.reduce((total, offerType) => {
-                                    if (!offers[offerType]) {
-                                        console.warn('Offer not found:', offerType);
-                                        return total;
-                                    }
-                                    
-                    const offer = offers[offerType];
-                                    const price = offer.prices && offer.prices[currentCurrency] 
-                                        ? offer.prices[currentCurrency] 
-                                        : offer.prices.USD || 0;
-                                    
-                    // A oferta premium não deve ser multiplicada pela quantidade
-                    if (offerType === 'premium') {
-                                        return total + price; // Sem multiplicação
-                    } else {
-                                        return total + (price * quantity); // Com multiplicação
-                    }
-                }, 0);
-                            }
+                                
+                                const offer = offers[offerType];
+                                let price = offer.prices.USD; // Start with USD price
+                                
+                                // Convert to correct currency if needed
+                                if (currentPayPalCurrency === 'EUR') {
+                                    price = offer.prices.EUR || (offer.prices.USD * 0.92); // Convert USD to EUR
+                                } else if (currentPayPalCurrency === 'BRL') {
+                                    price = offer.prices.BRL || (offer.prices.USD * 5.27); // Convert USD to BRL
+                                } else if (currentPayPalCurrency === 'USD') {
+                                    price = offer.prices.USD; // Use USD price directly
+                                }
+                                
+                                // Premium offer should not be multiplied by quantity
+                                if (offerType === 'premium') {
+                                    return total + price; // Without multiplication
+                                } else {
+                                    return total + (price * quantity); // With multiplication
+                                }
+                            }, 0);
+                            
+                            console.log('🔍 PayPal Debug -', currentPayPalCurrency, 'totalAmount for PayPal:', totalAmount);
                 
                 const productNames = selectedOffers.map(offerType => {
                     const offer = offers[offerType];
@@ -2512,6 +3014,7 @@
                                 quantity: quantity
                             });
                             
+                            console.log('🔍 PayPal Debug - Final totalAmount being sent to PayPal:', totalAmount);
                             if (totalAmount <= 0) {
                                 throw new Error('Invalid total amount: ' + totalAmount);
                             }
@@ -2521,7 +3024,7 @@
                     purchase_units: [{
                         amount: {
                             value: totalAmount.toFixed(2),
-                            currency_code: 'USD'
+                            currency_code: getCurrentCurrency()
                         },
                                     description: productNames || 'Wrinkle Reducer Products'
                                 }]
@@ -2547,16 +3050,16 @@
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
                         console.log('PayPal payment approved:', details);
-                    alert('Pagamento aprovado! ID da transação: ' + details.id);
+                    alert((translateContent('payment_approved') || 'Payment approved!') + ' Transaction ID: ' + details.id);
                     processCheckout();
                     }).catch(function(error) {
                         console.error('PayPal payment error:', error);
-                        alert('Erro no processamento do pagamento. Tente novamente.');
+                        alert(translateContent('payment_error') || 'Payment processing error. Please try again.');
                     });
                 },
                 onError: function(err) {
                     console.error('PayPal error:', err);
-                    alert('Erro no PayPal. Tente novamente ou escolha outra forma de pagamento.');
+                    alert(translateContent('paypal_error') || 'PayPal error. Please try again or choose another payment method.');
                 },
                 onCancel: function(data) {
                     console.log('PayPal payment cancelled:', data);
@@ -2575,7 +3078,8 @@
         </script>
 
         <script>
-        // Currency Detection and Conversion System
+        // Currency Detection and Conversion System - REMOVED (duplicate functionality)
+        /*
         class CurrencyConverter {
             constructor() {
                 this.baseCurrency = 'USD';
@@ -2594,9 +3098,9 @@
                 // Product names translations
                 this.productNames = {
                     'wrinkle-reducer': {
-                        'USD': 'Wrinkle Reducer - Red Light Therapy',
-                        'BRL': 'Redutor de Rugas - Terapia de Luz Vermelha',
-                        'EUR': 'Wrinkle Reducer - Red Light Therapy'
+                        'USD': 'Wrinkle Reducer',
+                        'BRL': 'Wrinkle Reducer',
+                        'EUR': 'Wrinkle Reducer'
                     }
                 };
                 
@@ -2604,7 +3108,7 @@
                 this.productDescriptions = {
                     'wrinkle-reducer': {
                         'USD': 'Eliminate wrinkles and expression lines at home. Red light + massage + 7 functions. Visible results in 2 weeks.',
-                        'BRL': 'Elimine rugas e linhas de expressão em casa. Luz vermelha + massagem + 7 funções. Resultados visíveis em 2 semanas.',
+                        'BRL': 'Eliminate wrinkles and expression lines at home. Red light + massage + 7 functions. Visible results in 2 weeks.',
                         'EUR': 'Eliminate wrinkles and expression lines at home. Red light + massage + 7 functions. Visible results in 2 weeks.'
                     }
                 };
@@ -2612,18 +3116,18 @@
                 // Page content translations
                 this.pageContent = {
                     'product_title': {
-                        'USD': 'Wrinkle Reducer - Red Light Therapy',
-                        'BRL': 'Redutor de Rugas - Terapia de Luz Vermelha',
-                        'EUR': 'Wrinkle Reducer - Red Light Therapy'
+                        'USD': 'Wrinkle Reducer',
+                        'BRL': 'Wrinkle Reducer',
+                        'EUR': 'Wrinkle Reducer'
                     },
                     'product_description': {
                         'USD': 'Eliminate wrinkles and expression lines at home. Red light + massage + 7 functions. Visible results in 2 weeks.',
-                        'BRL': 'Elimine rugas e linhas de expressão em casa. Luz vermelha + massagem + 7 funções. Resultados visíveis em 2 semanas.',
+                        'BRL': 'Eliminate wrinkles and expression lines at home. Red light + massage + 7 functions. Visible results in 2 weeks.',
                         'EUR': 'Eliminate wrinkles and expression lines at home. Red light + massage + 7 functions. Visible results in 2 weeks.'
                     },
                     'checkout_title': {
                         'USD': 'Checkout - Wrinkle Reducer',
-                        'BRL': 'Finalizar Compra - Redutor de Rugas',
+                        'BRL': 'Checkout - Wrinkle Reducer',
                         'EUR': 'Checkout - Wrinkle Reducer'
                     }
                 };
@@ -2654,14 +3158,25 @@
                     
                     // Check if running from file:// protocol
                     if (window.location.protocol === 'file:') {
-                        // Try to detect from browser language
+                        // Try to detect from browser language with better detection
                         const browserLang = navigator.language || navigator.userLanguage;
-                        if (browserLang.startsWith('pt')) {
+                        console.log('🌍 Browser Language Detected:', browserLang);
+
+                        if (browserLang.startsWith('pt-BR') || browserLang.startsWith('pt_BR')) {
                             countryCode = 'BR';
+                            console.log('🇧🇷 Brazilian Portuguese detected → Brazil');
+                        } else if (browserLang.startsWith('pt-PT') || browserLang.startsWith('pt_PT')) {
+                            countryCode = 'PT';
+                            console.log('🇵🇹 European Portuguese detected → Portugal');
+                        } else if (browserLang.startsWith('pt')) {
+                            countryCode = 'PT'; // Default to Portugal for Portuguese
+                            console.log('🇵🇹 Generic Portuguese detected → Portugal (default)');
                         } else if (browserLang.startsWith('es')) {
                             countryCode = 'ES';
+                            console.log('🇪🇸 Spanish detected → Spain');
                         } else {
                             countryCode = 'US';
+                            console.log('🇺🇸 English detected → USA');
                         }
                     } else {
                         // Try ipapi.co first
@@ -2699,11 +3214,14 @@
                     const countryToCurrency = {
                         // Real Brasileiro (BRL) - Brasil
                         'BR': 'BRL',
-                        
-                        // Dólar Americano (USD) - América do Norte e outros países
+
+                        // Angola - Dollar (default)
+                        'AO': 'USD',
+
+                        // US Dollar (USD) - North America and other countries
                         'US': 'USD', 'CA': 'USD', 'MX': 'USD', 'AR': 'USD', 'CL': 'USD', 'CO': 'USD', 'PE': 'USD', 'UY': 'USD', 'BO': 'USD', 'PY': 'USD', 'VE': 'USD', 'EC': 'USD', 'GY': 'USD', 'SR': 'USD', 'GF': 'USD', 'FK': 'USD', 'BZ': 'USD', 'GT': 'USD', 'HN': 'USD', 'SV': 'USD', 'NI': 'USD', 'CR': 'USD', 'PA': 'USD', 'CU': 'USD', 'JM': 'USD', 'HT': 'USD', 'DO': 'USD', 'PR': 'USD', 'VI': 'USD', 'AG': 'USD', 'BB': 'USD', 'DM': 'USD', 'GD': 'USD', 'KN': 'USD', 'LC': 'USD', 'VC': 'USD', 'TT': 'USD', 'BS': 'USD', 'AU': 'USD', 'NZ': 'USD', 'JP': 'USD', 'KR': 'USD', 'SG': 'USD', 'HK': 'USD', 'TW': 'USD', 'TH': 'USD', 'MY': 'USD', 'ID': 'USD', 'PH': 'USD', 'VN': 'USD', 'IN': 'USD', 'PK': 'USD', 'BD': 'USD', 'LK': 'USD', 'MM': 'USD', 'KH': 'USD', 'LA': 'USD', 'BN': 'USD', 'FJ': 'USD', 'PG': 'USD', 'SB': 'USD', 'VU': 'USD', 'NC': 'USD', 'PF': 'USD', 'WS': 'USD', 'TO': 'USD', 'KI': 'USD', 'TV': 'USD', 'NR': 'USD', 'MH': 'USD', 'FM': 'USD', 'PW': 'USD', 'AS': 'USD', 'GU': 'USD', 'MP': 'USD', 'CK': 'USD', 'NU': 'USD', 'TK': 'USD', 'WF': 'USD', 'NF': 'USD', 'PN': 'USD', 'GS': 'USD', 'SH': 'USD', 'AC': 'USD', 'TA': 'USD', 'IO': 'USD', 'CX': 'USD', 'CC': 'USD', 'HM': 'USD', 'AQ': 'USD', 'BV': 'USD', 'TF': 'USD', 'UM': 'USD',
-                        
-                        // Euro (EUR) - Países da Zona do Euro
+
+                        // Euro (EUR) - Eurozone countries
                         'DE': 'EUR', 'FR': 'EUR', 'IT': 'EUR', 'ES': 'EUR', 'NL': 'EUR', 'BE': 'EUR', 'AT': 'EUR', 'PT': 'EUR', 'IE': 'EUR', 'FI': 'EUR', 'GR': 'EUR', 'LU': 'EUR', 'MT': 'EUR', 'CY': 'EUR', 'SK': 'EUR', 'SI': 'EUR', 'EE': 'EUR', 'LV': 'EUR', 'LT': 'EUR', 'AD': 'EUR', 'MC': 'EUR', 'SM': 'EUR', 'VA': 'EUR', 'ME': 'EUR', 'XK': 'EUR'
                     };
                     
@@ -2763,58 +3281,7 @@
                 }
             }
             
-            updateAllPrices() {
-                try {
-                    // Product prices in USD
-                    const productPrices = {
-                        'wrinkle-reducer': { current: 17.45, original: 34.90 }
-                    };
-                    
-                    // Wait for DOM to be ready
-                    const updatePrices = () => {
-                        // Update product title
-                        const productTitle = document.querySelector('h3');
-                        if (productTitle) {
-                            productTitle.textContent = this.translatePageContent('product_title');
-                        }
-                        
-                        // Update page title
-                        document.title = this.translatePageContent('checkout_title');
-                        
-                        // Update product description
-                        const productDescription = document.querySelector('.product-details p');
-                        if (productDescription) {
-                            productDescription.textContent = this.translateProductDescription('wrinkle-reducer');
-                        }
-                        
-                        // Update prices in offer options
-                        const priceElements = document.querySelectorAll('.price, .price-current, .price-original');
-                        priceElements.forEach(element => {
-                            if (element.classList.contains('price') || element.classList.contains('price-current')) {
-                                element.textContent = this.convertPrice(productPrices['wrinkle-reducer'].current);
-                            } else if (element.classList.contains('price-original')) {
-                                element.textContent = this.convertPrice(productPrices['wrinkle-reducer'].original);
-                            }
-                        });
-                        
-                        // Update selected offer price in summary
-                        const selectedOfferPrice = document.getElementById('selectedOfferPrice');
-                        if (selectedOfferPrice) {
-                            selectedOfferPrice.textContent = this.convertPrice(productPrices['wrinkle-reducer'].current);
-                        }
-                        
-                    };
-                    
-                    // Try to update immediately
-                    updatePrices();
-                    
-                    // If no elements found, wait a bit and try again
-                    setTimeout(updatePrices, 100);
-                    
-                } catch (error) {
-                    console.error('Error updating prices:', error);
-                }
-            }
+            // Removed duplicate updateAllPrices function - using the main one instead
             
             updatePageContent() {
                 try {
@@ -2839,14 +3306,15 @@
                 }
             }
         }
+        */
         
-        // Initialize currency converter when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            const converter = new CurrencyConverter();
-            converter.init();
-        });
+        // Initialize currency converter when page loads - REMOVED (duplicate functionality)
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const converter = new CurrencyConverter();
+        //     converter.init();
+        // });
         
-        // Atualizar preços após carregamento completo
+        // Update prices after complete loading
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 updateAllPrices();
@@ -2917,14 +3385,14 @@
             let selectedRating = 0;
             let userReviews = [];
 
-            // Verificar se usuário está logado
+            // Check if user is logged in
             function checkLogin() {
                 return localStorage.getItem('userLoggedIn') === 'true';
             }
 
             // Mostrar modal de login
             function showLoginModal() {
-                alert('Por favor, faça login para adicionar uma review.');
+                alert(translateContent('please_login_review') || 'Please login to add a review.');
             }
 
             // Mostrar modal de review
@@ -3009,7 +3477,7 @@
                 reviewsContainer.insertBefore(reviewElement, reviewsContainer.firstChild);
             }
 
-            // Botão adicionar review
+            // Add review button
             const addReviewBtn = document.getElementById('addReviewBtn');
             if (addReviewBtn) {
                 addReviewBtn.addEventListener('click', showReviewModal);
@@ -3058,7 +3526,7 @@
                     const imageFile = document.getElementById('reviewImage').files[0];
                     
                     if (selectedRating === 0) {
-                        alert('Por favor, selecione uma avaliação.');
+                        alert('Please select a rating.');
                         return;
                     }
                     
@@ -3075,7 +3543,7 @@
                     addReviewToDOM(newReview);
                     closeReviewModal();
                     
-                    alert('Review adicionada com sucesso!');
+                    alert(translateContent('review_added_success') || 'Review added successfully!');
                 });
             }
 
@@ -3105,6 +3573,529 @@
             });
         });
         </script>
+
+    <!-- Translation System -->
+    <script>
+        class CheckoutTranslator {
+            constructor() {
+                this.userLanguage = 'en';
+                this.userCountry = null;
+                this.userCurrency = 'USD';
+                this.isInitialized = false;
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    await this.detectUserLocation();
+                    this.updatePageContent();
+                    this.isInitialized = true;
+                    console.log(`Checkout translator initialized. Language: ${this.userLanguage}, Currency: ${this.userCurrency}`);
+                } catch (error) {
+                    console.error('Error initializing checkout translator:', error);
+                    this.userLanguage = 'en';
+                    this.userCurrency = 'USD';
+                    this.updatePageContent();
+                }
+            }
+            
+            async detectUserLocation() {
+                try {
+                    // Use ONLY browser language - NO IP detection
+                    const browserLang = navigator.language || navigator.userLanguage;
+                    console.log('🌍 Browser language detected:', browserLang);
+                    
+                    // Set language and currency based ONLY on browser language
+                    if (browserLang.startsWith('pt-PT') || browserLang.startsWith('pt_PT')) {
+                        this.userLanguage = 'pt';
+                        this.userCountry = 'PT';
+                        this.userCurrency = 'EUR';
+                        console.log('🇵🇹 Portuguese (Portugal) detected → EUR');
+                    } else if (browserLang.startsWith('pt-BR') || browserLang.startsWith('pt_BR')) {
+                        this.userLanguage = 'pt';
+                        this.userCountry = 'BR';
+                        this.userCurrency = 'BRL';
+                        console.log('🇧🇷 Portuguese (Brazil) detected → BRL');
+                    } else if (browserLang.startsWith('pt')) {
+                        // Generic Portuguese - default to USD (for Angola and other Portuguese-speaking countries)
+                        this.userLanguage = 'pt';
+                        this.userCountry = 'AO'; // Angola
+                        this.userCurrency = 'USD';
+                        console.log('🇦🇴 Generic Portuguese detected → USD (Angola/International)');
+                    } else {
+                        this.userLanguage = 'en';
+                        this.userCountry = 'US';
+                        this.userCurrency = 'USD';
+                        console.log('🇺🇸 English detected → USD');
+                    }
+                } catch (error) {
+                    console.error('Error in language detection:', error);
+                    this.userLanguage = 'en';
+                    this.userCountry = 'US';
+                    this.userCurrency = 'USD';
+                }
+            }
+            
+            translateContent(contentKey) {
+                // Detect user language - prioritize English detection
+                const browserLang = navigator.language || navigator.userLanguage;
+                let userLanguage = 'en'; // Default to English
+                let languageKey = 'USD'; // Default to USD
+                
+                // Only use Portuguese if explicitly detected
+                if (browserLang.startsWith('pt')) {
+                    userLanguage = 'pt';
+                    languageKey = 'BRL';
+                } else if (browserLang.startsWith('en')) {
+                    userLanguage = 'en';
+                    languageKey = 'USD';
+                }
+                
+                console.log(`🌍 Translating ${contentKey}: userLanguage=${userLanguage}, languageKey=${languageKey}`);
+                
+                const translations = {
+                    'checkout_title': {
+                        'USD': 'Checkout',
+                        'BRL': 'Checkout',
+                        'EUR': 'Checkout'
+                    },
+                    'product_wrinkle_reducer': {
+                        'USD': 'Wrinkle Reducer',
+                        'BRL': 'Wrinkle Reducer',
+                        'EUR': 'Wrinkle Reducer'
+                    },
+                    'choose_offer': {
+                        'USD': 'Choose Your Offer',
+                        'BRL': 'Choose Your Offer',
+                        'EUR': 'Choose Your Offer'
+                    },
+                    'offer_basic_description': {
+                        'USD': 'Worried about wrinkles and fine lines? The Wrinkle Reducer uses red light to stimulate collagen and restore firmness to your skin without leaving home.',
+                        'BRL': 'Preocupada com rugas e linhas finas? O Redutor de Rugas usa luz vermelha para estimular o colágeno e devolver firmeza à sua pele sem sair de casa.',
+                        'EUR': 'Preocupada com rugas e linhas finas? O Redutor de Rugas usa luz vermelha para estimular o colágeno e devolver firmeza à sua pele sem sair de casa.'
+                    },
+                    'offer_premium_title': {
+                        'USD': 'Face Mask Therapy',
+                        'BRL': 'Terapia de Máscara Facial',
+                        'EUR': 'Terapia de Máscara Facial'
+                    },
+                    'offer_premium_description': {
+                        'USD': 'Tired skin with signs of aging? The Anti-Aging Facial Mask deeply hydrates, reduces fine lines and restores youthful glow to the face.',
+                        'BRL': 'Sua pele cansada e com sinais da idade? A Terapia de Máscara Facial Anti-Idade hidrata profundamente, reduz linhas finas e devolve o brilho jovem ao rosto.',
+                        'EUR': 'Sua pele cansada e com sinais da idade? A Terapia de Máscara Facial Anti-Idade hidrata profundamente, reduz linhas finas e devolve o brilho jovem ao rosto.'
+                    },
+                    'discount_badge': {
+                        'USD': '50% OFF',
+                        'BRL': '50% OFF',
+                        'EUR': '50% OFF'
+                    }
+                };
+                
+                return translations[contentKey] ? 
+                    translations[contentKey][languageKey] || 
+                    translations[contentKey]['USD'] : 
+                    contentKey;
+            }
+            
+            updatePageContent() {
+                try {
+                    // Update page title
+                    const pageTitle = document.querySelector('title');
+                    if (pageTitle) {
+                        pageTitle.textContent = `${this.translateContent('checkout_title')} - 7-in-1 Wrinkle Wand | 67 Beauty Hub`;
+                    }
+                    
+                    // Update product title
+                    const productTitle = document.querySelector('h3[data-translate-key="product_wrinkle_reducer"]');
+                    if (productTitle) productTitle.textContent = this.translateContent('product_wrinkle_reducer');
+                    
+                    // Update offer elements
+                    const chooseOfferTitle = document.querySelector('h3[data-translate-key="choose_offer"]');
+                    if (chooseOfferTitle) {
+                        chooseOfferTitle.innerHTML = `<i class="fas fa-gift"></i> ${this.translateContent('choose_offer')}`;
+                    }
+                    
+                    const productTitleInOffer = document.querySelector('h4[data-translate-key="product_wrinkle_reducer"]');
+                    if (productTitleInOffer) productTitleInOffer.textContent = this.translateContent('product_wrinkle_reducer');
+                    
+                    const offerPremiumTitle = document.querySelector('h4[data-translate-key="offer_premium_title"]');
+                    if (offerPremiumTitle) offerPremiumTitle.textContent = this.translateContent('offer_premium_title');
+                    
+                    const offerPremiumDescription = document.querySelector('.description[data-translate-key="offer_premium_description"]');
+                    if (offerPremiumDescription) offerPremiumDescription.textContent = this.translateContent('offer_premium_description');
+                    
+                    // Update order summary title
+                    const orderSummaryTitle = document.querySelector('span[data-translate-key="order_summary"]');
+                    if (orderSummaryTitle) orderSummaryTitle.textContent = this.translateContent('order_summary');
+                    
+                    console.log('Checkout page content updated successfully');
+                    
+                } catch (error) {
+                    console.error('Error updating checkout page content:', error);
+                }
+            }
+        }
+        
+        // Sistema CheckoutTranslator removido - usando sistema global unificado
+        
+        // PIX Payment System
+        let pixCheckout = null;
+        
+        // Use existing variables from the page
+        // selectedOffers, currentCurrency, and offers should already exist
+        
+        // Initialize PIX system
+        function initializePIXSystem() {
+            if (typeof PIXCheckout !== 'undefined') {
+                pixCheckout = new PIXCheckout();
+                console.log('✅ PIX system initialized');
+            } else {
+                console.error('❌ PIX system not available');
+            }
+        }
+        
+        // Setup payment methods based on user location
+        function setupPIXForBrazilOnly() {
+            const userLanguage = navigator.language || navigator.userLanguage;
+            const pixOption = document.getElementById('pix-option');
+            const stripeOption = document.getElementById('stripe-option');
+            
+            // Check for test mode (Angolan testing)
+            const isTestMode = localStorage.getItem('pixTestMode') === 'true';
+            const isAngolan = userLanguage.startsWith('pt') && !userLanguage.includes('BR') && !userLanguage.includes('PT');
+            
+            // Force test mode if explicitly enabled (regardless of language)
+            const forceTestMode = localStorage.getItem('pixTestMode') === 'true';
+            
+            // Debug logs
+            console.log('🔍 Payment Methods Debug Info:');
+            console.log('User Language:', userLanguage);
+            console.log('Is Test Mode:', isTestMode);
+            console.log('Is Angolan:', isAngolan);
+            console.log('PIX Option Element:', pixOption);
+            console.log('Stripe Option Element:', stripeOption);
+            console.log('localStorage pixTestMode:', localStorage.getItem('pixTestMode'));
+            
+            // Show PIX for Brazilian Portuguese (pt-BR) OR for test mode (any language)
+            if (userLanguage.startsWith('pt-BR') || userLanguage.startsWith('pt_BR') || forceTestMode) {
+                if (pixOption) {
+                    pixOption.style.display = 'block';
+                    if (isTestMode) {
+                        console.log('🧪 PIX Test Mode enabled');
+                        pixOption.textContent = 'PIX (Test Mode)';
+                    } else {
+                        console.log('🇧🇷 Brazilian customer detected - PIX enabled');
+                        pixOption.textContent = 'PIX';
+                    }
+                } else {
+                    console.error('❌ PIX Option element not found!');
+                }
+            } else {
+                if (pixOption) {
+                    pixOption.style.display = 'none';
+                    console.log('🌍 Non-Brazilian customer - PIX disabled');
+                } else {
+                    console.error('❌ PIX Option element not found!');
+                }
+            }
+            
+            // Show Stripe for US/UK/CA/AU users
+            if (userLanguage.startsWith('en-US') || userLanguage.startsWith('en-GB') || 
+                userLanguage.startsWith('en-CA') || userLanguage.startsWith('en-AU')) {
+                if (stripeOption) {
+                    stripeOption.style.display = 'block';
+                    console.log('🇺🇸 English-speaking customer detected - Stripe enabled');
+                }
+            } else {
+                if (stripeOption) {
+                    stripeOption.style.display = 'none';
+                }
+            }
+        }
+        
+        // Enable PIX test mode
+        function enablePIXTestMode() {
+            localStorage.setItem('pixTestMode', 'true');
+            console.log('🧪 PIX Test Mode enabled');
+            setupPIXForBrazilOnly();
+        }
+        
+        // Disable PIX test mode
+        function disablePIXTestMode() {
+            localStorage.removeItem('pixTestMode');
+            console.log('🚫 PIX Test Mode disabled');
+            setupPIXForBrazilOnly();
+        }
+        
+        // Check current PIX status
+        function checkPIXStatus() {
+            console.log('🔍 PIX Status Check:');
+            console.log('localStorage pixTestMode:', localStorage.getItem('pixTestMode'));
+            console.log('User Language:', navigator.language);
+            console.log('PIX Option Element:', document.getElementById('pix-option'));
+            console.log('PIX Option Display:', document.getElementById('pix-option')?.style.display);
+            console.log('PIX Option Text:', document.getElementById('pix-option')?.textContent);
+        }
+        
+        // Initialize PIX for order
+        function initializePIXForOrder() {
+            if (!pixCheckout) {
+                console.error('PIX system not initialized');
+                return;
+            }
+            
+            const orderData = getCurrentOrderData();
+            if (!orderData) {
+                console.error('Failed to get order data for PIX');
+                return;
+            }
+            
+            // Initialize PIX with order data
+            pixCheckout.initializePIX(orderData);
+        }
+        
+        // Get current order data for PIX (using summary total like PayPal)
+        function getCurrentOrderData() {
+            // Validate required variables
+            if (!selectedOffers || !Array.isArray(selectedOffers) || selectedOffers.length === 0) {
+                console.error('No offers selected');
+                return null;
+            }
+            
+            // Get total from order summary (same as PayPal logic)
+            const totalElement = document.getElementById('totalAmount');
+            let totalAmount = 0;
+            
+            if (totalElement) {
+                const totalText = totalElement.textContent;
+                totalAmount = parseFloat(totalText.replace(/[^\d.,]/g, '').replace(',', '.'));
+                console.log('💰 PIX using summary total:', totalAmount, currentCurrency);
+                console.log('📊 Summary element text:', totalText);
+            } else {
+                console.warn('⚠️ Total element not found, using fallback calculation');
+                // Fallback to calculation
+                selectedOffers.forEach(offerType => {
+                    if (offers[offerType]) {
+                        const offer = offers[offerType];
+                        const price = offer.prices && offer.prices[currentCurrency] 
+                            ? offer.prices[currentCurrency] 
+                            : offer.price || 0;
+                        totalAmount += price;
+                    }
+                });
+            }
+            
+            if (totalAmount <= 0) {
+                console.error('❌ Invalid total amount:', totalAmount);
+                return null;
+            }
+            
+            // Get product names
+            const products = selectedOffers.map(offerType => {
+                if (offers[offerType]) {
+                    let productName = offers[offerType].name;
+                    
+                    // Se for a oferta básica e há cor selecionada, usar apenas o nome da cor
+                    if (offerType === 'basic' && selectedColor && selectedColor.name) {
+                        productName = selectedColor.name;
+                    }
+                    
+                    return productName;
+                }
+                return 'Produto';
+            });
+            
+            console.log('✅ PIX Order Data:', {
+                total: totalAmount,
+                currency: currentCurrency,
+                products: products
+            });
+            
+            return {
+                id: 'ORDER_' + Date.now(),
+                products: products,
+                total: totalAmount,
+                currency: currentCurrency,
+                description: products.join(' + ')
+            };
+        }
+        
+        // Handle PIX payment
+        function handlePIXPayment(email, observations) {
+            if (!pixCheckout) {
+                alert('PIX system not available. Please try again.');
+                return;
+            }
+            
+            const orderData = getCurrentOrderData();
+            if (!orderData) {
+                alert('Failed to get order data. Please try again.');
+                return;
+            }
+            
+            // Initialize PIX with order data
+            pixCheckout.initializePIX(orderData);
+        }
+        
+        
+        // Payment method control
+        function setupPaymentMethodControl() {
+            const paymentMethodSelect = document.getElementById('paymentMethod');
+            const paypalButton = document.getElementById('paypal-payment-button');
+            const pixInfo = document.getElementById('pix-payment-info');
+            
+            if (paymentMethodSelect) {
+                paymentMethodSelect.addEventListener('change', function() {
+                    const selectedMethod = this.value;
+                    
+                    // Hide all payment options first
+                    if (paypalButton) paypalButton.style.display = 'none';
+                    if (pixInfo) pixInfo.style.display = 'none';
+                    
+                    // Show selected payment method
+                    switch(selectedMethod) {
+                        case 'paypal':
+                            if (paypalButton) paypalButton.style.display = 'block';
+                            break;
+                        case 'pix':
+                            if (pixInfo) pixInfo.style.display = 'block';
+                            initializePIXForOrder();
+                            break;
+                    }
+                });
+            }
+        }
+        
+        // Process checkout function
+        function processCheckout_OLD() { // DESABILITADA para usar supplier-order-processor.js
+            // Validate all required fields
+            const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'zipCode', 'country', 'paymentMethod'];
+            const missingFields = [];
+            
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (!field || !field.value.trim()) {
+                    missingFields.push(fieldId);
+                }
+            });
+            
+            if (missingFields.length > 0) {
+                alert('Please fill in all required fields: ' + missingFields.join(', '));
+                return;
+            }
+            
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const observations = document.getElementById('observations').value;
+            
+            // Handle PIX payment
+            if (paymentMethod === 'pix') {
+                handlePIXPayment(document.getElementById('email').value, observations);
+                return;
+            }
+            
+            // Handle other payment methods
+            if (paymentMethod === 'paypal') {
+                // PayPal is already handled by the PayPal SDK
+                return;
+            }
+            
+            if (paymentMethod === 'stripe') {
+                alert('Stripe payment integration coming soon!');
+                return;
+            }
+            
+            alert('Payment method not implemented yet.');
+        }
+        
+        // Initialize offers and summary
+        function initializeOffers() {
+            // Check if variables exist, if not create them
+            if (typeof selectedOffers === 'undefined') {
+                window.selectedOffers = ['basic'];
+            }
+            if (typeof currentCurrency === 'undefined') {
+                window.currentCurrency = 'USD';
+            }
+            if (typeof offers === 'undefined') {
+                window.offers = {
+                    basic: {
+                        name: '7-in-1 Wrinkle Wand',
+                        price: 17.45,
+                        prices: {
+                            'USD': 17.45,
+                            'EUR': 15.80,
+                            'BRL': 90.74
+                        },
+                        description: 'Basic offer with the main product'
+                    }
+                };
+            }
+            if (typeof selectedColor === 'undefined') {
+                window.selectedColor = null;
+            }
+            updateOrderSummary();
+        }
+        
+        // Update order summary
+        function updateOrderSummary() {
+            const selectedOffersElement = document.getElementById('selectedOffers');
+            const totalElement = document.getElementById('totalAmount');
+            
+            if (!selectedOffersElement || !totalElement) return;
+            
+            let total = 0;
+            let summaryHTML = '';
+            
+            selectedOffers.forEach(offerType => {
+                if (offers[offerType]) {
+                    const offer = offers[offerType];
+                    const price = offer.prices && offer.prices[currentCurrency] 
+                        ? offer.prices[currentCurrency] 
+                        : offer.price || 0;
+                    
+                    total += price;
+                    
+                    summaryHTML += `
+                        <div class="summary-row">
+                            <span>${offer.name}</span>
+                            <span>$${price.toFixed(2)}</span>
+                        </div>
+                    `;
+                }
+            });
+            
+            selectedOffersElement.innerHTML = summaryHTML;
+            totalElement.textContent = `$${total.toFixed(2)}`;
+        }
+        
+        // Initialize PIX system when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeOffers();
+            setupPaymentMethodControl();
+            initializePIXSystem();
+            setupPIXForBrazilOnly();
+            
+            // Update prices after initialization
+            setTimeout(() => {
+                updateAllPrices();
+            }, 100);
+        });
+
+            // Close dropdown when clicking outside
+            // Flag dropdown removed - no click listener needed
+
+        // Flag dropdown functions removed - currency detection is now automatic
+
+        // Currency detection is now automatic - no manual selection needed
+    </script>
+    
+    <!-- Footer Copyright -->
+    <footer style="text-align: center; padding: 20px; background: #f8f9fa; border-top: 1px solid #e9ecef; margin-top: 40px;">
+        <p style="color: #666; font-size: 14px; margin: 0;">
+            © 2025 67 Beauty Hub - All rights reserved
+        </p>
+    </footer>
+
 
 </body>
 </html>

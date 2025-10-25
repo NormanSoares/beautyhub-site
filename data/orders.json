@@ -1,99 +1,58 @@
 [
   {
-    "id": "order_1760125308498_aof5beagr",
+    "id": "order_1737123456789_abc123",
     "customer": {
-      "name": "Jo�o Silva",
-      "email": "joao@email.com",
-      "phone": ""
+      "name": "John Smith",
+      "email": "sb-personal@personal.example.com",
+      "phone": "+1 (555) 123-4567"
     },
     "products": [
       {
-        "id": "aliexpress_1",
-        "name": "Detachable Sofa Cover",
-        "price": 91.68,
+        "name": "Heat-Resistant Mat",
+        "price": 22.9,
         "quantity": 1
       }
     ],
-    "total": 91.68,
     "status": "pending",
-    "payment_status": "pending",
+    "payment_status": "paid",
+    "created_at": "2025-01-17T21:30:00.000Z",
+    "total": 22.9,
     "shipping_address": {
-      "street": "Rua das Flores, 123",
-      "city": "S�o Paulo",
-      "state": "SP",
-      "zip": "01234-567"
-    },
-    "notes": "",
-    "created_at": "2025-10-10T19:41:48.498Z",
-    "updated_at": "2025-10-10T19:41:48.498Z",
-    "tracking": {
-      "number": "",
-      "carrier": "",
-      "status": "pending"
+      "street": "1 Main St",
+      "city": "San Jose",
+      "state": "CA",
+      "zipCode": "95131",
+      "country": "United States"
     }
   },
   {
-    "id": "order_1760125739942_j3c65068z",
+    "id": "order_1760790031012_sggi2syrp",
     "customer": {
-      "name": "Maria Santos",
-      "email": "maria@email.com",
-      "phone": ""
+      "name": "Teste Cliente",
+      "email": "teste@teste.com",
+      "phone": "+1 (555) 999-9999"
     },
     "products": [
       {
-        "id": "aliexpress_2",
-        "name": "Human Dog bad",
-        "price": 91.68,
-        "quantity": 2
-      }
-    ],
-    "total": 183.36,
-    "status": "pending",
-    "payment_status": "pending",
-    "shipping_address": {
-      "street": "Av. Paulista, 1000",
-      "city": "S�o Paulo",
-      "state": "SP",
-      "zip": "01310-100"
-    },
-    "notes": "",
-    "created_at": "2025-10-10T19:48:59.942Z",
-    "updated_at": "2025-10-10T19:48:59.942Z",
-    "tracking": {
-      "number": "",
-      "carrier": "",
-      "status": "pending"
-    }
-  },
-  {
-    "id": "order_1760192024124_544w6xfh6",
-    "customer": {
-      "name": "Teste Popup",
-      "email": "teste@popup.com",
-      "phone": "+55 11 99999-9999"
-    },
-    "products": [
-      {
-        "id": "aliexpress_test",
-        "name": "Produto Teste",
-        "price": 99.99,
+        "price": 49.9,
         "quantity": 1,
-        "color": "Azul",
-        "size": "M"
+        "name": "Heat-Resistant Mat"
       }
     ],
-    "total": 99.99,
+    "total": 49.9,
     "status": "pending",
-    "payment_status": "pending",
+    "payment_status": "paid",
     "shipping_address": {
-      "street": "Rua Teste, 123",
-      "city": "S�o Paulo",
-      "state": "SP",
-      "zip": "01234-567"
+      "zip": "12345",
+      "street": "123 Test St",
+      "country": "United States",
+      "state": "CA",
+      "city": "Test City"
     },
-    "notes": "",
-    "created_at": "2025-10-11T14:13:44.124Z",
-    "updated_at": "2025-10-11T14:13:44.124Z",
+    "notes": "Teste de pedido",
+    "payment_method": "simulated",
+    "created_at": "2025-10-18T12:20:31.012Z",
+    "updated_at": "2025-10-18T12:20:31.012Z",
     "tracking": {
       "number": "",
       "carrier": "",
@@ -101,33 +60,2353 @@
     }
   },
   {
-    "id": "order_1760221412061_6i67p0iwi",
+    "id": "order_1760794435255_di0tmwolq",
     "customer": {
-      "name": "Cliente",
-      "email": "",
-      "phone": ""
+      "name": "Teste",
+      "email": "teste@teste.com",
+      "phone": "123456789"
     },
     "products": [
       {
-        "id": "aliexpress_1",
-        "name": "Produto Teste",
-        "price": "25.99",
+        "name": "Teste",
+        "price": 10,
         "quantity": 1
       }
     ],
-    "total": 0,
+    "total": 10,
     "status": "pending",
-    "payment_status": "pending",
+    "payment_status": "paid",
     "shipping_address": {
-      "street": "Rua Teste",
-      "city": "S�o Paulo",
-      "state": "SP",
-      "zip": "01234-567",
-      "country": "Brasil"
+      "street": "Teste",
+      "city": "Teste",
+      "state": "Teste",
+      "zip": "12345",
+      "country": "Teste"
+    },
+    "notes": "Teste",
+    "payment_method": "test",
+    "created_at": "2025-10-18T13:33:55.255Z",
+    "updated_at": "2025-10-18T13:33:55.255Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760794645352_ojsi9ml8s",
+    "customer": {
+      "name": "Norman  Soares",
+      "email": "teste@example.com",
+      "phone": "+15551234567"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 49.9,
+        "quantity": 1,
+        "color": "small-pink",
+        "colorName": "Small\n                                        Pink",
+        "size": "small"
+      },
+      {
+        "id": "basic",
+        "name": "Oferta Básica",
+        "price": 0,
+        "quantity": 1
+      }
+    ],
+    "total": 49.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
     },
     "notes": "",
-    "created_at": "2025-10-11T22:23:32.061Z",
-    "updated_at": "2025-10-11T22:23:32.061Z",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T13:37:25.352Z",
+    "updated_at": "2025-10-18T13:37:25.352Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760795113368_mlxwujgn3",
+    "customer": {
+      "name": "Norman  Soares",
+      "email": "teste@example.com",
+      "phone": "+15551234567"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 49.9,
+        "quantity": 1,
+        "color": "small-pink",
+        "colorName": "Small\n                                        Pink",
+        "size": "small"
+      },
+      {
+        "id": "basic",
+        "name": "Oferta Básica",
+        "price": 0,
+        "quantity": 1
+      }
+    ],
+    "total": 49.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T13:45:13.368Z",
+    "updated_at": "2025-10-18T13:45:13.368Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760795409905_v1zm5swuz",
+    "customer": {
+      "name": "Norman Soares",
+      "email": "jp062758@gmail.com",
+      "phone": "+15551234567"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 49.9,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      },
+      {
+        "id": "basic",
+        "name": "Oferta Básica",
+        "price": 0,
+        "quantity": 1
+      }
+    ],
+    "total": 499,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "Luanda",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T13:50:09.905Z",
+    "updated_at": "2025-10-18T13:50:09.905Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760797946626_0lezlk0q2",
+    "customer": {
+      "name": "Norman Soares",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "14083574976"
+    },
+    "products": [
+      {
+        "id": "alligator-clips",
+        "name": "Alligator Hair Clips",
+        "price": 29.99,
+        "quantity": 1,
+        "color": "nude-pink",
+        "colorName": "Nude Pink"
+      },
+      {
+        "id": "basic",
+        "name": "Basic Offer",
+        "price": 0,
+        "quantity": 1
+      }
+    ],
+    "total": 29.99,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T14:32:26.626Z",
+    "updated_at": "2025-10-18T14:32:26.626Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760802274103_nbuet51wl",
+    "customer": {
+      "name": "Norman Soares",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "wrinkle-reducer",
+        "name": "Wrinkle Reducer - Red Light Therapy",
+        "price": 59.99,
+        "quantity": 10,
+        "color": null,
+        "colorName": null
+      },
+      {
+        "id": "basic",
+        "name": "Wrinkle Reducer",
+        "price": 0,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "Premium Skincare Set",
+        "price": 0,
+        "quantity": 1
+      }
+    ],
+    "total": 599.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "simulated",
+    "created_at": "2025-10-18T15:44:34.103Z",
+    "updated_at": "2025-10-18T15:44:34.103Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760802609365_7g808romr",
+    "customer": {
+      "name": "Norman Soares",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "14083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 49.9,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      },
+      {
+        "id": "basic",
+        "name": "Oferta Básica",
+        "price": 0,
+        "quantity": 1
+      }
+    ],
+    "total": 499,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T15:50:09.365Z",
+    "updated_at": "2025-10-18T15:50:09.365Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760802609916_vhk00fm6k",
+    "customer": {
+      "name": "Norman Soares",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "14083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 49.9,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      },
+      {
+        "id": "basic",
+        "name": "Oferta Básica",
+        "price": 0,
+        "quantity": 1
+      }
+    ],
+    "total": 499,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T15:50:09.916Z",
+    "updated_at": "2025-10-18T15:50:09.916Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760803124604_y4lg3d1tx",
+    "customer": {
+      "name": "Norman Soares",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 49.9,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      },
+      {
+        "id": "basic",
+        "name": "Oferta Básica",
+        "price": 0,
+        "quantity": 1
+      }
+    ],
+    "total": 499,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T15:58:44.604Z",
+    "updated_at": "2025-10-18T15:58:44.604Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760803987500_cwkzsby4s",
+    "customer": {
+      "name": "Norman Soares",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 4.99,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      },
+      {
+        "id": "basic",
+        "name": "Oferta Básica",
+        "price": 0,
+        "quantity": 1
+      }
+    ],
+    "total": 49.900000000000006,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "i really want it!",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T16:13:07.500Z",
+    "updated_at": "2025-10-18T16:13:07.500Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760804099902_uyxdeu4b9",
+    "customer": {
+      "name": "Norman Soares",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 4.99,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      },
+      {
+        "id": "basic",
+        "name": "Oferta Básica",
+        "price": 0,
+        "quantity": 1
+      }
+    ],
+    "total": 49.900000000000006,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "i really want it!",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T16:14:59.902Z",
+    "updated_at": "2025-10-18T16:14:59.902Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760806782601_xg4sec9sg",
+    "customer": {
+      "name": "Big Tonka",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "alligator-clips",
+        "name": "Alligator Hair Clips",
+        "price": 29.99,
+        "quantity": 1,
+        "color": "purple",
+        "colorName": "Purple"
+      }
+    ],
+    "total": 29.99,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "I really want it!!",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T16:59:42.607Z",
+    "updated_at": "2025-10-18T16:59:42.607Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760806891879_jxfimwvao",
+    "customer": {
+      "name": "Big Tonka",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 4.99,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 49.900000000000006,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T17:01:31.915Z",
+    "updated_at": "2025-10-18T17:01:31.915Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760807081744_h7qxq289b",
+    "customer": {
+      "name": "Jonh Soares",
+      "email": "jp062758@gmail.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "golden-sakura",
+        "name": "LAIKOU Vitamin C 24K Golden Sakura",
+        "price": 5.99,
+        "quantity": 1,
+        "color": "sakura",
+        "colorName": "Sakura"
+      }
+    ],
+    "total": 5.99,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "California",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T17:04:41.744Z",
+    "updated_at": "2025-10-18T17:04:41.744Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760807954509_tbbrfjw9q",
+    "customer": {
+      "name": "Norman Soares",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "wrinkle-reducer",
+        "name": "Wrinkle Reducer - Red Light Therapy",
+        "price": 17.45,
+        "quantity": 10,
+        "color": null,
+        "colorName": null
+      },
+      {
+        "id": "basic",
+        "name": "Wrinkle Reducer",
+        "price": 17.45,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "Premium Skincare Set",
+        "price": 35.36,
+        "quantity": 1
+      }
+    ],
+    "total": 227.31,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "I really want it!!",
+    "payment_method": "simulated",
+    "created_at": "2025-10-18T17:19:14.509Z",
+    "updated_at": "2025-10-18T17:19:14.509Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760814836282_vi8t3ycxl",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "wrinkle-reducer",
+        "name": "Wrinkle Reducer - Red Light Therapy",
+        "price": 17.45,
+        "quantity": 10,
+        "color": null,
+        "colorName": null
+      },
+      {
+        "id": "basic",
+        "name": "Wrinkle Reducer",
+        "price": 17.45,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "Premium Skincare Set",
+        "price": 35.36,
+        "quantity": 1
+      }
+    ],
+    "total": 227.31,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "simulated",
+    "created_at": "2025-10-18T19:13:56.282Z",
+    "updated_at": "2025-10-18T19:13:56.282Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760814841041_tf05fz86q",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "wrinkle-reducer",
+        "name": "Wrinkle Reducer - Red Light Therapy",
+        "price": 17.45,
+        "quantity": 10,
+        "color": null,
+        "colorName": null
+      },
+      {
+        "id": "basic",
+        "name": "Wrinkle Reducer",
+        "price": 17.45,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "Premium Skincare Set",
+        "price": 35.36,
+        "quantity": 1
+      }
+    ],
+    "total": 227.31,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "simulated",
+    "created_at": "2025-10-18T19:14:01.041Z",
+    "updated_at": "2025-10-18T19:14:01.041Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760818065772_xoov756h5",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "wrinkle-reducer",
+        "name": "Wrinkle Reducer - Red Light Therapy",
+        "price": 17.45,
+        "quantity": 10,
+        "color": null,
+        "colorName": null
+      },
+      {
+        "id": "basic",
+        "name": "Wrinkle Reducer",
+        "price": 17.45,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "Premium Skincare Set",
+        "price": 35.36,
+        "quantity": 1
+      }
+    ],
+    "total": 227.31,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "simulated",
+    "created_at": "2025-10-18T20:07:45.772Z",
+    "updated_at": "2025-10-18T20:07:45.772Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760818251128_r2xo37ih5",
+    "customer": {
+      "name": "Big Tonka",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 4.99,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 49.900000000000006,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "1 Main St",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "Yhea I got big body lab truck!",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T20:10:51.128Z",
+    "updated_at": "2025-10-18T20:10:51.128Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760819955887_0jpyv1nja",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "wrinkle-reducer",
+        "name": "Wrinkle Reducer - Red Light Therapy",
+        "price": 17.45,
+        "quantity": 10,
+        "color": null,
+        "colorName": null
+      },
+      {
+        "id": "basic",
+        "name": "Wrinkle Reducer",
+        "price": 17.45,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "Premium Skincare Set",
+        "price": 35.36,
+        "quantity": 1
+      }
+    ],
+    "total": 227.31,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "simulated",
+    "created_at": "2025-10-18T20:39:15.887Z",
+    "updated_at": "2025-10-18T20:39:15.887Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760826409432_b2ywaln5i",
+    "customer": {
+      "name": "Amélia Nunes",
+      "email": "teste@example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "phoera-foundation",
+        "name": "2 Pack PHOERA Foundation",
+        "price": 39.99,
+        "quantity": 1,
+        "color": null,
+        "colorName": null
+      },
+      {
+        "id": "basic",
+        "name": "2 Pack PHOERA Foundation",
+        "price": 17.39,
+        "quantity": 1
+      }
+    ],
+    "total": 57.38,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "I reaaly want it!",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T22:26:49.432Z",
+    "updated_at": "2025-10-18T22:26:49.432Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760827111736_6i8197ag6",
+    "customer": {
+      "name": "Amélia Nunes",
+      "email": "teste@example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "phoera-foundation",
+        "name": "2 Pack PHOERA Foundation",
+        "price": 39.99,
+        "quantity": 1,
+        "color": null,
+        "colorName": null
+      },
+      {
+        "id": "basic",
+        "name": "2 Pack PHOERA Foundation",
+        "price": 17.39,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "8pcs Makeup Brush",
+        "price": 2.5,
+        "quantity": 1
+      },
+      {
+        "id": "complete",
+        "name": "2 Pack PHOERA Primer",
+        "price": 11.64,
+        "quantity": 1
+      }
+    ],
+    "total": 71.52000000000001,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T22:38:31.736Z",
+    "updated_at": "2025-10-18T22:38:31.736Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760829058778_8uckm3l8w",
+    "customer": {
+      "name": "Amélia Nunes",
+      "email": "teste@example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "basic",
+        "name": "2 Pack PHOERA Foundation",
+        "price": 17.39,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "8pcs Makeup Brush",
+        "price": 2.5,
+        "quantity": 1
+      },
+      {
+        "id": "complete",
+        "name": "2 Pack PHOERA Primer",
+        "price": 11.64,
+        "quantity": 1
+      }
+    ],
+    "total": 31.53,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "I miss you so much!",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T23:10:58.778Z",
+    "updated_at": "2025-10-18T23:10:58.778Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760829099546_3uy03whof",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "basic",
+        "name": "Basic Offer",
+        "price": 3.54,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "Towel cloth-pink",
+        "price": 2.89,
+        "quantity": 1
+      },
+      {
+        "id": "complete",
+        "name": "10pcsTouMing-blue",
+        "price": 11.36,
+        "quantity": 1
+      }
+    ],
+    "total": 17.79,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T23:11:39.546Z",
+    "updated_at": "2025-10-18T23:11:39.546Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760829135372_1kthw2n2c",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T23:12:15.372Z",
+    "updated_at": "2025-10-18T23:12:15.372Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760831447026_dfkvq3mf8",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T23:50:47.026Z",
+    "updated_at": "2025-10-18T23:50:47.026Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760831447041_2p7hjpnq7",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-18T23:50:47.041Z",
+    "updated_at": "2025-10-18T23:50:47.041Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760832842195_707787ytl",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T00:14:02.195Z",
+    "updated_at": "2025-10-19T00:14:02.195Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760833416675_pfsw13hma",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T00:23:36.675Z",
+    "updated_at": "2025-10-19T00:23:36.675Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760833764592_mgm4lg3gm",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "basic",
+        "name": "Wrinkle Reducer",
+        "price": 17.45,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "Premium Skincare Set",
+        "price": 35.36,
+        "quantity": 1
+      }
+    ],
+    "total": 52.81,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T00:29:24.592Z",
+    "updated_at": "2025-10-19T00:29:24.592Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760833826933_giccn3qx9",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T00:30:26.933Z",
+    "updated_at": "2025-10-19T00:30:26.933Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760834101490_ombgm072s",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "1 Main St",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T00:35:01.490Z",
+    "updated_at": "2025-10-19T00:35:01.490Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760834155505_ebu2re9ik",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T00:35:55.505Z",
+    "updated_at": "2025-10-19T00:35:55.505Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760834341107_mzql0eh3x",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T00:39:01.107Z",
+    "updated_at": "2025-10-19T00:39:01.107Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760834388520_lkxojjwoa",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "basic",
+        "name": "Basic Offer",
+        "price": 3.54,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "Towel cloth-pink",
+        "price": 2.89,
+        "quantity": 1
+      },
+      {
+        "id": "complete",
+        "name": "10pcsTouMing-blue",
+        "price": 11.36,
+        "quantity": 1
+      }
+    ],
+    "total": 17.79,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T00:39:48.520Z",
+    "updated_at": "2025-10-19T00:39:48.520Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760834752583_brtoljtqk",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "basic",
+        "name": "Wrinkle Reducer",
+        "price": 17.45,
+        "quantity": 1
+      }
+    ],
+    "total": 17.45,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T00:45:52.583Z",
+    "updated_at": "2025-10-19T00:45:52.583Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760835067589_xmcxugva3",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "small-green",
+        "colorName": "Small\n                                        Green",
+        "size": "small"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T00:51:07.589Z",
+    "updated_at": "2025-10-19T00:51:07.589Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760835088312_jesnhqb68",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "medium-gray",
+        "colorName": "Medium\n                                        Gray",
+        "size": "medium"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T00:51:28.312Z",
+    "updated_at": "2025-10-19T00:51:28.312Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760835629734_tr8hzyhzo",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T01:00:29.734Z",
+    "updated_at": "2025-10-19T01:00:29.734Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760835679639_6uj1n29gi",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T01:01:19.639Z",
+    "updated_at": "2025-10-19T01:01:19.639Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760836032682_7rk1egeqg",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T01:07:12.682Z",
+    "updated_at": "2025-10-19T01:07:12.682Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760836571920_6q190ql0p",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T01:16:11.920Z",
+    "updated_at": "2025-10-19T01:16:11.920Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760836821841_ht3dl24xp",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T01:20:21.841Z",
+    "updated_at": "2025-10-19T01:20:21.841Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760836867177_gzrkgukgr",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T01:21:07.177Z",
+    "updated_at": "2025-10-19T01:21:07.177Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760836990720_9sac78sjj",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 2.29,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T01:23:10.720Z",
+    "updated_at": "2025-10-19T01:23:10.720Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760837842789_sq9r0eqx3",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 4.99,
+        "quantity": 10,
+        "color": "extra-large",
+        "colorName": "Extra Large\n                                        Unique",
+        "size": "extra"
+      }
+    ],
+    "total": 49.900000000000006,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T01:37:22.789Z",
+    "updated_at": "2025-10-19T01:37:22.789Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760837860075_0ekot9os4",
+    "customer": {
+      "name": "Atamira Jose",
+      "email": "sb-weszd47058215@personal.example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "heat-resistant-mat",
+        "name": "Heat-Resistant Mat",
+        "price": 1.78,
+        "quantity": 10,
+        "color": "medium-green",
+        "colorName": "Medium\n                                        Green",
+        "size": "medium"
+      }
+    ],
+    "total": 17.8,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-19T01:37:40.075Z",
+    "updated_at": "2025-10-19T01:37:40.075Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1760966508473_ywk6ba92j",
+    "customer": {
+      "name": "Amélia Nunes",
+      "email": "teste@example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "basic",
+        "name": "2 Pack PHOERA Foundation",
+        "price": 17.39,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "8pcs Makeup Brush",
+        "price": 2.5,
+        "quantity": 1
+      },
+      {
+        "id": "complete",
+        "name": "2 Pack PHOERA Primer",
+        "price": 11.64,
+        "quantity": 1
+      }
+    ],
+    "total": 31.53,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "Cacuaco",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "pix",
+    "created_at": "2025-10-20T13:21:48.473Z",
+    "updated_at": "2025-10-20T13:21:48.473Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1761136565044_pgga2u1ju",
+    "customer": {
+      "name": "Amélia Nunes",
+      "email": "teste@example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "basic",
+        "name": "2 Pack PHOERA Foundation",
+        "price": 17.39,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "8pcs Makeup Brush",
+        "price": 2.5,
+        "quantity": 1
+      },
+      {
+        "id": "complete",
+        "name": "2 Pack PHOERA Primer",
+        "price": 11.64,
+        "quantity": 1
+      }
+    ],
+    "total": 31.53,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-22T12:36:05.044Z",
+    "updated_at": "2025-10-22T12:36:05.044Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1761144396137_rlbyh4x3h",
+    "customer": {
+      "name": "Teste Cliente",
+      "email": "teste@example.com",
+      "phone": "+1 555-123-4567"
+    },
+    "products": [
+      {
+        "price": 22.9,
+        "quantity": 1,
+        "name": "Heat-Resistant Mat"
+      }
+    ],
+    "total": 22.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "zip": "12345",
+      "street": "123 Test Street",
+      "country": "United States",
+      "state": "CA",
+      "city": "Test City"
+    },
+    "notes": "Teste de integra��o",
+    "payment_method": "unknown",
+    "created_at": "2025-10-22T14:46:36.137Z",
+    "updated_at": "2025-10-22T14:46:36.137Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1761145013381_henu6zv8w",
+    "customer": {
+      "name": "Amélia Nunes",
+      "email": "teste@example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "basic",
+        "name": "2 Pack PHOERA Foundation",
+        "price": 17.39,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "8pcs Makeup Brush",
+        "price": 2.5,
+        "quantity": 1
+      },
+      {
+        "id": "complete",
+        "name": "2 Pack PHOERA Primer",
+        "price": 11.64,
+        "quantity": 1
+      }
+    ],
+    "total": 31.53,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-22T14:56:53.381Z",
+    "updated_at": "2025-10-22T14:56:53.381Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1761145253734_buexaba7c",
+    "customer": {
+      "name": "Teste Auto-Refresh",
+      "email": "teste@example.com",
+      "phone": "+1 555-123-4567"
+    },
+    "products": [
+      {
+        "price": 15.9,
+        "quantity": 1,
+        "name": "Teste Produto"
+      }
+    ],
+    "total": 15.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "zip": "12345",
+      "street": "123 Test Street",
+      "country": "United States",
+      "state": "CA",
+      "city": "Test City"
+    },
+    "notes": "Teste de auto-refresh",
+    "payment_method": "unknown",
+    "created_at": "2025-10-22T15:00:53.734Z",
+    "updated_at": "2025-10-22T15:00:53.734Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1761145637745_uyrtvw36u",
+    "customer": {
+      "name": "Teste Verifica��o 16:07:16",
+      "email": "teste160716@example.com",
+      "phone": "+1 555-123-4567"
+    },
+    "products": [
+      {
+        "price": 25.9,
+        "quantity": 1,
+        "name": "Produto Teste 16:07:16"
+      }
+    ],
+    "total": 25.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "zip": "12345",
+      "street": "123 Test Street",
+      "country": "United States",
+      "state": "CA",
+      "city": "Test City"
+    },
+    "notes": "Teste de verifica��o - 16:07:16",
+    "payment_method": "unknown",
+    "created_at": "2025-10-22T15:07:17.745Z",
+    "updated_at": "2025-10-22T15:07:17.745Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1761145661953_sk2q0pmdh",
+    "customer": {
+      "name": "Teste 160740",
+      "email": "teste160740@example.com",
+      "phone": "+1 555-123-4567"
+    },
+    "products": [
+      {
+        "price": 25.9,
+        "quantity": 1,
+        "name": "Produto Teste 160740"
+      }
+    ],
+    "total": 25.9,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "zip": "12345",
+      "street": "123 Test Street",
+      "country": "United States",
+      "state": "CA",
+      "city": "Test City"
+    },
+    "notes": "Teste de verifica��o 160740",
+    "payment_method": "unknown",
+    "created_at": "2025-10-22T15:07:41.955Z",
+    "updated_at": "2025-10-22T15:07:41.955Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1761155489856_u1tocl1iu",
+    "customer": {
+      "name": "Norman Soares",
+      "email": "jp062758@gmail.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "basic",
+        "name": "Basic Offer",
+        "price": 3.54,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "Towel cloth-pink",
+        "price": 2.89,
+        "quantity": 1
+      },
+      {
+        "id": "complete",
+        "name": "10pcsTouMing-blue",
+        "price": 11.36,
+        "quantity": 1
+      }
+    ],
+    "total": 17.79,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "Luanda",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-22T17:51:29.856Z",
+    "updated_at": "2025-10-22T17:51:29.856Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1761160376255_2263taost",
+    "customer": {
+      "name": "Amélia Nunes",
+      "email": "teste@example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "basic",
+        "name": "2 Pack PHOERA Foundation",
+        "price": 17.39,
+        "quantity": 1
+      },
+      {
+        "id": "premium",
+        "name": "8pcs Makeup Brush",
+        "price": 2.5,
+        "quantity": 1
+      },
+      {
+        "id": "complete",
+        "name": "2 Pack PHOERA Primer",
+        "price": 11.64,
+        "quantity": 1
+      }
+    ],
+    "total": 31.53,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "",
+    "payment_method": "paypal",
+    "created_at": "2025-10-22T19:12:56.255Z",
+    "updated_at": "2025-10-22T19:12:56.255Z",
+    "tracking": {
+      "number": "",
+      "carrier": "",
+      "status": "pending"
+    }
+  },
+  {
+    "id": "order_1761305060145_xlbmnjqt3",
+    "customer": {
+      "name": "Amélia Nunes",
+      "email": "teste@example.com",
+      "phone": "+1 4083574976"
+    },
+    "products": [
+      {
+        "id": "basic",
+        "name": "2 Pack PHOERA Foundation",
+        "price": 17.39,
+        "quantity": 1
+      }
+    ],
+    "total": 17.39,
+    "status": "pending",
+    "payment_status": "paid",
+    "shipping_address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "New York",
+      "zip": "10001",
+      "country": "US"
+    },
+    "notes": "I really want it!",
+    "payment_method": "paypal",
+    "created_at": "2025-10-24T11:24:20.145Z",
+    "updated_at": "2025-10-24T11:24:20.145Z",
     "tracking": {
       "number": "",
       "carrier": "",

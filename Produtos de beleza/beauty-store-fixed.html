@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seção Beleza - 67 Beauty Hub</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="../js/modal-system.js"></script>
+    <script src="../js/language-controller.js"></script>
+    
+    <style>
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+        
+        /* User Authentication Styles */
+        .user-auth {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: #d4af37;
+            border: 2px solid #d4af37;
+        }
+
+        .login-btn:hover {
+            background: #d4af37;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .register-btn {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid #d4af37;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #d4af37;
+            font-weight: 500;
+        }
+
+        .user-avatar:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        .user-avatar i.fa-user-circle {
+            font-size: 1.2rem;
+        }
+
+        .user-avatar i.fa-chevron-down {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .user-avatar.active i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 5px;
+        }
+
+        .user-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .user-dropdown a:hover {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+        }
+
+        .user-dropdown a i {
+            font-size: 1.1rem;
+        }
+        
+        .beauty-background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f0e6d2, #e6d7c3);
+        }
+        
+        .beauty-background-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(5px);
+            transform: scale(1.1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+        
+        .beauty-header {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+        }
+        
+        .beauty-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .beauty-header p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .beauty-nav {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .beauty-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            gap: 20px;
+        }
+        
+        .beauty-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+        
+        .beauty-nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .beauty-nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        
+        .beauty-nav-links a:hover {
+            background: #ff6b6b;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        
+        .products-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(15px);
+            border: 3px solid rgba(212, 175, 55, 0.6);
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border: 3px solid rgba(212, 175, 55, 0.8);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.02);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .product-content {
+            padding: 25px;
+        }
+        
+        .product-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+        
+        .price-current {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .price-original {
+            font-size: 1.2rem;
+            color: #999;
+            text-decoration: line-through;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .price-discount {
+            background: #4CAF50;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-secondary:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .features-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 20px;
+            margin: 60px 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 50px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .testimonials-section {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .testimonials-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .testimonial-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .newsletter-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .newsletter-description {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background: #ee5a24;
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .beauty-header h1 {
+                font-size: 2.5rem;
+                white-space: normal;
+                overflow: visible;
+                text-overflow: initial;
+            }
+            
+            .beauty-nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .beauty-nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+            
+            .product-price {
+                flex-wrap: nowrap;
+                gap: 10px;
+                overflow-x: auto;
+            }
+            
+            .price-current {
+                font-size: 1.5rem;
+            }
+            
+            .price-original {
+                font-size: 1rem;
+            }
+            
+            .price-discount {
+                font-size: 0.7rem;
+                padding: 2px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <div class="beauty-background-video">
+        <video autoplay muted loop playsinline preload="auto">
+            <source src="Background.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos.
+        </video>
+    </div>
+    
+    <!-- Beauty Header -->
+    <div class="beauty-header">
+        <h1><i class="fas fa-sparkles"></i> Seção Beleza</h1>
+        <p>Descubra os melhores produtos de beleza e maquiagem para realçar sua naturalidade</p>
+    </div>
+
+    <!-- Beauty Navigation -->
+    <nav class="beauty-nav">
+        <div class="beauty-nav-container">
+            <div class="beauty-logo">
+                <img src="../Logo.png" alt="67 Beauty Hub" style="height: 40px; margin-right: 10px;">
+                <span style="font-weight: 700; color: #d4af37;">67 BEAUTY HUB</span>
+            </div>
+            <div class="beauty-nav-links">
+                <a href="../index.html"><i class="fas fa-home"></i> Início</a>
+                <a href="../Produtos de conforto/comfort-store.html"><i class="fas fa-couch"></i> Seção Conforto</a>
+                <a href="#features"><i class="fas fa-star"></i> Benefícios</a>
+            </div>
+            
+            
+            <!-- User Authentication Section -->
+            <div class="user-auth" id="userAuthSection">
+                <!-- Login/Register buttons (shown when not logged in) -->
+                <div class="auth-buttons" id="authButtons">
+                    <button class="auth-btn login-btn" onclick="openSimpleLoginModal()">
+                        <i class="fas fa-sign-in-alt"></i> Logar
+                    </button>
+                </div>
+                
+                <!-- User menu (shown when logged in) -->
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <div class="user-avatar" onclick="toggleUserDropdown()">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userName">Usuário</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#" onclick="viewProfile()">
+                            <i class="fas fa-user"></i> Meu Perfil
+                        </a>
+                        <a href="#" onclick="viewMyReviews()">
+                            <i class="fas fa-star"></i> Minhas Avaliações
+                        </a>
+                        <a href="#" onclick="logoutUser()">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Products Section -->
+    <div class="products-container">
+        <div class="products-grid" id="products">
+            <!-- PHOERA Foundation -->
+            <div class="product-card">
+                <div class="product-badge">Mais Vendido</div>
+                <img src="2 Pack PHOERA Foundation + Combo/Apresentação 1.png" alt="2 Pack PHOERA Foundation" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">2 Pack PHOERA Foundation</h3>
+                    <p class="product-description">Elimine manchas, olheiras e imperfeições com cobertura total que dura 12+ horas. Acabamento matte que não derrete no calor. Kit com 2 bases + extras.</p>
+                    <div class="product-price">
+                        <span class="price-current">R$ 91,68</span>
+                        <span class="price-original">R$ 183,36</span>
+                        <span class="price-discount">50% OFF</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="2 Pack PHOERA Foundation + Combo/checkout-phoera.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Comprar Agora
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alligator Hair Clips -->
+            <div class="product-card">
+                <div class="product-badge">Novidade</div>
+                <img src="Alligator Hair Clips + Combo/Nude Pink (6 Pieces).png" alt="Alligator Hair Clips" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">Alligator Hair Clips</h3>
+                    <p class="product-description">Pare de perder grampos que quebram. Estes não escorregam, não quebram e seguram qualquer penteado firme. Kit com 6 peças em tons nude.</p>
+                    <div class="product-price">
+                        <span class="price-current">$3.54</span>
+                        <span class="price-original">$4.99</span>
+                        <span class="price-discount">48% OFF</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="Alligator Hair Clips + Combo/checkout-alligator-clips.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Comprar Agora
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Heat-Resistant Mat -->
+            <div class="product-card">
+                <div class="product-badge">Essencial</div>
+                <img src="Heat-Resistant Mat + Combo/Apresentação 1.png" alt="Heat-Resistant Mat" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">Heat-Resistant Mat</h3>
+                    <p class="product-description">Proteja sua mesa de queimaduras e danos. Resiste a temperaturas altas sem derreter. Impermeável e fácil de limpar.</p>
+                    <div class="product-price">
+                        <span class="price-current">$2.29</span>
+                        <span class="price-original">$34.99</span>
+                        <span class="price-discount">94% OFF</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="Heat-Resistant Mat + Combo/checkout-heat-resistant-mat.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Comprar Agora
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Golden Sakura -->
+            <div class="product-card">
+                <div class="product-badge">Premium</div>
+                <img src="LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/Apresentação.png" alt="LAIKOU Vitamin C 24K Golden Sakura" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">LAIKOU Skincare</h3>
+                    <p class="product-description">Reduza rugas, manchas e sinais de envelhecimento. Vitamina C + ouro 24k para pele mais firme e iluminada em 30 dias.</p>
+                    <div class="product-price">
+                        <span class="price-current">$5.99</span>
+                        <span class="price-original">$19.99</span>
+                        <span class="price-discount">70% OFF</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/checkout-golden-sakura.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Comprar Agora
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            
+
+            <!-- Vara de Skincare - Wrinkle Reducer -->
+            <div class="product-card">
+                <div class="product-badge">Tecnologia</div>
+                <img src="Wrinkle Reducer - Red Light Therapy + Combo/Face and Neck Massager Tool, 7-in-1 Color Red-Light-Therapy Wand for Skin Care.png" alt="Vara de Skincare - Wrinkle Reducer Red Light Therapy" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">Vara de Skincare - Wrinkle Reducer - Red Light Therapy</h3>
+                    <p class="product-description">Elimine rugas e linhas de expressão em casa. Luz vermelha + massagem + 7 funções. Resultados visíveis em 2 semanas.</p>
+                    <div class="product-price">
+                        <span class="price-current">$17.45</span>
+                        <span class="price-original">$34.90</span>
+                        <span class="price-discount">50% OFF</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="Wrinkle Reducer - Red Light Therapy + Combo/checkout-wrinkle-reducer.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Comprar Agora
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section" id="features">
+        <div class="features-container">
+            <h2 class="features-title">Por que escolher nossa Seção Beleza?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="feature-title">Produtos Premium</h3>
+                    <p class="feature-description">Selecionamos apenas os melhores produtos de beleza do mercado para garantir qualidade excepcional.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3 class="feature-title">Entrega Rápida</h3>
+                    <p class="feature-description">Frete grátis para todo o Brasil com entrega em 15-25 dias úteis. Rastreamento completo.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Garantia Total</h3>
+                    <p class="feature-description">30 dias de garantia em todos os produtos. Satisfação garantida ou seu dinheiro de volta.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3 class="feature-title">Aprovado por Especialistas</h3>
+                    <p class="feature-description">Produtos testados e aprovados por profissionais de beleza e dermatologistas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="testimonials-section">
+        <div class="testimonials-container">
+            <h2 class="testimonials-title">O que nossas clientes dizem</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"É minha base absoluta favorita, já comprei várias vezes! Me apaixonei na primeira vez que usei, e não comprei uma base diferente desde então! É super leve mas com cobertura total, acabamento matte, e juro que dá um look aerografado! Minha pele parece que nem tem muita maquiagem!"</p>
+                    <p class="testimonial-author">- Brookie, Cliente Verificada</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Os prendedores de cabelo são perfeitos para meus penteados. Qualidade excepcional!"</p>
+                    <p class="testimonial-author">- Maria Fernanda, Rio de Janeiro</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"O perfume Phero é divino! Recebo muitos elogios quando uso. Vale cada centavo!"</p>
+                    <p class="testimonial-author">- Juliana Santos, Belo Horizonte</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Section -->
+    <div class="newsletter-section">
+        <div class="newsletter-container">
+            <h2 class="newsletter-title">Fique por dentro das novidades!</h2>
+            <p class="newsletter-description">Receba ofertas exclusivas e dicas de beleza direto no seu e-mail</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Seu melhor e-mail">
+                <button type="submit" class="newsletter-btn">Inscrever-se</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 67 Beauty Hub - Seção Beleza. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Newsletter form submission
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('.newsletter-input').value;
+            if (email) {
+                alert('Obrigado por se inscrever! Você receberá nossas novidades em breve.');
+                this.querySelector('.newsletter-input').value = '';
+            }
+        });
+
+        // Add to cart functionality
+        function setupButtonListeners() {
+            document.querySelectorAll('.btn-primary').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    console.log('Button clicked!', e.target);
+                    
+                    // Prevent event from bubbling up to the card
+                    e.stopPropagation();
+                    
+                    // Add visual feedback
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+        }
+
+        // Forçar o vídeo de background a tocar
+        const backgroundVideo = document.querySelector('.beauty-background-video video');
+        if (backgroundVideo) {
+            console.log('Vídeo de background da seção beleza encontrado');
+            
+            // Garantir que o vídeo seja reproduzido
+            backgroundVideo.muted = true;
+            backgroundVideo.loop = true;
+            backgroundVideo.playsInline = true;
+            
+            const playVideo = () => {
+                backgroundVideo.play().catch(e => {
+                    console.log('Erro ao tocar vídeo da seção beleza:', e);
+                    // Tentar novamente após um pequeno delay
+                    setTimeout(playVideo, 1000);
+                });
+            };
+            
+            playVideo();
+            
+            // Tentar reproduzir quando o usuário interagir com a página
+            document.addEventListener('click', playVideo, { once: true });
+            document.addEventListener('touchstart', playVideo, { once: true });
+        } else {
+            console.log('Vídeo de background da seção beleza não encontrado');
+        }
+
+        // User Authentication System
+        let currentUser = null;
+
+        // Check if user is logged in on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedUser = localStorage.getItem('userLogin');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showUserMenu();
+            }
+            
+            // Make product cards clickable
+            setTimeout(() => {
+                makeProductCardsClickable();
+                setupButtonListeners();
+            }, 100);
+        });
+
+        function openLoginModal() {
+            const email = prompt('Digite seu e-mail:');
+            const password = prompt('Digite sua senha:');
+            
+            if (email && password) {
+                // Simulate login (in real app, this would be an API call)
+                currentUser = {
+                    name: email.split('@')[0],
+                    email: email
+                };
+                localStorage.setItem('userLogin', JSON.stringify(currentUser));
+                showUserMenu();
+                alert('Login realizado com sucesso!');
+            }
+        }
+
+        function openRegisterModal() {
+            const name = prompt('Digite seu nome:');
+            const email = prompt('Digite seu e-mail:');
+            const password = prompt('Digite sua senha:');
+            
+            if (name && email && password) {
+                // Simulate registration (in real app, this would be an API call)
+                currentUser = {
+                    name: name,
+                    email: email
+                };
+                localStorage.setItem('userLogin', JSON.stringify(currentUser));
+                showUserMenu();
+                alert('Cadastro realizado com sucesso!');
+            }
+        }
+
+        function showUserMenu() {
+            document.getElementById('authButtons').style.display = 'none';
+            document.getElementById('userMenu').style.display = 'block';
+            document.getElementById('userName').textContent = currentUser.name;
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            const avatar = document.querySelector('.user-avatar');
+            
+            dropdown.classList.toggle('show');
+            avatar.classList.toggle('active');
+        }
+
+        function viewProfile() {
+            alert('Perfil do usuário: ' + currentUser.name + ' (' + currentUser.email + ')');
+            document.getElementById('userDropdown').classList.remove('show');
+        }
+
+        function viewMyReviews() {
+            alert('Suas avaliações serão exibidas aqui em breve!');
+            document.getElementById('userDropdown').classList.remove('show');
+        }
+
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('userLogin');
+            document.getElementById('authButtons').style.display = 'flex';
+            document.getElementById('userMenu').style.display = 'none';
+            document.getElementById('userDropdown').classList.remove('show');
+            alert('Logout realizado com sucesso!');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.user-menu')) {
+                document.getElementById('userDropdown').classList.remove('show');
+                document.querySelector('.user-avatar').classList.remove('active');
+            }
+        });
+
+        // Make product cards clickable
+        function makeProductCardsClickable() {
+            const cards = document.querySelectorAll('.product-card');
+            console.log('Found', cards.length, 'product cards to make clickable');
+            
+            cards.forEach((card, index) => {
+                console.log(`Setting up click listener for card ${index + 1}`);
+                card.addEventListener('click', function(e) {
+                    console.log('Card clicked!', e.target);
+                    
+                    // Add visual feedback
+                    this.style.transform = 'scale(0.98)';
+                    this.style.boxShadow = '0 10px 25px rgba(212, 175, 55, 0.5)';
+                    
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                        this.style.boxShadow = '0 15px 40px rgba(0,0,0,0.3)';
+                    }, 150);
+                    
+                    // Get the product title to determine the checkout page
+                    const title = this.querySelector('.product-title').textContent.trim();
+                    console.log('Product title:', title);
+                    
+                    let checkoutUrl = '';
+                    
+                    if (title.includes('PHOERA Foundation') || title.includes('Kit 2 Bases PHOERA') || title.includes('PHOERA')) {
+                        checkoutUrl = '2 Pack PHOERA Foundation + Combo/checkout-phoera.html';
+                    } else if (title.includes('Alligator Hair Clips') || title.includes('Grampos de Cabelo Jacaré') || title.includes('Grampos de Cabelo') || title.includes('Grampos')) {
+                        checkoutUrl = 'Alligator Hair Clips + Combo/checkout-alligator-clips.html';
+                    } else if (title.includes('Heat-Resistant Mat') || title.includes('Tapete Anti-Queimadura') || title.includes('Tapete Resistente') || title.includes('Tapete')) {
+                        checkoutUrl = 'Heat-Resistant Mat + Combo/checkout-heat-resistant-mat.html';
+                    } else if (title.includes('LAIKOU Skincare') || title.includes('LAIKOU Cuidados da Pele') || title.includes('LAIKOU') || title.includes('Skincare') || title.includes('Cuidados da Pele')) {
+                        checkoutUrl = 'LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/checkout-golden-sakura.html';
+                    } else if (title.includes('Wrinkle Reducer') || title.includes('Redutor de Rugas - Terapia de Luz Vermelha') || title.includes('Vara de Skincare') || title.includes('Redutor de Rugas') || title.includes('Vara') || title.includes('Terapia de Luz Vermelha')) {
+                        checkoutUrl = 'Wrinkle Reducer - Red Light Therapy + Combo/checkout-wrinkle-reducer.html';
+                    }
+                    
+                    console.log('Checkout URL:', checkoutUrl);
+                    
+                    if (checkoutUrl) {
+                        console.log('Redirecting to:', checkoutUrl);
+                        // Add a small delay to show the visual feedback
+                        setTimeout(() => {
+                            console.log('Executing redirect...');
+                            window.location.href = checkoutUrl;
+                        }, 200);
+                    } else {
+                        console.log('No checkout URL found for product:', title);
+                    }
+                });
+            });
+        }
+
+        // Currency Detection and Conversion System
+        class CurrencyConverter {
+            constructor() {
+                this.baseCurrency = 'USD';
+                this.exchangeRates = {
+                    'USD': 1.00,
+                    'BRL': 5.20,  // Brazilian Real
+                    'EUR': 0.85   // Euro
+                };
+                
+                this.currencySymbols = {
+                    'USD': '$',
+                    'BRL': 'R$',
+                    'EUR': '€'
+                };
+                
+                // Product names translations
+                this.productNames = {
+                    'phoera-foundation': {
+                        'USD': '2 Pack PHOERA Foundation',
+                        'BRL': 'Kit 2 Bases PHOERA',
+                        'EUR': '2 Pack PHOERA Foundation'
+                    },
+                    'hair-clips': {
+                        'USD': 'Alligator Hair Clips',
+                        'BRL': 'Grampos de Cabelo Jacaré',
+                        'EUR': 'Alligator Hair Clips'
+                    },
+                    'heat-mat': {
+                        'USD': 'Heat-Resistant Mat',
+                        'BRL': 'Tapete Anti-Queimadura',
+                        'EUR': 'Heat-Resistant Mat'
+                    },
+                    'laiou-skincare': {
+                        'USD': 'LAIKOU Skincare',
+                        'BRL': 'LAIKOU Cuidados da Pele',
+                        'EUR': 'LAIKOU Skincare'
+                    },
+                    'wrinkle-reducer': {
+                        'USD': 'Wrinkle Reducer - Red Light Therapy',
+                        'BRL': 'Redutor de Rugas - Terapia de Luz Vermelha',
+                        'EUR': 'Wrinkle Reducer - Red Light Therapy'
+                    }
+                };
+                
+                // Product descriptions translations
+                this.productDescriptions = {
+                    'phoera-foundation': {
+                        'USD': 'Professional foundation with full coverage and long-lasting formula. Perfect for all skin types.',
+                        'BRL': 'Base profissional com cobertura total e fórmula de longa duração. Perfeita para todos os tipos de pele.',
+                        'EUR': 'Professional foundation with full coverage and long-lasting formula. Perfect for all skin types.'
+                    },
+                    'hair-clips': {
+                        'USD': 'Durable alligator hair clips that hold your hair securely without damaging it.',
+                        'BRL': 'Grampos de cabelo jacaré duráveis que seguram seu cabelo com segurança sem danificá-lo.',
+                        'EUR': 'Durable alligator hair clips that hold your hair securely without damaging it.'
+                    },
+                    'heat-mat': {
+                        'USD': 'Protect your furniture from heat damage. Heat-resistant mat for styling tools.',
+                        'BRL': 'Proteja seus móveis de danos causados pelo calor. Tapete anti-queimadura para ferramentas de styling.',
+                        'EUR': 'Protect your furniture from heat damage. Heat-resistant mat for styling tools.'
+                    },
+                    'laiou-skincare': {
+                        'USD': 'Advanced skincare with vitamin C and 24K gold. Reduces wrinkles and brightens skin.',
+                        'BRL': 'Skincare avançado com vitamina C e ouro 24K. Reduz rugas e ilumina a pele.',
+                        'EUR': 'Advanced skincare with vitamin C and 24K gold. Reduces wrinkles and brightens skin.'
+                    },
+                    'wrinkle-reducer': {
+                        'USD': 'Red light therapy device that stimulates collagen production and reduces fine lines.',
+                        'BRL': 'Dispositivo de terapia com luz vermelha que estimula a produção de colágeno e reduz linhas finas.',
+                        'EUR': 'Red light therapy device that stimulates collagen production and reduces fine lines.'
+                    }
+                };
+                
+                // Page content translations
+                this.pageContent = {
+                    'header': {
+                        'USD': 'Beauty Section',
+                        'BRL': 'Seção Beleza',
+                        'EUR': 'Beauty Section'
+                    },
+                    'subtitle': {
+                        'USD': 'Discover the best beauty and makeup products to enhance your natural beauty',
+                        'BRL': 'Descubra os melhores produtos de beleza e maquiagem para realçar sua beleza natural',
+                        'EUR': 'Discover the best beauty and makeup products to enhance your natural beauty'
+                    },
+                    'features_title': {
+                        'USD': 'Why choose our Beauty Section?',
+                        'BRL': 'Por que escolher nossa Seção Beleza?',
+                        'EUR': 'Why choose our Beauty Section?'
+                    },
+                    'premium_products': {
+                        'USD': 'Premium Products',
+                        'BRL': 'Produtos Premium',
+                        'EUR': 'Premium Products'
+                    },
+                    'premium_description': {
+                        'USD': 'We select only the best beauty products on the market to ensure exceptional quality.',
+                        'BRL': 'Selecionamos apenas os melhores produtos de beleza do mercado para garantir qualidade excepcional.',
+                        'EUR': 'We select only the best beauty products on the market to ensure exceptional quality.'
+                    },
+                    'fast_delivery': {
+                        'USD': 'Fast Delivery',
+                        'BRL': 'Entrega Rápida',
+                        'EUR': 'Fast Delivery'
+                    },
+                    'fast_delivery_description': {
+                        'USD': 'Free shipping throughout Brazil with delivery in 15-25 business days. Complete tracking.',
+                        'BRL': 'Frete grátis para todo o Brasil com entrega em 15-25 dias úteis. Rastreamento completo.',
+                        'EUR': 'Free shipping throughout Europe with delivery in 15-25 business days. Complete tracking.'
+                    },
+                    'total_guarantee': {
+                        'USD': 'Total Guarantee',
+                        'BRL': 'Garantia Total',
+                        'EUR': 'Total Guarantee'
+                    },
+                    'guarantee_description': {
+                        'USD': '30 days guarantee on all products. Satisfaction guaranteed or your money back.',
+                        'BRL': '30 dias de garantia em todos os produtos. Satisfação garantida ou seu dinheiro de volta.',
+                        'EUR': '30 days guarantee on all products. Satisfaction guaranteed or your money back.'
+                    },
+                    'expert_approved': {
+                        'USD': 'Expert Approved',
+                        'BRL': 'Aprovado por Especialistas',
+                        'EUR': 'Expert Approved'
+                    },
+                    'expert_description': {
+                        'USD': 'Products tested and approved by beauty professionals and dermatologists.',
+                        'BRL': 'Produtos testados e aprovados por profissionais de beleza e dermatologistas.',
+                        'EUR': 'Products tested and approved by beauty professionals and dermatologists.'
+                    },
+                    'testimonials_title': {
+                        'USD': 'What our customers say',
+                        'BRL': 'O que nossas clientes dizem',
+                        'EUR': 'What our customers say'
+                    },
+                    'newsletter_title': {
+                        'USD': 'Stay updated with the latest news!',
+                        'BRL': 'Fique por dentro das novidades!',
+                        'EUR': 'Stay updated with the latest news!'
+                    },
+                    'newsletter_description': {
+                        'USD': 'Receive exclusive offers and beauty tips directly to your email',
+                        'BRL': 'Receba ofertas exclusivas e dicas de beleza direto no seu e-mail',
+                        'EUR': 'Receive exclusive offers and beauty tips directly to your email'
+                    },
+                    'newsletter_placeholder': {
+                        'USD': 'Your best email',
+                        'BRL': 'Seu melhor e-mail',
+                        'EUR': 'Your best email'
+                    },
+                    'newsletter_button': {
+                        'USD': 'Subscribe',
+                        'BRL': 'Inscrever-se',
+                        'EUR': 'Subscribe'
+                    },
+                    'footer_text': {
+                        'USD': '© 2024 67 Beauty Hub - Beauty Section. All rights reserved.',
+                        'BRL': '© 2024 67 Beauty Hub - Seção Beleza. Todos os direitos reservados.',
+                        'EUR': '© 2024 67 Beauty Hub - Beauty Section. All rights reserved.'
+                    },
+                    'testimonial_1': {
+                        'USD': 'This is my absolute favorite foundation, I\'ve bought it several times! I fell in love the first time I used it, and I haven\'t bought a different foundation since then! It\'s super light but with full coverage, matte finish, and I swear it gives an airbrushed look! My skin looks like it doesn\'t even have much makeup on!',
+                        'BRL': 'É minha base absoluta favorita, já comprei várias vezes! Me apaixonei na primeira vez que usei, e não comprei uma base diferente desde então! É super leve mas com cobertura total, acabamento matte, e juro que dá um look aerografado! Minha pele parece que nem tem muita maquiagem!',
+                        'EUR': 'This is my absolute favorite foundation, I\'ve bought it several times! I fell in love the first time I used it, and I haven\'t bought a different foundation since then! It\'s super light but with full coverage, matte finish, and I swear it gives an airbrushed look! My skin looks like it doesn\'t even have much makeup on!'
+                    },
+                    'testimonial_1_author': {
+                        'USD': '- Brookie, Verified Customer',
+                        'BRL': '- Brookie, Cliente Verificada',
+                        'EUR': '- Brookie, Verified Customer'
+                    },
+                    'testimonial_2': {
+                        'USD': 'The hair clips are perfect for my hairstyles. Exceptional quality!',
+                        'BRL': 'Os prendedores de cabelo são perfeitos para meus penteados. Qualidade excepcional!',
+                        'EUR': 'The hair clips are perfect for my hairstyles. Exceptional quality!'
+                    },
+                    'testimonial_2_author': {
+                        'USD': '- Maria Fernanda, Rio de Janeiro',
+                        'BRL': '- Maria Fernanda, Rio de Janeiro',
+                        'EUR': '- Maria Fernanda, Rio de Janeiro'
+                    },
+                    'testimonial_3': {
+                        'USD': 'The Phero perfume is divine! I receive many compliments when I use it. Worth every penny!',
+                        'BRL': 'O perfume Phero é divino! Recebo muitos elogios quando uso. Vale cada centavo!',
+                        'EUR': 'The Phero perfume is divine! I receive many compliments when I use it. Worth every penny!'
+                    },
+                    'testimonial_3_author': {
+                        'USD': '- Juliana Santos, Belo Horizonte',
+                        'BRL': '- Juliana Santos, Belo Horizonte',
+                        'EUR': '- Juliana Santos, Belo Horizonte'
+                    }
+                };
+                
+                this.userCountry = null;
+                this.userCurrency = 'USD';
+                this.isInitialized = false;
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    await this.detectUserLocation();
+                    this.updateAllPrices();
+                    this.updatePageContent();
+                    this.isInitialized = true;
+                    console.log(`Currency converter initialized successfully. Currency: ${this.userCurrency}`);
+                } catch (error) {
+                    console.error('Error initializing currency converter:', error);
+                    this.userCurrency = 'USD';
+                    this.updateAllPrices();
+                    this.updatePageContent();
+                }
+            }
+            
+            async detectUserLocation() {
+                try {
+                    let countryCode = null;
+                    
+                    // Check if running from file:// protocol
+                    if (window.location.protocol === 'file:') {
+                        console.log('Running from file:// protocol, using fallback detection');
+                        // Try to detect from browser language
+                        const browserLang = navigator.language || navigator.userLanguage;
+                        if (browserLang.startsWith('pt')) {
+                            countryCode = 'BR';
+                            console.log('Detected Portuguese language, assuming Brazil');
+                        } else if (browserLang.startsWith('es')) {
+                            countryCode = 'ES';
+                            console.log('Detected Spanish language, assuming Spain');
+                        } else {
+                            countryCode = 'US';
+                            console.log('Using default US location');
+                        }
+                    } else {
+                        // Try ipapi.co first
+                        try {
+                            const response = await fetch('https://ipapi.co/json/', {
+                                timeout: 5000,
+                                mode: 'cors'
+                            });
+                            if (response.ok) {
+                                const data = await response.json();
+                                countryCode = data.country_code;
+                                console.log('Location detected via ipapi.co:', countryCode);
+                            }
+                        } catch (e) {
+                            console.log('ipapi.co failed, trying alternative...');
+                        }
+                        
+                        // Fallback to ipinfo.io if ipapi.co fails
+                        if (!countryCode) {
+                            try {
+                                const response = await fetch('https://ipinfo.io/json', {
+                                    timeout: 5000,
+                                    mode: 'cors'
+                                });
+                                if (response.ok) {
+                                    const data = await response.json();
+                                    countryCode = data.country;
+                                    console.log('Location detected via ipinfo.io:', countryCode);
+                                }
+                            } catch (e) {
+                                console.log('ipinfo.io also failed');
+                            }
+                        }
+                    }
+                    
+                    this.userCountry = countryCode;
+                    
+                    // Map countries to supported currencies based on user origin
+                    const countryToCurrency = {
+                        // Real Brasileiro (BRL) - Brasil
+                        'BR': 'BRL',
+                        
+                        // Dólar Americano (USD) - América do Norte e outros países
+                        'US': 'USD', 'CA': 'USD', 'MX': 'USD', 'AR': 'USD', 'CL': 'USD', 'CO': 'USD', 'PE': 'USD', 'UY': 'USD', 'BO': 'USD', 'PY': 'USD', 'VE': 'USD', 'EC': 'USD', 'GY': 'USD', 'SR': 'USD', 'GF': 'USD', 'FK': 'USD', 'BZ': 'USD', 'GT': 'USD', 'HN': 'USD', 'SV': 'USD', 'NI': 'USD', 'CR': 'USD', 'PA': 'USD', 'CU': 'USD', 'JM': 'USD', 'HT': 'USD', 'DO': 'USD', 'PR': 'USD', 'VI': 'USD', 'AG': 'USD', 'BB': 'USD', 'DM': 'USD', 'GD': 'USD', 'KN': 'USD', 'LC': 'USD', 'VC': 'USD', 'TT': 'USD', 'BS': 'USD', 'AU': 'USD', 'NZ': 'USD', 'JP': 'USD', 'KR': 'USD', 'SG': 'USD', 'HK': 'USD', 'TW': 'USD', 'TH': 'USD', 'MY': 'USD', 'ID': 'USD', 'PH': 'USD', 'VN': 'USD', 'IN': 'USD', 'PK': 'USD', 'BD': 'USD', 'LK': 'USD', 'MM': 'USD', 'KH': 'USD', 'LA': 'USD', 'BN': 'USD', 'FJ': 'USD', 'PG': 'USD', 'SB': 'USD', 'VU': 'USD', 'NC': 'USD', 'PF': 'USD', 'WS': 'USD', 'TO': 'USD', 'KI': 'USD', 'TV': 'USD', 'NR': 'USD', 'MH': 'USD', 'FM': 'USD', 'PW': 'USD', 'AS': 'USD', 'GU': 'USD', 'MP': 'USD', 'CK': 'USD', 'NU': 'USD', 'TK': 'USD', 'WF': 'USD', 'NF': 'USD', 'PN': 'USD', 'GS': 'USD', 'SH': 'USD', 'AC': 'USD', 'TA': 'USD', 'IO': 'USD', 'CX': 'USD', 'CC': 'USD', 'HM': 'USD', 'AQ': 'USD', 'BV': 'USD', 'TF': 'USD', 'UM': 'USD',
+                        
+                        // Euro (EUR) - Países da Zona do Euro
+                        'DE': 'EUR', 'FR': 'EUR', 'IT': 'EUR', 'ES': 'EUR', 'NL': 'EUR', 'BE': 'EUR', 'AT': 'EUR', 'PT': 'EUR', 'IE': 'EUR', 'FI': 'EUR', 'GR': 'EUR', 'LU': 'EUR', 'MT': 'EUR', 'CY': 'EUR', 'SK': 'EUR', 'SI': 'EUR', 'EE': 'EUR', 'LV': 'EUR', 'LT': 'EUR', 'AD': 'EUR', 'MC': 'EUR', 'SM': 'EUR', 'VA': 'EUR', 'ME': 'EUR', 'XK': 'EUR'
+                    };
+                    
+                    this.userCurrency = countryToCurrency[this.userCountry] || 'USD';
+                    
+                    console.log(`Final detection - Country: ${this.userCountry}, Currency: ${this.userCurrency}`);
+                    
+                } catch (error) {
+                    console.error('Error in location detection:', error);
+                    this.userCurrency = 'USD';
+                    this.userCountry = 'Unknown';
+                }
+            }
+            
+            convertPrice(usdPrice) {
+                const rate = this.exchangeRates[this.userCurrency];
+                const convertedPrice = usdPrice * rate;
+                return this.formatPrice(convertedPrice);
+            }
+            
+            translateProductName(productKey) {
+                return this.productNames[productKey] ? 
+                    this.productNames[productKey][this.userCurrency] || 
+                    this.productNames[productKey]['USD'] : 
+                    productKey;
+            }
+            
+            translateProductDescription(productKey) {
+                return this.productDescriptions[productKey] ? 
+                    this.productDescriptions[productKey][this.userCurrency] || 
+                    this.productDescriptions[productKey]['USD'] : 
+                    '';
+            }
+            
+            translatePageContent(contentKey) {
+                return this.pageContent[contentKey] ? 
+                    this.pageContent[contentKey][this.userCurrency] || 
+                    this.pageContent[contentKey]['USD'] : 
+                    contentKey;
+            }
+            
+            formatPrice(price) {
+                const symbol = this.currencySymbols[this.userCurrency];
+                
+                if (this.userCurrency === 'BRL') {
+                    return `${symbol} ${price.toFixed(2).replace('.', ',')}`;
+                } else {
+                    return `${symbol}${price.toFixed(2)}`;
+                }
+            }
+            
+            updateAllPrices() {
+                try {
+                    // Product prices in USD
+                    const productPrices = {
+                        'phoera-foundation': { current: 17.63, original: 35.26 },
+                        'hair-clips': { current: 3.54, original: 4.99 },
+                        'heat-mat': { current: 2.29, original: 34.99 },
+                        'laiou-skincare': { current: 5.99, original: 19.99 },
+                        'wrinkle-reducer': { current: 17.45, original: 34.90 }
+                    };
+                    
+                    // Wait for DOM to be ready
+                    const updatePrices = () => {
+                        const productCards = document.querySelectorAll('.product-card');
+                        
+                        productCards.forEach((card, index) => {
+                            const currentPrice = card.querySelector('.price-current');
+                            const originalPrice = card.querySelector('.price-original');
+                            const productTitle = card.querySelector('.product-title');
+                            const productDescription = card.querySelector('.product-description');
+                            
+                            if (currentPrice && originalPrice) {
+                                let productKey = '';
+                                switch(index) {
+                                    case 0: productKey = 'phoera-foundation'; break;
+                                    case 1: productKey = 'hair-clips'; break;
+                                    case 2: productKey = 'heat-mat'; break;
+                                    case 3: productKey = 'laiou-skincare'; break;
+                                    case 4: productKey = 'wrinkle-reducer'; break;
+                                }
+                                
+                                if (productKey && productPrices[productKey]) {
+                                    // Update prices
+                                    currentPrice.textContent = this.convertPrice(productPrices[productKey].current);
+                                    originalPrice.textContent = this.convertPrice(productPrices[productKey].original);
+                                    
+                                    // Update product name
+                                    if (productTitle) {
+                                        productTitle.textContent = this.translateProductName(productKey);
+                                    }
+                                    
+                                    // Update product description
+                                    if (productDescription) {
+                                        productDescription.textContent = this.translateProductDescription(productKey);
+                                    }
+                                    
+                                    console.log(`Updated ${productKey}: ${productTitle ? productTitle.textContent : 'N/A'} - ${currentPrice.textContent} / ${originalPrice.textContent}`);
+                                }
+                            }
+                        });
+                    };
+                    
+                    // Try to update immediately
+                    updatePrices();
+                    
+                    // If no products found, wait a bit and try again
+                    if (document.querySelectorAll('.product-card').length === 0) {
+                        setTimeout(updatePrices, 100);
+                    }
+                    
+                } catch (error) {
+                    console.error('Error updating prices:', error);
+                }
+            }
+            
+            updatePageContent() {
+                try {
+                    // Update header
+                    const header = document.querySelector('.beauty-header h1');
+                    if (header) {
+                        header.innerHTML = `<i class="fas fa-sparkles"></i> ${this.translatePageContent('header')}`;
+                    }
+                    
+                    // Update subtitle
+                    const subtitle = document.querySelector('.beauty-header p');
+                    if (subtitle) {
+                        subtitle.textContent = this.translatePageContent('subtitle');
+                    }
+                    
+                    // Update features section
+                    const featuresTitle = document.querySelector('.features-title');
+                    if (featuresTitle) {
+                        featuresTitle.textContent = this.translatePageContent('features_title');
+                    }
+                    
+                    // Update feature cards
+                    const featureCards = document.querySelectorAll('.feature-card');
+                    if (featureCards.length >= 4) {
+                        // Premium Products
+                        const premiumTitle = featureCards[0].querySelector('.feature-title');
+                        const premiumDesc = featureCards[0].querySelector('.feature-description');
+                        if (premiumTitle) premiumTitle.textContent = this.translatePageContent('premium_products');
+                        if (premiumDesc) premiumDesc.textContent = this.translatePageContent('premium_description');
+                        
+                        // Fast Delivery
+                        const deliveryTitle = featureCards[1].querySelector('.feature-title');
+                        const deliveryDesc = featureCards[1].querySelector('.feature-description');
+                        if (deliveryTitle) deliveryTitle.textContent = this.translatePageContent('fast_delivery');
+                        if (deliveryDesc) deliveryDesc.textContent = this.translatePageContent('fast_delivery_description');
+                        
+                        // Total Guarantee
+                        const guaranteeTitle = featureCards[2].querySelector('.feature-title');
+                        const guaranteeDesc = featureCards[2].querySelector('.feature-description');
+                        if (guaranteeTitle) guaranteeTitle.textContent = this.translatePageContent('total_guarantee');
+                        if (guaranteeDesc) guaranteeDesc.textContent = this.translatePageContent('guarantee_description');
+                        
+                        // Expert Approved
+                        const expertTitle = featureCards[3].querySelector('.feature-title');
+                        const expertDesc = featureCards[3].querySelector('.feature-description');
+                        if (expertTitle) expertTitle.textContent = this.translatePageContent('expert_approved');
+                        if (expertDesc) expertDesc.textContent = this.translatePageContent('expert_description');
+                    }
+                    
+                    // Update testimonials
+                    const testimonialsTitle = document.querySelector('.testimonials-title');
+                    if (testimonialsTitle) {
+                        testimonialsTitle.textContent = this.translatePageContent('testimonials_title');
+                    }
+                    
+                    // Update testimonial cards
+                    const testimonialCards = document.querySelectorAll('.testimonial-card');
+                    if (testimonialCards.length >= 3) {
+                        // First testimonial
+                        const testimonial1Text = testimonialCards[0].querySelector('.testimonial-text');
+                        const testimonial1Author = testimonialCards[0].querySelector('.testimonial-author');
+                        if (testimonial1Text) testimonial1Text.textContent = this.translatePageContent('testimonial_1');
+                        if (testimonial1Author) testimonial1Author.textContent = this.translatePageContent('testimonial_1_author');
+                        
+                        // Second testimonial
+                        const testimonial2Text = testimonialCards[1].querySelector('.testimonial-text');
+                        const testimonial2Author = testimonialCards[1].querySelector('.testimonial-author');
+                        if (testimonial2Text) testimonial2Text.textContent = this.translatePageContent('testimonial_2');
+                        if (testimonial2Author) testimonial2Author.textContent = this.translatePageContent('testimonial_2_author');
+                        
+                        // Third testimonial
+                        const testimonial3Text = testimonialCards[2].querySelector('.testimonial-text');
+                        const testimonial3Author = testimonialCards[2].querySelector('.testimonial-author');
+                        if (testimonial3Text) testimonial3Text.textContent = this.translatePageContent('testimonial_3');
+                        if (testimonial3Author) testimonial3Author.textContent = this.translatePageContent('testimonial_3_author');
+                    }
+                    
+                    // Update newsletter
+                    const newsletterTitle = document.querySelector('.newsletter-title');
+                    const newsletterDesc = document.querySelector('.newsletter-description');
+                    const newsletterInput = document.querySelector('.newsletter-input');
+                    const newsletterBtn = document.querySelector('.newsletter-btn');
+                    
+                    if (newsletterTitle) newsletterTitle.textContent = this.translatePageContent('newsletter_title');
+                    if (newsletterDesc) newsletterDesc.textContent = this.translatePageContent('newsletter_description');
+                    if (newsletterInput) newsletterInput.placeholder = this.translatePageContent('newsletter_placeholder');
+                    if (newsletterBtn) newsletterBtn.textContent = this.translatePageContent('newsletter_button');
+                    
+                    // Update footer
+                    const footerText = document.querySelector('.footer p');
+                    if (footerText) {
+                        footerText.textContent = this.translatePageContent('footer_text');
+                    }
+                    
+                    console.log('Page content updated successfully');
+                    
+                } catch (error) {
+                    console.error('Error updating page content:', error);
+                }
+            }
+        }
+        
+        // Initialize currency converter when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const converter = new CurrencyConverter();
+            converter.init();
+            
+            // Add test function to window for debugging
+            window.testCurrencyConverter = function() {
+                console.log('=== Currency Converter Test ===');
+                console.log('User Country:', converter.userCountry);
+                console.log('User Currency:', converter.userCurrency);
+                console.log('Exchange Rates:', converter.exchangeRates);
+                console.log('Currency Symbols:', converter.currencySymbols);
+                
+                // Test price conversion
+                const testPrice = 17.63;
+                console.log(`Test price conversion for $${testPrice}:`);
+                console.log(`USD: ${converter.convertPrice(testPrice)}`);
+                
+                // Test with different currencies
+                const originalCurrency = converter.userCurrency;
+                converter.userCurrency = 'BRL';
+                console.log(`BRL: ${converter.convertPrice(testPrice)}`);
+                converter.userCurrency = 'EUR';
+                console.log(`EUR: ${converter.convertPrice(testPrice)}`);
+                converter.userCurrency = originalCurrency;
+                
+                // Test product name translation
+                console.log('\n=== Product Name Translation Test ===');
+                const productKeys = ['phoera-foundation', 'hair-clips', 'heat-mat', 'laiou-skincare', 'wrinkle-reducer'];
+                productKeys.forEach(key => {
+                    console.log(`${key}:`);
+                    console.log(`  USD: ${converter.productNames[key]['USD']}`);
+                    console.log(`  BRL: ${converter.productNames[key]['BRL']}`);
+                    console.log(`  EUR: ${converter.productNames[key]['EUR']}`);
+                });
+                
+                // Test page content translation
+                console.log('\n=== Page Content Translation Test ===');
+                const contentKeys = ['header', 'subtitle', 'features_title', 'premium_products', 'fast_delivery'];
+                contentKeys.forEach(key => {
+                    console.log(`${key}:`);
+                    console.log(`  USD: ${converter.pageContent[key]['USD']}`);
+                    console.log(`  BRL: ${converter.pageContent[key]['BRL']}`);
+                    console.log(`  EUR: ${converter.pageContent[key]['EUR']}`);
+                });
+                
+                console.log('=== End Test ===');
+            };
+            
+            // Auto-test after 2 seconds
+            setTimeout(() => {
+                if (converter.isInitialized) {
+                    console.log('Currency converter test available. Run window.testCurrencyConverter() to test.');
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

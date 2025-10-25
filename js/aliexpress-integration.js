@@ -307,17 +307,32 @@ class AliExpressIntegration {
      * Mostra notificação de status
      */
     showStatusNotification(update) {
+        // Verificar se estamos no dashboard
+        const isDashboard = window.location.pathname.includes('dashboard') || 
+                           document.title.includes('Dashboard') ||
+                           document.querySelector('#capitalCards') !== null;
+        
+        if (!isDashboard) {
+            // Nas páginas de checkout, apenas log no console
+            console.log('📬 Atualização recebida:', update);
+            return;
+        }
+        
+        // No dashboard, mostrar notificação visual
         const notification = document.createElement('div');
         notification.style.cssText = `
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            position: fixed; top: 20px; right: 20px;
             background: #28a745; color: white; padding: 15px 20px;
             border-radius: 8px; z-index: 10002; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            animation: slideDown 0.3s ease;
+            animation: slideInRight 0.3s ease; max-width: 350px;
+            font-weight: 500;
         `;
         
         notification.innerHTML = `
-            <i class="fas fa-info-circle"></i>
-            Atualização do pedido: ${update.message || 'Status atualizado'}
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span>🛒</span>
+                <span>AliExpress: ${update.message || 'Status atualizado'}</span>
+            </div>
         `;
         
         document.body.appendChild(notification);

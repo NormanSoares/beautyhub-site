@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Carregamento de Arquivos de Tradução</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { color: #28a745; font-weight: bold; }
+        .error { color: #dc3545; font-weight: bold; }
+        .info { color: #007bff; }
+        .warning { color: #ffc107; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        .file-test { background: #f8f9fa; padding: 10px; border-radius: 5px; margin: 10px 0; }
+        .loading { background: #fff3cd; padding: 10px; border-radius: 5px; margin: 10px 0; }
+        .loaded { background: #d4edda; padding: 10px; border-radius: 5px; margin: 10px 0; }
+        .failed { background: #f8d7da; padding: 10px; border-radius: 5px; margin: 10px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📁 Teste de Carregamento de Arquivos de Tradução</h1>
+        
+        <div class="test-section">
+            <h2>🔍 Teste 1: Verificação de Arquivos Existentes</h2>
+            <button onclick="testFileExistence()">🔍 Verificar Arquivos</button>
+            <div id="existence-test"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📥 Teste 2: Carregamento Dinâmico de Arquivos</h2>
+            <button onclick="testDynamicLoading()">📥 Testar Carregamento Dinâmico</button>
+            <div id="dynamic-test"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🌍 Teste 3: Simulação de Mudança de Idioma</h2>
+            <select id="language-selector" onchange="testLanguageFileLoading(this.value)">
+                <option value="pt-BR">🇧🇷 Português (Brasil) - translation-pt-br.js</option>
+                <option value="pt-PT">🇵🇹 Português (Portugal) - translation-pt-pt.js</option>
+                <option value="en-US">🇺🇸 English (US) - translation-en.js</option>
+            </select>
+            <button onclick="testAllLanguages()">🌍 Testar Todos os Idiomas</button>
+            <div id="language-test"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📊 Resultados dos Testes</h2>
+            <div id="results-table"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔍 Logs Detalhados</h2>
+            <div id="detailed-logs"></div>
+        </div>
+    </div>
+
+    <script>
+        const testResults = {
+            'pt-BR': { file: '../../js/translation-pt-br.js', status: 'pending', content: null, error: null },
+            'pt-PT': { file: '../../js/translation-pt-pt.js', status: 'pending', content: null, error: null },
+            'en-US': { file: '../../js/translation-en.js', status: 'pending', content: null, error: null }
+        };
+        
+        // Teste 1: Verificar se arquivos existem
+        async function testFileExistence() {
+            const files = [
+                '../../js/translation-pt-br.js',
+                '../../js/translation-pt-pt.js',
+                '../../js/translation-en.js',
+                '../../js/language-controller.js'
+            ];
+            
+            let results = '<h3>📁 Verificação de Arquivos:</h3>';
+            
+            for (const file of files) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        const content = await response.text();
+                        results += `<div class="loaded">✅ ${file} - OK (${content.length} caracteres)</div>`;
+                    } else {
+                        results += `<div class="failed">❌ ${file} - Erro ${response.status}</div>`;
+                    }
+                } catch (error) {
+                    results += `<div class="failed">❌ ${file} - Erro: ${error.message}</div>`;
+                }
+            }
+            
+            document.getElementById('existence-test').innerHTML = results;
+        }
+        
+        // Teste 2: Carregamento dinâmico
+        async function testDynamicLoading() {
+            document.getElementById('dynamic-test').innerHTML = '<div class="loading">⏳ Testando carregamento dinâmico...</div>';
+            
+            const languages = ['pt-BR', 'pt-PT', 'en-US'];
+            let results = '<h3>📥 Carregamento Dinâmico:</h3>';
+            
+            for (const lang of languages) {
+                const file = testResults[lang].file;
+                try {
+                    results += `<div class="loading">⏳ Carregando ${file}...</div>`;
+                    
+                    // Simular carregamento dinâmico como na beauty store
+                    const script = document.createElement('script');
+                    script.src = file;
+                    
+                    await new Promise((resolve, reject) => {
+                        script.onload = () => {
+                            testResults[lang].status = 'loaded';
+                            testResults[lang].content = 'Carregado com sucesso';
+                            resolve();
+                        };
+                        script.onerror = () => {
+                            testResults[lang].status = 'failed';
+                            testResults[lang].error = 'Erro ao carregar';
+                            reject(new Error('Erro ao carregar'));
+                        };
+                        document.head.appendChild(script);
+                    });
+                    
+                    results += `<div class="loaded">✅ ${file} - Carregado com sucesso</div>`;
+                } catch (error) {
+                    results += `<div class="failed">❌ ${file} - Erro: ${error.message}</div>`;
+                }
+            }
+            
+            document.getElementById('dynamic-test').innerHTML = results;
+        }
+        
+        // Teste 3: Simulação de mudança de idioma
+        async function testLanguageFileLoading(language) {
+            document.getElementById('language-test').innerHTML = '<div class="loading">⏳ Testando carregamento para ' + language + '...</div>';
+            
+            const file = testResults[language].file;
+            
+            try {
+                // Simular o que acontece na beauty store
+                localStorage.setItem('userLanguage', language);
+                localStorage.setItem('selectedCountry', language === 'pt-BR' ? 'BR' : language === 'pt-PT' ? 'PT' : 'US');
+                
+                const response = await fetch(file);
+                if (response.ok) {
+                    const content = await response.text();
+                    
+                    // Verificar se o arquivo contém as classes esperadas
+                    const hasTranslationClass = content.includes('TranslationSystem');
+                    const hasTranslations = content.includes('translations');
+                    
+                    const result = `
+                        <div class="loaded">
+                            <strong>✅ Arquivo carregado com sucesso!</strong><br>
+                            <strong>📁 Arquivo:</strong> ${file}<br>
+                            <strong>📏 Tamanho:</strong> ${content.length} caracteres<br>
+                            <strong>🔍 Classe de tradução:</strong> ${hasTranslationClass ? '✅ Encontrada' : '❌ Não encontrada'}<br>
+                            <strong>🔍 Traduções:</strong> ${hasTranslations ? '✅ Encontradas' : '❌ Não encontradas'}<br>
+                            <strong>🌍 Idioma:</strong> ${language}<br>
+                            <strong>💾 localStorage:</strong> userLanguage = ${localStorage.getItem('userLanguage')}
+                        </div>
+                    `;
+                    
+                    document.getElementById('language-test').innerHTML = result;
+                } else {
+                    document.getElementById('language-test').innerHTML = `
+                        <div class="failed">
+                            <strong>❌ Erro ao carregar arquivo!</strong><br>
+                            <strong>📁 Arquivo:</strong> ${file}<br>
+                            <strong>📊 Status:</strong> ${response.status}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('language-test').innerHTML = `
+                    <div class="failed">
+                        <strong>❌ Erro na requisição!</strong><br>
+                        <strong>📁 Arquivo:</strong> ${file}<br>
+                        <strong>🔍 Erro:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        // Testar todos os idiomas
+        async function testAllLanguages() {
+            document.getElementById('language-test').innerHTML = '<div class="loading">⏳ Testando todos os idiomas...</div>';
+            
+            const languages = ['pt-BR', 'pt-PT', 'en-US'];
+            let results = '<h3>🌍 Teste de Todos os Idiomas:</h3>';
+            
+            for (const lang of languages) {
+                const file = testResults[lang].file;
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        const content = await response.text();
+                        results += `<div class="loaded">✅ ${lang} - ${file} (${content.length} chars)</div>`;
+                    } else {
+                        results += `<div class="failed">❌ ${lang} - ${file} (Erro ${response.status})</div>`;
+                    }
+                } catch (error) {
+                    results += `<div class="failed">❌ ${lang} - ${file} (Erro: ${error.message})</div>`;
+                }
+            }
+            
+            document.getElementById('language-test').innerHTML = results;
+        }
+        
+        // Mostrar tabela de resultados
+        function showResultsTable() {
+            const table = `
+                <table>
+                    <tr>
+                        <th>Idioma</th>
+                        <th>Arquivo</th>
+                        <th>Status</th>
+                        <th>Conteúdo</th>
+                        <th>Erro</th>
+                    </tr>
+                    ${Object.keys(testResults).map(lang => `
+                        <tr>
+                            <td>${lang}</td>
+                            <td>${testResults[lang].file}</td>
+                            <td>${testResults[lang].status}</td>
+                            <td>${testResults[lang].content || 'N/A'}</td>
+                            <td>${testResults[lang].error || 'N/A'}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            `;
+            
+            document.getElementById('results-table').innerHTML = table;
+        }
+        
+        // Capturar logs detalhados
+        function captureDetailedLogs() {
+            const originalLog = console.log;
+            const logs = [];
+            
+            console.log = function(...args) {
+                logs.push(args.join(' '));
+                originalLog.apply(console, args);
+            };
+            
+            // Mostrar logs capturados
+            setInterval(() => {
+                if (logs.length > 0) {
+                    const logHtml = logs.slice(-10).map(log => `<div style="background: #f0f0f0; padding: 5px; margin: 2px 0; border-radius: 3px; font-family: monospace; font-size: 12px;">${log}</div>`).join('');
+                    document.getElementById('detailed-logs').innerHTML = logHtml;
+                }
+            }, 1000);
+        }
+        
+        // Inicializar
+        window.addEventListener('load', () => {
+            testFileExistence();
+            showResultsTable();
+            captureDetailedLogs();
+            
+            // Mostrar status inicial
+            document.getElementById('language-test').innerHTML = `
+                <div class="info">
+                    <strong>🚀 Sistema de teste inicializado</strong><br>
+                    Selecione um idioma ou clique em "Testar Todos os Idiomas" para verificar o carregamento.
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

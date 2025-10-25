@@ -1,15 +1,55 @@
 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en-US" id="html-lang">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>67 Beauty Hub - Beleza e Conforto</title>
+    <title>67 Beauty Hub - Beauty and Comfort</title>
     <link rel="stylesheet" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    
+
     <style>
+        /* Preloader to prevent FOUC */
+        /* Preloader removido completamente */
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        
+        /* Country/Currency Selector Styles */
+        .country-selector {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .country-selector select {
+            padding: 8px 12px;
+            border: 2px solid #d4af37;
+            border-radius: 6px;
+            background: white;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .country-selector select:hover {
+            border-color: #b8941f;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+        }
+
+        .country-selector select:focus {
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
         /* User Authentication Styles */
         .user-auth {
             display: flex;
@@ -139,6 +179,15 @@
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
+            .country-selector {
+                margin-right: 10px;
+            }
+
+            .country-selector select {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
             .user-auth {
                 margin-right: 10px;
             }
@@ -175,34 +224,99 @@
         }
 
         /* Product Section Interactive Styles */
-        .product-overlay {
+        .product-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(212, 175, 55, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             opacity: 0;
-            transition: all 0.3s ease;
-            border-radius: 15px;
+            transition: opacity 0.5s ease;
+            z-index: 1 !important;
+            background: none !important;
         }
         
-        .product-overlay i {
-            font-size: 2rem;
-            color: white;
-            transform: translateX(-10px);
-            transition: all 0.3s ease;
+        .product-card:hover::before {
+            opacity: 0.3 !important;
+        }
+        
+        .product-card .product-icon {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .product-card h3,
+        .product-card p,
+        .product-card .product-features,
+        .product-card .product-action-btn {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Overlay system for background images */
+        .product-card .product-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+            border-radius: 20px;
         }
         
         .product-card:hover .product-overlay {
-            opacity: 1;
+            opacity: 0.3;
         }
         
-        .product-card:hover .product-overlay i {
-            transform: translateX(0);
+        /* Arrow indicator */
+        .product-card .arrow-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #d4af37;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 3;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .product-card:hover .arrow-indicator {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        /* Beauty card background images */
+        .beauty-card::before {
+            background-image: url('Produtos de beleza/2 Pack PHOERA Foundation + Combo/Galeria/1760391255800.jpeg') !important;
+        }
+        
+        .beauty-card:hover::before {
+            background-image: url('Produtos de beleza/Alligator Hair Clips + Combo/Galeria/Whisk_9dc8cad069040e18750461ad2431c6abdr.jpeg') !important;
+        }
+        
+        /* Comfort card background images */
+        .comfort-card::before {
+            background-image: url('Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/Galeria/Apresentação.jpg') !important;
+        }
+        
+        .comfort-card:hover::before {
+            background-image: url('Produtos de conforto/Human Dog bad/Galeria/main-image-3.jpeg') !important;
         }
         
         .product-action-btn {
@@ -316,17 +430,15 @@
             pointer-events: none;
         }
 
-
-
         .product-checkout-overlay i {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 10px;
             transform: translateY(-10px);
             transition: all 0.3s ease;
         }
 
         .product-checkout-overlay span {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             transform: translateY(10px);
             transition: all 0.3s ease;
         }
@@ -970,11 +1082,14 @@
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <!-- Preloader removido completamente -->
+    
     <!-- Background Video -->
     <div class="global-background-video" style="z-index: -10 !important;">
         <video autoplay muted loop playsinline preload="auto" style="z-index: -10 !important;">
             <source src="background-video.mp4" type="video/mp4">
-            Seu navegador não suporta vídeos.
+            Your browser does not support videos.
         </video>
     </div>
     
@@ -991,23 +1106,23 @@
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="#home" class="nav-link">Início</a>
+                    <a href="#home" class="nav-link" data-translate-key="nav_home" data-default="Home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#products" class="nav-link">Produtos</a>
+                    <a href="#products" class="nav-link" data-translate-key="nav_products" data-default="Products">Products</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Seções <i class="fas fa-chevron-down"></i></a>
+                    <a href="#" class="nav-link dropdown-toggle" data-translate-key="nav_sections" data-default="Sections"><i class="fas fa-chevron-down"></i>Sections</a>
                     <ul class="dropdown-menu">
-                        <li><a href="Produtos de beleza/beauty-store.html" class="dropdown-link"><i class="fas fa-palette"></i> Seção Beleza</a></li>
-                        <li><a href="Produtos de conforto/comfort-store.html" class="dropdown-link"><i class="fas fa-home"></i> Seção Conforto</a></li>
+                        <li><a href="Produtos de beleza/beauty-store.html" class="dropdown-link"><i class="fas fa-palette"></i> <span data-translate-key="nav_beauty_section" data-default="Beauty Section">Beauty Section</span></a></li>
+                        <li><a href="Produtos de conforto/comfort-store.html" class="dropdown-link"><i class="fas fa-home"></i> <span data-translate-key="nav_comfort_section" data-default="Comfort Section">Comfort Section</span></a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#about" class="nav-link">Sobre</a>
+                    <a href="#about" class="nav-link" data-translate-key="nav_about" data-default="About">About</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contato</a>
+                    <a href="#contact" class="nav-link" data-translate-key="nav_contact" data-default="Contact">Contact</a>
                 </li>
             </ul>
             
@@ -1018,7 +1133,7 @@
                 <div class="sidebar-overlay" onclick="closeProductSidebar()"></div>
                 <div class="sidebar-content">
                     <div class="sidebar-header">
-                        <h3><i class="fas fa-box"></i> Produto Selecionado</h3>
+                        <h3><i class="fas fa-box"></i> Selected Product</h3>
                         <button onclick="closeProductSidebar()" class="close-sidebar">
                             <i class="fas fa-times"></i>
                         </button>
@@ -1029,12 +1144,21 @@
                 </div>
             </div>
 
+            <!-- Country/Currency Selector -->
+            <div class="country-selector">
+                <select id="countrySelector" onchange="changeCountry(this.value)">
+                    <option value="BR">🇧🇷 <span data-translate-key="country_brazil">Brasil</span> (R$)</option>
+                    <option value="PT">🇵🇹 <span data-translate-key="country_portugal">Portugal</span> (€)</option>
+                    <option value="US">🇺🇸 <span data-translate-key="country_usa">United States</span> ($)</option>
+                </select>
+            </div>
+
             <!-- User Authentication Section -->
             <div class="user-auth" id="userAuthSection">
                 <!-- Login button (shown when not logged in) -->
                 <div class="auth-buttons" id="authButtons">
-                    <button class="auth-btn login-btn" onclick="openSimpleLoginModal()">
-                        <i class="fas fa-sign-in-alt"></i> Logar
+                    <button class="auth-btn login-btn" onclick="openSimpleLoginModal()" data-translate-key="login_btn">
+                        <i class="fas fa-sign-in-alt"></i>
                     </button>
                 </div>
                 
@@ -1042,18 +1166,18 @@
                 <div class="user-menu" id="userMenu" style="display: none;">
                     <div class="user-avatar" onclick="toggleUserDropdown()">
                         <i class="fas fa-user-circle"></i>
-                        <span id="userName">Usuário</span>
+                        <span id="userName" data-translate-key="user_name">User</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="user-dropdown" id="userDropdown">
-                        <a href="#" onclick="viewProfile()">
-                            <i class="fas fa-user"></i> Meu Perfil
+                        <a href="#" onclick="viewProfile()" data-translate-key="my_profile">
+                            <i class="fas fa-user"></i>
                         </a>
-                        <a href="#" onclick="viewMyReviews()">
-                            <i class="fas fa-star"></i> Minhas Avaliações
+                        <a href="#" onclick="viewMyReviews()" data-translate-key="my_reviews">
+                            <i class="fas fa-star"></i>
                         </a>
-                        <a href="#" onclick="logoutUser()">
-                            <i class="fas fa-sign-out-alt"></i> Sair
+                        <a href="#" onclick="logoutUser()" data-translate-key="logout">
+                            <i class="fas fa-sign-out-alt"></i>
                         </a>
                     </div>
                 </div>
@@ -1074,11 +1198,11 @@
                 <img src="Logo.png?v=1" alt="67 Beauty Hub" class="hero-logo-image" style="display: block !important; visibility: visible !important; opacity: 1 !important; height: 200px !important; width: auto !important; max-width: 100% !important; object-fit: contain !important; filter: drop-shadow(0 8px 16px rgba(212, 175, 55, 0.3)) !important;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
                 <div style="display: none; font-size: 3rem; color: #d4af37; font-weight: bold; text-align: center; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 15px; border: 2px solid #d4af37;">67 BEAUTY HUB</div>
             </div>
-            <p class="hero-subtitle" style="display: block !important; visibility: visible !important; opacity: 1 !important;">Produtos de Beleza e Conforto</p>
-            <p class="hero-description" style="display: block !important; visibility: visible !important; opacity: 1 !important;">Descubra nossa seleção exclusiva de produtos de beleza e conforto, cuidadosamente escolhidos para sua rotina de cuidados pessoais.</p>
+            <p class="hero-subtitle" style="display: block !important; visibility: visible !important; opacity: 1 !important;" data-translate-key="hero_subtitle" data-default="Discover Beauty & Comfort">Discover Beauty & Comfort</p>
+            <p class="hero-description" style="display: block !important; visibility: visible !important; opacity: 1 !important;" data-translate-key="hero_description" data-default="Your trusted partner for premium beauty and comfort products">Your trusted partner for premium beauty and comfort products</p>
             <div class="hero-buttons" style="display: flex !important; visibility: visible !important; opacity: 1 !important;">
-                <a href="#products" class="btn btn-primary">Nossos Produtos</a>
-                <a href="#contact" class="btn btn-secondary">Fazer Pedido</a>
+                <a href="#products" class="btn btn-primary" data-translate-key="hero_products_btn" data-default="Explore Products">Explore Products</a>
+                <a href="#contact" class="btn btn-secondary" data-translate-key="hero_order_btn" data-default="Order Now">Order Now</a>
             </div>
         </div>
     </section>
@@ -1086,45 +1210,47 @@
     <!-- Products Section -->
     <section id="products" class="products">
         <div class="container">
-            <h2 class="section-title">Nossos Produtos</h2>
-            <p class="section-subtitle">Seleção cuidadosa de produtos de beleza e conforto para sua rotina diária</p>
+            <h2 class="section-title" data-translate-key="products_title" data-default="Our Products">Our Products</h2>
+            <p class="section-subtitle" data-translate-key="products_subtitle" data-default="Discover our premium selection of beauty and comfort products">Discover our premium selection of beauty and comfort products</p>
             
             <div class="products-grid">
-                <div class="product-card" onclick="openBeautyStore()" style="cursor: pointer;">
+                <div class="product-card beauty-card" onclick="openBeautyStore()" style="cursor: pointer;">
+                    <div class="product-overlay" style="background-image: url('Produtos de beleza/2 Pack PHOERA Foundation + Combo/Galeria/1760391255800.jpeg');"></div>
+                    <div class="arrow-indicator">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
                     <div class="product-icon">
-                        <img src="Imagens/Beauty Products.jpg" alt="Produtos de Beleza" class="product-image" />
-                        <div class="product-overlay">
-                            <i class="fas fa-arrow-right"></i>
-                        </div>
+                        <img src="Imagens/Beauty Products.jpg" alt="Beauty Products" class="product-image" />
                     </div>
-                    <h3>Produtos de Beleza</h3>
-                    <p>Maquiagem, skincare, produtos capilares e tudo que você precisa para realçar sua beleza natural.</p>
+                    <h3 data-translate-key="beauty_section" data-default="Beauty Products">Beauty Products</h3>
+                    <p data-translate-key="beauty_description" data-default="Makeup, hair products and everything you need to enhance your natural beauty.">Makeup, hair products and everything you need to enhance your natural beauty.</p>
                     <div class="product-features">
-                        <span class="feature-tag">Maquiagem</span>
-                        <span class="feature-tag">Skincare</span>
-                        <span class="feature-tag">Cabelos</span>
+                        <span class="feature-tag" data-translate-key="feature_makeup" data-default="Makeup">Makeup</span>
+                        <span class="feature-tag" data-translate-key="feature_skincare" data-default="Skincare">Skincare</span>
+                        <span class="feature-tag" data-translate-key="feature_hair" data-default="Hair">Hair</span>
                     </div>
-                    <div class="product-action-btn">
-                        <i class="fas fa-sparkles"></i> Explorar Seção Beleza
+                    <div class="product-action-btn" data-translate-key="explore_beauty_section" data-default="Explore Beauty Section">
+                        <i class="fas fa-sparkles"></i> Explore Beauty Section
                     </div>
                 </div>
                 
-                <div class="product-card" onclick="openComfortStore()" style="cursor: pointer;">
+                <div class="product-card comfort-card" onclick="openComfortStore()" style="cursor: pointer;">
+                    <div class="product-overlay" style="background-image: url('Produtos de conforto/Memory Foam Neck Pillow Cervical Vertebra Travel Portable Noon Break Aircraft U Type Of Pillow Sleep Camping Pillow Carry Bag/Galeria/Gemini_Generated_Image_ewn2ycewn2ycewn2.png');"></div>
+                    <div class="arrow-indicator">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
                     <div class="product-icon">
-                        <img src="Imagens/comfort Products.jpg" alt="Produtos de Conforto" class="product-image" />
-                        <div class="product-overlay">
-                            <i class="fas fa-arrow-right"></i>
-                        </div>
+                        <img src="Imagens/comfort Products.jpg" alt="Comfort Products" class="product-image" />
                     </div>
-                    <h3>Produtos de Conforto</h3>
-                    <p>Itens para seu bem-estar e conforto pessoal, criando um ambiente acolhedor em casa.</p>
+                    <h3 data-translate-key="comfort_section" data-default="Comfort Products">Comfort Products</h3>
+                    <p data-translate-key="comfort_description" data-default="Items for your well-being and personal comfort, creating a cozy environment at home.">Items for your well-being and personal comfort, creating a cozy environment at home.</p>
                     <div class="product-features">
-                        <span class="feature-tag">Bem-estar</span>
-                        <span class="feature-tag">Conforto</span>
-                        <span class="feature-tag">Relaxamento</span>
+                        <span class="feature-tag" data-translate-key="feature_wellbeing" data-default="Well-being">Well-being</span>
+                        <span class="feature-tag" data-translate-key="feature_comfort" data-default="Comfort">Comfort</span>
+                        <span class="feature-tag" data-translate-key="feature_relaxation" data-default="Relaxation">Relaxation</span>
                     </div>
-                    <div class="product-action-btn">
-                        <i class="fas fa-home"></i> Explorar Seção Conforto
+                    <div class="product-action-btn" data-translate-key="explore_comfort_section" data-default="Explore Comfort Section">
+                        <i class="fas fa-home"></i> Explore Comfort Section
                     </div>
                 </div>
             </div>
@@ -1138,21 +1264,21 @@
             <div class="about-content">
                 <div class="about-text">
                     <div class="about-text-container">
-                        <h2>Sobre o 67 Beauty Hub</h2>
-                        <p>No 67 Beauty Hub, acreditamos que a beleza e o conforto andam juntos. Somos especialistas em produtos de beleza e conforto, oferecendo uma seleção cuidadosa de itens para sua rotina diária.</p>
-                        <p>Com anos de experiência no mercado, selecionamos apenas produtos de alta qualidade que combinam eficácia, segurança e conforto para você.</p>
+                        <h2 data-translate-key="about_title" data-default="About Us">About Us</h2>
+                        <p data-translate-key="about_description_1" data-default="We are passionate about bringing you the best in beauty and comfort products.">We are passionate about bringing you the best in beauty and comfort products.</p>
+                        <p data-translate-key="about_description_2" data-default="Our mission is to enhance your daily life with premium quality items that make you feel confident and comfortable.">Our mission is to enhance your daily life with premium quality items that make you feel confident and comfortable.</p>
                         <div class="about-features">
                             <div class="feature">
                                 <i class="fas fa-check-circle"></i>
-                                <span>Produtos de alta qualidade</span>
+                                <span data-translate-key="about_feature_1" data-default="Premium Quality">Premium Quality</span>
                             </div>
                             <div class="feature">
                                 <i class="fas fa-check-circle"></i>
-                                <span>Seleção cuidadosa</span>
+                                <span data-translate-key="about_feature_2" data-default="Fast Delivery">Fast Delivery</span>
                             </div>
                             <div class="feature">
                                 <i class="fas fa-check-circle"></i>
-                                <span>Entrega rápida e segura</span>
+                                <span data-translate-key="about_feature_3" data-default="Customer Support">Customer Support</span>
                             </div>
                         </div>
                     </div>
@@ -1167,8 +1293,8 @@
     <!-- Featured Products Section -->
     <section id="featured" class="featured-products">
         <div class="container">
-            <h2 class="section-title">Produtos em Destaque</h2>
-            <p class="section-subtitle">Nossos produtos mais procurados e recomendados</p>
+            <h2 class="section-title" data-translate-key="featured_title" data-default="Featured Products">Featured Products</h2>
+            <p class="section-subtitle" data-translate-key="featured_subtitle" data-default="Discover our most popular and highly-rated products">Discover our most popular and highly-rated products</p>
             
             <div class="featured-grid">
                 <!-- Primeira linha - 5 blocos -->
@@ -1176,14 +1302,14 @@
                     <div class="featured-image">
                         <img src="Produtos de beleza/2 Pack PHOERA Foundation + Combo/Apresentação 1.png" alt="Produto 1" class="featured-product-image" />
                         <div class="product-checkout-overlay" onclick="window.location.href='Produtos de beleza/2 Pack PHOERA Foundation + Combo/checkout-phoera.html'">
-                            <i class="fas fa-credit-card"></i>
-                            <span>Comprar Agora</span>
+                            <i class="fas fa-shopping-cart"></i>
+                            <span data-translate-key="add_to_cart" data-default="Add to Cart">Add to Cart</span>
                         </div>
                     </div>
                     <div class="featured-content">
-                        <h3>2 Pack PHOERA Foundation</h3>
-                        <p>Elimine manchas, olheiras e imperfeições com cobertura total que dura 12+ horas. Acabamento matte que não derrete no calor. Kit com 2 bases + extras.</p>
-                        <div class="product-price">R$ 91,68</div>
+                        <h3 data-translate-key="product_phoera_foundation" data-default="PHOERA Foundation Kit">PHOERA Foundation Kit</h3>
+                        <p data-translate-key="phoera_description" data-default="Get flawless coverage that lasts all day! This full-coverage foundation eliminates spots, dark circles and imperfections for up to 12+ hours. The matte finish won't melt in the heat. Kit includes 2 foundations plus bonus items.">Get flawless coverage that lasts all day! This full-coverage foundation eliminates spots, dark circles and imperfections for up to 12+ hours. The matte finish won't melt in the heat. Kit includes 2 foundations plus bonus items.</p>
+                        <div class="product-price" data-translate-key="price_phoera">$17.39</div>
                         
                     </div>
                 </div>
@@ -1192,30 +1318,30 @@
                     <div class="featured-image">
                         <img src="Produtos de beleza/Alligator Hair Clips + Combo/Nude Pink (6 Pieces).png" alt="Produto 2" class="featured-product-image" />
                         <div class="product-checkout-overlay" onclick="window.location.href='Produtos de beleza/Alligator Hair Clips + Combo/checkout-alligator-clips.html'">
-                            <i class="fas fa-credit-card"></i>
-                            <span>Comprar Agora</span>
+                            <i class="fas fa-shopping-cart"></i>
+                            <span data-translate-key="add_to_cart" data-default="Add to Cart">Add to Cart</span>
                         </div>
                     </div>
                     <div class="featured-content">
-                        <h3>Alligator Hair Clips</h3>
-                        <p>Pare de perder grampos que quebram. Estes não escorregam, não quebram e seguram qualquer penteado firme. Kit com 6 peças em tons nude.</p>
-                        <div class="product-price">$3.54</div>
+                        <h3 data-translate-key="product_hair_clips" data-default="Unbreakable Hair Clips">Unbreakable Hair Clips</h3>
+                        <p data-translate-key="clips_description" data-default="Stop losing clips that slip and break! These stay put all day! Super durable and comfortable, they hold any hairstyle firm. Kit with 6 pieces in nude tones.">Stop losing clips that slip and break! These stay put all day! Super durable and comfortable, they hold any hairstyle firm. Kit with 6 pieces in nude tones.</p>
+                        <div class="product-price" data-translate-key="price_clips">$3.54</div>
                         
                     </div>
                 </div>
                 
-                <div class="featured-item" onclick="window.location.href='Produtos de beleza/Heat-Resistant Mat + Combo/checkout-heat-resistant-mat.html'">
+                <div class="featured-item" onclick="window.location.href='Produtos de beleza/Heat-Resistant Mat/checkout-heat-resistant-mat.html'">
                     <div class="featured-image">
-                        <img src="Produtos de beleza/Heat-Resistant Mat + Combo/Apresentação 1.png" alt="Produto 3" class="featured-product-image" />
-                        <div class="product-checkout-overlay" onclick="window.location.href='Produtos de beleza/Heat-Resistant Mat + Combo/checkout-heat-resistant-mat.html'">
-                            <i class="fas fa-credit-card"></i>
-                            <span>Comprar Agora</span>
+                        <img src="Produtos de beleza/Heat-Resistant Mat/Apresentação 1.png" alt="Produto 3" class="featured-product-image" />
+                        <div class="product-checkout-overlay" onclick="window.location.href='Produtos de beleza/Heat-Resistant Mat/checkout-heat-resistant-mat.html'">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span data-translate-key="add_to_cart" data-default="Add to Cart">Add to Cart</span>
                         </div>
                     </div>
                     <div class="featured-content">
-                        <h3>Heat-Resistant Mat</h3>
-                        <p>Proteja sua mesa de queimaduras e danos. Resiste a temperaturas altas sem derreter. Impermeável e fácil de limpar.</p>
-                        <div class="product-price">$2.29</div>
+                        <h3 data-translate-key="product_heat_mat" data-default="Heat Shield Mat">Heat Shield Mat</h3>
+                        <p data-translate-key="heat_mat_description" data-default="Protect your countertops and tables from heat damage! This mat withstands high temperatures without melting or warping. Waterproof and super easy to clean - just wipe and go!">Protect your countertops and tables from heat damage! This mat withstands high temperatures without melting or warping. Waterproof and super easy to clean - just wipe and go!</p>
+                        <div class="product-price" data-translate-key="price_mat">$2.29</div>
                         
                     </div>
                 </div>
@@ -1224,14 +1350,14 @@
                     <div class="featured-image">
                         <img src="Produtos de beleza/LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/Apresentação.png" alt="Golden Sakura Skin Care" class="featured-product-image" />
                         <div class="product-checkout-overlay" onclick="window.location.href='Produtos de beleza/LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/checkout-golden-sakura.html'">
-                            <i class="fas fa-credit-card"></i>
-                            <span>Comprar Agora</span>
+                            <i class="fas fa-shopping-cart"></i>
+                            <span data-translate-key="add_to_cart" data-default="Add to Cart">Add to Cart</span>
                         </div>
                     </div>
                     <div class="featured-content">
-                        <h3>LAIKOU Skincare</h3>
-                        <p>Reduza rugas, manchas e sinais de envelhecimento. Vitamina C + ouro 24k para pele mais firme e iluminada em 30 dias.</p>
-                        <div class="product-price">$5.99</div>
+                        <h3 data-translate-key="product_laiou_skincare" data-default="LAIKOU Skincare">LAIKOU Skincare</h3>
+                        <p data-translate-key="laiou_skincare_description" data-default="Reduce wrinkles, spots and signs of aging. Vitamin C + 24k gold for firmer and brighter skin in 30 days.">Reduce wrinkles, spots and signs of aging. Vitamin C + 24k gold for firmer and brighter skin in 30 days.</p>
+                        <div class="product-price" data-translate-key="price_laiou">$5.99</div>
                         
                     </div>
                 </div>
@@ -1243,68 +1369,68 @@
                 
                 <div class="featured-item" onclick="window.location.href='Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/checkout-wrinkle-reducer.html'">
                     <div class="featured-image">
-                        <img src="Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/Apresentação.png" alt="Vara de Skincare - Wrinkle Reducer" class="featured-product-image" />
+                        <img src="Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/Apresentação.png" alt="Wrinkle Reducer" class="featured-product-image" />
                         <div class="product-checkout-overlay" onclick="window.location.href='Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/checkout-wrinkle-reducer.html'">
-                            <i class="fas fa-credit-card"></i>
-                            <span>Comprar Agora</span>
+                            <i class="fas fa-shopping-cart"></i>
+                            <span data-translate-key="add_to_cart" data-default="Add to Cart">Add to Cart</span>
                         </div>
                     </div>
                     <div class="featured-content">
-                        <h3>Vara de Skincare - Wrinkle Reducer</h3>
-                        <p>Elimine rugas e linhas de expressão em casa. Luz vermelha + massagem + 7 funções. Resultados visíveis em 2 semanas.</p>
-                        <div class="product-price">$17.45</div>
+                        <h3 data-translate-key="product_wrinkle_reducer" data-default="7-in-1 Wrinkle Wand">7-in-1 Wrinkle Wand</h3>
+                        <p data-translate-key="wrinkle_reducer_description" data-default="Red light therapy device that stimulates collagen, smooths fine lines and reduces wrinkles.">Red light therapy device that stimulates collagen, smooths fine lines and reduces wrinkles.</p>
+                        <div class="product-price" data-translate-key="price_wrinkle">$17.45</div>
                         
                     </div>
                 </div>
                 
                 <div class="featured-item" onclick="window.location.href='Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/checkout-sofa-cover.html'">
                     <div class="featured-image">
-                        <img src="Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person's Couch/Apresentação.jpg" alt="Detachable Sofa Cover" class="featured-product-image" />
+                        <img src="Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person's Couch/Apresentação.jpeg" alt="Detachable Sofa Cover" class="featured-product-image" />
                         <div class="product-checkout-overlay" onclick="window.location.href='Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/checkout-sofa-cover.html'">
-                            <i class="fas fa-credit-card"></i>
-                            <span>Comprar Agora</span>
+                            <i class="fas fa-shopping-cart"></i>
+                            <span data-translate-key="add_to_cart" data-default="Add to Cart">Add to Cart</span>
                         </div>
                     </div>
                     <div class="featured-content">
-                        <h3>Detachable Sofa Cover</h3>
-                        <p>Acabe com sofás desgastados e manchados. Transforme qualquer móvel em um lounge confortável. Remove e lava em segundos.</p>
-                        <div class="product-price">R$ 159,90</div>
-                        
+                        <h3 data-translate-key="product_sofa_cover" data-default="3-in-1 Sofa Cover">3-in-1 Sofa Cover</h3>
+                        <p data-translate-key="sofa_cover_description" data-default="Revive your old sofa! This 3-in-1 cover transforms any furniture into a cozy lounger. Super easy to remove and wash - just toss in the machine!">Revive your old sofa! This 3-in-1 cover transforms any furniture into a cozy lounger. Super easy to remove and wash - just toss in the machine!</p>
+                        <div class="product-price" data-translate-key="price_sofa">$34.99</div>
+
                     </div>
                 </div>
                 
                 
                 <div class="featured-item" onclick="window.location.href='Produtos de conforto/Human Dog bad/checkout-human-dog-bed.html'">
                     <div class="featured-image">
-                        <img src="Produtos de conforto/Human Dog bad/Apresentação.png" alt="Human Dog Bed" class="featured-product-image" />
+                        <img src="Produtos de conforto/Human Dog bad/Apresentação.jpeg" alt="Human Dog Bed" class="featured-product-image" />
                         <div class="product-checkout-overlay" onclick="window.location.href='Produtos de conforto/Human Dog bad/checkout-human-dog-bed.html'">
-                            <i class="fas fa-credit-card"></i>
-                            <span>Comprar Agora</span>
+                            <i class="fas fa-shopping-cart"></i>
+                            <span data-translate-key="add_to_cart" data-default="Add to Cart">Add to Cart</span>
                         </div>
                     </div>
                     <div class="featured-content">
-                        <h3>Human Dog Bed</h3>
-                        <p>Acabe com dores nas costas e no pescoço. Cama gigante que suporta até 150kg. Conforto total para relaxar.</p>
-                        <div class="product-price">R$ 299,90</div>
-                        
+                        <h3 data-translate-key="product_human_dog_bed" data-default="Giant Anti-Pain Bed">Giant Anti-Pain Bed</h3>
+                        <p data-translate-key="anti_pain_bed_description" data-default="End back and neck pain. Giant bed that supports up to 150kg. Total comfort for relaxation.">End back and neck pain. Giant bed that supports up to 150kg. Total comfort for relaxation.</p>
+                        <div class="product-price" data-translate-key="price_anti_pain_bed">$79.99</div>
+
                     </div>
                 </div>
                 
                 <!-- Terceira linha - 3 blocos adicionais -->
                 
-                <div class="featured-item" onclick="window.location.href='Produtos de conforto/SNOOZE BUNDLE/checkout-snooze-bundle.html'">
+                <div class="featured-item" onclick="window.location.href='Produtos de conforto/Memory Foam Neck Pillow Cervical Vertebra Travel Portable Noon Break Aircraft U Type Of Pillow Sleep Camping Pillow Carry Bag/checkout-memory-foam-pillow.html'">
                     <div class="featured-image">
-                        <img src="Produtos de conforto/SNOOZE BUNDLE/apresentação 1.jpg" alt="Snooze Bundle" class="featured-product-image" />
-                        <div class="product-checkout-overlay" onclick="window.location.href='Produtos de conforto/SNOOZE BUNDLE/checkout-snooze-bundle.html'">
-                            <i class="fas fa-credit-card"></i>
-                            <span>Comprar Agora</span>
+                        <img src="Produtos de conforto/Memory Foam Neck Pillow Cervical Vertebra Travel Portable Noon Break Aircraft U Type Of Pillow Sleep Camping Pillow Carry Bag/Apresentação.jpeg" alt="Memory Foam Neck Pillow" class="featured-product-image" />
+                        <div class="product-checkout-overlay" onclick="window.location.href='Produtos de conforto/Memory Foam Neck Pillow Cervical Vertebra Travel Portable Noon Break Aircraft U Type Of Pillow Sleep Camping Pillow Carry Bag/checkout-memory-foam-pillow.html'">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span data-translate-key="add_to_cart" data-default="Add to Cart">Add to Cart</span>
                         </div>
                     </div>
                     <div class="featured-content">
-                        <h3>Snooze Bundle</h3>
-                        <p>Acabe com noites mal dormidas em viagens. Conforto total para dormir em qualquer lugar. Compacto e prático.</p>
-                        <div class="product-price">R$ 89,90</div>
-                        
+                        <h3 data-translate-key="product_memory_foam_pillow" data-default="Portable Neck Pillow">Portable Neck Pillow</h3>
+                        <p data-translate-key="neck_pillow_description" data-default="End neck pain on trips. High-quality memory foam, U-shaped design for perfect cervical support. Portable and practical.">End neck pain on trips. High-quality memory foam, U-shaped design for perfect cervical support. Portable and practical.</p>
+                        <div class="product-price" data-translate-key="price_neck_pillow">$42.70</div>
+
                     </div>
                 </div>
                 
@@ -1315,58 +1441,58 @@
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2 class="section-title">Entre em Contato</h2>
-            <p class="section-subtitle">Faça seu pedido e descubra os melhores produtos de beleza e conforto</p>
+            <h2 class="section-title" data-translate-key="contact_title" data-default="Contact Us">Contact Us</h2>
+            <p class="section-subtitle" data-translate-key="contact_subtitle" data-default="Get in touch with us for any questions or support">Get in touch with us for any questions or support</p>
             
             <div class="contact-content">
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
-                            <h4>Endereço</h4>
-                            <p>Rua da Beleza, 67<br>Centro - São Paulo, SP</p>
+                            <h4 data-translate-key="address_label" data-default="Address">Address</h4>
+                            <p data-translate-key="address_text" data-default="Wekwitcha Street<br>Angola - Luanda">Wekwitcha Street<br>Angola - Luanda</p>
                         </div>
                     </div>
                     
                     <div class="contact-item">
                         <i class="fas fa-phone"></i>
                         <div>
-                            <h4>Telefone</h4>
-                            <p>(11) 99999-9999</p>
+                            <h4 data-translate-key="phone_label" data-default="Phone">Phone</h4>
+                            <p data-translate-key="phone_text" data-default="(+244) 946773551">(+244) 946773551</p>
                         </div>
                     </div>
                     
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
                         <div>
-                            <h4>Email</h4>
-                            <p>contato@67beautyhub.com</p>
+                            <h4 data-translate-key="email_label" data-default="Email">Email</h4>
+                            <p data-translate-key="email_text" data-default="mojojojo946925@gmail.com">mojojojo946925@gmail.com</p>
                         </div>
                     </div>
                     
                     <div class="contact-item">
                         <i class="fas fa-clock"></i>
                         <div>
-                            <h4>Horário de Funcionamento</h4>
-                            <p>Seg - Sex: 9h às 19h<br>Sáb: 9h às 17h</p>
+                            <h4 data-translate-key="business_hours_label" data-default="Business Hours">Business Hours</h4>
+                            <p data-translate-key="business_hours_text" data-default="Mon - Fri: 9:00 AM - 6:00 PM<br>Sat: 10:00 AM - 4:00 PM">Mon - Fri: 9:00 AM - 6:00 PM<br>Sat: 10:00 AM - 4:00 PM</p>
                         </div>
                     </div>
                 </div>
                 
                 <form class="contact-form">
                     <div class="form-group">
-                        <input type="text" id="name" name="name" placeholder="Seu nome" required />
+                        <input type="text" id="name" name="name" data-translate-key="name_placeholder" placeholder="Your Name" required />
                     </div>
                     <div class="form-group">
-                        <input type="email" id="email" name="email" placeholder="Seu email" required />
+                        <input type="email" id="email" name="email" data-translate-key="email_placeholder" placeholder="Your Email" required />
                     </div>
                     <div class="form-group">
-                        <input type="tel" id="phone" name="phone" placeholder="Seu telefone" />
+                        <input type="tel" id="phone" name="phone" data-translate-key="phone_placeholder" placeholder="Your Phone" />
                     </div>
                     <div class="form-group">
-                        <textarea id="message" name="message" placeholder="Sua mensagem" rows="5" required></textarea>
+                        <textarea id="message" name="message" data-translate-key="message_placeholder" placeholder="Your Message" rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Fazer Pedido</button>
+                    <button type="submit" class="btn btn-primary" data-translate-key="place_order_btn" data-default="Send Message">Send Message</button>
                 </form>
             </div>
         </div>
@@ -1377,44 +1503,43 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>67 Beauty Hub</h3>
-                    <p>Onde a beleza encontra o conforto. Sua jornada de bem-estar começa aqui.</p>
+                    <h3 data-translate-key="footer_brand" data-default="67 Beauty Hub">67 Beauty Hub</h3>
+                    <p data-translate-key="footer_description" data-default="Your trusted partner for beauty and comfort products">Your trusted partner for beauty and comfort products</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="mailto:contato@67beautyhub.com"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Links Rápidos</h4>
+                    <h4 data-translate-key="quick_links_label" data-default="Quick Links">Quick Links</h4>
                     <ul>
-                        <li><a href="#home">Início</a></li>
-                        <li><a href="#services">Serviços</a></li>
-                        <li><a href="#about">Sobre</a></li>
-                        <li><a href="#contact">Contato</a></li>
+                        <li><a href="#home" data-translate-key="nav_home" data-default="Home">Home</a></li>
+                        <li><a href="#about" data-translate-key="nav_about" data-default="About">About</a></li>
+                        <li><a href="#contact" data-translate-key="nav_contact" data-default="Contact">Contact</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Produtos</h4>
+                    <h4 data-translate-key="products_label" data-default="Products">Products</h4>
                     <ul>
-                        <li><a href="#">Produtos de Beleza</a></li>
-                        <li><a href="#">Produtos de Conforto</a></li>
-                        <li><a href="#">Skincare</a></li>
-                        <li><a href="#">Bem-estar</a></li>
+                        <li><a href="Produtos de beleza/beauty-store.html" data-translate-key="beauty_products" data-default="Beauty Products">Beauty Products</a></li>
+                        <li><a href="Produtos de conforto/comfort-store.html" data-translate-key="comfort_products" data-default="Comfort Products">Comfort Products</a></li>
+                        <li><a href="#" data-translate-key="wellbeing" data-default="Well-being">Well-being</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 67 Beauty Hub. Todos os direitos reservados.</p>
+                <p data-translate-key="footer_copyright" data-default="© 2024 67 Beauty Hub. All rights reserved.">© 2024 67 Beauty Hub. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
 
-    <script src="script.js"></script>
+    <!-- Global Translation System -->
+    <script src="js/language-controller.js"></script>
+    <script src="js/country-currency-system.js"></script>
+    <!-- script.js removido - arquivo não existe -->
     
     <script>
         // Navigation Functions for Product Sections
@@ -1551,69 +1676,93 @@
         function getProductData(productId) {
             console.log(`Getting product data for: ${productId}`);
             const products = {
-                'phoera-foundation': {
+                'phoera': {
                     nameKey: 'product_phoera_foundation',
-                    price: 'R$ 91,68',
+                    price: '$17.39',
                     image: 'Produtos de beleza/2 Pack PHOERA Foundation + Combo/Apresentação 1.png',
-                    description: 'Base de alta cobertura, acabamento natural e longa duração. Ideal para todos os tipos de pele.',
-                    category: 'Beleza',
+                    description: 'Cover imperfections and dark circles with full coverage that lasts all day. No more foundation that melts or fades.',
+                    category: 'Beauty',
                     checkoutUrl: 'Produtos de beleza/2 Pack PHOERA Foundation + Combo/checkout-phoera.html'
                 },
-                'hair-clips': {
+                'alligator-clips': {
                     nameKey: 'product_hair_clips',
                     price: '$2.31',
                     image: 'Produtos de beleza/Alligator Hair Clips + Combo/Nude Pink (6 Pieces).png',
-                    description: 'Prendedores resistentes e práticos, ideais para separar e fixar mechas durante penteados, cortes ou maquiagens.',
-                    category: 'Beleza',
+                    description: 'Stop losing clips that break. These hold any hairstyle firm and never slip. No more broken clips ruining your look.',
+                    category: 'Beauty',
                     checkoutUrl: 'Produtos de beleza/Alligator Hair Clips + Combo/checkout-alligator-clips.html'
                 },
                 'heat-resistant-mat': {
-                    nameKey: 'product_heat_resistant_mat',
+                    nameKey: 'product_heat_mat',
                     price: '$2.29',
-                    image: 'Produtos de beleza/Heat-Resistant Mat + Combo/Apresentação 1.png',
-                    description: 'Tapete resistente ao calor, ideal para proteger superfícies de danos causados por ferramentas de styling.',
-                    category: 'Beleza',
-                    checkoutUrl: 'Produtos de beleza/Heat-Resistant Mat + Combo/checkout-heat-resistant-mat.html'
+                    image: 'Produtos de beleza/Heat-Resistant Mat/Apresentação 1.png',
+                    description: 'Protect your table from burns and damage. Resists high temperatures without melting. No more ruined surfaces.',
+                    category: 'Beauty',
+                    checkoutUrl: 'Produtos de beleza/Heat-Resistant Mat/checkout-heat-resistant-mat.html'
                 },
-                'laikou-skincare': {
-                    nameKey: 'product_laikou_skincare',
+                'golden-sakura': {
+                    nameKey: 'product_laiou_skincare',
                     price: '$5.99',
                     image: 'Produtos de beleza/LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/Apresentação.png',
-                    description: 'Linha de cuidados com a pele inspirada na flor de cerejeira dourada, com fórmulas nutritivas.',
-                    category: 'Beleza',
+                    description: 'Reduce wrinkles, spots and signs of aging. Vitamin C + 24k gold for firmer and brighter skin in 30 days.',
+                    category: 'Beauty',
                     checkoutUrl: 'Produtos de beleza/LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/checkout-golden-sakura.html'
                 },
                 'wrinkle-reducer': {
                     nameKey: 'product_wrinkle_reducer',
                     price: '$17.45',
                     image: 'Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/Apresentação.png',
-                    description: 'Dispositivo de terapia com luz vermelha que estimula o colágeno, suaviza linhas finas e reduz rugas.',
-                    category: 'Beleza',
+                    description: 'Red light therapy device that stimulates collagen, smooths fine lines and reduces wrinkles.',
+                    category: 'Beauty',
                     checkoutUrl: 'Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/checkout-wrinkle-reducer.html'
                 },
                 'sofa-cover': {
                     nameKey: 'product_sofa_cover',
-                    price: 'R$ 159,90',
+                    price: '$30.77',
                     image: 'Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/Apresentação.jpg',
-                    description: 'Design versátil e confortável, ideal como sofá, puff ou lounge. Fácil de remover e limpar.',
-                    category: 'Conforto',
+                    description: 'End worn and stained sofas. Transform any furniture into a comfortable lounge. Removes and washes in seconds.',
+                    category: 'Comfort',
                     checkoutUrl: 'Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/checkout-sofa-cover.html'
                 },
                 'human-dog-bed': {
                     nameKey: 'product_human_dog_bed',
-                    price: 'R$ 299,90',
+                    price: '$57.69',
                     image: 'Produtos de conforto/Human Dog bad/Apresentação.png',
-                    description: 'Cama gigante e aconchegante, projetada para adultos relaxarem com conforto. Macia e espaçosa.',
-                    category: 'Conforto',
+                    description: 'End back and neck pain. Giant bed that supports up to 150kg. Total comfort for relaxation.',
+                    category: 'Comfort',
                     checkoutUrl: 'Produtos de conforto/Human Dog bad/checkout-human-dog-bed.html'
                 },
                 'snooze-bundle': {
                     nameKey: 'product_snooze_bundle',
-                    price: 'R$ 89,90',
+                    price: '$17.29',
                     image: 'Produtos de conforto/SNOOZE BUNDLE/apresentação 1.jpg',
-                    description: 'Torna suas viagens muito mais confortáveis, proporcionando descanso, praticidade e aconchego.',
-                    category: 'Conforto',
+                    description: 'End neck pain on trips. High-quality memory foam, U-shaped design for perfect cervical support. Portable and practical.',
+                    category: 'Comfort',
                     checkoutUrl: 'Produtos de conforto/SNOOZE BUNDLE/checkout-snooze-bundle.html'
+                },
+                'sofa-cover': {
+                    nameKey: 'product_sofa_cover',
+                    price: '$6.73',
+                    image: 'Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/Apresentação.jpeg',
+                    description: 'End worn and stained sofas. Transform any furniture into a comfortable lounge. Removes and washes in seconds.',
+                    category: 'Comfort',
+                    checkoutUrl: 'Produtos de conforto/Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/checkout-sofa-cover.html'
+                },
+                'human-dog-bed': {
+                    nameKey: 'product_human_dog_bed',
+                    price: '$15.38',
+                    image: 'Produtos de conforto/Human Dog bad/Apresentação.jpeg',
+                    description: 'End back and neck pain. Giant bed that supports up to 150kg. Total comfort for relaxation.',
+                    category: 'Comfort',
+                    checkoutUrl: 'Produtos de conforto/Human Dog bad/checkout-human-dog-bed.html'
+                },
+                'memory-foam-pillow': {
+                    nameKey: 'product_memory_foam_pillow',
+                    price: '$42.70',
+                    image: 'Produtos de conforto/Memory Foam Neck Pillow Cervical Vertebra Travel Portable Noon Break Aircraft U Type Of Pillow Sleep Camping Pillow Carry Bag/Apresentação.jpeg',
+                    description: 'End neck pain on trips. High-quality memory foam, U-shaped design for perfect cervical support. Portable and practical.',
+                    category: 'Comfort',
+                    checkoutUrl: 'Produtos de conforto/Memory Foam Neck Pillow Cervical Vertebra Travel Portable Noon Break Aircraft U Type Of Pillow Sleep Camping Pillow Carry Bag/checkout-memory-foam-pillow.html'
                 }
             };
             
@@ -1684,8 +1833,8 @@
             checkoutWindow.document.write('<a href="javascript:window.close()" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>');
             checkoutWindow.document.write('<div class="checkout-container">');
             checkoutWindow.document.write('<div class="checkout-header">');
-            checkoutWindow.document.write('<h1><i class="fas fa-credit-card"></i> Finalizar Compra</h1>');
-            checkoutWindow.document.write('<p>Complete seu pedido com segurança</p>');
+            checkoutWindow.document.write('<h1><i class="fas fa-credit-card"></i> Checkout</h1>');
+            checkoutWindow.document.write('<p>Complete your order securely</p>');
             checkoutWindow.document.write('</div>');
             checkoutWindow.document.write('<div class="checkout-content">');
             checkoutWindow.document.write('<div class="product-info">');
@@ -1695,19 +1844,19 @@
             checkoutWindow.document.write('<div class="product-price">' + product.price + '</div>');
             checkoutWindow.document.write('</div>');
             checkoutWindow.document.write('<form class="checkout-form" onsubmit="processCheckout(event)">');
-            checkoutWindow.document.write('<div class="form-group"><label for="name">Nome Completo</label><input type="text" id="name" name="name" required></div>');
-            checkoutWindow.document.write('<div class="form-group"><label for="email">E-mail</label><input type="email" id="email" name="email" required></div>');
-            checkoutWindow.document.write('<div class="form-group"><label for="phone">Telefone</label><input type="tel" id="phone" name="phone" required></div>');
-            checkoutWindow.document.write('<div class="form-group"><label for="address">Endereço Completo</label><textarea id="address" name="address" rows="3" required></textarea></div>');
-            checkoutWindow.document.write('<div class="form-group"><label for="payment">Forma de Pagamento</label>');
+            checkoutWindow.document.write('<div class="form-group"><label for="name">Full Name</label><input type="text" id="name" name="name" required></div>');
+            checkoutWindow.document.write('<div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required></div>');
+            checkoutWindow.document.write('<div class="form-group"><label for="phone">Phone</label><input type="tel" id="phone" name="phone" required></div>');
+            checkoutWindow.document.write('<div class="form-group"><label for="address">Full Address</label><textarea id="address" name="address" rows="3" required></textarea></div>');
+            checkoutWindow.document.write('<div class="form-group"><label for="payment">Payment Method</label>');
             checkoutWindow.document.write('<select id="payment" name="payment" required>');
-            checkoutWindow.document.write('<option value="">Selecione...</option>');
+            checkoutWindow.document.write('<option value="">Select...</option>');
             checkoutWindow.document.write('<option value="pix">PIX</option>');
-            checkoutWindow.document.write('<option value="credit">Cartão de Crédito</option>');
-            checkoutWindow.document.write('<option value="debit">Cartão de Débito</option>');
-            checkoutWindow.document.write('<option value="boleto">Boleto Bancário</option>');
+            checkoutWindow.document.write('<option value="credit">Credit Card</option>');
+            checkoutWindow.document.write('<option value="debit">Debit Card</option>');
+            checkoutWindow.document.write('<option value="boleto">Bank Slip</option>');
             checkoutWindow.document.write('</select></div>');
-            checkoutWindow.document.write('<button type="submit" class="checkout-btn"><i class="fas fa-check"></i> Finalizar Pedido</button>');
+            checkoutWindow.document.write('<button type="submit" class="checkout-btn"><i class="fas fa-check"></i> Complete Order</button>');
             checkoutWindow.document.write('</form>');
             checkoutWindow.document.write('</div>');
             checkoutWindow.document.write('</div>');
@@ -1755,6 +1904,15 @@
                 return;
             }
 
+            // Verificar se já mostrou o modal hoje
+            const lastShown = localStorage.getItem('beautyHub_modalLastShown');
+            const today = new Date().toDateString();
+
+            if (lastShown === today) {
+                console.log('Modal já foi mostrado hoje, não exibindo novamente');
+                return; // Já mostrou hoje, não mostrar novamente
+            }
+
             // Iniciar timer de 15 segundos
             loginTimer = setTimeout(() => {
                 if (!isLoggedIn) {
@@ -1767,6 +1925,12 @@
         function saveLoginState(state) {
             localStorage.setItem('beautyHub_loginState', state);
             localStorage.setItem('beautyHub_loginTime', Date.now());
+        }
+
+        // Função para resetar controle de modal (útil para testes)
+        function resetModalControl() {
+            localStorage.removeItem('beautyHub_modalLastShown');
+            console.log('Controle de modal resetado - modal aparecerá novamente amanhã');
         }
 
         function getLoginState() {
@@ -1794,6 +1958,9 @@
                 return;
             }
 
+            // Registrar que o modal foi mostrado hoje
+            localStorage.setItem('beautyHub_modalLastShown', new Date().toDateString());
+
             // Criar modal de login
             loginModal = document.createElement('div');
             loginModal.id = 'loginModal';
@@ -1815,28 +1982,28 @@
                 <div style="background: white; padding: 40px; border-radius: 15px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: slideIn 0.3s ease;">
                     <div style="margin-bottom: 20px;">
                         <i class="fas fa-user-circle" style="font-size: 60px; color: #d4af37; margin-bottom: 15px;"></i>
-                        <h2 style="color: #333; margin-bottom: 10px;">Bem-vindo à 67 Beauty Hub</h2>
-                        <p style="color: #666; margin-bottom: 30px;">Faça login para continuar navegando</p>
+                        <h2 style="color: #333; margin-bottom: 10px;" data-translate-key="welcome_title">Welcome to 67 Beauty Hub</h2>
+                        <p style="color: #666; margin-bottom: 30px;" data-translate-key="login_subtitle">Please login to continue browsing</p>
                     </div>
                     
                     <form id="loginForm" style="text-align: left;">
                         <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Email</label>
-                            <input type="email" id="loginEmail" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.3s ease;" placeholder="seu@email.com" />
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;" data-translate-key="email_label">Email</label>
+                            <input type="email" id="loginEmail" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.3s ease;" placeholder="your@email.com" data-translate-key="email_placeholder" />
                         </div>
                         
                         <div style="margin-bottom: 30px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Senha</label>
-                            <input type="password" id="loginPassword" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.3s ease;" placeholder="Sua senha" />
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;" data-translate-key="password_label">Password</label>
+                            <input type="password" id="loginPassword" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.3s ease;" placeholder="Your password" data-translate-key="password_placeholder" />
                         </div>
                         
                         <div style="display: flex; gap: 15px; margin-bottom: 20px;">
                             <button type="submit" style="flex: 1; background: linear-gradient(135deg, #d4af37, #b8941f); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                                <i class="fas fa-sign-in-alt"></i> Entrar
+                                <i class="fas fa-sign-in-alt"></i> <span data-translate-key="login_btn">Login</span>
                             </button>
                             
                             <button type="button" onclick="skipLogin()" style="flex: 1; background: #f8f9fa; color: #666; border: 2px solid #e0e0e0; padding: 12px 20px; border-radius: 8px; font-size: 16px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
-                                <i class="fas fa-times"></i> Pular
+                                <i class="fas fa-times"></i> <span data-translate-key="skip_btn">Skip</span>
                             </button>
                         </div>
                         
@@ -1868,35 +2035,59 @@
             document.getElementById('loginForm').addEventListener('submit', handleLogin);
         }
 
-        function handleLogin(e) {
+        async function handleLogin(e) {
             e.preventDefault();
-            
+
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-            
-            // Simular validação (em produção, validar com servidor)
-            if (email && password) {
-                // Login bem-sucedido
-                isLoggedIn = true;
-                const userData = {
-                    name: name,
-                    email: email,
-                    provider: 'auto'
-                };
-                localStorage.setItem('userLogin', JSON.stringify(userData));
-                
-                // Salvar estado de login bem-sucedido
-                saveLoginState('success');
-                
-                // Mostrar mensagem de sucesso
-                showLoginSuccess();
-                
-                // Fechar modal após 2 segundos
-                setTimeout(() => {
-                    closeLoginModal();
-                }, 2000);
-            } else {
+
+            if (!email || !password) {
                 alert('Por favor, preencha todos os campos.');
+                return;
+            }
+
+            try {
+                // Fazer login através da API
+                const response = await fetch('/api/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'authenticate_user',
+                        data: { email, password }
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.result.success) {
+                    // Login bem-sucedido
+                    isLoggedIn = true;
+                    const userData = result.result.user;
+                    localStorage.setItem('userLogin', JSON.stringify(userData));
+
+                    // Salvar estado de login bem-sucedido
+                    saveLoginState('success');
+
+                    // Registrar que o modal foi mostrado hoje
+                    localStorage.setItem('beautyHub_modalLastShown', new Date().toDateString());
+
+                    // Mostrar mensagem de sucesso
+                    showLoginSuccess();
+
+                    // Fechar modal após 2 segundos
+                    setTimeout(() => {
+                        closeLoginModal();
+                    }, 2000);
+                } else {
+                    // Erro no login
+                    const errorMessage = result.result?.error || 'Erro no login';
+                    alert(errorMessage);
+                }
+            } catch (error) {
+                console.error('Erro na autenticação:', error);
+                alert('Erro de conexão. Tente novamente.');
             }
         }
 
@@ -1907,8 +2098,8 @@
                         <div style="color: #28a745; font-size: 60px; margin-bottom: 20px;">
                             <i class="fas fa-check-circle"></i>
                         </div>
-                        <h2 style="color: #333; margin-bottom: 10px;">Login realizado com sucesso!</h2>
-                        <p style="color: #666;">Bem-vindo à 67 Beauty Hub!</p>
+                        <h2 style="color: #333; margin-bottom: 10px;" data-translate-key="login_success_title">Login successful!</h2>
+                        <p style="color: #666;" data-translate-key="login_success_message">Welcome to 67 Beauty Hub!</p>
                     </div>
                 `;
             }
@@ -1917,6 +2108,8 @@
         function skipLogin() {
             // Salvar estado de rejeição
             saveLoginState('rejected');
+            // Registrar que o modal foi mostrado hoje
+            localStorage.setItem('beautyHub_modalLastShown', new Date().toDateString());
             closeLoginModal();
         }
 
@@ -1973,22 +2166,22 @@
                             <button class="modal-close" onclick="closeModal('simpleLoginModal')">
                                 <i class="fas fa-times"></i>
                             </button>
-                            <h2 class="modal-title">Entrar</h2>
-                            <p class="modal-subtitle">Digite seus dados para acessar</p>
+                            <h2 class="modal-title" data-translate-key="login_title">Login</h2>
+                            <p class="modal-subtitle" data-translate-key="login_subtitle">Enter your data to access</p>
                         </div>
                         <div class="modal-body">
                             <form id="simpleLoginForm" onsubmit="handleSimpleLogin(event)">
                                 <div class="form-group">
-                                    <label for="simpleName">Nome</label>
-                                    <input type="text" id="simpleName" name="name" required placeholder="Seu nome">
+                                    <label for="simpleName" data-translate-key="name_label">Name</label>
+                                    <input type="text" id="simpleName" name="name" required placeholder="Your name" data-translate-key="name_placeholder">
                                 </div>
                                 <div class="form-group">
-                                    <label for="simpleEmail">Email</label>
-                                    <input type="email" id="simpleEmail" name="email" required placeholder="seu@email.com">
+                                    <label for="simpleEmail" data-translate-key="email_label">Email</label>
+                                    <input type="email" id="simpleEmail" name="email" required placeholder="your@email.com" data-translate-key="email_placeholder">
                                 </div>
                                 <button type="submit" class="btn-modal btn-primary-modal">
                                     <i class="fas fa-sign-in-alt"></i>
-                                    Entrar
+                                    Login
                                 </button>
                             </form>
                         </div>
@@ -2002,23 +2195,55 @@
             }, 10);
         }
 
-        function handleSimpleLogin(event) {
+        async function handleSimpleLogin(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
             const name = formData.get('name');
             const email = formData.get('email');
-            
-            if (name && email) {
-                const userData = {
-                    name: name,
-                    email: email,
-                    provider: 'simple'
-                };
-                
-                localStorage.setItem('userLogin', JSON.stringify(userData));
-                showUserMenu(userData.name);
-                closeModal('simpleLoginModal');
-                showNotification('Login realizado com sucesso!', 'success');
+
+            if (!name || !email) {
+                showNotification('Por favor, preencha todos os campos.', 'error');
+                return;
+            }
+
+            try {
+                // Registrar usuário na API
+                const response = await fetch('/api/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'register_user',
+                        data: {
+                            name,
+                            email,
+                            provider: 'simple'
+                        }
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.result.success) {
+                    const userData = {
+                        name: name,
+                        email: email,
+                        provider: 'simple'
+                    };
+
+                    localStorage.setItem('userLogin', JSON.stringify(userData));
+                    // Registrar que o modal foi mostrado hoje
+                    localStorage.setItem('beautyHub_modalLastShown', new Date().toDateString());
+                    showUserMenu(userData.name);
+                    closeModal('simpleLoginModal');
+                    showNotification('Login realizado com sucesso!', 'success');
+                } else {
+                    showNotification('Erro ao criar usuário. Tente novamente.', 'error');
+                }
+            } catch (error) {
+                console.error('Erro no cadastro:', error);
+                showNotification('Erro de conexão. Tente novamente.', 'error');
             }
         }
 
@@ -2031,31 +2256,31 @@
                             <button class="modal-close" onclick="closeModal('loginModal')">
                                 <i class="fas fa-times"></i>
                             </button>
-                            <h2 class="modal-title">Entrar na sua conta</h2>
-                            <p class="modal-subtitle">Acesse sua conta 67 Beauty Hub</p>
+                            <h2 class="modal-title" data-translate-key="login_account_title">Login to your account</h2>
+                            <p class="modal-subtitle" data-translate-key="login_account_subtitle">Access your 67 Beauty Hub account</p>
                         </div>
                         <div class="modal-body">
                             <button class="btn-modal btn-google" onclick="loginWithGoogle()">
                                 <i class="fab fa-google"></i>
-                                Entrar com Google
+                                <span data-translate-key="login_google">Login with Google</span>
                             </button>
                             
                             <div class="divider">
-                                <span>ou</span>
+                                <span data-translate-key="or_text">or</span>
                             </div>
                             
                             <form id="loginForm" onsubmit="handleLogin(event)">
                                 <div class="form-group">
-                                    <label for="loginEmail">Email</label>
-                                    <input type="email" id="loginEmail" name="email" required placeholder="seu@email.com">
+                                    <label for="loginEmail" data-translate-key="email_label">Email</label>
+                                    <input type="email" id="loginEmail" name="email" required placeholder="your@email.com" data-translate-key="email_placeholder">
                                 </div>
                                 <div class="form-group">
-                                    <label for="loginPassword">Senha</label>
-                                    <input type="password" id="loginPassword" name="password" required placeholder="Sua senha">
+                                    <label for="loginPassword" data-translate-key="password_label">Password</label>
+                                    <input type="password" id="loginPassword" name="password" required placeholder="Your password" data-translate-key="password_placeholder">
                                 </div>
                                 <button type="submit" class="btn-modal btn-primary-modal">
                                     <i class="fas fa-sign-in-alt"></i>
-                                    Entrar
+                                    Login
                                 </button>
                             </form>
                         </div>
@@ -2080,41 +2305,89 @@
 
 
         // Integração com Google
-        function loginWithGoogle() {
-            // Simular login com Google
-            const userData = {
-                name: 'Usuário Google',
-                email: 'usuario@gmail.com',
-                provider: 'google'
-            };
-            
-            localStorage.setItem('userLogin', JSON.stringify(userData));
-            showUserMenu(userData.name);
-            closeModal('loginModal');
-            
-            // Mostrar notificação de sucesso
-            showNotification('Login realizado com sucesso via Google!', 'success');
+        async function loginWithGoogle() {
+            try {
+                // Simular dados do Google (em produção usar OAuth)
+                const userData = {
+                    name: 'Usuário Google',
+                    email: 'usuario@gmail.com',
+                    provider: 'google'
+                };
+
+                // Registrar usuário na API
+                const response = await fetch('/api/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'register_user',
+                        data: userData
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.result.success) {
+                    localStorage.setItem('userLogin', JSON.stringify(userData));
+                    // Registrar que o modal foi mostrado hoje
+                    localStorage.setItem('beautyHub_modalLastShown', new Date().toDateString());
+                    showUserMenu(userData.name);
+                    closeModal('loginModal');
+
+                    // Mostrar notificação de sucesso
+                    showNotification('Login realizado com sucesso via Google!', 'success');
+                } else {
+                    showNotification('Erro no login com Google. Tente novamente.', 'error');
+                }
+            } catch (error) {
+                console.error('Erro no login com Google:', error);
+                showNotification('Erro de conexão. Tente novamente.', 'error');
+            }
         }
 
 
         // Handlers de formulário
-        function handleLogin(event) {
+        async function handleLogin(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
             const email = formData.get('email');
             const password = formData.get('password');
-            
-            if (email && password) {
-                const userData = {
-                    name: email.split('@')[0],
-                    email: email,
-                    provider: 'email'
-                };
-                
-                localStorage.setItem('userLogin', JSON.stringify(userData));
-                showUserMenu(userData.name);
-                closeModal('loginModal');
-                showNotification('Login realizado com sucesso!', 'success');
+
+            if (!email || !password) {
+                showNotification('Por favor, preencha todos os campos.', 'error');
+                return;
+            }
+
+            try {
+                // Primeiro tentar autenticar
+                const response = await fetch('/api/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'authenticate_user',
+                        data: { email, password }
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.result.success) {
+                    const userData = result.result.user;
+                    localStorage.setItem('userLogin', JSON.stringify(userData));
+                    // Registrar que o modal foi mostrado hoje
+                    localStorage.setItem('beautyHub_modalLastShown', new Date().toDateString());
+                    showUserMenu(userData.name);
+                    closeModal('loginModal');
+                    showNotification('Login realizado com sucesso!', 'success');
+                } else {
+                    showNotification('Credenciais inválidas. Tente novamente.', 'error');
+                }
+            } catch (error) {
+                console.error('Erro na autenticação:', error);
+                showNotification('Erro de conexão. Tente novamente.', 'error');
             }
         }
 
@@ -2174,7 +2447,7 @@
             modal.innerHTML = `
                 <div style="background: white; padding: 40px; border-radius: 15px; max-width: 400px; width: 90%; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                        <h3 style="color: #d4af37; margin: 0;"><i class="fas fa-sign-in-alt"></i> Entrar na sua conta</h3>
+                        <h3 style="color: #d4af37; margin: 0;"><i class="fas fa-sign-in-alt"></i> <span data-translate-key="login_account_title">Login to your account</span></h3>
                         <button onclick="closeHeaderModal()" style="background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer;">
                             <i class="fas fa-times"></i>
                         </button>
@@ -2182,17 +2455,17 @@
                     
                     <form id="headerLoginForm">
                         <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">Nome</label>
-                            <input type="text" id="headerLoginName" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="Seu nome completo" />
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;" data-translate-key="name_label">Name</label>
+                            <input type="text" id="headerLoginName" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="Your full name" data-translate-key="name_placeholder" />
                         </div>
                         
                         <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;">E-mail</label>
-                            <input type="email" id="headerLoginEmail" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="seu@email.com" />
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #333;" data-translate-key="email_label">Email</label>
+                            <input type="email" id="headerLoginEmail" required style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px;" placeholder="your@email.com" data-translate-key="email_placeholder" />
                         </div>
                         
                         <button type="submit" style="width: 100%; background: linear-gradient(135deg, #d4af37, #b8941f); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                            <i class="fas fa-sign-in-alt"></i> Entrar
+                            <i class="fas fa-sign-in-alt"></i> <span data-translate-key="login_btn">Login</span>
                         </button>
                     </form>
                     
@@ -2201,27 +2474,57 @@
             
             document.body.appendChild(modal);
             
-            document.getElementById('headerLoginForm').addEventListener('submit', function(e) {
+            document.getElementById('headerLoginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const name = document.getElementById('headerLoginName').value;
                 const email = document.getElementById('headerLoginEmail').value;
                 
                 if (name && email) {
-                    // Salvar dados do usuário
-                    const userData = { name, email, loginDate: new Date().toISOString() };
-                    localStorage.setItem('userLogin', JSON.stringify(userData));
-                    
-                    // Salvar estado de login bem-sucedido
-                    saveLoginState('success');
-                    
-                    // Mostrar sucesso
-                    showHeaderLoginSuccess(name);
-                    
-                    // Atualizar interface
-                    setTimeout(() => {
-                        closeHeaderModal();
-                        showUserMenu(name);
-                    }, 2000);
+                    try {
+                        // Registrar usuário na API
+                        const response = await fetch('/api/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                action: 'register_user',
+                                data: {
+                                    name,
+                                    email,
+                                    provider: 'header'
+                                }
+                            })
+                        });
+
+                        const result = await response.json();
+
+                        if (result.success && result.result.success) {
+                            // Salvar dados do usuário
+                            const userData = { name, email, loginDate: new Date().toISOString() };
+                            localStorage.setItem('userLogin', JSON.stringify(userData));
+
+                            // Salvar estado de login bem-sucedido
+                            saveLoginState('success');
+
+                            // Registrar que o modal foi mostrado hoje
+                            localStorage.setItem('beautyHub_modalLastShown', new Date().toDateString());
+
+                            // Mostrar sucesso
+                            showHeaderLoginSuccess(name);
+
+                            // Atualizar interface
+                            setTimeout(() => {
+                                closeHeaderModal();
+                                showUserMenu(name);
+                            }, 2000);
+                        } else {
+                            alert('Erro ao criar usuário. Tente novamente.');
+                        }
+                    } catch (error) {
+                        console.error('Erro no cadastro do header:', error);
+                        alert('Erro de conexão. Tente novamente.');
+                    }
                 }
             });
         }
@@ -2335,7 +2638,26 @@
 				
 				this.userCountry = null;
 				this.userCurrency = 'USD';
+				this.userLanguage = 'en-US'; // FORCE English as default for US audience
 				this.isInitialized = false;
+
+				// Check for saved preferences first
+				const savedCountry = localStorage.getItem('selectedCountry');
+				const savedLanguage = localStorage.getItem('userLanguage');
+				const savedCurrency = localStorage.getItem('userCurrency');
+				
+				if (savedCountry && savedLanguage && savedCurrency) {
+					console.log('🌍 GlobalTranslator using saved preferences:', savedCountry);
+					this.userLanguage = savedLanguage;
+					this.userCurrency = savedCurrency;
+					this.userCountry = savedCountry;
+				} else {
+					console.log('🇺🇸 GlobalTranslator using default English');
+					localStorage.setItem('userLanguage', 'en-US');
+					localStorage.setItem('userCurrency', 'USD');
+					localStorage.setItem('userCountry', 'US');
+					localStorage.setItem('selectedCountry', 'US');
+				}
 				this.init();
 			}
 			
@@ -2354,201 +2676,178 @@
 			
             async detectUserLocation() {
                 try {
-                    let countryCode = null;
-                    
-                    // Check if running from file:// protocol
-                    if (window.location.protocol === 'file:') {
-                        console.log('Running from file:// protocol, using fallback detection');
-                        // Try to detect from browser language
-                        const browserLang = navigator.language || navigator.userLanguage;
-                        if (browserLang.startsWith('pt')) {
-                            countryCode = 'BR';
-                            console.log('Detected Portuguese language, assuming Brazil');
-                        } else if (browserLang.startsWith('es')) {
-                            countryCode = 'ES';
-                            console.log('Detected Spanish language, assuming Spain');
-                        } else {
-                            countryCode = 'US';
-                            console.log('Using default US location');
-                        }
-                    } else {
-                        try {
-                            const response = await fetch('https://ipapi.co/json/', { 
-                                timeout: 5000,
-                                mode: 'cors'
-                            });
-                            if (response.ok) {
-                                const data = await response.json();
-                                countryCode = data.country_code;
-                                console.log('Location detected via ipapi.co:', countryCode);
-                            }
-                        } catch (e) {
-                            console.log('ipapi.co failed, trying alternative...');
-                        }
-                        
-                        if (!countryCode) {
-                            try {
-                                const response = await fetch('https://ipinfo.io/json', { 
-                                    timeout: 5000,
-                                    mode: 'cors'
-                                });
-                                if (response.ok) {
-                                    const data = await response.json();
-                                    countryCode = data.country;
-                                    console.log('Location detected via ipinfo.io:', countryCode);
-                                }
-                            } catch (e) {
-                                console.log('ipinfo.io also failed');
-                            }
-                        }
-                    }
-					
-					this.userCountry = countryCode;
-					
-					const countryToCurrency = {
-						// Real Brasileiro (BRL) - Brasil
-						'BR': 'BRL',
-						
-						// Euro (EUR) - Países da Zona do Euro (incluindo Portugal)
-						'PT': 'EUR', 'DE': 'EUR', 'FR': 'EUR', 'IT': 'EUR', 'ES': 'EUR', 'NL': 'EUR', 'BE': 'EUR', 'AT': 'EUR', 'IE': 'EUR', 'FI': 'EUR', 'GR': 'EUR', 'LU': 'EUR', 'MT': 'EUR', 'CY': 'EUR', 'SK': 'EUR', 'SI': 'EUR', 'EE': 'EUR', 'LV': 'EUR', 'LT': 'EUR', 'AD': 'EUR', 'MC': 'EUR', 'SM': 'EUR', 'VA': 'EUR', 'ME': 'EUR', 'XK': 'EUR',
-						
-						// Dólar Americano (USD) - América do Norte e outros países
-						'US': 'USD', 'CA': 'USD', 'MX': 'USD', 'AR': 'USD', 'CL': 'USD', 'CO': 'USD', 'PE': 'USD', 'UY': 'USD', 'BO': 'USD', 'PY': 'USD', 'VE': 'USD', 'EC': 'USD', 'GY': 'USD', 'SR': 'USD', 'GF': 'USD', 'FK': 'USD', 'BZ': 'USD', 'GT': 'USD', 'HN': 'USD', 'SV': 'USD', 'NI': 'USD', 'CR': 'USD', 'PA': 'USD', 'CU': 'USD', 'JM': 'USD', 'HT': 'USD', 'DO': 'USD', 'PR': 'USD', 'VI': 'USD', 'AG': 'USD', 'BB': 'USD', 'DM': 'USD', 'GD': 'USD', 'KN': 'USD', 'LC': 'USD', 'VC': 'USD', 'TT': 'USD', 'BS': 'USD', 'AU': 'USD', 'NZ': 'USD', 'JP': 'USD', 'KR': 'USD', 'SG': 'USD', 'HK': 'USD', 'TW': 'USD', 'TH': 'USD', 'MY': 'USD', 'ID': 'USD', 'PH': 'USD', 'VN': 'USD', 'IN': 'USD', 'PK': 'USD', 'BD': 'USD', 'LK': 'USD', 'MM': 'USD', 'KH': 'USD', 'LA': 'USD', 'BN': 'USD', 'FJ': 'USD', 'PG': 'USD', 'SB': 'USD', 'VU': 'USD', 'NC': 'USD', 'PF': 'USD', 'WS': 'USD', 'TO': 'USD', 'KI': 'USD', 'TV': 'USD', 'NR': 'USD', 'MH': 'USD', 'FM': 'USD', 'PW': 'USD', 'AS': 'USD', 'GU': 'USD', 'MP': 'USD', 'CK': 'USD', 'NU': 'USD', 'TK': 'USD', 'WF': 'USD', 'NF': 'USD', 'PN': 'USD', 'GS': 'USD', 'SH': 'USD', 'AC': 'USD', 'TA': 'USD', 'IO': 'USD', 'CX': 'USD', 'CC': 'USD', 'HM': 'USD', 'AQ': 'USD', 'BV': 'USD', 'TF': 'USD', 'UM': 'USD'
-					};
-					
-					this.userCurrency = countryToCurrency[this.userCountry] || 'USD';
-					
-					// Debug: Log detection results
-					console.log('🌍 Currency Detection Results:');
-					console.log('📍 User Country:', this.userCountry);
-					console.log('💰 User Currency:', this.userCurrency);
-					console.log('💱 Exchange Rate:', this.exchangeRates[this.userCurrency]);
-					console.log('💱 Currency Symbol:', this.currencySymbols[this.userCurrency]);
-					
-				} catch (error) {
-					console.error('Error in location detection:', error);
-					this.userCurrency = 'USD';
-					this.userCountry = 'Unknown';
-				}
-			}
+                    // Use saved preferences instead of browser language
+                    console.log('🌍 Using saved preferences instead of browser detection');
+                    console.log('📊 Current settings:', {
+                        language: this.userLanguage,
+                        currency: this.userCurrency,
+                        country: this.userCountry
+                    });
+
+                } catch (error) {
+                    console.error('Error in location detection:', error);
+                    this.userCurrency = 'USD';
+                    this.userCountry = 'US';
+                    this.userLanguage = 'en-US';
+                }
+            }
 			
 			translateContent(contentKey) {
+				// Use detected language for content translation - distinguish between Brazilian and European Portuguese
+				let languageKey = 'USD'; // Default to English
+
+				if (this.userLanguage === 'pt-PT' || this.userLanguage === 'pt_PT') {
+					languageKey = 'EUR'; // European Portuguese for Portugal
+					console.log(`🇵🇹 European Portuguese detected for ${contentKey}`);
+				} else if (this.userLanguage === 'pt-BR' || this.userLanguage === 'pt_BR') {
+					languageKey = 'BRL'; // Brazilian Portuguese
+					console.log(`🇧🇷 Brazilian Portuguese detected for ${contentKey}`);
+				} else if (this.userLanguage === 'pt') {
+					languageKey = 'EUR'; // Generic Portuguese defaults to European (Portugal focus)
+					console.log(`🇵🇹 Generic Portuguese detected for ${contentKey} - defaulting to European Portuguese`);
+				} else {
+					languageKey = 'USD'; // English for other languages
+					console.log(`🇺🇸 English detected for ${contentKey}`);
+				}
+
+				console.log(`🌍 Translating ${contentKey}: userLanguage=${this.userLanguage}, languageKey=${languageKey}`);
 				const translations = {
 					'hero_subtitle': {
 						'USD': 'Beauty and Comfort Products',
 						'BRL': 'Produtos de Beleza e Conforto',
-						'EUR': 'Beauty and Comfort Products'
+						'EUR': 'Produtos de Beleza e Conforto'
 					},
 					'hero_description': {
 						'USD': 'Discover our exclusive selection of beauty and comfort products, carefully chosen for your personal care routine.',
 						'BRL': 'Descubra nossa seleção exclusiva de produtos de beleza e conforto, cuidadosamente escolhidos para sua rotina de cuidados pessoais.',
-						'EUR': 'Discover our exclusive selection of beauty and comfort products, carefully chosen for your personal care routine.'
+						'EUR': 'Descubra a nossa seleção exclusiva de produtos de beleza e conforto, cuidadosamente escolhidos para a sua rotina de cuidados pessoais.'
 					},
 					'products_title': {
 						'USD': 'Our Products',
 						'BRL': 'Nossos Produtos',
-						'EUR': 'Our Products'
+						'EUR': 'Os Nossos Produtos'
 					},
 					'products_subtitle': {
 						'USD': 'Careful selection of beauty and comfort products for your daily routine',
 						'BRL': 'Seleção cuidadosa de produtos de beleza e conforto para sua rotina diária',
-						'EUR': 'Careful selection of beauty and comfort products for your daily routine'
+						'EUR': 'Seleção cuidadosa de produtos de beleza e conforto para a sua rotina diária'
 					},
 					'beauty_section': {
 						'USD': 'Beauty Products',
 						'BRL': 'Produtos de Beleza',
-						'EUR': 'Beauty Products'
+						'EUR': 'Produtos de Beleza'
 					},
 					'beauty_description': {
 						'USD': 'Makeup, skincare, hair products and everything you need to enhance your natural beauty.',
 						'BRL': 'Maquiagem, skincare, produtos capilares e tudo que você precisa para realçar sua beleza natural.',
-						'EUR': 'Makeup, skincare, hair products and everything you need to enhance your natural beauty.'
+						'EUR': 'Maquilhagem, skincare, produtos capilares e tudo o que precisa para realçar a sua beleza natural.'
+					},
+					'feature_makeup': {
+						'USD': 'Makeup',
+						'BRL': 'Maquiagem',
+						'EUR': 'Maquilhagem'
+					},
+					'feature_skincare': {
+						'USD': 'Skincare',
+						'BRL': 'Skincare',
+						'EUR': 'Skincare'
+					},
+					'feature_hair': {
+						'USD': 'Hair',
+						'BRL': 'Cabelo',
+						'EUR': 'Cabelo'
 					},
 					'comfort_section': {
 						'USD': 'Comfort Products',
 						'BRL': 'Produtos de Conforto',
-						'EUR': 'Comfort Products'
+						'EUR': 'Produtos de Conforto'
 					},
 					'comfort_description': {
 						'USD': 'Items for your well-being and personal comfort, creating a cozy environment at home.',
 						'BRL': 'Itens para seu bem-estar e conforto pessoal, criando um ambiente acolhedor em casa.',
-						'EUR': 'Items for your well-being and personal comfort, creating a cozy environment at home.'
+						'EUR': 'Artigos para o seu bem-estar e conforto pessoal, criando um ambiente acolhedor em casa.'
 					},
 					'explore_beauty': {
 						'USD': 'Explore Beauty Section',
 						'BRL': 'Explorar Seção Beleza',
-						'EUR': 'Explore Beauty Section'
+						'EUR': 'Explorar Secção de Beleza'
 					},
 					'explore_comfort': {
 						'USD': 'Explore Comfort Section',
 						'BRL': 'Explorar Seção Conforto',
-						'EUR': 'Explore Comfort Section'
+						'EUR': 'Explorar Secção de Conforto'
 					},
 					'about_title': {
 						'USD': 'About 67 Beauty Hub',
 						'BRL': 'Sobre o 67 Beauty Hub',
-						'EUR': 'About 67 Beauty Hub'
+						'EUR': 'Sobre o 67 Beauty Hub'
 					},
 					'about_description': {
 						'USD': 'At 67 Beauty Hub, we believe that beauty and comfort go hand in hand. We are specialists in beauty and comfort products, offering a careful selection of items for your daily routine.',
 						'BRL': 'No 67 Beauty Hub, acreditamos que a beleza e o conforto andam juntos. Somos especialistas em produtos de beleza e conforto, oferecendo uma seleção cuidadosa de itens para sua rotina diária.',
-						'EUR': 'At 67 Beauty Hub, we believe that beauty and comfort go hand in hand. We are specialists in beauty and comfort products, offering a careful selection of items for your daily routine.'
+						'EUR': 'No 67 Beauty Hub, acreditamos que a beleza e o conforto andam de mãos dadas. Somos especialistas em produtos de beleza e conforto, oferecendo uma seleção cuidadosa de artigos para a sua rotina diária.'
 					},
 					'about_description2': {
 						'USD': 'With years of experience in the market, we select only high-quality products that combine effectiveness, safety and comfort for you.',
 						'BRL': 'Com anos de experiência no mercado, selecionamos apenas produtos de alta qualidade que combinam eficácia, segurança e conforto para você.',
-						'EUR': 'With years of experience in the market, we select only high-quality products that combine effectiveness, safety and comfort for you.'
+						'EUR': 'Com anos de experiência no mercado, selecionamos apenas produtos de alta qualidade que combinam eficácia, segurança e conforto para si.'
 					},
 					'footer_text': {
-						'USD': '© 2024 67 Beauty Hub. All rights reserved.',
-						'BRL': '© 2024 67 Beauty Hub. Todos os direitos reservados.',
-						'EUR': '© 2024 67 Beauty Hub. All rights reserved.'
+						'USD': '© 2025 67 Beauty Hub. All rights reserved.',
+						'BRL': '© 2025 67 Beauty Hub. Todos os direitos reservados.',
+						'EUR': '© 2025 67 Beauty Hub. Todos os direitos reservados.'
 					},
 					// Product name translations
 					'product_phoera_foundation': {
-						'USD': '2 Pack PHOERA Foundation',
-						'BRL': '2 Pack PHOERA Foundation',
-						'EUR': '2 Pack PHOERA Foundation'
+						'USD': 'Foundation 2-Pack',
+						'BRL': 'Kit 2 Bases PHOERA',
+						'EUR': 'Kit 2 Bases PHOERA'
 					},
 					'product_hair_clips': {
-						'USD': 'Alligator Hair Clips',
-						'BRL': 'Prendedores de Cabelo Jacaré',
-						'EUR': 'Alligator Hair Clips'
+						'USD': 'Unbreakable Hair Clips',
+						'BRL': 'Grampos Anti-Quebra',
+						'EUR': 'Clipes de Cabelo Inquebráveis'
 					},
-					'product_heat_resistant_mat': {
-						'USD': 'Heat-Resistant Mat',
-						'BRL': 'Tapete Resistente ao Calor',
-						'EUR': 'Heat-Resistant Mat'
+					'product_heat_mat': {
+						'USD': 'Heat Shield Mat',
+						'BRL': 'Tapete Anti-Queimadura',
+						'EUR': 'Tapete Protetor de Calor'
 					},
-					'product_laikou_skincare': {
-						'USD': 'LAIKOU Skincare',
-						'BRL': 'LAIKOU Skincare',
-						'EUR': 'LAIKOU Skincare'
+					'product_laiou_skincare': {
+						'USD': '24K Anti-Aging Kit',
+						'BRL': 'LAIKOU Cuidados da Pele',
+						'EUR': 'Kit Anti-Idade 24K LAIKOU'
 					},
 					'product_wrinkle_reducer': {
-						'USD': 'Wrinkle Reducer - Red Light Therapy',
+						'USD': '7-in-1 Wrinkle Wand',
 						'BRL': 'Redutor de Rugas - Terapia de Luz Vermelha',
-						'EUR': 'Wrinkle Reducer - Red Light Therapy'
+						'EUR': 'Varinha 7 em 1 Anti-Rugas'
 					},
 					'product_sofa_cover': {
-						'USD': 'Detachable Sofa Cover',
-						'BRL': 'Capa de Sofá Removível',
-						'EUR': 'Detachable Sofa Cover'
+						'USD': '3-in-1 Sofa Cover',
+						'BRL': 'Capa Sofá 3 em 1',
+						'EUR': 'Capa de Sofá 3 em 1'
 					},
 					'product_human_dog_bed': {
-						'USD': 'Human Dog Bed',
-						'BRL': 'Cama Humana Gigante',
-						'EUR': 'Human Dog Bed'
+						'USD': 'Giant Anti-Pain Bed',
+						'BRL': 'Cama Gigante Anti-Dor',
+						'EUR': 'Cama Gigante Anti-Dor'
 					},
 					'product_snooze_bundle': {
 						'USD': 'Snooze Bundle',
 						'BRL': 'Kit Snooze',
-						'EUR': 'Snooze Bundle'
+						'EUR': 'Kit Snooze'
+					},
+					'product_memory_foam_pillow': {
+						'USD': 'Portable Neck Pillow',
+						'BRL': 'Travesseiro Cervical Portátil',
+						'EUR': 'Almofada Cervical Portátil'
 					}
 				};
 				
+				// Use detected language for translation (not currency)
 				return translations[contentKey] ? 
-					translations[contentKey][this.userCurrency] || 
+					translations[contentKey][languageKey] || 
 					translations[contentKey]['USD'] : 
 					contentKey;
 			}
@@ -2706,11 +3005,18 @@
 									console.log(`Updated image alt text: ${productData.name}`);
 								}
 								
-								// Update product title (h3 element)
-								const titleElement = item.querySelector('h3');
+								// Update product title (h3 element) - use translation system
+								const titleElement = item.querySelector('h3[data-translate-key]');
 								if (titleElement) {
-									titleElement.textContent = productData.name;
-									console.log(`Updated title: ${productData.name}`);
+									const translateKey = titleElement.getAttribute('data-translate-key');
+									console.log(`🔍 Found title element with key: ${translateKey}`);
+									if (translateKey) {
+										const originalText = titleElement.textContent;
+										titleElement.textContent = this.translateContent(translateKey);
+										console.log(`🔄 Updated title: "${originalText}" → "${titleElement.textContent}"`);
+									}
+								} else {
+									console.log(`❌ No title element with data-translate-key found in item ${index + 1}`);
 								}
 								
 								// Update product description (p element)
@@ -2764,9 +3070,565 @@
 		
 		// Initialize global translator when page loads
 		document.addEventListener('DOMContentLoaded', function() {
+            // Preloader removido completamente - página carrega diretamente
+			
+			// Check if user has manually selected a country
+			const selectedCountry = localStorage.getItem('selectedCountry');
+			
+			if (selectedCountry) {
+				// User has manually selected - use that preference
+				console.log('🌍 Using manually selected country:', selectedCountry);
+				const countryInfo = {
+					'BR': { language: 'pt-BR', currency: 'BRL', country: 'BR' },
+					'PT': { language: 'pt-PT', currency: 'EUR', country: 'PT' },
+					'US': { language: 'en-US', currency: 'USD', country: 'US' }
+				};
+				
+				const info = countryInfo[selectedCountry];
+				localStorage.setItem('userLanguage', info.language);
+				localStorage.setItem('userCurrency', info.currency);
+				localStorage.setItem('userCountry', info.country);
+			} else {
+				// No manual selection - default to Portuguese/BR
+				console.log('🇧🇷 No manual selection, defaulting to Portuguese/BR');
+				localStorage.setItem('userLanguage', 'pt-BR');
+				localStorage.setItem('userCurrency', 'BRL');
+				localStorage.setItem('userCountry', 'BR');
+				localStorage.setItem('selectedCountry', 'BR');
+			}
+
+			// Initialize global translator with saved preferences
 			window.globalTranslator = new GlobalTranslator();
 			window.globalTranslator.init();
+
+			// Initialize country selector
+			initializeCountrySelector();
+			
+			// Initialize currency and language
+			initializeCurrencyAndLanguage();
 		});
+
+		// Initialize country selector
+		function initializeCountrySelector() {
+			const countrySelector = document.getElementById('countrySelector');
+			if (countrySelector) {
+				// Set current selection based on localStorage
+				const selectedCountry = localStorage.getItem('selectedCountry') || localStorage.getItem('userCountry') || 'BR';
+				countrySelector.value = selectedCountry;
+				
+				// Add change event listener
+				countrySelector.addEventListener('change', function() {
+					changeCountry(this.value);
+				});
+				
+				console.log('🌍 Country selector initialized with:', selectedCountry);
+			}
+		}
+
+        // Função robusta para detectar dispositivos móveis
+        function detectMobileDevice() {
+            // Múltiplas validações para maior precisão
+            const userAgent = navigator.userAgent || '';
+            const screenWidth = window.screen.width || 0;
+            const screenHeight = window.screen.height || 0;
+            const maxDimension = Math.max(screenWidth, screenHeight);
+            
+            // Validação 1: UserAgent
+            const isMobileUA = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+            
+            // Validação 2: Tamanho da tela (dispositivos pequenos)
+            const isSmallScreen = maxDimension <= 768;
+            
+            // Validação 3: Touch support
+            const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            
+            // Validação 4: Orientação (dispositivos móveis)
+            const isPortrait = window.innerHeight > window.innerWidth;
+            
+            // Decisão baseada em múltiplos fatores
+            const isMobile = isMobileUA && (isSmallScreen || hasTouch);
+            
+            console.log(`🔍 Detecção móvel:`, {
+                userAgent: isMobileUA,
+                smallScreen: isSmallScreen,
+                touch: hasTouch,
+                portrait: isPortrait,
+                final: isMobile
+            });
+            
+            return isMobile;
+		}
+
+        // Change country function
+        function changeCountry(countryCode) {
+            console.log('🌍 Changing country to:', countryCode);
+            
+            // Detectar dispositivo móvel com validação robusta
+            const isMobile = detectMobileDevice();
+            console.log(`📱 Dispositivo móvel: ${isMobile}`);
+            
+            // Save selection to localStorage
+            localStorage.setItem('selectedCountry', countryCode);
+            
+            // Update language and currency based on country
+            const countryInfo = {
+                'BR': { language: 'pt-BR', currency: 'BRL', country: 'BR' },
+                'PT': { language: 'pt-PT', currency: 'EUR', country: 'PT' },
+                'US': { language: 'en-US', currency: 'USD', country: 'US' }
+            };
+            
+            const info = countryInfo[countryCode];
+            if (info) {
+                localStorage.setItem('userLanguage', info.language);
+                localStorage.setItem('userCurrency', info.currency);
+                localStorage.setItem('userCountry', info.country);
+                
+                // Estratégia híbrida com fallback de segurança
+                try {
+                    if (isMobile) {
+                        console.log('📱 Móvel detectado: usando RELOAD para melhor performance');
+                        // Pequeno delay para garantir que localStorage seja salvo
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 100);
+                    } else {
+                        console.log('🖥️ Desktop detectado: usando TEMPO REAL para melhor UX');
+                updatePricesAndLanguage(countryCode, info);
+                    }
+                } catch (error) {
+                    console.error('❌ Erro na estratégia híbrida, usando fallback:', error);
+                    // Fallback: sempre usar reload em caso de erro
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 100);
+                }
+                
+                // Force language update without reload
+                if (window.languageController) {
+                    window.languageController.updateLanguage(info.language);
+                }
+                
+                // Apply translations immediately
+                setTimeout(() => {
+                    // Force translation application
+                    const elements = document.querySelectorAll('[data-translate-key]');
+                    elements.forEach(element => {
+                        const key = element.getAttribute('data-translate-key');
+                        let translatedText = '';
+                        
+                        if (info.language === 'en-US') {
+                            // English translations
+                            const englishTranslations = {
+                                'nav_home': 'Home',
+                                'nav_products': 'Products',
+                                'nav_sections': 'Sections',
+                                'nav_about': 'About',
+                                'nav_contact': 'Contact',
+                                'hero_subtitle': 'Beauty and Comfort Products',
+                                'hero_description': 'Discover our exclusive selection of beauty and comfort products, carefully chosen for your personal care routine.',
+                                'hero_products_btn': 'Our Products',
+                                'hero_order_btn': 'Place Order',
+                                'products_title': 'Our Products',
+                                'products_subtitle': 'Discover our exclusive selection of premium products',
+                                'featured_title': 'Featured Products',
+                                'featured_subtitle': 'Our most sought-after and recommended products',
+                                'beauty_section': 'Beauty Products',
+                                'beauty_description': 'Makeup, hair products and everything you need to enhance your natural beauty.',
+                                'comfort_section': 'Comfort Products',
+                                'comfort_description': 'Items for your well-being and personal comfort, creating a cozy environment at home.',
+                                'feature_makeup': 'Makeup',
+                                'feature_skincare': 'Skincare',
+                                'feature_hair': 'Hair',
+                                'feature_wellbeing': 'Well-being',
+                                'feature_comfort': 'Comfort',
+                                'feature_relaxation': 'Relaxation',
+                                'explore_beauty_section': 'Explore Beauty Section',
+                                'explore_comfort_section': 'Explore Comfort Section',
+                                'about_title': 'About 67 Beauty Hub',
+                                'about_description_1': 'At 67 Beauty Hub, we believe that beauty and comfort go hand in hand. We are specialists in beauty and comfort products, offering a careful selection of items for your daily routine.',
+                                'about_description_2': 'With years of experience in the market, we select only high-quality products that combine effectiveness, safety and comfort for you.',
+                                'about_feature_1': 'High quality products',
+                                'about_feature_2': 'Careful selection',
+                                'about_feature_3': 'Fast and secure delivery',
+                                'login_btn': 'Login',
+                                'my_profile': 'My Profile',
+                                'my_reviews': 'My Reviews',
+                                'logout': 'Logout',
+                                'contact_title': 'Contact Us',
+                                'contact_subtitle': 'Place your order and discover the best beauty and comfort products'
+                            };
+                            translatedText = englishTranslations[key] || key;
+                        } else if (info.language === 'pt-BR') {
+                            // Portuguese Brazilian translations
+                            const portugueseBrTranslations = {
+                                'nav_home': 'Início',
+                                'nav_products': 'Produtos',
+                                'nav_sections': 'Seções',
+                                'nav_about': 'Sobre',
+                                'nav_contact': 'Contato',
+                                'hero_subtitle': 'Produtos de Beleza e Conforto',
+                                'hero_description': 'Descubra nossa seleção exclusiva de produtos de beleza e conforto, cuidadosamente escolhidos para sua rotina de cuidados pessoais.',
+                                'hero_products_btn': 'Nossos Produtos',
+                                'hero_order_btn': 'Fazer Pedido',
+                                'products_title': 'Nossos Produtos',
+                                'products_subtitle': 'Descubra nossa seleção exclusiva de produtos premium',
+                                'featured_title': 'Produtos em Destaque',
+                                'featured_subtitle': 'Nossos produtos mais procurados e recomendados',
+                                'beauty_section': 'Produtos de Beleza',
+                                'beauty_description': 'Maquiagem, produtos capilares e tudo que você precisa para realçar sua beleza natural.',
+                                'comfort_section': 'Produtos de Conforto',
+                                'comfort_description': 'Itens para seu bem-estar e conforto pessoal, criando um ambiente acolhedor em casa.',
+                                'feature_makeup': 'Maquiagem',
+                                'feature_skincare': 'Skincare',
+                                'feature_hair': 'Cabelos',
+                                'feature_wellbeing': 'Bem-estar',
+                                'feature_comfort': 'Conforto',
+                                'feature_relaxation': 'Relaxamento',
+                                'explore_beauty_section': 'Explorar Seção Beleza',
+                                'explore_comfort_section': 'Explorar Seção Conforto',
+                                'about_title': 'Sobre o 67 Beauty Hub',
+                                'about_description_1': 'No 67 Beauty Hub, acreditamos que a beleza e o conforto andam juntos. Somos especialistas em produtos de beleza e conforto, oferecendo uma seleção cuidadosa de itens para sua rotina diária.',
+                                'about_description_2': 'Com anos de experiência no mercado, selecionamos apenas produtos de alta qualidade que combinam eficácia, segurança e conforto para você.',
+                                'about_feature_1': 'Produtos de alta qualidade',
+                                'about_feature_2': 'Seleção cuidadosa',
+                                'about_feature_3': 'Entrega rápida e segura',
+                                'login_btn': 'Entrar',
+                                'my_profile': 'Meu Perfil',
+                                'my_reviews': 'Minhas Avaliações',
+                                'logout': 'Sair',
+                                'contact_title': 'Entre em Contato',
+                                'contact_subtitle': 'Faça seu pedido e descubra os melhores produtos de beleza e conforto'
+                            };
+                            translatedText = portugueseBrTranslations[key] || key;
+                        } else if (info.language === 'pt-PT') {
+                            // Portuguese European translations
+                            const portuguesePtTranslations = {
+                                'nav_home': 'Início',
+                                'nav_products': 'Produtos',
+                                'nav_sections': 'Secções',
+                                'nav_about': 'Sobre',
+                                'nav_contact': 'Contacto',
+                                'hero_subtitle': 'Produtos de Beleza e Conforto',
+                                'hero_description': 'Descubra a nossa seleção exclusiva de produtos de beleza e conforto, cuidadosamente escolhidos para a sua rotina de cuidados pessoais.',
+                                'hero_products_btn': 'Os Nossos Produtos',
+                                'hero_order_btn': 'Fazer Pedido',
+                                'products_title': 'Os Nossos Produtos',
+                                'products_subtitle': 'Descubra a nossa seleção exclusiva de produtos premium',
+                                'featured_title': 'Produtos em Destaque',
+                                'featured_subtitle': 'Os nossos produtos mais procurados e recomendados',
+                                'beauty_section': 'Produtos de Beleza',
+                                'beauty_description': 'Maquilhagem, produtos capilares e tudo o que precisa para realçar a sua beleza natural.',
+                                'comfort_section': 'Produtos de Conforto',
+                                'comfort_description': 'Itens para o seu bem-estar e conforto pessoal, criando um ambiente acolhedor em casa.',
+                                'feature_makeup': 'Maquilhagem',
+                                'feature_skincare': 'Cuidados da Pele',
+                                'feature_hair': 'Cabelo',
+                                'feature_wellbeing': 'Bem-estar',
+                                'feature_comfort': 'Conforto',
+                                'feature_relaxation': 'Relaxamento',
+                                'explore_beauty_section': 'Explorar Secção Beleza',
+                                'explore_comfort_section': 'Explorar Secção Conforto',
+                                'about_title': 'Sobre o 67 Beauty Hub',
+                                'about_description_1': 'No 67 Beauty Hub, acreditamos que a beleza e o conforto andam de mãos dadas. Somos especialistas em produtos de beleza e conforto, oferecendo uma seleção cuidadosa de itens para a sua rotina diária.',
+                                'about_description_2': 'Com anos de experiência no mercado, selecionamos apenas produtos de alta qualidade que combinam eficácia, segurança e conforto para si.',
+                                'about_feature_1': 'Produtos de alta qualidade',
+                                'about_feature_2': 'Seleção cuidadosa',
+                                'about_feature_3': 'Entrega rápida e segura',
+                                'login_btn': 'Entrar',
+                                'my_profile': 'O Meu Perfil',
+                                'my_reviews': 'As Minhas Avaliações',
+                                'logout': 'Sair',
+                                'contact_title': 'Entre em Contacto',
+                                'contact_subtitle': 'Faça o seu pedido e descubra os melhores produtos de beleza e conforto'
+                            };
+                            translatedText = portuguesePtTranslations[key] || key;
+                        }
+                        
+                        if (translatedText && translatedText !== key) {
+                            element.textContent = translatedText;
+                        }
+                    });
+                }, 500);
+            }
+        }
+
+        // Update prices and language function
+        function updatePricesAndLanguage(countryCode, countryInfo) {
+            console.log('💰 Updating prices and language for:', countryCode);
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = countryInfo.language;
+            console.log('🌍 HTML lang atualizado para:', countryInfo.language);
+            
+            // CONVERSÃO DIRETA NO INDEX.HTML
+            console.log('🔄 Aplicando conversão direta no index.html');
+            
+            // Valores originais em USD
+            const originalPrices = {
+                'price_phoera': 17.39,
+                'price_clips': 3.54,
+                'price_mat': 2.29,
+                'price_laiou': 5.99,
+                'price_wrinkle': 17.45,
+                'price_sofa': 34.99,
+                'price_anti_pain_bed': 79.99,
+                'price_neck_pillow': 42.70
+            };
+            
+            // Taxas de conversão
+            const exchangeRates = {
+                'US': { symbol: '$', rate: 1.0 },
+                'BR': { symbol: 'R$ ', rate: 5.2 },
+                'PT': { symbol: '€', rate: 0.92 }
+            };
+            
+            const rate = exchangeRates[countryCode];
+            if (rate) {
+                const priceElements = document.querySelectorAll('.product-price');
+                priceElements.forEach((element, index) => {
+                    const priceKey = element.getAttribute('data-translate-key');
+                    if (priceKey && originalPrices[priceKey]) {
+                        const originalValue = originalPrices[priceKey];
+                        const convertedPrice = (originalValue * rate.rate).toFixed(2);
+                        const formattedPrice = rate.symbol + convertedPrice;
+                        element.textContent = formattedPrice;
+                        console.log(`💰 Convertido: ${priceKey} → ${formattedPrice}`);
+                    }
+                });
+                console.log('✅ Conversão direta aplicada com sucesso');
+            }
+            
+            // Force language update
+            if (window.globalTranslator && window.globalTranslator.updateLanguage) {
+                console.log('🔄 Forcing language update via GlobalTranslator');
+                window.globalTranslator.updateLanguage(countryInfo.language);
+            }
+            
+            // Aplicar traduções via language-controller
+            if (window.languageController) {
+                console.log('🌍 Aplicando traduções via language-controller...');
+                window.languageController.applyCurrentPageTranslations();
+            } else {
+                console.log('🔧 Language-controller não disponível, aplicando traduções diretas...');
+                applyDirectTranslations(countryInfo.language);
+            }
+        }
+
+        // Função para aplicar traduções diretas
+        function applyDirectTranslations(language) {
+            console.log('🔧 Aplicando traduções diretas para:', language);
+            
+            const translations = {
+                'pt-BR': {
+                    'sofa_cover_description': 'Acabe com sofás gastos e manchados. Transforme qualquer móvel em uma poltrona confortável. Remove e lava em segundos.',
+                    'anti_pain_bed_description': 'Acabe com dores nas costas e pescoço! Esta cama gigante suporta até 150kg e proporciona conforto total para a melhor experiência de relaxamento.',
+                    'neck_pillow_description': 'Acabe com dores no pescoço em viagens. Espuma viscoelástica de alta qualidade, design em U para suporte cervical perfeito. Portátil e prático.',
+                    'phoera_description': 'Obtenha cobertura perfeita que dura o dia todo! Esta base de cobertura total elimina manchas, olheiras e imperfeições por até 12+ horas. O acabamento matte não derrete no calor. Kit inclui 2 bases mais itens bônus.',
+                    'clips_description': 'Pare de perder grampos que escorregam e quebram! Estes ficam no lugar o dia todo! Super duráveis e confortáveis, seguram qualquer penteado firme. Kit com 6 peças em tons nude.',
+                    'heat_mat_description': 'Proteja suas bancadas e mesas de danos por calor! Este tapete suporta altas temperaturas sem derreter ou deformar. À prova d\'água e super fácil de limpar - apenas limpe e pronto!',
+                    'laiou_skincare_description': 'Reduza rugas, manchas e sinais de envelhecimento. Vitamina C + ouro 24k para pele mais firme e brilhante em 30 dias.',
+                    'wrinkle_reducer_description': 'Dispositivo de terapia de luz vermelha que estimula colágeno, suaviza linhas finas e reduz rugas.'
+                },
+                'pt-PT': {
+                    'sofa_cover_description': 'Acabe com sofás gastos e manchados. Transforme qualquer móvel numa poltrona confortável. Remove e lava em segundos.',
+                    'anti_pain_bed_description': 'Acabe com dores nas costas e pescoço! Esta cama gigante suporta até 150kg e proporciona conforto total para a melhor experiência de relaxamento.',
+                    'neck_pillow_description': 'Acabe com dores no pescoço em viagens. Espuma viscoelástica de alta qualidade, design em U para suporte cervical perfeito. Portátil e prático.',
+                    'phoera_description': 'Obtenha cobertura perfeita que dura o dia todo! Esta base de cobertura total elimina manchas, olheiras e imperfeições por até 12+ horas. O acabamento mate não derrete no calor. Kit inclui 2 bases mais itens bónus.',
+                    'clips_description': 'Pare de perder grampos que escorregam e quebram! Estes ficam no lugar o dia todo! Super duráveis e confortáveis, seguram qualquer penteado firme. Kit com 6 peças em tons nude.',
+                    'heat_mat_description': 'Proteja as suas bancadas e mesas de danos por calor! Este tapete suporta altas temperaturas sem derreter ou deformar. À prova d\'água e super fácil de limpar - apenas limpe e pronto!',
+                    'laiou_skincare_description': 'Reduza rugas, manchas e sinais de envelhecimento. Vitamina C + ouro 24k para pele mais firme e brilhante em 30 dias.',
+                    'wrinkle_reducer_description': 'Dispositivo de terapia de luz vermelha que estimula colágeno, suaviza linhas finas e reduz rugas.'
+                },
+                'en-US': {
+                    'sofa_cover_description': 'Revive your old sofa! This 3-in-1 cover transforms any furniture into a cozy lounger. Super easy to remove and wash - just toss in the machine!',
+                    'anti_pain_bed_description': 'End back and neck pain. Giant bed that supports up to 150kg. Total comfort for relaxation.',
+                    'neck_pillow_description': 'End neck pain on trips. High-quality memory foam, U-shaped design for perfect cervical support. Portable and practical.',
+                    'phoera_description': 'Get flawless coverage that lasts all day! This full-coverage foundation eliminates spots, dark circles and imperfections for up to 12+ hours. The matte finish won\'t melt in the heat. Kit includes 2 foundations plus bonus items.',
+                    'clips_description': 'Stop losing clips that slip and break! These stay put all day! Super durable and comfortable, they hold any hairstyle firm. Kit with 6 pieces in nude tones.',
+                    'heat_mat_description': 'Protect your countertops and tables from heat damage! This mat withstands high temperatures without melting or warping. Waterproof and super easy to clean - just wipe and go!',
+                    'laiou_skincare_description': 'Reduce wrinkles, spots and signs of aging. Vitamin C + 24k gold for firmer and brighter skin in 30 days.',
+                    'wrinkle_reducer_description': 'Red light therapy device that stimulates collagen, smooths fine lines and reduces wrinkles.'
+                }
+            };
+            
+            const currentTranslations = translations[language] || translations['en-US'];
+            
+            // Aplicar traduções
+            Object.keys(currentTranslations).forEach(key => {
+                const elements = document.querySelectorAll(`[data-translate-key="${key}"]`);
+                elements.forEach(element => {
+                    element.textContent = currentTranslations[key];
+                    console.log(`✅ Traduzido: ${key} → ${currentTranslations[key]}`);
+                });
+            });
+        }
+
+        // Initialize currency and language on page load
+        function initializeCurrencyAndLanguage() {
+            const selectedCountry = localStorage.getItem('selectedCountry') || 'BR';
+            const countryInfo = {
+                'BR': { language: 'pt-BR', currency: 'BRL', country: 'BR' },
+                'PT': { language: 'pt-PT', currency: 'EUR', country: 'PT' },
+                'US': { language: 'en-US', currency: 'USD', country: 'US' }
+            };
+            
+            const info = countryInfo[selectedCountry];
+            if (info) {
+                updatePricesAndLanguage(selectedCountry, info);
+            }
+        }
 	</script>
+	
+	<!-- Scripts de tradução -->
+	<!-- translation-en.js carregado via language-controller.js -->
+	
+	<!-- Script de inicialização das traduções -->
+	<script>
+		// Aguardar todos os scripts carregarem
+		window.addEventListener('load', function() {
+			console.log('🚀 Página totalmente carregada, inicializando traduções...');
+			
+			// Aguardar um pouco mais para garantir que todos os sistemas estejam prontos
+			setTimeout(() => {
+				console.log('🔍 Verificando sistemas disponíveis...');
+				console.log('   LanguageController:', typeof window.languageController);
+				console.log('   EnglishTranslationSystem:', typeof window.englishTranslationSystem);
+				console.log('   PortugueseBrTranslationSystem:', typeof window.portugueseBrTranslationSystem);
+				console.log('   PortuguesePtTranslationSystem:', typeof window.portuguesePtTranslationSystem);
+				
+				if (window.languageController) {
+					console.log('✅ LanguageController encontrado, aplicando traduções...');
+					window.languageController.applyCurrentPageTranslations();
+				} else {
+					console.error('❌ LanguageController não encontrado!');
+					console.log('🔧 Tentando inicializar manualmente...');
+					
+					// Tentar inicializar manualmente
+					if (window.LanguageController) {
+						window.languageController = new window.LanguageController();
+						setTimeout(() => {
+							window.languageController.applyCurrentPageTranslations();
+						}, 200);
+					} else {
+						console.log('🔧 LanguageController não disponível, usando fallback...');
+						// Aplicar traduções manuais como fallback
+						applyManualTranslations();
+					}
+				}
+			}, 1000);
+		});
+
+		// Função de fallback para traduções manuais
+		function applyManualTranslations() {
+			console.log('🔧 Aplicando traduções manuais...');
+			
+			const selectedCountry = localStorage.getItem('selectedCountry') || 'BR';
+			const translations = {
+				'BR': {
+					'sofa_cover_description': 'Acabe com sofás gastos e manchados. Transforme qualquer móvel em uma poltrona confortável. Remove e lava em segundos.',
+					'anti_pain_bed_description': 'Acabe com dores nas costas e pescoço! Esta cama gigante suporta até 150kg e proporciona conforto total para a melhor experiência de relaxamento.',
+					'neck_pillow_description': 'Acabe com dores no pescoço em viagens. Espuma viscoelástica de alta qualidade, design em U para suporte cervical perfeito. Portátil e prático.',
+					'phoera_description': 'Obtenha cobertura perfeita que dura o dia todo! Esta base de cobertura total elimina manchas, olheiras e imperfeições por até 12+ horas. O acabamento matte não derrete no calor. Kit inclui 2 bases mais itens bônus.',
+					'clips_description': 'Pare de perder grampos que escorregam e quebram! Estes ficam no lugar o dia todo! Super duráveis e confortáveis, seguram qualquer penteado firme. Kit com 6 peças em tons nude.',
+					'heat_mat_description': 'Proteja suas bancadas e mesas de danos por calor! Este tapete suporta altas temperaturas sem derreter ou deformar. À prova d\'água e super fácil de limpar - apenas limpe e pronto!',
+					'laiou_skincare_description': 'Reduza rugas, manchas e sinais de envelhecimento. Vitamina C + ouro 24k para pele mais firme e brilhante em 30 dias.',
+					'wrinkle_reducer_description': 'Dispositivo de terapia de luz vermelha que estimula colágeno, suaviza linhas finas e reduz rugas.',
+					'contact_title': 'Entre em Contato',
+					'contact_subtitle': 'Fale conosco para qualquer dúvida ou suporte',
+					'address_label': 'Endereço',
+					'phone_label': 'Telefone',
+					'email_label': 'E-mail',
+					'business_hours_label': 'Horário de Funcionamento',
+					'business_hours_text': 'Seg - Sex: 9:00 - 18:00<br>Sáb: 10:00 - 16:00',
+					'name_placeholder': 'Seu Nome',
+					'email_placeholder': 'Seu E-mail',
+					'phone_placeholder': 'Seu Telefone',
+					'message_placeholder': 'Sua Mensagem',
+					'place_order_btn': 'Enviar Mensagem',
+					'footer_brand': '67 Beauty Hub',
+					'footer_description': 'Seu parceiro de confiança para produtos de beleza e conforto.',
+					'quick_links_label': 'Links Rápidos',
+					'products_label': 'Produtos',
+					'footer_copyright': '© 2024 67 Beauty Hub. Todos os direitos reservados.',
+					'beauty_products': 'Produtos de Beleza',
+					'comfort_products': 'Produtos de Conforto',
+					'wellbeing': 'Bem-estar'
+				},
+				'PT': {
+					'sofa_cover_description': 'Acabe com sofás gastos e manchados. Transforme qualquer móvel numa poltrona confortável. Remove e lava em segundos.',
+					'anti_pain_bed_description': 'Acabe com dores nas costas e pescoço! Esta cama gigante suporta até 150kg e proporciona conforto total para a melhor experiência de relaxamento.',
+					'neck_pillow_description': 'Acabe com dores no pescoço em viagens. Espuma viscoelástica de alta qualidade, design em U para suporte cervical perfeito. Portátil e prático.',
+					'phoera_description': 'Obtenha cobertura perfeita que dura o dia todo! Esta base de cobertura total elimina manchas, olheiras e imperfeições por até 12+ horas. O acabamento mate não derrete no calor. Kit inclui 2 bases mais itens bónus.',
+					'clips_description': 'Pare de perder grampos que escorregam e quebram! Estes ficam no lugar o dia todo! Super duráveis e confortáveis, seguram qualquer penteado firme. Kit com 6 peças em tons nude.',
+					'heat_mat_description': 'Proteja as suas bancadas e mesas de danos por calor! Este tapete suporta altas temperaturas sem derreter ou deformar. À prova d\'água e super fácil de limpar - apenas limpe e pronto!',
+					'laiou_skincare_description': 'Reduza rugas, manchas e sinais de envelhecimento. Vitamina C + ouro 24k para pele mais firme e brilhante em 30 dias.',
+					'wrinkle_reducer_description': 'Dispositivo de terapia de luz vermelha que estimula colágeno, suaviza linhas finas e reduz rugas.',
+					'contact_title': 'Entre em Contacto',
+					'contact_subtitle': 'Fale connosco para qualquer dúvida ou suporte',
+					'address_label': 'Endereço',
+					'phone_label': 'Telefone',
+					'email_label': 'E-mail',
+					'business_hours_label': 'Horário de Funcionamento',
+					'business_hours_text': 'Segunda - Sexta: 9:00 - 18:00<br>Sábado: 10:00 - 16:00<br>Domingo: Fechado',
+					'name_placeholder': 'O Seu Nome',
+					'email_placeholder': 'O Seu E-mail',
+					'phone_placeholder': 'O Seu Telefone',
+					'message_placeholder': 'A Sua Mensagem',
+					'place_order_btn': 'Enviar Mensagem',
+					'footer_brand': '67 Beauty Hub',
+					'footer_description': 'O seu parceiro de confiança para produtos de beleza e conforto.',
+					'quick_links_label': 'Links Rápidos',
+					'products_label': 'Produtos',
+					'footer_copyright': '© 2024 67 Beauty Hub. Todos os direitos reservados.',
+					'beauty_products': 'Produtos de Beleza',
+					'comfort_products': 'Produtos de Conforto',
+					'wellbeing': 'Bem-estar'
+				},
+				'US': {
+					'sofa_cover_description': 'Revive your old sofa! This 3-in-1 cover transforms any furniture into a cozy lounger. Super easy to remove and wash - just toss in the machine!',
+					'anti_pain_bed_description': 'End back and neck pain. Giant bed that supports up to 150kg. Total comfort for relaxation.',
+					'neck_pillow_description': 'End neck pain on trips. High-quality memory foam, U-shaped design for perfect cervical support. Portable and practical.',
+					'phoera_description': 'Get flawless coverage that lasts all day! This full-coverage foundation eliminates spots, dark circles and imperfections for up to 12+ hours. The matte finish won\'t melt in the heat. Kit includes 2 foundations plus bonus items.',
+					'clips_description': 'Stop losing clips that slip and break! These stay put all day! Super durable and comfortable, they hold any hairstyle firm. Kit with 6 pieces in nude tones.',
+					'heat_mat_description': 'Protect your countertops and tables from heat damage! This mat withstands high temperatures without melting or warping. Waterproof and super easy to clean - just wipe and go!',
+					'laiou_skincare_description': 'Reduce wrinkles, spots and signs of aging. Vitamin C + 24k gold for firmer and brighter skin in 30 days.',
+					'wrinkle_reducer_description': 'Red light therapy device that stimulates collagen, smooths fine lines and reduces wrinkles.',
+					'contact_title': 'Contact Us',
+					'contact_subtitle': 'Get in touch with us for any questions or support',
+					'address_label': 'Address',
+					'phone_label': 'Phone',
+					'email_label': 'Email',
+					'business_hours_label': 'Business Hours',
+					'business_hours_text': 'Mon - Fri: 9:00 AM - 6:00 PM<br>Sat: 10:00 AM - 4:00 PM',
+					'name_placeholder': 'Your Name',
+					'email_placeholder': 'Your Email',
+					'phone_placeholder': 'Your Phone',
+					'message_placeholder': 'Your Message',
+					'place_order_btn': 'Send Message',
+					'footer_brand': '67 Beauty Hub',
+					'footer_description': 'Your trusted partner for beauty and comfort products.',
+					'quick_links_label': 'Quick Links',
+					'products_label': 'Products',
+					'footer_copyright': '© 2024 67 Beauty Hub. All rights reserved.',
+					'beauty_products': 'Beauty Products',
+					'comfort_products': 'Comfort Products',
+					'wellbeing': 'Well-being'
+				}
+			};
+			
+			const currentTranslations = translations[selectedCountry] || translations['BR'];
+			
+			// Aplicar traduções
+			Object.keys(currentTranslations).forEach(key => {
+				const elements = document.querySelectorAll(`[data-translate-key="${key}"]`);
+				elements.forEach(element => {
+					element.textContent = currentTranslations[key];
+					console.log(`✅ Traduzido: ${key} → ${currentTranslations[key]}`);
+				});
+			});
+		}
+	</script>
+	
+	<!-- Script para corrigir traduções vazias -->
 	</body>
 	</html>

@@ -1,0 +1,63 @@
+{
+  "aliexpress": {
+    "selectors": {
+      "price": [
+        ".notranslate",
+        ".product-price-value",
+        "[data-pl='product-price']",
+        ".price-current",
+        ".price-sale"
+      ],
+      "title": [
+        "h1",
+        ".product-title-text",
+        "[data-pl='product-title']",
+        ".product-title"
+      ],
+      "rating": [
+        ".overview-rating-average",
+        ".rating-value",
+        "[data-pl='rating']"
+      ],
+      "reviews": [
+        ".product-reviewer-reviews",
+        ".review-count",
+        "[data-pl='review-count']"
+      ],
+      "stock": [
+        ".product-quantity-tip",
+        ".stock-info",
+        "[data-pl='stock']"
+      ],
+      "seller": [
+        ".store-name",
+        ".seller-name",
+        "[data-pl='seller-name']"
+      ],
+      "images": [
+        ".images-view-item img",
+        ".product-image img",
+        "[data-pl='product-image'] img"
+      ]
+    },
+    "currency_conversion": {
+      "AOA_to_USD": 0.0006,
+      "USD_to_AOA": 1666.67
+    },
+    "products": {
+      "1005008851251479": {
+        "name": "8pcs Makeup Brush Kit",
+        "expected_price_range": {
+          "min": 1.0,
+          "max": 5.0,
+          "currency": "USD"
+        },
+        "price_selectors": [
+          ".notranslate",
+          ".product-price-value"
+        ]
+      }
+    }
+  }
+}
+

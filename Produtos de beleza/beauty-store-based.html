@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seção Beleza - 67 Beauty Hub</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="../js/modal-system.js"></script>
+    
+    <style>
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .language-selector select {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            background: white;
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .beauty-header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .beauty-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('Background.mp4') center/cover;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        .beauty-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .beauty-header p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .beauty-nav {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .beauty-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            gap: 20px;
+        }
+        
+        .beauty-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+        
+        .beauty-nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .beauty-nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        
+        .beauty-nav-links a:hover {
+            background: #ff6b6b;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .products-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(15px);
+            border: 3px solid rgba(212, 175, 55, 0.6);
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border: 3px solid rgba(212, 175, 55, 0.8);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.02);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .product-content {
+            padding: 25px;
+        }
+        
+        .product-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+        
+        .price-current {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .price-original {
+            font-size: 1.2rem;
+            color: #999;
+            text-decoration: line-through;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .price-discount {
+            background: #4CAF50;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .beauty-header h1 {
+                font-size: 2.5rem;
+                white-space: normal;
+                overflow: visible;
+                text-overflow: initial;
+            }
+            
+            .beauty-nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .beauty-nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="pt-BR">Português (BR)</option>
+            <option value="pt-PT">Português (PT)</option>
+            <option value="en-US">English</option>
+        </select>
+    </div>
+
+    <!-- Header -->
+    <div class="beauty-header">
+        <h1 data-translate-key="beauty_hero_title">Produtos de Beleza</h1>
+        <p data-translate-key="beauty_hero_subtitle">Descubra nossa coleção premium de beleza</p>
+    </div>
+
+    <!-- Navigation -->
+    <div class="beauty-nav">
+        <div class="beauty-nav-container">
+            <div class="beauty-logo">
+                <i class="fas fa-gem"></i> 67 Beauty Hub
+            </div>
+            <div class="beauty-nav-links">
+                <a href="../index.html" data-translate-key="nav_home">Home</a>
+                <a href="beauty-store.html" data-translate-key="nav_beauty">Beleza</a>
+                <a href="../Produtos de conforto/comfort-store.html" data-translate-key="nav_comfort">Conforto</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <div class="products-container">
+        <div class="products-grid">
+            
+            <!-- 2 Pack PHOERA Foundation -->
+            <div class="product-card">
+                <div class="product-badge" data-translate-key="badge_bestseller">Bestseller</div>
+                <img src="2 Pack PHOERA Foundation + Combo/Apresentação 1.png" alt="2 Pack PHOERA Foundation" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title" data-translate-key="product_foundation_title">2 Pack PHOERA Foundation</h3>
+                    <p class="product-description" data-translate-key="product_foundation_desc">Kit completo de base com 2 unidades</p>
+                    <div class="product-price">
+                        <span class="price-current">$22.90</span>
+                        <span class="price-original">$45.90</span>
+                        <span class="price-discount">50% OFF</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="2 Pack PHOERA Foundation + Combo/checkout-phoera.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> <span data-translate-key="btn_buy_now">Comprar Agora</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alligator Hair Clips -->
+            <div class="product-card">
+                <div class="product-badge" data-translate-key="badge_new">Novidade</div>
+                <img src="Alligator Hair Clips + Combo/Nude Pink (6 Pieces).png" alt="Alligator Hair Clips" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title" data-translate-key="product_clips_title">Alligator Hair Clips</h3>
+                    <p class="product-description" data-translate-key="product_clips_desc">6 grampos de cabelo em rosa nude</p>
+                    <div class="product-price">
+                        <span class="price-current">$15.90</span>
+                        <span class="price-original">$18.90</span>
+                        <span class="price-discount">16% OFF</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="Alligator Hair Clips + Combo/checkout-alligator-clips.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> <span data-translate-key="btn_buy_now">Comprar Agora</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Heat-Resistant Mat -->
+            <div class="product-card">
+                <div class="product-badge" data-translate-key="badge_essential">Essencial</div>
+                <img src="Heat-Resistant Mat/Apresentação 1.png" alt="Heat-Resistant Mat" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title" data-translate-key="product_mat_title">Heat-Resistant Mat</h3>
+                    <p class="product-description" data-translate-key="product_mat_desc">Tapete resistente ao calor para ferramentas</p>
+                    <div class="product-price">
+                        <span class="price-current">$25.90</span>
+                        <span class="price-original">$25.90</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="Heat-Resistant Mat/checkout-heat-resistant-mat.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> <span data-translate-key="btn_buy_now">Comprar Agora</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LAIKOU Vitamin C 24K -->
+            <div class="product-card">
+                <div class="product-badge" data-translate-key="badge_premium">Premium</div>
+                <img src="LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/Apresentação.png" alt="LAIKOU Vitamin C 24K" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title" data-translate-key="product_vitamin_title">LAIKOU Vitamin C 24K</h3>
+                    <p class="product-description" data-translate-key="product_vitamin_desc">Creme facial com vitamina C e ouro 24K</p>
+                    <div class="product-price">
+                        <span class="price-current">$59.90</span>
+                        <span class="price-original">$89.90</span>
+                        <span class="price-discount">33% OFF</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="LAIKOU Vitamin C 24K Golden Sakura Skin Care Sets Face Cream/checkout-golden-sakura.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> <span data-translate-key="btn_buy_now">Comprar Agora</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wrinkle Reducer -->
+            <div class="product-card">
+                <div class="product-badge" data-translate-key="badge_technology">Tecnologia</div>
+                <img src="Wrinkle Reducer - Red Light Therapy + Combo/Apresentação.png" alt="Wrinkle Reducer" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title" data-translate-key="product_wrinkle_title">Wrinkle Reducer</h3>
+                    <p class="product-description" data-translate-key="product_wrinkle_desc">Redutor de rugas com terapia de luz vermelha</p>
+                    <div class="product-price">
+                        <span class="price-current">$149.90</span>
+                        <span class="price-original">$199.90</span>
+                        <span class="price-discount">25% OFF</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="Wrinkle Reducer - Red Light Therapy + Combo/checkout-wrinkle-reducer.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i> <span data-translate-key="btn_buy_now">Comprar Agora</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p data-translate-key="footer_copyright">&copy; 2024 67 Beauty Hub. Todos os direitos reservados.</p>
+    </div>
+
+    <!-- Scripts de Tradução -->
+    <script src="../js/language-controller.js"></script>
+    
+    <!-- JavaScript Otimizado -->
+    <script>
+        // Função para mudar idioma
+        function changeLanguage(language) {
+            console.log('Changing language to:', language);
+            localStorage.setItem('userLanguage', language);
+            
+            if (window.languageController) {
+                window.languageController.updateLanguage(language);
+            } else {
+                setTimeout(() => {
+                    if (window.languageController) {
+                        window.languageController.updateLanguage(language);
+                    }
+                }, 500);
+            }
+        }
+
+        // Inicialização da página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Beauty Store - Página carregada');
+            
+            // Configurar idioma inicial
+            const savedLanguage = localStorage.getItem('userLanguage') || 'pt-BR';
+            const languageSelect = document.getElementById('languageSelect');
+            if (languageSelect) {
+                languageSelect.value = savedLanguage;
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+

@@ -9,7 +9,7 @@
 import { MongoClient } from 'mongodb';
 
 // Configurações
-const MONGODB_URI = process.env.NORMANDB_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/beautyhub';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://BATMANRICH_db_user:password1234567@cluster.mongodb.net/beautyhub?retryWrites=true&w=majority';
 const API_VERSION = '1.0.0';
 const API_NAME = '67 Beauty Hub API';
 
@@ -179,8 +179,13 @@ function getAvailableEndpoints() {
             },
             {
                 path: '/api/users',
-                methods: ['GET', 'POST'],
-                description: 'Gerenciamento de usuários'
+                methods: ['GET', 'POST', 'PUT', 'DELETE'],
+                description: 'Gerenciamento completo de usuários'
+            },
+            {
+                path: '/api/auth',
+                methods: ['POST'],
+                description: 'Sistema de autenticação'
             },
             {
                 path: '/api/health',
@@ -192,13 +197,114 @@ function getAvailableEndpoints() {
 }
 
 /**
+ * Cria ou atualiza um usuário no banco
+ */
+async function upsertUser(userData) {
+    try {
+        const client = await connectToMongoDB();
+        const db = client.db();
+
+        const { email, name, role = 'customer' } = userData;
+
+        const user = {
+            email,
+            name,
+            role,
+            status: 'active',
+            createdAt: new Date(),
+            lastLogin: new Date()
+        };
+
+        // Upsert - insere ou atualiza se já existe
+        const result = await db.collection('users').updateOne(
+            { email },
+            { $set: user },
+            { upsert: true }
+        );
+
+        return {
+            success: true,
+            userId: result.upsertedId || user.email,
+            message: result.upsertedCount > 0 ? 'Usuário criado' : 'Usuário atualizado'
+        };
+    } catch (error) {
+        console.error('❌ Erro ao salvar usuário:', error.message);
+        return {
+            success: false,
+            error: 'Erro ao salvar usuário',
+            message: error.message
+        };
+    }
+}
+
+/**
+ * Autentica um usuário
+ */
+async function authenticateUser(email, password) {
+    try {
+        const client = await connectToMongoDB();
+        const db = client.db();
+
+        const user = await db.collection('users').findOne({ email });
+
+        if (!user) {
+            return { success: false, error: 'Usuário não encontrado' };
+        }
+
+        // Para sistema básico, qualquer usuário pode logar sem senha
+        // Em produção, implementar autenticação adequada
+
+        // Atualizar último login
+        await db.collection('users').updateOne(
+            { email },
+            { $set: { lastLogin: new Date() } }
+        );
+
+        return {
+            success: true,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                status: user.status
+            }
+        };
+    } catch (error) {
+        console.error('❌ Erro na autenticação:', error.message);
+        return {
+            success: false,
+            error: 'Erro na autenticação',
+            message: error.message
+        };
+    }
+}
+
+
+
+/**
  * Processa requisições POST para operações da API
  */
 async function processAPIRequest(body) {
     const { action, data } = body;
-    
+
     try {
         switch (action) {
+            case 'register_user':
+                return await upsertUser(data);
+
+            case 'authenticate_user':
+                return await authenticateUser(data.email, data.password);
+
+            case 'get_users':
+                // Buscar todos os usuários
+                const client = await connectToMongoDB();
+                const db = client.db();
+                const users = await db.collection('users').find({}).toArray();
+                return {
+                    success: true,
+                    users: users.map(u => ({ id: u._id, name: u.name, email: u.email, status: u.status, role: u.role }))
+                };
             case 'get_stats':
                 return await getAPIStats();
                 

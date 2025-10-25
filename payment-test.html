@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Pagamentos - 67 Beauty Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .test-section h3 {
+            margin-top: 0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .test-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .test-btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .test-btn.paypal {
+            background: #0070ba;
+            color: white;
+        }
+
+        .test-btn.stripe {
+            background: #635bff;
+            color: white;
+        }
+
+        .test-btn.pix {
+            background: #32bcad;
+            color: white;
+        }
+
+        .test-btn.all {
+            background: #28a745;
+            color: white;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            min-height: 100px;
+        }
+
+        .result-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-item.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .result-item.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .result-item.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-indicator.success {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-indicator.error {
+            background: #dc3545;
+            color: white;
+        }
+
+        .status-indicator.warning {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .payment-interface {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .payment-method {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .payment-method:hover {
+            border-color: #d4af37;
+            transform: translateY(-2px);
+        }
+
+        .payment-method.selected {
+            border-color: #d4af37;
+            background: #fff3cd;
+        }
+
+        .payment-method i {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .payment-method.paypal i {
+            color: #0070ba;
+        }
+
+        .payment-method.stripe i {
+            color: #635bff;
+        }
+
+        .payment-method.pix i {
+            color: #32bcad;
+        }
+
+        .test-order {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .test-order h4 {
+            margin: 0 0 10px 0;
+            color: #495057;
+        }
+
+        .test-order p {
+            margin: 5px 0;
+            color: #6c757d;
+        }
+
+        .log-container {
+            margin-top: 20px;
+            padding: 15px;
+            background: #000;
+            color: #0f0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            margin: 2px 0;
+        }
+
+        .log-entry.info {
+            color: #0f0;
+        }
+
+        .log-entry.error {
+            color: #f00;
+        }
+
+        .log-entry.warning {
+            color: #ff0;
+        }
+
+        .log-entry.success {
+            color: #0f0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-credit-card"></i> Teste de Pagamentos</h1>
+            <p>67 Beauty Hub - Sistema de Pagamentos em Produção</p>
+        </div>
+
+        <div class="content">
+            <!-- Seção de Testes -->
+            <div class="test-section">
+                <h3><i class="fas fa-flask"></i> Testes de Integração</h3>
+                <p>Execute testes para verificar se todos os métodos de pagamento estão funcionando corretamente.</p>
+                
+                <div class="test-buttons">
+                    <button class="test-btn all" onclick="runAllTests()">
+                        <i class="fas fa-play"></i> Executar Todos os Testes
+                    </button>
+                    <button class="test-btn paypal" onclick="runPayPalTests()">
+                        <i class="fab fa-paypal"></i> Testar PayPal
+                    </button>
+                    <button class="test-btn stripe" onclick="runStripeTests()">
+                        <i class="fab fa-stripe"></i> Testar Stripe
+                    </button>
+                    <button class="test-btn pix" onclick="runPIXTests()">
+                        <i class="fas fa-qrcode"></i> Testar PIX
+                    </button>
+                </div>
+
+                <div class="results" id="test-results">
+                    <div class="result-item">
+                        <div class="status-indicator warning">⏳</div>
+                        <span>Aguardando execução dos testes...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Teste de Pagamento -->
+            <div class="test-section">
+                <h3><i class="fas fa-shopping-cart"></i> Teste de Pagamento Real</h3>
+                <p>Teste o fluxo completo de pagamento com dados de teste.</p>
+
+                <div class="test-order">
+                    <h4>Pedido de Teste</h4>
+                    <p><strong>ID:</strong> TEST_ORDER_<span id="order-id"></span></p>
+                    <p><strong>Valor:</strong> $<span id="order-amount">10.00</span></p>
+                    <p><strong>Descrição:</strong> Teste de Pagamento - 67 Beauty Hub</p>
+                </div>
+
+                <div class="payment-interface">
+                    <h4>Escolha o método de pagamento:</h4>
+                    <div class="payment-methods">
+                        <div class="payment-method paypal" data-method="paypal">
+                            <i class="fab fa-paypal"></i>
+                            <h4>PayPal</h4>
+                            <p>Pague com PayPal</p>
+                        </div>
+                        <div class="payment-method stripe" data-method="stripe">
+                            <i class="fas fa-credit-card"></i>
+                            <h4>Cartão de Crédito</h4>
+                            <p>Visa, Mastercard, Amex</p>
+                        </div>
+                        <div class="payment-method pix" data-method="pix">
+                            <i class="fas fa-qrcode"></i>
+                            <h4>PIX</h4>
+                            <p>Pagamento instantâneo</p>
+                        </div>
+                    </div>
+
+                    <div id="payment-container">
+                        <!-- Interface de pagamento será inserida aqui -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Log de Testes -->
+            <div class="test-section">
+                <h3><i class="fas fa-terminal"></i> Log de Testes</h3>
+                <div class="log-container" id="test-log">
+                    <div class="log-entry info">Sistema de teste de pagamentos inicializado...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/payment-gateway.js"></script>
+    <script src="js/payment-testing.js"></script>
+    <script src="js/pix-generator.js"></script>
+
+    <script>
+        // Inicializar sistema de teste
+        let paymentGateway;
+        let paymentTesting;
+        let currentOrder;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gerar ID do pedido
+            document.getElementById('order-id').textContent = Date.now();
+            
+            // Inicializar sistemas
+            paymentGateway = new PaymentGateway();
+            paymentTesting = new PaymentTesting();
+            
+            // Configurar pedido de teste
+            currentOrder = {
+                id: 'TEST_ORDER_' + Date.now(),
+                total: 10.00,
+                currency: 'USD',
+                description: 'Teste de Pagamento - 67 Beauty Hub',
+                items: [
+                    { name: 'Produto de Teste', price: 10.00, quantity: 1 }
+                ]
+            };
+
+            // Adicionar event listeners para métodos de pagamento
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.addEventListener('click', function() {
+                    // Remover seleção anterior
+                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                    
+                    // Selecionar método atual
+                    this.classList.add('selected');
+                    
+                    const methodType = this.dataset.method;
+                    processPayment(methodType);
+                });
+            });
+
+            logMessage('Sistema de teste de pagamentos carregado com sucesso!', 'success');
+        });
+
+        // Funções de teste
+        async function runAllTests() {
+            logMessage('Iniciando todos os testes...', 'info');
+            await paymentTesting.runAllTests();
+        }
+
+        async function runPayPalTests() {
+            logMessage('Testando PayPal...', 'info');
+            await paymentTesting.testPayPal();
+        }
+
+        async function runStripeTests() {
+            logMessage('Testando Stripe...', 'info');
+            await paymentTesting.testStripe();
+        }
+
+        async function runPIXTests() {
+            logMessage('Testando PIX...', 'info');
+            await paymentTesting.testPIX();
+        }
+
+        // Processar pagamento
+        async function processPayment(method) {
+            logMessage(`Processando pagamento via ${method.toUpperCase()}...`, 'info');
+            
+            try {
+                const customerData = {
+                    name: 'Cliente Teste',
+                    email: 'teste@67beautyhub.com'
+                };
+
+                const result = await paymentGateway.processPayment({
+                    method: method,
+                    orderData: currentOrder,
+                    customerData: customerData
+                });
+
+                logMessage(`Pagamento ${method.toUpperCase()} processado com sucesso!`, 'success');
+                updatePaymentResults(result);
+            } catch (error) {
+                logMessage(`Erro no pagamento ${method.toUpperCase()}: ${error.message}`, 'error');
+            }
+        }
+
+        // Atualizar resultados
+        function updatePaymentResults(result) {
+            const container = document.getElementById('payment-container');
+            container.innerHTML = `
+                <div class="result-item success">
+                    <div class="status-indicator success">✓</div>
+                    <span>Pagamento processado com sucesso!</span>
+                </div>
+                <div class="result-item info">
+                    <div class="status-indicator warning">ℹ</div>
+                    <span>Método: ${result.method}</span>
+                </div>
+                <div class="result-item info">
+                    <div class="status-indicator warning">ℹ</div>
+                    <span>ID da Transação: ${result.transactionId || 'N/A'}</span>
+                </div>
+            `;
+        }
+
+        // Log de mensagens
+        function logMessage(message, type = 'info') {
+            const logContainer = document.getElementById('test-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        // Atualizar resultados de teste
+        function updateTestResults(results) {
+            const container = document.getElementById('test-results');
+            container.innerHTML = '';
+
+            Object.keys(results).forEach(method => {
+                const result = results[method];
+                const statusClass = result.status === 'passed' ? 'success' : 
+                                  result.status === 'failed' ? 'error' : 'warning';
+                const statusIcon = result.status === 'passed' ? '✓' : 
+                                  result.status === 'failed' ? '✗' : '⚠';
+
+                const resultItem = document.createElement('div');
+                resultItem.className = `result-item ${statusClass}`;
+                resultItem.innerHTML = `
+                    <div class="status-indicator ${statusClass}">${statusIcon}</div>
+                    <span><strong>${method.toUpperCase()}:</strong> ${result.status}</span>
+                `;
+                container.appendChild(resultItem);
+            });
+        }
+    </script>
+</body>
+</html>
+

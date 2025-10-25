@@ -54,7 +54,7 @@ function getProductImage(productName) {
         'type1 set nobox': 'Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/type1 set nobox.png',
         '2 Pack PHOERA Foundation': 'Produtos de beleza/2 Pack PHOERA Foundation + Combo/Apresentação 1.png',
         '2 Pack PHOERA Primer': 'Produtos de beleza/2 Pack PHOERA Foundation + Combo/2 Pack PHOERA Primer.png',
-        'Face and Neck Massager Tool, 7-in-1 Color Red-Light-Therapy Wand for Skin Care': 'Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/Face and Neck Massager Tool, 7-in-1 Color Red-Light-Therapy Wand for Skin Care.png'
+        'Face and Neck Massager Tool, 7-in-1 Color Red-Light-Therapy Wand for Skin Care': 'Produtos de beleza/Wrinkle Reducer - Red Light Therapy + Combo/Apresentação.png'
     };
     
     return imageMap[productName] || 'Produtos de beleza/2 Pack PHOERA Foundation + Combo/Apresentação 1.png';

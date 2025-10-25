@@ -1,15 +1,25 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seção Conforto - 67 Beauty Hub</title>
+    <title data-translate-key="comfort_page_title">Comfort Section - 67 Beauty Hub</title>
     <link rel="stylesheet" href="../styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="../js/modal-system.js"></script>
-    
+    <script src="../js/language-controller.js"></script>
+    <!-- Language Controller System -->
     <style>
+        /* Preloader to prevent FOUC */
+        /* Preloader removido completamente */
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        
         body {
             min-height: 100vh;
             overflow-x: hidden;
@@ -17,6 +27,37 @@
             position: relative;
         }
         
+        /* Country/Currency Selector Styles */
+        .country-selector {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .country-selector select {
+            padding: 8px 12px;
+            border: 2px solid #d4af37;
+            border-radius: 6px;
+            background: white;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .country-selector select:hover {
+            border-color: #b8941f;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+        }
+
+        .country-selector select:focus {
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
         /* User Authentication Styles */
         .user-auth {
             display: flex;
@@ -255,21 +296,26 @@
         
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
             margin-bottom: 60px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .product-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            position: relative;
-            backdrop-filter: blur(15px);
-            border: 3px solid rgba(212, 175, 55, 0.6);
-            cursor: pointer;
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-radius: 20px !important;
+            overflow: hidden !important;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3) !important;
+            transition: all 0.3s ease !important;
+            position: relative !important;
+            backdrop-filter: blur(15px) !important;
+            border: 3px solid rgba(212, 175, 55, 0.6) !important;
+            cursor: pointer !important;
+            padding: 0 !important;
+            text-align: left !important;
         }
         
         .product-card:hover {
@@ -302,7 +348,7 @@
         }
         
         .product-content {
-            padding: 25px;
+            padding: 20px;
         }
         
         .product-title {
@@ -324,27 +370,48 @@
             align-items: center;
             gap: 15px;
             margin-bottom: 20px;
+            flex-wrap: nowrap;
+            white-space: nowrap;
         }
         
         .price-current {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #00b894;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #e74c3c;
+            white-space: nowrap;
+            flex-shrink: 0;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
         
         .price-original {
             font-size: 1.2rem;
             color: #999;
             text-decoration: line-through;
+            white-space: nowrap;
+            flex-shrink: 0;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
         
         .price-discount {
-            background: #e17055;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            white-space: nowrap;
+            flex-shrink: 0;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .product-actions {
@@ -593,40 +660,52 @@
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <!-- Preloader removido completamente -->
+    
     <!-- Background Video -->
     <div class="comfort-background-video">
         <video autoplay muted loop playsinline preload="auto">
             <source src="Background.mp4" type="video/mp4">
-            Seu navegador não suporta vídeos.
+            Your browser does not support videos.
         </video>
     </div>
     
     <!-- Comfort Header -->
     <div class="comfort-header">
-        <h1><i class="fas fa-home"></i> Seção Conforto</h1>
-        <p>Transforme seu lar em um oásis de conforto e bem-estar com nossos produtos exclusivos</p>
+        <h1><i class="fas fa-home"></i> <span data-translate-key="comfort_section_title">Comfort Section</span></h1>
+        <p data-translate-key="comfort_section_subtitle">Discover the best comfort and wellness products for your home</p>
     </div>
 
     <!-- Comfort Navigation -->
     <nav class="comfort-nav">
         <div class="comfort-nav-container">
             <div class="comfort-logo">
-                <img src="../Logo.png" alt="67 Beauty Hub" style="height: 40px; margin-right: 10px;">
-                <span style="font-weight: 700; color: #d4af37;">67 BEAUTY HUB</span>
+                <img src="../Logo.png" alt="" style="height: 40px; margin-right: 10px;">
+                <span style="font-size: 24px; font-weight: 700; color: #d4af37;">67 BEAUTY HUB</span>
             </div>
             <div class="comfort-nav-links">
-                <a href="../index.html"><i class="fas fa-home"></i> Início</a>
-                <a href="../Produtos de beleza/beauty-store.html"><i class="fas fa-palette"></i> Seção Beleza</a>
-                <a href="#features"><i class="fas fa-star"></i> Benefícios</a>
+                <a href="../index.html" data-translate-key="nav_home"><i class="fas fa-home"></i> Home</a>
+                <a href="../Produtos de beleza/beauty-store.html" data-translate-key="nav_beauty_section"><i class="fas fa-palette"></i> Beauty Section</a>
+                <a href="#features" data-translate-key="nav_benefits"><i class="fas fa-star"></i> Benefits</a>
             </div>
             
+            <!-- Country/Currency Selector -->
+            <div class="country-selector">
+                <select id="countrySelector" onchange="changeCountry(this.value)">
+                    <option value="BR">🇧🇷 <span data-translate-key="country_brazil">Brasil</span> (R$)</option>
+                    <option value="PT">🇵🇹 <span data-translate-key="country_portugal">Portugal</span> (€)</option>
+                    <option value="US">🇺🇸 <span data-translate-key="country_usa">United States</span> ($)</option>
+                </select>
+            </div>
             
             <!-- User Authentication Section -->
             <div class="user-auth" id="userAuthSection">
                 <!-- Login/Register buttons (shown when not logged in) -->
                 <div class="auth-buttons" id="authButtons">
                     <button class="auth-btn login-btn" onclick="openSimpleLoginModal()">
-                        <i class="fas fa-sign-in-alt"></i> Logar
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span data-translate-key="login">Login</span>
                     </button>
                 </div>
                 
@@ -634,18 +713,18 @@
                 <div class="user-menu" id="userMenu" style="display: none;">
                     <div class="user-avatar" onclick="toggleUserDropdown()">
                         <i class="fas fa-user-circle"></i>
-                        <span id="userName">Usuário</span>
+                        <span id="userName" data-translate-key="user_name">User</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="user-dropdown" id="userDropdown">
-                        <a href="#" onclick="viewProfile()">
-                            <i class="fas fa-user"></i> Meu Perfil
+                        <a href="#" onclick="viewProfile()" data-translate-key="my_profile">
+                            <i class="fas fa-user"></i> My Profile
                         </a>
-                        <a href="#" onclick="viewMyReviews()">
-                            <i class="fas fa-star"></i> Minhas Avaliações
+                        <a href="#" onclick="viewMyReviews()" data-translate-key="my_reviews">
+                            <i class="fas fa-star"></i> My Reviews
                         </a>
-                        <a href="#" onclick="logoutUser()">
-                            <i class="fas fa-sign-out-alt"></i> Sair
+                        <a href="#" onclick="logoutUser()" data-translate-key="logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
                     </div>
                 </div>
@@ -658,19 +737,20 @@
         <div class="products-grid" id="products">
             <!-- Detachable Sofa Cover -->
             <div class="product-card">
-                <div class="product-badge">Mais Popular</div>
-                <img src="Detachable Sofa Cover Bean Bag Cover Lazy Person's Couch/Apresentação.jpg" alt="Detachable Sofa Cover" class="product-image">
+                <div class="product-badge" data-translate-key="badge_most_popular">Most Popular</div>
+                <img src="Detachable Sofa Cover Bean Bag Cover Lazy Person's Couch/Apresentação.jpeg" alt="3-in-1 Sofa Cover" class="product-image">
                 <div class="product-content">
-                    <h3 class="product-title">Detachable Sofa Cover Bean Bag Cover</h3>
-                    <p class="product-description">Acabe com sofás desgastados e manchados. Transforme qualquer móvel em um lounge confortável. Remove e lava em segundos.</p>
+                    <h3 class="product-title" data-translate-key="product_sofa_cover_title">3-in-1 Sofa Cover</h3>
+                    <p class="product-description" data-translate-key="product_sofa_cover_desc">Revive your old sofa! This 3-in-1 cover transforms any furniture into a cozy lounger. Super easy to remove and wash - just toss in the machine!</p>
                     <div class="product-price">
-                        <span class="price-current">R$ 34,99</span>
-                        <span class="price-original">R$ 59,99</span>
-                        <span class="price-discount">42% OFF</span>
+                        <span class="price-current">$6.73</span>
+                        <span class="price-original">$11.54</span>
+                        <span class="price-discount" data-translate-key="discount_42_off">42% OFF</span>
                     </div>
                     <div class="product-actions">
                         <a href="Detachable Sofa Cover Bean Bag Cover Lazy Person's Couch/checkout-sofa-cover.html" class="btn-primary">
-                            <i class="fas fa-shopping-cart"></i> Comprar Agora
+                            <i class="fas fa-shopping-cart"></i>
+                            <span data-translate-key="btn_buy_now">Buy Now</span>
                         </a>
                     </div>
                 </div>
@@ -679,40 +759,42 @@
 
             <!-- Human Dog Bed -->
             <div class="product-card">
-                <div class="product-badge">Conforto Máximo</div>
-                <img src="Human Dog bad/Apresentação.png" alt="Human Dog Bed" class="product-image">
+                <div class="product-badge" data-translate-key="badge_maximum_comfort">Maximum Comfort</div>
+                <img src="Human Dog bad/Apresentação.jpeg" alt="Giant Anti-Pain Bed" class="product-image">
                 <div class="product-content">
-                    <h3 class="product-title">Human Dog Bed</h3>
-                    <p class="product-description">Acabe com dores nas costas e no pescoço. Cama gigante que suporta até 150kg. Conforto total para relaxar.</p>
+                    <h3 class="product-title" data-translate-key="product_dog_bed_title">Giant Anti-Pain Bed</h3>
+                    <p class="product-description" data-translate-key="product_dog_bed_desc">Say goodbye to back and neck pain! This giant bed supports up to 330 lbs and provides ultimate comfort for the best relaxation experience.</p>
                     <div class="product-price">
-                        <span class="price-current">R$ 79,99</span>
-                        <span class="price-original">R$ 129,99</span>
-                        <span class="price-discount">38% OFF</span>
+                        <span class="price-current">$15.38</span>
+                        <span class="price-original">$25.00</span>
+                        <span class="price-discount" data-translate-key="discount_38_off">38% OFF</span>
                     </div>
                     <div class="product-actions">
                         <a href="Human Dog bad/checkout-human-dog-bed.html" class="btn-primary">
-                            <i class="fas fa-shopping-cart"></i> Comprar Agora
+                            <i class="fas fa-shopping-cart"></i>
+                            <span data-translate-key="btn_buy_now">Buy Now</span>
                         </a>
                     </div>
                 </div>
             </div>
 
 
-            <!-- SNOOZE BUNDLE -->
+            <!-- Memory Foam Neck Pillow -->
             <div class="product-card">
-                <div class="product-badge">Kit Completo</div>
-                <img src="SNOOZE BUNDLE/apresentação.png" alt="SNOOZE BUNDLE" class="product-image">
+                <div class="product-badge" data-translate-key="badge_new">New</div>
+                <img src="Memory Foam Neck Pillow Cervical Vertebra Travel Portable Noon Break Aircraft U Type Of Pillow Sleep Camping Pillow Carry Bag/Apresentação.jpeg" alt="Portable Neck Pillow" class="product-image">
                 <div class="product-content">
-                    <h3 class="product-title">SNOOZE BUNDLE</h3>
-                    <p class="product-description">Acabe com noites mal dormidas em viagens. Conforto total para dormir em qualquer lugar. Compacto e prático.</p>
+                    <h3 class="product-title" data-translate-key="product_pillow_title">Portable Neck Pillow</h3>
+                    <p class="product-description" data-translate-key="product_pillow_desc">Travel in comfort! Premium memory foam neck pillow with perfect U-shape design provides amazing cervical support. Compact and lightweight for easy travel.</p>
                     <div class="product-price">
-                        <span class="price-current">R$ 149,99</span>
-                        <span class="price-original">R$ 249,99</span>
-                        <span class="price-discount">40% OFF</span>
+                        <span class="price-current">$42.70</span>
+                        <span class="price-original">$80.57</span>
+                        <span class="price-discount" data-translate-key="discount_47_off">47% OFF</span>
                     </div>
                     <div class="product-actions">
-                        <a href="SNOOZE BUNDLE/checkout-snooze-bundle.html" class="btn-primary">
-                            <i class="fas fa-shopping-cart"></i> Comprar Agora
+                        <a href="Memory Foam Neck Pillow Cervical Vertebra Travel Portable Noon Break Aircraft U Type Of Pillow Sleep Camping Pillow Carry Bag/checkout-memory-foam-pillow.html" class="btn-primary">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span data-translate-key="btn_buy_now">Buy Now</span>
                         </a>
                     </div>
                 </div>
@@ -723,35 +805,35 @@
     <!-- Features Section -->
     <div class="features-section" id="features">
         <div class="features-container">
-            <h2 class="features-title">Por que escolher nossa Seção Conforto?</h2>
+            <h2 class="features-title" data-translate-key="comfort_features_title">Why Choose Our Comfort Products?</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <h3 class="feature-title">Conforto Garantido</h3>
-                    <p class="feature-description">Produtos selecionados para proporcionar o máximo de conforto e bem-estar em seu lar.</p>
+                    <h3 class="feature-title" data-translate-key="comfort_guaranteed">Comfort Guaranteed</h3>
+                    <p class="feature-description" data-translate-key="comfort_guarantee_description">Products selected to provide maximum comfort and well-being in your home.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-truck"></i>
                     </div>
-                    <h3 class="feature-title">Entrega Gratuita</h3>
-                    <p class="feature-description">Frete grátis para todo o Brasil. Receba seus produtos de conforto no conforto da sua casa.</p>
+                    <h3 class="feature-title" data-translate-key="free_delivery">Free Delivery</h3>
+                    <p class="feature-description" data-translate-key="free_delivery_description">Free shipping throughout Brazil. Receive your comfort products in the comfort of your home.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-home"></i>
                     </div>
-                    <h3 class="feature-title">Transforme Seu Lar</h3>
-                    <p class="feature-description">Produtos que transformam qualquer ambiente em um espaço acolhedor e confortável.</p>
+                    <h3 class="feature-title" data-translate-key="transform_home">Transform Your Home</h3>
+                    <p class="feature-description" data-translate-key="transform_home_description">Products that transform any environment into a cozy and comfortable space.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-paw"></i>
                     </div>
-                    <h3 class="feature-title">Pet-Friendly</h3>
-                    <p class="feature-description">Muitos de nossos produtos são perfeitos para você e seus pets desfrutarem juntos.</p>
+                    <h3 class="feature-title" data-translate-key="pet_friendly">Pet Friendly</h3>
+                    <p class="feature-description" data-translate-key="pet_friendly_description">Many of our products are perfect for you and your pets to enjoy together.</p>
                 </div>
             </div>
         </div>
@@ -760,19 +842,19 @@
     <!-- Testimonials Section -->
     <div class="testimonials-section">
         <div class="testimonials-container">
-            <h2 class="testimonials-title">O que nossos clientes dizem</h2>
+            <h2 class="testimonials-title" data-translate-key="testimonials_title">What Our Customers Say</h2>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
-                    <p class="testimonial-text">"A capa do sofá mudou completamente o visual da minha sala! Super fácil de colocar e lavar."</p>
-                    <p class="testimonial-author">- Maria Silva, São Paulo</p>
+                    <p class="testimonial-text" data-translate-key="testimonial_1">"The sofa cover completely changed the look of my living room! Super easy to put on and wash."</p>
+                    <p class="testimonial-author" data-translate-key="testimonial_1_author">- Maria Silva, São Paulo</p>
                 </div>
                 <div class="testimonial-card">
-                    <p class="testimonial-text">"O secador portátil é perfeito para minhas viagens. Leve e eficiente!"</p>
-                    <p class="testimonial-author">- João Santos, Rio de Janeiro</p>
+                    <p class="testimonial-text" data-translate-key="testimonial_2">"The portable hair dryer is perfect for my travels. Light and efficient!"</p>
+                    <p class="testimonial-author" data-translate-key="testimonial_2_author">- João Santos, Rio de Janeiro</p>
                 </div>
                 <div class="testimonial-card">
-                    <p class="testimonial-text">"A caixa de areia inteligente é um sonho! Meu gato adora e eu também."</p>
-                    <p class="testimonial-author">- Ana Costa, Belo Horizonte</p>
+                    <p class="testimonial-text" data-translate-key="testimonial_3">"The smart litter box is a dream! My cat loves it and so do I."</p>
+                    <p class="testimonial-author" data-translate-key="testimonial_3_author">- Ana Costa, Belo Horizonte</p>
                 </div>
             </div>
         </div>
@@ -781,21 +863,46 @@
     <!-- Newsletter Section -->
     <div class="newsletter-section">
         <div class="newsletter-container">
-            <h2 class="newsletter-title">Transforme seu lar hoje!</h2>
-            <p class="newsletter-description">Receba dicas de decoração e ofertas especiais para tornar sua casa ainda mais confortável</p>
+            <h2 class="newsletter-title" data-translate-key="newsletter_title">Stay Updated</h2>
+            <p class="newsletter-description" data-translate-key="newsletter_description">Subscribe to receive our latest comfort tips and exclusive offers.</p>
             <form class="newsletter-form">
-                <input type="email" class="newsletter-input" placeholder="Seu melhor e-mail">
-                <button type="submit" class="newsletter-btn">Inscrever-se</button>
+                <input type="email" class="newsletter-input" placeholder="Enter your email" data-translate-key="newsletter_placeholder">
+                <button type="submit" class="newsletter-btn" data-translate-key="newsletter_button">Subscribe</button>
             </form>
         </div>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2024 67 Beauty Hub - Seção Conforto. Todos os direitos reservados.</p>
+        <p data-translate-key="footer_text">&copy; 2025 67 Beauty Hub - Comfort Section. All rights reserved.</p>
     </footer>
 
     <script>
+        // Change country function - GLOBAL SCOPE
+        function changeCountry(countryCode) {
+            console.log('🌍 Changing country to:', countryCode);
+            
+            // Save selection to localStorage
+            localStorage.setItem('selectedCountry', countryCode);
+            
+            // Update language and currency based on country
+            const countryInfo = {
+                'BR': { language: 'pt-BR', currency: 'BRL', country: 'BR' },
+                'PT': { language: 'pt-PT', currency: 'EUR', country: 'PT' },
+                'US': { language: 'en-US', currency: 'USD', country: 'US' }
+            };
+            
+            const info = countryInfo[countryCode];
+            if (info) {
+                localStorage.setItem('userLanguage', info.language);
+                localStorage.setItem('userCurrency', info.currency);
+                localStorage.setItem('userCountry', info.country);
+                
+                // Recarregar página para aplicar mudanças
+                console.log('🔄 Recarregando página para aplicar mudanças...');
+                window.location.reload();
+            }
+        }
         
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -816,7 +923,7 @@
             e.preventDefault();
             const email = this.querySelector('.newsletter-input').value;
             if (email) {
-                alert('Obrigado por se inscrever! Você receberá nossas dicas de conforto em breve.');
+                alert('Thank you for subscribing! You will receive our comfort tips soon.');
                 this.querySelector('.newsletter-input').value = '';
             }
         });
@@ -899,8 +1006,8 @@
         });
 
         function openLoginModal() {
-            const email = prompt('Digite seu e-mail:');
-            const password = prompt('Digite sua senha:');
+            const email = prompt('Enter your email:');
+            const password = prompt('Enter your password:');
             
             if (email && password) {
                 // Simulate login (in real app, this would be an API call)
@@ -910,14 +1017,14 @@
                 };
                 localStorage.setItem('userLogin', JSON.stringify(currentUser));
                 showUserMenu();
-                alert('Login realizado com sucesso!');
+                alert('Login successful!');
             }
         }
 
         function openRegisterModal() {
-            const name = prompt('Digite seu nome:');
-            const email = prompt('Digite seu e-mail:');
-            const password = prompt('Digite sua senha:');
+            const name = prompt('Enter your name:');
+            const email = prompt('Enter your email:');
+            const password = prompt('Enter your password:');
             
             if (name && email && password) {
                 // Simulate registration (in real app, this would be an API call)
@@ -927,7 +1034,7 @@
                 };
                 localStorage.setItem('userLogin', JSON.stringify(currentUser));
                 showUserMenu();
-                alert('Cadastro realizado com sucesso!');
+                alert('Registration successful!');
             }
         }
 
@@ -961,7 +1068,7 @@
             document.getElementById('authButtons').style.display = 'flex';
             document.getElementById('userMenu').style.display = 'none';
             document.getElementById('userDropdown').classList.remove('show');
-            alert('Logout realizado com sucesso!');
+            alert('Logout successful!');
         }
 
         // Close dropdown when clicking outside
@@ -997,12 +1104,12 @@
                     
                 let checkoutUrl = '';
                 
-                    if (title.includes('Detachable Sofa Cover') || title.includes('Capa de Sofá') || title.includes('Sofa Cover')) {
+                    if (title.includes('3-in-1 Sofa Cover') || title.includes('Capa Sofá 3 em 1') || title.includes('Detachable Sofa Cover') || title.includes('Capa de Sofá') || title.includes('Sofa Cover')) {
                     checkoutUrl = 'Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/checkout-sofa-cover.html';
-                    } else if (title.includes('Human Dog Bed') || title.includes('Cama Humana') || title.includes('Dog Bed')) {
+                    } else if (title.includes('Giant Anti-Pain Bed') || title.includes('Cama Gigante Anti-Dor') || title.includes('Human Dog Bed') || title.includes('Cama Humana') || title.includes('Dog Bed')) {
                     checkoutUrl = 'Human Dog bad/checkout-human-dog-bed.html';
-                    } else if (title.includes('SNOOZE BUNDLE') || title.includes('Kit Snooze') || title.includes('Snooze')) {
-                    checkoutUrl = 'SNOOZE BUNDLE/checkout-snooze-bundle.html';
+                    } else if (title.includes('Portable Neck Pillow') || title.includes('Travesseiro Cervical Portátil') || title.includes('Memory Foam Neck Pillow') || title.includes('Travesseiro Cervical') || title.includes('Neck Pillow')) {
+                    checkoutUrl = 'Memory Foam Neck Pillow Cervical Vertebra Travel Portable Noon Break Aircraft U Type Of Pillow Sleep Camping Pillow Carry Bag/checkout-memory-foam-pillow.html';
                 }
                     
                     console.log('Comfort checkout URL:', checkoutUrl);
@@ -1021,14 +1128,108 @@
         });
         }
 
-        // Global Translation System for Comfort Page
-        class ComfortTranslator {
+        // Sistema básico da página - funcionalidades essenciais
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página da Seção Conforto carregada com sucesso');
+
+            // Funcionalidades básicas da página
+            setupBasicFunctionality();
+        });
+
+        function setupBasicFunctionality() {
+            // Newsletter form submission
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const email = this.querySelector('.newsletter-input').value;
+                    if (email) {
+                        alert('Obrigado por se inscrever! Você receberá nossas novidades em breve.');
+                        this.querySelector('.newsletter-input').value = '';
+                    }
+                });
+            }
+
+            // Add to cart functionality
+            setupButtonListeners();
+
+            // Make product cards clickable
+            makeProductCardsClickable();
+        }
+
+        function setupButtonListeners() {
+            document.querySelectorAll('.btn-primary').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    console.log('Button clicked!', e.target);
+
+                    // Prevent event from bubbling up to the card
+                    e.stopPropagation();
+
+                    // Add visual feedback
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+        }
+
+        function makeProductCardsClickable() {
+            const cards = document.querySelectorAll('.product-card');
+            console.log('Found', cards.length, 'product cards to make clickable');
+
+            cards.forEach((card, index) => {
+                console.log(`Setting up click listener for card ${index + 1}`);
+                card.addEventListener('click', function(e) {
+                    console.log('Card clicked!', e.target);
+
+                    // Add visual feedback
+                    this.style.transform = 'scale(0.98)';
+                    this.style.boxShadow = '0 10px 25px rgba(212, 175, 55, 0.5)';
+
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                        this.style.boxShadow = '0 15px 40px rgba(0,0,0,0.3)';
+                    }, 150);
+
+                    // Get the product title to determine the checkout page
+                    const title = this.querySelector('.product-title').textContent.trim();
+                    console.log('Product title:', title);
+
+                    let checkoutUrl = '';
+
+                    if (title.includes('Memory Foam') || title.includes('Travesseiro') || title.includes('Pillow')) {
+                        checkoutUrl = 'Memory Foam Neck Pillow Cervical Vertebra Travel Portable Noon Break Aircraft U Type Of Pillow Sleep Camping Pillow Carry Bag/checkout-memory-foam-pillow.html';
+                    } else if (title.includes('Human Dog') || title.includes('Cama') || title.includes('Bed')) {
+                        checkoutUrl = 'Human Dog bad/checkout-human-dog-bed.html';
+                    } else if (title.includes('Sofa Cover') || title.includes('Capa') || title.includes('Cover')) {
+                        checkoutUrl = 'Detachable Sofa Cover Bean Bag Cover Lazy Person\'s Couch/checkout-sofa-cover.html';
+                    }
+
+                    console.log('Checkout URL:', checkoutUrl);
+
+                    if (checkoutUrl) {
+                        console.log('Redirecting to:', checkoutUrl);
+                        // Add a small delay to show the visual feedback
+                        setTimeout(() => {
+                            console.log('Executing redirect...');
+                            window.location.href = checkoutUrl;
+                        }, 200);
+                    } else {
+                        console.log('No checkout URL found for comfort product:', title);
+                    }
+                });
+            });
+        }
+
+        // Currency System for Comfort Store
+        class ComfortCurrencySystem {
             constructor() {
                 this.baseCurrency = 'USD';
                 this.exchangeRates = {
                     'USD': 1.00,
                     'BRL': 5.20,
-                    'EUR': 0.85
+                    'EUR': 0.92
                 };
                 
                 this.currencySymbols = {
@@ -1037,359 +1238,411 @@
                     'EUR': '€'
                 };
                 
-                this.userCountry = null;
                 this.userCurrency = 'USD';
-                this.isInitialized = false;
                 this.init();
             }
             
             async init() {
-                try {
-                    await this.detectUserLocation();
-                    this.updatePageContent();
-                    this.isInitialized = true;
-                    console.log(`Comfort translator initialized. Currency: ${this.userCurrency}`);
-                } catch (error) {
-                    console.error('Error initializing comfort translator:', error);
-                    this.userCurrency = 'USD';
-                    this.updatePageContent();
-                }
+                await this.detectUserLocation();
+                this.updatePrices();
             }
             
             async detectUserLocation() {
                 try {
-                    let countryCode = null;
-                    
-                    // Check if running from file:// protocol
-                    if (window.location.protocol === 'file:') {
-                        console.log('Running from file:// protocol, using fallback detection');
-                        // Try to detect from browser language
-                        const browserLang = navigator.language || navigator.userLanguage;
-                        if (browserLang.startsWith('pt')) {
-                            countryCode = 'BR';
-                            console.log('Detected Portuguese language, assuming Brazil');
-                        } else if (browserLang.startsWith('es')) {
-                            countryCode = 'ES';
-                            console.log('Detected Spanish language, assuming Spain');
-                        } else {
-                            countryCode = 'US';
-                            console.log('Using default US location');
-                        }
+                    // Check if user has manually selected a country
+                    const selectedCountry = localStorage.getItem('selectedCountry');
+                    if (selectedCountry) {
+                        console.log('🌍 [COMFORT] Using manually selected country:', selectedCountry);
+                        const countryMap = {
+                            'BR': 'BRL',
+                            'PT': 'EUR', 
+                            'US': 'USD'
+                        };
+                        this.userCurrency = countryMap[selectedCountry] || 'USD';
+                        console.log('💰 [COMFORT] Currency set to:', this.userCurrency);
                     } else {
-                        try {
-                            const response = await fetch('https://ipapi.co/json/', { 
-                                timeout: 5000,
-                                mode: 'cors'
-                            });
-                            if (response.ok) {
-                                const data = await response.json();
-                                countryCode = data.country_code;
-                                console.log('Location detected via ipapi.co:', countryCode);
-                            }
-                        } catch (e) {
-                            console.log('ipapi.co failed, trying alternative...');
-                        }
-                        
-                        if (!countryCode) {
-                            try {
-                                const response = await fetch('https://ipinfo.io/json', { 
-                                    timeout: 5000,
-                                    mode: 'cors'
-                                });
-                                if (response.ok) {
-                                    const data = await response.json();
-                                    countryCode = data.country;
-                                    console.log('Location detected via ipinfo.io:', countryCode);
-                                }
-                            } catch (e) {
-                                console.log('ipinfo.io also failed');
-                            }
+                        // No manual selection - detect from HTML lang
+                        const htmlLang = document.documentElement.lang;
+                        if (htmlLang === 'en-US') {
+                        this.userCurrency = 'USD';
+                        localStorage.setItem('selectedCountry', 'US');
+                            console.log('🇺🇸 Defaulting to USD based on HTML lang');
+                        } else {
+                            this.userCurrency = 'USD';
+                            localStorage.setItem('selectedCountry', 'US');
+                            console.log('🇺🇸 Defaulting to USD as fallback');
                         }
                     }
-                    
-                    this.userCountry = countryCode;
-                    
-                    const countryToCurrency = {
-                        'BR': 'BRL',
-                        'US': 'USD', 'CA': 'USD', 'MX': 'USD', 'AR': 'USD', 'CL': 'USD', 'CO': 'USD', 'PE': 'USD', 'UY': 'USD', 'BO': 'USD', 'PY': 'USD', 'VE': 'USD', 'EC': 'USD', 'GY': 'USD', 'SR': 'USD', 'GF': 'USD', 'FK': 'USD', 'BZ': 'USD', 'GT': 'USD', 'HN': 'USD', 'SV': 'USD', 'NI': 'USD', 'CR': 'USD', 'PA': 'USD', 'CU': 'USD', 'JM': 'USD', 'HT': 'USD', 'DO': 'USD', 'PR': 'USD', 'VI': 'USD', 'AG': 'USD', 'BB': 'USD', 'DM': 'USD', 'GD': 'USD', 'KN': 'USD', 'LC': 'USD', 'VC': 'USD', 'TT': 'USD', 'BS': 'USD', 'AU': 'USD', 'NZ': 'USD', 'JP': 'USD', 'KR': 'USD', 'SG': 'USD', 'HK': 'USD', 'TW': 'USD', 'TH': 'USD', 'MY': 'USD', 'ID': 'USD', 'PH': 'USD', 'VN': 'USD', 'IN': 'USD', 'PK': 'USD', 'BD': 'USD', 'LK': 'USD', 'MM': 'USD', 'KH': 'USD', 'LA': 'USD', 'BN': 'USD', 'FJ': 'USD', 'PG': 'USD', 'SB': 'USD', 'VU': 'USD', 'NC': 'USD', 'PF': 'USD', 'WS': 'USD', 'TO': 'USD', 'KI': 'USD', 'TV': 'USD', 'NR': 'USD', 'MH': 'USD', 'FM': 'USD', 'PW': 'USD', 'AS': 'USD', 'GU': 'USD', 'MP': 'USD', 'CK': 'USD', 'NU': 'USD', 'TK': 'USD', 'WF': 'USD', 'NF': 'USD', 'PN': 'USD', 'GS': 'USD', 'SH': 'USD', 'AC': 'USD', 'TA': 'USD', 'IO': 'USD', 'CX': 'USD', 'CC': 'USD', 'HM': 'USD', 'AQ': 'USD', 'BV': 'USD', 'TF': 'USD', 'UM': 'USD',
-                        'DE': 'EUR', 'FR': 'EUR', 'IT': 'EUR', 'ES': 'EUR', 'NL': 'EUR', 'BE': 'EUR', 'AT': 'EUR', 'PT': 'EUR', 'IE': 'EUR', 'FI': 'EUR', 'GR': 'EUR', 'LU': 'EUR', 'MT': 'EUR', 'CY': 'EUR', 'SK': 'EUR', 'SI': 'EUR', 'EE': 'EUR', 'LV': 'EUR', 'LT': 'EUR', 'AD': 'EUR', 'MC': 'EUR', 'SM': 'EUR', 'VA': 'EUR', 'ME': 'EUR', 'XK': 'EUR'
-                    };
-                    
-                    this.userCurrency = countryToCurrency[this.userCountry] || 'USD';
-                    console.log(`Final detection - Country: ${this.userCountry}, Currency: ${this.userCurrency}`);
-                    
                 } catch (error) {
-                    console.error('Error in location detection:', error);
-                    this.userCurrency = 'USD';
-                    this.userCountry = 'Unknown';
+                    console.error('Error detecting location:', error);
+                    this.userCurrency = 'USD'; // Default to USD
                 }
             }
             
-            translateProductDescription(productKey) {
-                return this.productDescriptions[productKey] ? 
-                    this.productDescriptions[productKey][this.userCurrency] || 
-                    this.productDescriptions[productKey]['USD'] : 
-                    '';
+            convertPrice(priceUSD) {
+                const rate = this.exchangeRates[this.userCurrency];
+                return priceUSD * rate;
             }
             
-            translateContent(contentKey) {
-                const translations = {
-                    'header': {
-                        'USD': 'Comfort Section',
-                        'BRL': 'Seção Conforto',
-                        'EUR': 'Comfort Section'
-                    },
-                    'subtitle': {
-                        'USD': 'Discover the best comfort and well-being products for your home',
-                        'BRL': 'Descubra os melhores produtos de conforto e bem-estar para sua casa',
-                        'EUR': 'Discover the best comfort and well-being products for your home'
-                    },
-                    'features_title': {
-                        'USD': 'Why choose our Comfort Section?',
-                        'BRL': 'Por que escolher nossa Seção Conforto?',
-                        'EUR': 'Why choose our Comfort Section?'
-                    },
-                    'premium_products': {
-                        'USD': 'Premium Products',
-                        'BRL': 'Produtos Premium',
-                        'EUR': 'Premium Products'
-                    },
-                    'premium_description': {
-                        'USD': 'We select only the best comfort products on the market to ensure exceptional quality.',
-                        'BRL': 'Selecionamos apenas os melhores produtos de conforto do mercado para garantir qualidade excepcional.',
-                        'EUR': 'We select only the best comfort products on the market to ensure exceptional quality.'
-                    },
-                    'fast_delivery': {
-                        'USD': 'Fast Delivery',
-                        'BRL': 'Entrega Rápida',
-                        'EUR': 'Fast Delivery'
-                    },
-                    'fast_delivery_description': {
-                        'USD': 'Free shipping throughout Brazil with delivery in 15-25 business days. Complete tracking.',
-                        'BRL': 'Frete grátis para todo o Brasil com entrega em 15-25 dias úteis. Rastreamento completo.',
-                        'EUR': 'Free shipping throughout Europe with delivery in 15-25 business days. Complete tracking.'
-                    },
-                    'total_guarantee': {
-                        'USD': 'Total Guarantee',
-                        'BRL': 'Garantia Total',
-                        'EUR': 'Total Guarantee'
-                    },
-                    'guarantee_description': {
-                        'USD': '30 days guarantee on all products. Satisfaction guaranteed or your money back.',
-                        'BRL': '30 dias de garantia em todos os produtos. Satisfação garantida ou seu dinheiro de volta.',
-                        'EUR': '30 days guarantee on all products. Satisfaction guaranteed or your money back.'
-                    },
-                    'expert_approved': {
-                        'USD': 'Expert Approved',
-                        'BRL': 'Aprovado por Especialistas',
-                        'EUR': 'Expert Approved'
-                    },
-                    'expert_description': {
-                        'USD': 'Products tested and approved by comfort and well-being professionals.',
-                        'BRL': 'Produtos testados e aprovados por profissionais de conforto e bem-estar.',
-                        'EUR': 'Products tested and approved by comfort and well-being professionals.'
-                    },
-                    'testimonials_title': {
-                        'USD': 'What our customers say',
-                        'BRL': 'O que nossos clientes dizem',
-                        'EUR': 'What our customers say'
-                    },
-                    'newsletter_title': {
-                        'USD': 'Stay updated with the latest news!',
-                        'BRL': 'Fique por dentro das novidades!',
-                        'EUR': 'Stay updated with the latest news!'
-                    },
-                    'newsletter_description': {
-                        'USD': 'Receive exclusive offers and comfort tips directly to your email',
-                        'BRL': 'Receba ofertas exclusivas e dicas de conforto direto no seu e-mail',
-                        'EUR': 'Receive exclusive offers and comfort tips directly to your email'
-                    },
-                    'newsletter_placeholder': {
-                        'USD': 'Your best email',
-                        'BRL': 'Seu melhor e-mail',
-                        'EUR': 'Your best email'
-                    },
-                    'newsletter_button': {
-                        'USD': 'Subscribe',
-                        'BRL': 'Inscrever-se',
-                        'EUR': 'Subscribe'
-                    },
-                    'footer_text': {
-                        'USD': '© 2024 67 Beauty Hub - Comfort Section. All rights reserved.',
-                        'BRL': '© 2024 67 Beauty Hub - Seção Conforto. Todos os direitos reservados.',
-                        'EUR': '© 2024 67 Beauty Hub - Comfort Section. All rights reserved.'
-                    }
-                };
-                
-                // Product descriptions translations
-                this.productDescriptions = {
-                    'sofa-cover': {
-                        'USD': 'Versatile and comfortable design, perfect as sofa, puff or lounge. Easy to remove and clean.',
-                        'BRL': 'Design versátil e confortável, ideal como sofá, puff ou lounge. Fácil de remover e limpar.',
-                        'EUR': 'Versatile and comfortable design, perfect as sofa, puff or lounge. Easy to remove and clean.'
-                    },
-                    'steam-dryer': {
-                        'USD': 'Compact steam dryer for quick clothes drying. Portable and efficient for home use.',
-                        'BRL': 'Secador a vapor compacto para secagem rápida de roupas. Portátil e eficiente para uso doméstico.',
-                        'EUR': 'Compact steam dryer for quick clothes drying. Portable and efficient for home use.'
-                    },
-                    'human-dog-bed': {
-                        'USD': 'Comfortable bed for pets with soft material and ergonomic design for better rest.',
-                        'BRL': 'Cama confortável para pets com material macio e design ergonômico para melhor descanso.',
-                        'EUR': 'Comfortable bed for pets with soft material and ergonomic design for better rest.'
-                    },
-                    'cat-litter-box': {
-                        'USD': 'Automatic cat litter box with cleaning and deodorization system. Smart monitoring via app.',
-                        'BRL': 'Caixa de areia automática com sistema de limpeza e desodorização. Monitoramento inteligente via app.',
-                        'EUR': 'Automatic cat litter box with cleaning and deodorization system. Smart monitoring via app.'
-                    },
-                    'snooze-bundle': {
-                        'USD': 'Complete sleep bundle with comfortable items for better rest and relaxation.',
-                        'BRL': 'Kit completo de sono com itens confortáveis para melhor descanso e relaxamento.',
-                        'EUR': 'Complete sleep bundle with comfortable items for better rest and relaxation.'
-                    },
-                    'testimonial_1': {
-                        'USD': 'The sofa cover is amazing! It completely transformed my living room. Easy to install and very comfortable.',
-                        'BRL': 'A capa do sofá é incrível! Transformou completamente minha sala de estar. Fácil de instalar e muito confortável.',
-                        'EUR': 'The sofa cover is amazing! It completely transformed my living room. Easy to install and very comfortable.'
-                    },
-                    'testimonial_1_author': {
-                        'USD': '- Ana Silva, São Paulo',
-                        'BRL': '- Ana Silva, São Paulo',
-                        'EUR': '- Ana Silva, São Paulo'
-                    },
-                    'testimonial_2': {
-                        'USD': 'The steam dryer is a game changer! My clothes are ready in minutes. Highly recommend!',
-                        'BRL': 'O secador a vapor é revolucionário! Minhas roupas ficam prontas em minutos. Super recomendo!',
-                        'EUR': 'The steam dryer is a game changer! My clothes are ready in minutes. Highly recommend!'
-                    },
-                    'testimonial_2_author': {
-                        'USD': '- Carlos Mendes, Brasília',
-                        'BRL': '- Carlos Mendes, Brasília',
-                        'EUR': '- Carlos Mendes, Brasília'
-                    },
-                    'testimonial_3': {
-                        'USD': 'The cat litter box is perfect for my pets. Automatic cleaning and no odors. My cats love it!',
-                        'BRL': 'A caixa de areia é perfeita para meus pets. Limpeza automática e sem odores. Meus gatos adoram!',
-                        'EUR': 'The cat litter box is perfect for my pets. Automatic cleaning and no odors. My cats love it!'
-                    },
-                    'testimonial_3_author': {
-                        'USD': '- Maria Oliveira, Belo Horizonte',
-                        'BRL': '- Maria Oliveira, Belo Horizonte',
-                        'EUR': '- Maria Oliveira, Belo Horizonte'
-                    }
-                };
-                
-                return translations[contentKey] ? 
-                    translations[contentKey][this.userCurrency] || 
-                    translations[contentKey]['USD'] : 
-                    contentKey;
+            formatPrice(price) {
+                const symbol = this.currencySymbols[this.userCurrency];
+                if (this.userCurrency === 'BRL') {
+                    return `${symbol} ${price.toFixed(2).replace('.', ',')}`;
+                } else {
+                    return `${symbol}${price.toFixed(2)}`;
+                }
             }
             
-            updatePageContent() {
+            // Método para detectar se o preço já está na moeda correta
+            isAlreadyInCurrency(priceText) {
+                const currentSymbol = this.currencySymbols[this.userCurrency];
+                return priceText.includes(currentSymbol);
+            }
+            
+            updatePrices() {
                 try {
-                    // Update header
-                    const header = document.querySelector('.beauty-header h1');
-                    if (header) {
-                        header.innerHTML = `<i class="fas fa-couch"></i> ${this.translateContent('header')}`;
-                    }
+                    const productCards = document.querySelectorAll('.product-card');
+                    console.log('🔍 Encontrados', productCards.length, 'cards de produto');
                     
-                    // Update subtitle
-                    const subtitle = document.querySelector('.beauty-header p');
-                    if (subtitle) {
-                        subtitle.textContent = this.translateContent('subtitle');
-                    }
-                    
-                    // Update features section
-                    const featuresTitle = document.querySelector('.features-title');
-                    if (featuresTitle) {
-                        featuresTitle.textContent = this.translateContent('features_title');
-                    }
-                    
-                    // Update feature cards
-                    const featureCards = document.querySelectorAll('.feature-card');
-                    if (featureCards.length >= 4) {
-                        // Premium Products
-                        const premiumTitle = featureCards[0].querySelector('.feature-title');
-                        const premiumDesc = featureCards[0].querySelector('.feature-description');
-                        if (premiumTitle) premiumTitle.textContent = this.translateContent('premium_products');
-                        if (premiumDesc) premiumDesc.textContent = this.translateContent('premium_description');
+                    productCards.forEach((card, index) => {
+                        const currentPrice = card.querySelector('.price-current');
+                        const originalPrice = card.querySelector('.price-original');
                         
-                        // Fast Delivery
-                        const deliveryTitle = featureCards[1].querySelector('.feature-title');
-                        const deliveryDesc = featureCards[1].querySelector('.feature-description');
-                        if (deliveryTitle) deliveryTitle.textContent = this.translateContent('fast_delivery');
-                        if (deliveryDesc) deliveryDesc.textContent = this.translateContent('fast_delivery_description');
+                        console.log(`Card ${index + 1}:`, {
+                            currentPrice: currentPrice ? 'encontrado' : 'não encontrado',
+                            originalPrice: originalPrice ? 'encontrado' : 'não encontrado'
+                        });
                         
-                        // Total Guarantee
-                        const guaranteeTitle = featureCards[2].querySelector('.feature-title');
-                        const guaranteeDesc = featureCards[2].querySelector('.feature-description');
-                        if (guaranteeTitle) guaranteeTitle.textContent = this.translateContent('total_guarantee');
-                        if (guaranteeDesc) guaranteeDesc.textContent = this.translateContent('guarantee_description');
-                        
-                        // Expert Approved
-                        const expertTitle = featureCards[3].querySelector('.feature-title');
-                        const expertDesc = featureCards[3].querySelector('.feature-description');
-                        if (expertTitle) expertTitle.textContent = this.translateContent('expert_approved');
-                        if (expertDesc) expertDesc.textContent = this.translateContent('expert_description');
-                    }
-                    
-                    // Update testimonials
-                    const testimonialsTitle = document.querySelector('.testimonials-title');
-                    if (testimonialsTitle) {
-                        testimonialsTitle.textContent = this.translateContent('testimonials_title');
-                    }
-                    
-                    // Update testimonial cards
-                    const testimonialCards = document.querySelectorAll('.testimonial-card');
-                    if (testimonialCards.length >= 3) {
-                        // First testimonial
-                        const testimonial1Text = testimonialCards[0].querySelector('.testimonial-text');
-                        const testimonial1Author = testimonialCards[0].querySelector('.testimonial-author');
-                        if (testimonial1Text) testimonial1Text.textContent = this.translateContent('testimonial_1');
-                        if (testimonial1Author) testimonial1Author.textContent = this.translateContent('testimonial_1_author');
-                        
-                        // Second testimonial
-                        const testimonial2Text = testimonialCards[1].querySelector('.testimonial-text');
-                        const testimonial2Author = testimonialCards[1].querySelector('.testimonial-author');
-                        if (testimonial2Text) testimonial2Text.textContent = this.translateContent('testimonial_2');
-                        if (testimonial2Author) testimonial2Author.textContent = this.translateContent('testimonial_2_author');
-                        
-                        // Third testimonial
-                        const testimonial3Text = testimonialCards[2].querySelector('.testimonial-text');
-                        const testimonial3Author = testimonialCards[2].querySelector('.testimonial-author');
-                        if (testimonial3Text) testimonial3Text.textContent = this.translateContent('testimonial_3');
-                        if (testimonial3Author) testimonial3Author.textContent = this.translateContent('testimonial_3_author');
-                    }
-                    
-                    // Update newsletter
-                    const newsletterTitle = document.querySelector('.newsletter-title');
-                    const newsletterDesc = document.querySelector('.newsletter-description');
-                    const newsletterInput = document.querySelector('.newsletter-input');
-                    const newsletterBtn = document.querySelector('.newsletter-btn');
-                    
-                    if (newsletterTitle) newsletterTitle.textContent = this.translateContent('newsletter_title');
-                    if (newsletterDesc) newsletterDesc.textContent = this.translateContent('newsletter_description');
-                    if (newsletterInput) newsletterInput.placeholder = this.translateContent('newsletter_placeholder');
-                    if (newsletterBtn) newsletterBtn.textContent = this.translateContent('newsletter_button');
-                    
-                    // Update footer
-                    const footerText = document.querySelector('.footer p');
-                    if (footerText) {
-                        footerText.textContent = this.translateContent('footer_text');
-                    }
-                    
-                    console.log('Comfort page content updated successfully');
-                    
+                        if (currentPrice && originalPrice) {
+                            // Verificar se já está na moeda correta
+                            const isAlreadyConverted = this.isAlreadyInCurrency(currentPrice.textContent);
+                            if (isAlreadyConverted) {
+                                console.log(`💰 Preço já convertido para ${this.userCurrency}: ${currentPrice.textContent}`);
+                                return;
+                            }
+                            
+                            let currentValue, originalValue;
+                            
+                            switch(index) {
+                                case 0: // Sofa Cover
+                                    currentValue = this.convertPrice(6.73);
+                                    originalValue = this.convertPrice(11.54);
+                                    break;
+                                case 1: // Human Dog Bed
+                                    currentValue = this.convertPrice(15.38);
+                                    originalValue = this.convertPrice(25.00);
+                                    break;
+                                case 2: // Memory Foam Pillow
+                                    currentValue = this.convertPrice(42.70);
+                                    originalValue = this.convertPrice(80.57);
+                                    break;
+                                default:
+                                    return;
+                            }
+                            
+                            currentPrice.textContent = this.formatPrice(currentValue);
+                            originalPrice.textContent = this.formatPrice(originalValue);
+                            
+                            // Calcular e exibir desconto
+                            const discountElement = card.querySelector('.price-discount');
+                            if (discountElement) {
+                                const discountPercent = Math.round(((originalValue - currentValue) / originalValue) * 100);
+                                // NÃO sobrescrever o texto - deixar o sistema de tradução cuidar completamente
+                                console.log(`🎯 Desconto calculado: ${discountPercent}% - deixando para sistema de tradução`);
+                            }
+                            
+                            // NÃO reaplicar CSS aqui - deixar para o sistema de tradução
+                            console.log('💰 Preços atualizados sem sobrescrever estilos');
+                        }
+                    });
                 } catch (error) {
-                    console.error('Error updating comfort page content:', error);
+                    console.error('Erro ao atualizar preços:', error);
+                }
+            }
+            
+            reapplyPriceStyles(currentPrice, originalPrice) {
+                console.log('🎨 Aplicando estilos aos preços:', {
+                    currentPrice: currentPrice ? 'encontrado' : 'não encontrado',
+                    originalPrice: originalPrice ? 'encontrado' : 'não encontrado'
+                });
+                
+                if (currentPrice) {
+                    currentPrice.style.color = '#e74c3c';
+                    currentPrice.style.fontSize = '2rem';
+                    currentPrice.style.fontWeight = '800';
+                    currentPrice.style.display = 'block';
+                    currentPrice.style.visibility = 'visible';
+                    currentPrice.style.opacity = '1';
+                    currentPrice.style.textShadow = '0 1px 2px rgba(0,0,0,0.1)';
+                    console.log('✅ Estilos aplicados ao preço atual:', currentPrice.textContent);
+                }
+                
+                if (originalPrice) {
+                    originalPrice.style.color = '#999';
+                    originalPrice.style.fontSize = '1.2rem';
+                    originalPrice.style.textDecoration = 'line-through';
+                    originalPrice.style.display = 'block';
+                    originalPrice.style.visibility = 'visible';
+                    originalPrice.style.opacity = '1';
+                    console.log('✅ Estilos aplicados ao preço original:', originalPrice.textContent);
                 }
             }
         }
         
-        // Initialize comfort translator when page loads
+        // Initialize currency system
         document.addEventListener('DOMContentLoaded', function() {
-            new ComfortTranslator();
+            // Preloader removido completamente - página carrega diretamente
+            
+            const comfortCurrencySystem = new ComfortCurrencySystem();
+            
+            // Re-aplicar estilos após atualização de preços
+            const originalUpdatePrices = comfortCurrencySystem.updatePrices;
+            comfortCurrencySystem.updatePrices = function() {
+                originalUpdatePrices.call(this);
+                // Re-aplicar estilos após atualização de preços
+                setTimeout(() => {
+                    const currentPrices = document.querySelectorAll('.price-current');
+                    const originalPrices = document.querySelectorAll('.price-original');
+                    const discountPrices = document.querySelectorAll('.price-discount');
+                    
+                    currentPrices.forEach(price => {
+                        price.style.color = '#e74c3c';
+                        price.style.fontSize = '2rem';
+                        price.style.fontWeight = '800';
+                        price.style.display = 'block';
+                        price.style.visibility = 'visible';
+                        price.style.opacity = '1';
+                        price.style.textShadow = '0 1px 2px rgba(0,0,0,0.1)';
+                    });
+                    
+                    originalPrices.forEach(price => {
+                        price.style.color = '#999';
+                        price.style.fontSize = '1.2rem';
+                        price.style.textDecoration = 'line-through';
+                        price.style.display = 'block';
+                        price.style.visibility = 'visible';
+                        price.style.opacity = '1';
+                    });
+                    
+                    discountPrices.forEach(price => {
+                        price.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                        price.style.color = 'white';
+                        price.style.padding = '6px 12px';
+                        price.style.borderRadius = '15px';
+                        price.style.fontSize = '0.9rem';
+                        price.style.fontWeight = '700';
+                        price.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+                        price.style.textTransform = 'uppercase';
+                        price.style.letterSpacing = '0.5px';
+                    });
+                    
+                    console.log('🎨 Estilos re-aplicados após atualização de preços');
+                }, 100);
+            };
+            
+            // Initialize country selector
+            initializeCountrySelector();
+            
+            // Initialize currency and language
+            initializeCurrencyAndLanguage();
+        });
+
+        // Initialize country selector
+        function initializeCountrySelector() {
+            const countrySelector = document.getElementById('countrySelector');
+            if (countrySelector) {
+                // Set current selection based on localStorage or HTML lang
+                let selectedCountry = localStorage.getItem('selectedCountry') || localStorage.getItem('userCountry');
+                
+                if (!selectedCountry) {
+                    // Detectar país baseado no idioma do HTML apenas se não há preferência
+                    const htmlLang = document.documentElement.lang;
+                    if (htmlLang === 'en-US') {
+                        selectedCountry = 'US';
+                        localStorage.setItem('selectedCountry', 'US');
+                        localStorage.setItem('userLanguage', 'en-US');
+                        localStorage.setItem('userCurrency', 'USD');
+                        console.log('🇺🇸 Country selector initialized with: US (based on HTML lang)');
+                    } else {
+                        selectedCountry = 'US'; // Default fallback
+                    }
+                } else {
+                    console.log('🌍 Usando preferência salva:', selectedCountry);
+                }
+                
+                countrySelector.value = selectedCountry;
+                
+                // Add change event listener
+                countrySelector.addEventListener('change', function() {
+                    changeCountry(this.value);
+                });
+                
+                console.log('🌍 Country selector initialized with:', selectedCountry);
+            }
+        }
+
+    // Initialize currency and language
+    function initializeCurrencyAndLanguage() {
+        // This function is now simplified - just initialize the currency system
+        console.log('💰 Sistema de moeda e idioma inicializado');
+    }
+
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 Página Comfort Store carregada');
+        
+        // Initialize basic functionality
+        setupBasicFunctionality();
+        
+        // Initialize currency system
+        const comfortCurrencySystem = new ComfortCurrencySystem();
+        
+        // Initialize country selector
+        initializeCountrySelector();
+        
+        // Initialize currency and language
+        initializeCurrencyAndLanguage();
+        
+        // Initialize translation system
+        setTimeout(() => {
+            console.log('🔍 Verificando sistema de tradução...');
+            console.log('LanguageController disponível:', !!window.languageController);
+            
+            // Sistema de tradução baseado no país selecionado
+            const selectedCountry = localStorage.getItem('selectedCountry') || 'US';
+            console.log('🌍 País selecionado:', selectedCountry);
+            
+            // Usar APENAS o languageController para todas as traduções
+            if (window.languageController) {
+                console.log('🌍 Aplicando traduções via languageController...');
+                window.languageController.applyCurrentPageTranslations();
+            } else {
+                console.log('❌ LanguageController não disponível, usando fallback...');
+                // Fallback apenas se languageController não estiver disponível
+                if (selectedCountry === 'BR' || selectedCountry === 'PT') {
+                    applyPortugueseTranslations(selectedCountry);
+                }
+            }
+        }, 500);
+        
+        // Função para aplicar traduções em português
+        function applyPortugueseTranslations(country) {
+                        const translations = {
+                'BR': {
+                    // Header
+                    'Comfort Section': 'Seção Conforto',
+                    'Discover the best comfort and wellness products for your home': 'Descubra os melhores produtos de conforto e bem-estar para sua casa',
+                    
+                    // Navigation
+                    'Home': 'Início',
+                    'Beauty Section': 'Seção Beleza',
+                    'Benefits': 'Benefícios',
+                    'Login': 'Entrar',
+                    
+                    // Products
+                    'Most Popular': 'Mais Popular',
+                    'Maximum Comfort': 'Máximo Conforto',
+                    'New': 'Novo',
+                    '3-in-1 Sofa Cover': 'Capa de Sofá 3 em 1',
+                    'Revive your old sofa! This 3-in-1 cover transforms any furniture into a cozy lounger. Super easy to remove and wash - just toss in the machine!': 'Acabe com sofás gastos e manchados. Transforme qualquer móvel em uma poltrona confortável. Remove e lava em segundos.',
+                    'Giant Anti-Pain Bed': 'Cama Gigante Anti-Dor',
+                    'Say goodbye to back and neck pain! This giant bed supports up to 330 lbs and provides ultimate comfort for the best relaxation experience.': 'Acabe com dores nas costas e pescoço. Cama gigante que suporta até 150kg. Conforto total para relaxamento.',
+                    'Portable Neck Pillow': 'Travesseiro Cervical Portátil',
+                    'Travel in comfort! Premium memory foam neck pillow with perfect U-shape design provides amazing cervical support. Compact and lightweight for easy travel.': 'Acabe com dores no pescoço em viagens. Espuma viscoelástica de alta qualidade, design em U para suporte cervical perfeito. Portátil e prático.',
+                    'Buy Now': 'Comprar Agora',
+                    '42% OFF': '42% DESCONTO',
+                    '38% OFF': '38% DESCONTO',
+                    '47% OFF': '47% DESCONTO',
+                    
+                    // Features
+                    'Why Choose Our Comfort Products?': 'Por que Escolher Nossos Produtos de Conforto?',
+                    'Comfort Guaranteed': 'Conforto Garantido',
+                    'Products selected to provide maximum comfort and well-being in your home.': 'Produtos selecionados para proporcionar máximo conforto e bem-estar em sua casa.',
+                    'Free Delivery': 'Entrega Grátis',
+                    'Free shipping throughout Brazil. Receive your comfort products in the comfort of your home.': 'Frete grátis em todo o Brasil. Receba seus produtos de conforto no conforto da sua casa.',
+                    'Transform Your Home': 'Transforme Sua Casa',
+                    'Products that transform any environment into a cozy and comfortable space.': 'Produtos que transformam qualquer ambiente em um espaço aconchegante e confortável.',
+                    'Pet Friendly': 'Pet Friendly',
+                    'Many of our products are perfect for you and your pets to enjoy together.': 'Muitos dos nossos produtos são perfeitos para você e seus pets aproveitarem juntos.',
+                    
+                    // Testimonials
+                    'What Our Customers Say': 'O que Nossos Clientes Dizem',
+                    '"The sofa cover completely changed the look of my living room! Super easy to put on and wash."': '"A capa de sofá mudou completamente o visual da minha sala! Super fácil de colocar e lavar."',
+                    '"The portable hair dryer is perfect for my travels. Light and efficient!"': '"O secador portátil é perfeito para minhas viagens. Leve e eficiente!"',
+                    '"The smart litter box is a dream! My cat loves it and so do I."': '"A caixa de areia inteligente é um sonho! Minha gata ama e eu também."',
+                    
+                    // Newsletter
+                    'Stay Updated': 'Fique Atualizado',
+                    'Subscribe to receive our latest comfort tips and exclusive offers.': 'Inscreva-se para receber nossas dicas de conforto e ofertas exclusivas.',
+                    'Enter your email': 'Digite seu email',
+                    'Subscribe': 'Inscrever'
+                },
+                'PT': {
+                    // Header
+                    'Comfort Section': 'Secção Conforto',
+                    'Discover the best comfort and wellness products for your home': 'Descubra os melhores produtos de conforto e bem-estar para a sua casa',
+                    
+                    // Navigation
+                    'Home': 'Início',
+                    'Beauty Section': 'Secção Beleza',
+                    'Benefits': 'Benefícios',
+                    'Login': 'Entrar',
+                    
+                    // Products
+                    'Most Popular': 'Mais Popular',
+                    'Maximum Comfort': 'Máximo Conforto',
+                    'New': 'Novo',
+                    '3-in-1 Sofa Cover': 'Capa de Sofá Desmontável',
+                    'Revive your old sofa! This 3-in-1 cover transforms any furniture into a cozy lounger. Super easy to remove and wash - just toss in the machine!': 'Acabe com sofás gastos e manchados. Transforme qualquer móvel numa poltrona confortável. Remove e lava em segundos.',
+                    'Giant Anti-Pain Bed': 'Cama Human Dog',
+                    'Say goodbye to back and neck pain! This giant bed supports up to 330 lbs and provides ultimate comfort for the best relaxation experience.': 'Acabe com dores nas costas e pescoço. Cama gigante que suporta até 150kg. Conforto total para relaxamento.',
+                    'Portable Neck Pillow': 'Travesseiro Cervical de Espuma Viscoelástica',
+                    'Travel in comfort! Premium memory foam neck pillow with perfect U-shape design provides amazing cervical support. Compact and lightweight for easy travel.': 'Acabe com dores no pescoço em viagens. Espuma viscoelástica de alta qualidade, design em U para suporte cervical perfeito. Portátil e prático.',
+                    'Buy Now': 'Comprar Agora',
+                    '42% OFF': '42% DESCONTO',
+                    '38% OFF': '38% DESCONTO',
+                    '47% OFF': '47% DESCONTO',
+                    
+                    // Features
+                    'Why Choose Our Comfort Products?': 'Por que Escolher os Nossos Produtos de Conforto?',
+                    'Comfort Guaranteed': 'Conforto Garantido',
+                    'Products selected to provide maximum comfort and well-being in your home.': 'Produtos selecionados para proporcionar máximo conforto e bem-estar na sua casa.',
+                    'Free Delivery': 'Entrega Grátis',
+                    'Free shipping throughout Brazil. Receive your comfort products in the comfort of your home.': 'Envio grátis em todo o país. Receba os seus produtos de conforto no conforto da sua casa.',
+                    'Transform Your Home': 'Transforme a Sua Casa',
+                    'Products that transform any environment into a cozy and comfortable space.': 'Produtos que transformam qualquer ambiente num espaço aconchegante e confortável.',
+                    'Pet Friendly': 'Pet Friendly',
+                    'Many of our products are perfect for you and your pets to enjoy together.': 'Muitos dos nossos produtos são perfeitos para si e os seus animais de estimação aproveitarem juntos.',
+                    
+                    // Testimonials
+                    'What Our Customers Say': 'O que os Nossos Clientes Dizem',
+                    '"The sofa cover completely changed the look of my living room! Super easy to put on and wash."': '"A capa de sofá mudou completamente o visual da minha sala! Super fácil de colocar e lavar."',
+                    '"The portable hair dryer is perfect for my travels. Light and efficient!"': '"O secador portátil é perfeito para as minhas viagens. Leve e eficiente!"',
+                    '"The smart litter box is a dream! My cat loves it and so do I."': '"A caixa de areia inteligente é um sonho! A minha gata adora e eu também."',
+                    
+                    // Newsletter
+                    'Stay Updated': 'Fique Atualizado',
+                    'Subscribe to receive our latest comfort tips and exclusive offers.': 'Inscreva-se para receber as nossas dicas de conforto e ofertas exclusivas.',
+                    'Enter your email': 'Digite o seu email',
+                    'Subscribe': 'Inscrever',
+                    
+                    // Brand/Logo
+                    '67 Beauty Hub': '67 Beauty Hub',
+                    'Comfort Section - 67 Beauty Hub': 'Secção Conforto - 67 Beauty Hub',
+                    '&copy; 2025 67 Beauty Hub - Comfort Section. All rights reserved.': '&copy; 2025 67 Beauty Hub - Secção Conforto. Todos os direitos reservados.'
+                }
+            };
+            
+            const countryTranslations = translations[country];
+            if (countryTranslations) {
+                Object.keys(countryTranslations).forEach(englishText => {
+                    const portugueseText = countryTranslations[englishText];
+                    // Substituir todos os textos na página
+                    document.body.innerHTML = document.body.innerHTML.replace(new RegExp(englishText, 'g'), portugueseText);
+                });
+                console.log('✅ Traduções aplicadas para:', country);
+            }
+        }
         });
     </script>
 </body>

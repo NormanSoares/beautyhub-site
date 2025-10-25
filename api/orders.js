@@ -84,10 +84,11 @@ function createOrder(orderData) {
         },
         products: orderData.products || [],
         total: orderData.total || 0,
-        status: 'pending', // pending, processing, shipped, delivered, cancelled
-        payment_status: 'pending', // pending, processing, confirmed, failed, refunded
+        status: orderData.status || 'pending', // pending, processing, shipped, delivered, cancelled
+        payment_status: orderData.payment_status || 'pending', // pending, processing, confirmed, failed, refunded
         shipping_address: orderData.shipping_address || {},
         notes: orderData.notes || '',
+        payment_method: orderData.payment_method || 'unknown',
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
         tracking: {
@@ -102,6 +103,14 @@ function createOrder(orderData) {
     saveOrdersToFile(orders);
     
     console.log(`✅ Novo pedido criado: ${newOrder.id}`);
+    console.log('📊 Dados do pedido:', {
+        customer: newOrder.customer,
+        products: newOrder.products.length,
+        total: newOrder.total,
+        status: newOrder.status,
+        payment_status: newOrder.payment_status
+    });
+    
     return newOrder;
 }
 
@@ -148,6 +157,11 @@ export default async function handler(req, res) {
         const action = req.query.action || 'list';
         const orderId = req.query.order_id;
         
+        // Handle PUT requests for updating orders
+        if (req.method === 'PUT') {
+            return handlePut(req, res);
+        }
+        
         switch (req.method) {
             case 'GET':
                 return await handleGet(req, res, action, orderId);
@@ -180,7 +194,7 @@ async function handleGet(req, res, action, orderId) {
     switch (action) {
         case 'list':
             const ordersList = getOrders();
-            const limit = parseInt(req.query.limit) || 50;
+            const limit = parseInt(req.query.limit) || 1000; // Aumentar limite para mostrar todos os pedidos
             const status = req.query.status;
             
             let filteredOrders = ordersList;
@@ -252,6 +266,47 @@ async function handleGet(req, res, action, orderId) {
                 available_actions: ['list', 'stats', 'get']
             });
     }
+}
+
+/**
+ * Handle PUT requests
+ */
+async function handlePut(req, res) {
+    const orderId = req.params.orderId || req.query.order_id;
+    
+    if (!orderId) {
+        return res.status(400).json({
+            success: false,
+            error: 'ID do pedido é obrigatório'
+        });
+    }
+    
+    const orders = getOrders();
+    const orderIndex = orders.findIndex(o => o.id === orderId);
+    
+    if (orderIndex === -1) {
+        return res.status(404).json({
+            success: false,
+            error: 'Pedido não encontrado'
+        });
+    }
+    
+    // Atualizar pedido com dados do body
+    const updatedOrder = { ...orders[orderIndex], ...req.body };
+    updatedOrder.updated_at = new Date().toISOString();
+    
+    orders[orderIndex] = updatedOrder;
+    ordersCache = orders;
+    saveOrdersToFile(orders);
+    
+    console.log(`✅ Pedido ${orderId} atualizado com sucesso`);
+    
+    return res.status(200).json({
+        success: true,
+        data: updatedOrder,
+        message: 'Pedido atualizado com sucesso',
+        timestamp: new Date().toISOString()
+    });
 }
 
 /**
@@ -414,49 +469,3 @@ async function sendToSuppliers(req, res) {
     }
 }
 
-/**
- * Handle PUT requests
- */
-async function handlePut(req, res, orderId) {
-    if (!orderId) {
-        return res.status(400).json({
-            success: false,
-            error: 'ID do pedido é obrigatório'
-        });
-    }
-    
-    const { status, notes } = req.body;
-    
-    if (!status) {
-        return res.status(400).json({
-            success: false,
-            error: 'Status é obrigatório'
-        });
-    }
-    
-    const validStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
-    if (!validStatuses.includes(status)) {
-        return res.status(400).json({
-            success: false,
-            error: 'Status inválido',
-            valid_statuses: validStatuses
-        });
-    }
-    
-    try {
-        const updatedOrder = updateOrderStatus(orderId, status, notes);
-        
-        return res.status(200).json({
-            success: true,
-            data: updatedOrder,
-            message: 'Status do pedido atualizado com sucesso',
-            timestamp: new Date().toISOString()
-        });
-        
-    } catch (error) {
-        return res.status(404).json({
-            success: false,
-            error: error.message
-        });
-    }
-}

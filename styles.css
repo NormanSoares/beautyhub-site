@@ -14,27 +14,7 @@ body {
     position: relative;
 }
 
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    z-index: -3;
-}
-
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(240, 230, 210, 0.1);
-    z-index: -1;
-}
+/* Removed problematic overlay elements */
 
 /* Global Background Video */
 .global-background-video {

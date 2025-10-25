@@ -1,9 +1,9 @@
 {
-  "totalRuns": 384,
+  "totalRuns": 385,
   "apiSuccess": 247,
-  "scrapingSuccess": 137,
-  "totalProducts": 467,
-  "lastRun": "2025-10-11T22:24:53.422Z",
+  "scrapingSuccess": 138,
+  "totalProducts": 469,
+  "lastRun": "2025-10-11T22:29:53.421Z",
   "errors": [
     {
       "type": "api_error",
@@ -264,13 +264,13 @@
   "connectivity": {
     "aliexpress": {
       "isOnline": true,
-      "lastCheck": "2025-10-11T22:24:53.426Z",
+      "lastCheck": "2025-10-11T22:29:53.431Z",
       "consecutiveFailures": 0
     },
     "amazon": {
       "isOnline": false,
-      "lastCheck": "2025-10-11T22:24:53.429Z",
-      "consecutiveFailures": 318
+      "lastCheck": "2025-10-11T22:29:53.444Z",
+      "consecutiveFailures": 319
     }
   }
 }

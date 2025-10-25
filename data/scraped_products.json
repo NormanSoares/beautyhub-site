@@ -1,0 +1,52 @@
+[
+  {
+    "product_id": "API_1005006454142221",
+    "title": "LAIKOU Vitamin C 24K Golden Sakura Skin Care Set",
+    "price": "29.99",
+    "currency": "USD",
+    "images": [
+      "https://via.placeholder.com/300x300/FF6B6B/FFFFFF?text=Product+Image+1",
+      "https://via.placeholder.com/300x300/4ECDC4/FFFFFF?text=Product+Image+2",
+      "https://via.placeholder.com/300x300/45B7D1/FFFFFF?text=Product+Image+3"
+    ],
+    "description": "Kit de cuidados com a pele LAIKOU com vitamina C e ouro 24K.",
+    "store": {
+      "name": "LAIKOU Official Store"
+    },
+    "skus": [
+      {
+        "skuId": "SKU001",
+        "color": "Black",
+        "size": "One Size",
+        "price": "29.99"
+      },
+      {
+        "skuId": "SKU002",
+        "color": "White",
+        "size": "One Size",
+        "price": "29.99"
+      },
+      {
+        "skuId": "SKU003",
+        "color": "Gray",
+        "size": "One Size",
+        "price": "29.99"
+      }
+    ],
+    "url": "https://pt.aliexpress.com/item/1005006454142221.html",
+    "scraped_at": "2025-10-19T21:30:32.213Z",
+    "created_at": "2025-10-19T21:30:32.213Z",
+    "updated_at": "2025-10-19T21:30:32.213Z",
+    "source": "aliexpress_official_api_fallback",
+    "status": "active",
+    "rating": "4.8",
+    "reviews": "342",
+    "stock": "In Stock",
+    "availability": "available",
+    "shipping": {
+      "free": false,
+      "time": "7-15 days",
+      "cost": "0.00"
+    }
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "backup_date": "2024-12-21",
+  "purpose": "Backup antes da migração para conta de afiliado",
+  "current_config": {
+    "aliexpress": {
+      "apiKey": "520258",
+      "secretKey": "HWUOyFoxVp9U5EoiM1U4febs77IUFDX3",
+      "trackingId": "520258"
+    },
+    "mongodb": {
+      "uri": "mongodb://localhost:27017/beautyhub",
+      "timeouts": {
+        "serverSelection": 5000,
+        "socket": 45000
+      }
+    },
+    "webhooks": {
+      "endpoint": "/api/aliexpress-callback.php",
+      "secret": "67beautyhub_webhook_secret_2024"
+    }
+  },
+  "problems_identified": [
+    "Rate limiting - muitas requisições bloqueadas",
+    "IP blocking - possível blacklist",
+    "MongoDB connection instável",
+    "Webhooks não configurados",
+    "Scraping sendo detectado"
+  ],
+  "next_steps": [
+    "Aguardar aprovação da conta de afiliado",
+    "Atualizar credenciais com nova API",
+    "Configurar webhooks com nova conta",
+    "Testar endpoints com nova API",
+    "Migrar dados existentes"
+  ]
+}
+
