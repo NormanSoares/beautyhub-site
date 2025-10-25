@@ -6,7 +6,8 @@
 import { MongoClient } from 'mongodb';
 
 // Configuração do MongoDB
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://BATMANRICH_db_user:password1234567@cluster.mongodb.net/beautyhub?retryWrites=true&w=majority';
+// Nunca incluir credenciais embutidas
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/beautyhub';
 
 let mongoClient = null;
 

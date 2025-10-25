@@ -9,16 +9,35 @@ const router = express.Router();
 
 // PayPal SDK
 import paypal from '@paypal/checkout-server-sdk';
-const paypalClient = new paypal.core.PayPalHttpClient(
-    new paypal.core.LiveEnvironment(
-        paymentConfig.paypal.clientId,
-        paymentConfig.paypal.clientSecret
-    )
-);
+
+function getPaypalClient() {
+    const { clientId, clientSecret, environment } = paymentConfig.paypal;
+    if (!clientId || !clientSecret) {
+        const error = new Error('PayPal credentials not configured');
+        error.statusCode = 503;
+        throw error;
+    }
+    const env = environment === 'live'
+        ? new paypal.core.LiveEnvironment(clientId, clientSecret)
+        : new paypal.core.SandboxEnvironment(clientId, clientSecret);
+    return new paypal.core.PayPalHttpClient(env);
+}
 
 // Stripe SDK
 import Stripe from 'stripe';
-const stripe = new Stripe(paymentConfig.stripe.secretKey);
+let stripeInstance = null;
+function getStripe() {
+    const secretKey = paymentConfig.stripe.secretKey;
+    if (!secretKey) {
+        const error = new Error('Stripe secret key not configured');
+        error.statusCode = 503;
+        throw error;
+    }
+    if (!stripeInstance) {
+        stripeInstance = new Stripe(secretKey);
+    }
+    return stripeInstance;
+}
 
 // PIX APIs
 import axios from 'axios';
@@ -53,6 +72,7 @@ router.post('/paypal/create-order', async (req, res) => {
             }
         });
 
+        const paypalClient = getPaypalClient();
         const response = await paypalClient.execute(request);
         
         res.json({
@@ -62,7 +82,7 @@ router.post('/paypal/create-order', async (req, res) => {
         });
     } catch (error) {
         console.error('❌ Erro PayPal create order:', error);
-        res.status(500).json({
+        res.status(error.statusCode || 500).json({
             success: false,
             error: error.message
         });
@@ -79,6 +99,7 @@ router.post('/paypal/capture-order', async (req, res) => {
         const request = new paypal.orders.OrdersCaptureRequest(orderId);
         request.requestBody({});
         
+        const paypalClient = getPaypalClient();
         const response = await paypalClient.execute(request);
         
         if (response.result.status === 'COMPLETED') {
@@ -105,7 +126,7 @@ router.post('/paypal/capture-order', async (req, res) => {
         }
     } catch (error) {
         console.error('❌ Erro PayPal capture:', error);
-        res.status(500).json({
+        res.status(error.statusCode || 500).json({
             success: false,
             error: error.message
         });
@@ -119,6 +140,7 @@ router.post('/stripe/create-payment-intent', async (req, res) => {
     try {
         const { amount, currency, orderId, customerEmail } = req.body;
         
+        const stripe = getStripe();
         const paymentIntent = await stripe.paymentIntents.create({
             amount: amount,
             currency: currency || 'usd',
@@ -138,7 +160,7 @@ router.post('/stripe/create-payment-intent', async (req, res) => {
         });
     } catch (error) {
         console.error('❌ Erro Stripe create payment intent:', error);
-        res.status(500).json({
+        res.status(error.statusCode || 500).json({
             success: false,
             error: error.message
         });
@@ -152,6 +174,7 @@ router.post('/stripe/confirm-payment', async (req, res) => {
     try {
         const { paymentIntentId } = req.body;
         
+        const stripe = getStripe();
         const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
         
         if (paymentIntent.status === 'succeeded') {
@@ -178,7 +201,7 @@ router.post('/stripe/confirm-payment', async (req, res) => {
         }
     } catch (error) {
         console.error('❌ Erro Stripe confirm payment:', error);
-        res.status(500).json({
+        res.status(error.statusCode || 500).json({
             success: false,
             error: error.message
         });

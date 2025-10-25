@@ -56,8 +56,8 @@ paypal: {
 
 ### 2. Obter Chaves de Produção
 1. No dashboard Stripe, vá para Developers > API Keys
-2. Copie a **Publishable Key** (pk_live_...)
-3. Copie a **Secret Key** (sk_live_...)
+2. Copie a **Publishable Key** (use pk_test_ em desenvolvimento)
+3. Copie a **Secret Key** (use sk_test_ em desenvolvimento)
 
 ### 3. Configurar Webhooks
 1. Vá para Developers > Webhooks
@@ -70,8 +70,8 @@ Edite o arquivo `config/payment-config.js`:
 
 ```javascript
 stripe: {
-    publishableKey: 'pk_live_SUA_CHAVE_PUBLICA',
-    secretKey: 'sk_live_SUA_CHAVE_SECRETA',
+    publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+    secretKey: process.env.STRIPE_SECRET_KEY,
     webhookSecret: 'whsec_SEU_WEBHOOK_SECRET'
 }
 ```
@@ -162,8 +162,8 @@ PAYPAL_CLIENT_SECRET=seu_paypal_client_secret
 PAYPAL_WEBHOOK_ID=seu_paypal_webhook_id
 
 # Stripe
-STRIPE_PUBLISHABLE_KEY=pk_live_sua_chave_publica
-STRIPE_SECRET_KEY=sk_live_sua_chave_secreta
+STRIPE_PUBLISHABLE_KEY=pk_test_sua_chave_publica
+STRIPE_SECRET_KEY=sk_test_sua_chave_secreta
 STRIPE_WEBHOOK_SECRET=whsec_seu_webhook_secret
 
 # PIX

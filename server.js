@@ -7,28 +7,58 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001')
+  .split(',')
+  .map(s => s.trim())
+  .filter(Boolean);
 
 // Middleware
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('.'));
+app.use(helmet({
+    contentSecurityPolicy: false
+}));
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
-// CORS
+// Limitação de taxa básica para API
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 300,
+    standardHeaders: true,
+    legacyHeaders: false
+});
+app.use('/api', apiLimiter);
+
+// Servir estáticos apenas de diretórios seguros
+const staticDirs = ['css', 'js', 'Imagens', 'templates'];
+for (const dir of staticDirs) {
+    const target = path.join(__dirname, dir);
+    if (fs.existsSync(target)) {
+        app.use(`/${dir}`, express.static(target, { index: false, dotfiles: 'ignore' }));
+    }
+}
+
+// CORS com allowlist
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    const origin = req.headers.origin;
+    const allowOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0] || '';
+    if (allowOrigin) {
+        res.header('Access-Control-Allow-Origin', allowOrigin);
+        res.header('Vary', 'Origin');
+    }
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     if (req.method === 'OPTIONS') {
-        res.sendStatus(200);
-    } else {
-        next();
+        return res.sendStatus(200);
     }
+    next();
 });
 // Rota básica da API
 app.all('/api/', (req, res) => {
@@ -191,6 +221,20 @@ app.get('/dashboard.html', (req, res) => {
 // Rota para a página inicial
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Rotas explícitas para ativos na raiz
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+app.get('/styles.css', (req, res) => {
+    res.sendFile(path.join(__dirname, 'styles.css'));
+});
+app.get('/Logo.png', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Logo.png'));
+});
+app.get('/background-video.mp4', (req, res) => {
+    res.sendFile(path.join(__dirname, 'background-video.mp4'));
 });
 
 // Tratamento de erros

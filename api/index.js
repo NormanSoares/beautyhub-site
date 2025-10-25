@@ -8,8 +8,16 @@
 
 import { MongoClient } from 'mongodb';
 
+// CORS allowlist
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001')
+  .split(',')
+  .map(s => s.trim())
+  .filter(Boolean);
+
 // Configurações
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://BATMANRICH_db_user:password1234567@cluster.mongodb.net/beautyhub?retryWrites=true&w=majority';
+// Nunca use credenciais embutidas; use variáveis de ambiente.
+// Em desenvolvimento, um fallback seguro para localhost é aceitável.
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/beautyhub';
 const API_VERSION = '1.0.0';
 const API_NAME = '67 Beauty Hub API';
 
@@ -377,8 +385,11 @@ async function processAPIRequest(body) {
 export default async function handler(req, res) {
     const startTime = Date.now();
     
-    // Configurar CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    // Configurar CORS com allowlist
+    const requestOrigin = req.headers.origin;
+    const allowOrigin = ALLOWED_ORIGINS.includes(requestOrigin) ? requestOrigin : ALLOWED_ORIGINS[0] || '*';
+    res.setHeader('Access-Control-Allow-Origin', allowOrigin);
+    res.setHeader('Vary', 'Origin');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.setHeader('Content-Type', 'application/json');

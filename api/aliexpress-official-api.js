@@ -10,24 +10,26 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Carregar credenciais
-let credentials = null;
-try {
-    const credentialsPath = path.join(__dirname, '../config/api_credentials.json');
-    const credentialsData = fs.readFileSync(credentialsPath, 'utf8');
-    credentials = JSON.parse(credentialsData);
-} catch (error) {
-    console.error('Erro ao carregar credenciais:', error);
-}
+// Credenciais via variáveis de ambiente
+const envCredentials = {
+    aliexpress: {
+        apiKey: process.env.ALIEXPRESS_API_KEY || process.env.ALIEXPRESS_APP_KEY,
+        secretKey: process.env.ALIEXPRESS_SECRET_KEY || process.env.ALIEXPRESS_APP_SECRET,
+        trackingId: process.env.ALIEXPRESS_TRACKING_ID || ''
+    }
+};
 
 /**
  * Classe para API oficial do AliExpress
  */
 class AliExpressOfficialAPI {
     constructor() {
-        this.apiKey = credentials?.aliexpress?.apiKey || '520258';
-        this.secretKey = credentials?.aliexpress?.secretKey || 'HWUOyFoxVp9U5EoiM1U4febs77IUFDX3';
-        this.trackingId = credentials?.aliexpress?.trackingId || '520258';
+        this.apiKey = envCredentials?.aliexpress?.apiKey;
+        this.secretKey = envCredentials?.aliexpress?.secretKey;
+        this.trackingId = envCredentials?.aliexpress?.trackingId;
+        if (!this.apiKey || !this.secretKey) {
+            throw new Error('AliExpress API credentials not configured');
+        }
         this.baseUrl = 'https://api-sg.aliexpress.com';
         this.accessToken = null;
     }
