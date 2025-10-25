@@ -4,12 +4,15 @@
  */
 
 import express from 'express';
+import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -49,12 +52,20 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-// Importar rotas de pagamento
-import paymentsRouter from './api/payments.js';
+// Importar rotas de pagamento (com modo simulado)
 import paymentsSimpleRouter from './api/payments-simple.js';
-app.use('/api/payments', paymentsRouter);
+
+const paymentsMode = process.env.PAYMENTS_MODE || (process.env.ENABLE_REAL_PAYMENTS === 'true' ? 'real' : 'simple');
+if (paymentsMode === 'real') {
+    const paymentsModule = await import('./api/payments.js');
+    app.use('/api/payments', paymentsModule.default);
+    console.log('✅ Payments (real) router carregado');
+} else {
+    app.use('/api/payments', paymentsSimpleRouter);
+    console.log('✅ Payments (simulado) router carregado');
+}
+
 app.use('/api/payments-simple', paymentsSimpleRouter);
-console.log('✅ Payments router carregado');
 console.log('✅ Payments Simple router carregado');
 
 // Importar rotas de pedidos
