@@ -289,7 +289,7 @@ router.get('/help', (req, res) => {
         troubleshooting: {
             'Token expirado': 'Use POST /api/auth/refresh ou GET /api/auth/authorize',
             'Código inválido': 'Gere nova URL com GET /api/auth/authorize',
-            'Sistema não pronto': 'Verifique credenciais em config/api_credentials.json',
+            'Sistema não pronto': 'Defina ALIEXPRESS_API_KEY e ALIEXPRESS_SECRET_KEY nas variáveis de ambiente',
             'Erro de autorização': 'Verifique se app está ativo no portal AliExpress'
         }
     });

@@ -100,7 +100,7 @@ const expectedBenefits = {
 ```
 
 #### **B) Implementação:**
-1. **Atualizar credenciais** em `config/api_credentials.json`
+1. **Atualizar credenciais** via variáveis de ambiente: `ALIEXPRESS_API_KEY`, `ALIEXPRESS_SECRET_KEY`, `ALIEXPRESS_TRACKING_ID`
 2. **Configurar webhooks** com nova conta
 3. **Testar endpoints** com nova API
 4. **Migrar dados** existentes
@@ -123,7 +123,7 @@ const expectedBenefits = {
 ### **6. ARQUIVOS AFETADOS**
 
 #### **A) Configurações:**
-- `config/api_credentials.json` - Credenciais
+- Variáveis de ambiente - Credenciais (não versionar)
 - `config/aliexpress-config.json` - Configurações
 - `config/mongodb-config.js` - MongoDB
 

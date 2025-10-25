@@ -16,11 +16,10 @@ const TOKEN_SYSTEM_CONFIG = {
     // Endpoints oficiais do AliExpress
     authBaseUrl: 'https://auth.aliexpress.com',
     apiBaseUrl: 'https://api-sg.aliexpress.com',
-    
-    // Arquivos de configuração
-    credentialsFile: path.join(__dirname, '../config/api_credentials.json'),
+
+    // Local de armazenamento de tokens (não versionado)
     tokensFile: path.join(__dirname, '../data/aliexpress_tokens.json'),
-    
+
     // Configurações de token
     tokenExpiryBuffer: 300000, // 5 minutos antes do vencimento
     maxRetries: 3,
@@ -39,28 +38,21 @@ class AliExpressTokenSystem {
     }
 
     /**
-     * Carregar credenciais do arquivo
+     * Carregar credenciais das variáveis de ambiente
      */
     loadCredentials() {
-        try {
-            if (!fs.existsSync(TOKEN_SYSTEM_CONFIG.credentialsFile)) {
-                throw new Error('Arquivo de credenciais não encontrado');
-            }
-            
-            const credentialsData = fs.readFileSync(TOKEN_SYSTEM_CONFIG.credentialsFile, 'utf8');
-            const credentials = JSON.parse(credentialsData);
-            
-            if (!credentials.aliexpress) {
-                throw new Error('Credenciais AliExpress não encontradas');
-            }
-            
-            console.log('✅ Credenciais carregadas com sucesso');
-            return credentials.aliexpress;
-            
-        } catch (error) {
-            console.error('❌ Erro ao carregar credenciais:', error.message);
-            throw new Error(`Falha ao carregar credenciais: ${error.message}`);
+        const apiKey = process.env.ALIEXPRESS_API_KEY || process.env.ALIEXPRESS_APP_KEY;
+        const secretKey = process.env.ALIEXPRESS_SECRET_KEY || process.env.ALIEXPRESS_APP_SECRET;
+        const trackingId = process.env.ALIEXPRESS_TRACKING_ID || '';
+
+        if (!apiKey || !secretKey) {
+            const message = 'Credenciais AliExpress ausentes. Defina ALIEXPRESS_API_KEY e ALIEXPRESS_SECRET_KEY nas variáveis de ambiente.';
+            console.error('❌', message);
+            throw new Error(message);
         }
+
+        console.log('✅ Credenciais (env) carregadas');
+        return { apiKey, secretKey, trackingId };
     }
 
     /**

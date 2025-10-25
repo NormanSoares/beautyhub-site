@@ -15,12 +15,14 @@ class AliExpressMigrationHelper {
      */
     async loadCurrentConfig() {
         try {
-            const response = await fetch('/config/api_credentials.json');
-            this.currentConfig = await response.json();
-            console.log('✅ Configuração atual carregada:', this.currentConfig);
+            // Em vez de ler arquivo sensível, obter status via API segura
+            const response = await fetch('/api/auth/status');
+            const status = await response.json();
+            this.currentConfig = { aliexpress: { configured: !!status?.system_ready } };
+            console.log('✅ Status atual carregado:', this.currentConfig);
             return this.currentConfig;
         } catch (error) {
-            console.error('❌ Erro ao carregar configuração atual:', error);
+            console.error('❌ Erro ao carregar status atual:', error);
             throw error;
         }
     }

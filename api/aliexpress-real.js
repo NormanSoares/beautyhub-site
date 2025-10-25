@@ -9,13 +9,13 @@ import fetch from 'node-fetch';
 
 const router = express.Router();
 
-// Configurações reais AliExpress
+// Configurações reais AliExpress via env
 const ALIEXPRESS_CONFIG = {
-    apiKey: '520258',
-    secretKey: 'YUfgyKXrywwJOhUWZ4nDG2QZzXxdRzsF',
-    trackingId: '520258',
+    apiKey: process.env.ALIEXPRESS_API_KEY || process.env.ALIEXPRESS_APP_KEY,
+    secretKey: process.env.ALIEXPRESS_SECRET_KEY || process.env.ALIEXPRESS_APP_SECRET,
+    trackingId: process.env.ALIEXPRESS_TRACKING_ID || '',
     baseUrl: 'https://api-sg.aliexpress.com',
-    webhookUrl: 'https://beautyhub-site-1.onrender.com/api/aliexpress-callback'
+    webhookUrl: process.env.ALIEXPRESS_WEBHOOK_URL || ''
 };
 
 /**
